@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BBE6AE68-2631-4C4D-A56A-2967145B5A58}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MixedCampaignManager</RootNamespace>
+    <AssemblyName>MixedCampaignManager</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\MixedCampaignManager.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\MixedCampaignManager.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ChilkatDotNet2">
+      <HintPath>..\Libs\32 Bit\ChilkatDotNet2.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Libs\32 Bit\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.65.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\LD\LibsTextFile\32BitDll\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="classes\CampaignAccountManager.cs" />
+    <Compile Include="classes\CampTwitterDataScrapper.cs" />
+    <Compile Include="classes\Cls_AccountsManager.cs" />
+    <Compile Include="classes\Cls_DbcDecode.cs" />
+    <Compile Include="classes\Cls_FollowStart.cs" />
+    <Compile Include="classes\Cls_ReplyStart.cs" />
+    <Compile Include="classes\Cls_Retweet.cs" />
+    <Compile Include="classes\Cls_StartTweetProcess.cs" />
+    <Compile Include="classes\cls_variables.cs" />
+    <Compile Include="classes\CampaignTweetAccountContainer.cs" />
+    <Compile Include="CustomUserControls\AccountCreatorUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\AccountCreatorUserControl.Designer.cs">
+      <DependentUpon>AccountCreatorUserControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomUserControls\followusecontrols.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\followusecontrols.Designer.cs">
+      <DependentUpon>followusecontrols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomUserControls\replyusercontrols.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\replyusercontrols.Designer.cs">
+      <DependentUpon>replyusercontrols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomUserControls\retweetusercontrols.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\retweetusercontrols.Designer.cs">
+      <DependentUpon>retweetusercontrols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomUserControls\TweetMentionUserUsingScrapedList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\TweetMentionUserUsingScrapedList.Designer.cs">
+      <DependentUpon>TweetMentionUserUsingScrapedList.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CustomUserControls\tweetusercontrols.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CustomUserControls\tweetusercontrols.Designer.cs">
+      <DependentUpon>tweetusercontrols.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_mixcampaignmanager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_mixcampaignmanager.Designer.cs">
+      <DependentUpon>frm_mixcampaignmanager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frm_Status.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frm_Status.Designer.cs">
+      <DependentUpon>frm_Status.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PopupControl\ComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PopupControl\ComboBox.Designer.cs">
+      <DependentUpon>ComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PopupControl\GripBounds.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PopupControl\NativeMethods.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PopupControl\Popup.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PopupControl\Popup.Designer.cs">
+      <DependentUpon>Popup.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PopupControl\PopupAnimations.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="PopupControl\PopupComboBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="PopupControl\PopupComboBox.Designer.cs">
+      <DependentUpon>PopupComboBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryClasses\cls_DbRepository.cs" />
+    <Compile Include="RepositoryClasses\DateTimeSpan.cs" />
+    <EmbeddedResource Include="CustomUserControls\AccountCreatorUserControl.resx">
+      <DependentUpon>AccountCreatorUserControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUserControls\followusecontrols.resx">
+      <DependentUpon>followusecontrols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUserControls\replyusercontrols.resx">
+      <DependentUpon>replyusercontrols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUserControls\retweetusercontrols.resx">
+      <DependentUpon>retweetusercontrols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUserControls\TweetMentionUserUsingScrapedList.resx">
+      <DependentUpon>TweetMentionUserUsingScrapedList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CustomUserControls\tweetusercontrols.resx">
+      <DependentUpon>tweetusercontrols.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_MixCampaignManager.resx">
+      <DependentUpon>frm_mixcampaignmanager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frm_Status.resx">
+      <DependentUpon>frm_Status.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="PopupControl\obj\Debug\DesignTimeResolveAssemblyReferencesInput.cache" />
+    <None Include="PopupControl\PopupControl.snk" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BaseLib\BaseLib.csproj">
+      <Project>{85977246-DE21-44CC-B798-EE7CACEF001F}</Project>
+      <Name>BaseLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Follower\Follower.csproj">
+      <Project>{9F850B21-C8DC-4CB7-A983-FADEC297E81F}</Project>
+      <Name>Follower</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tweeter\Tweeter.csproj">
+      <Project>{6AFB0389-ECC5-4252-9C51-7DBD35D3E1A4}</Project>
+      <Name>Tweeter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwitterSignup\TwitterSignup.csproj">
+      <Project>{70016AA7-27DD-4EDE-8D3C-C295CA2B3486}</Project>
+      <Name>TwitterSignup</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\app_bg.jpg" />
+    <Content Include="Images\off.png" />
+    <Content Include="Images\on.png" />
+    <None Include="Resources\update_compaign.png" />
+    <None Include="Resources\get_hash_tags_campaign.png" />
+    <None Include="Resources\show_all_status.png" />
+    <None Include="Resources\save_compaign.png" />
+    <Content Include="PopupControl\bin\Debug\PopupControl.dll" />
+    <Content Include="PopupControl\bin\Debug\PopupControl.pdb" />
+    <Content Include="PopupControl\obj\Debug\PopupControl.csproj.FileListAbsolute.txt" />
+    <Content Include="PopupControl\obj\Debug\PopupControl.dll" />
+    <Content Include="PopupControl\obj\Debug\PopupControl.pdb" />
+    <Content Include="PopupControl\PopupControl.csproj" />
+    <Content Include="Resources\search.png" />
+    <None Include="Resources\bt_Browse_campaign.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="PopupControl\obj\Debug\TempPE\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,4 @@
+C:\Users\GLB-111\Downloads\simplepopup\SimplePopup\src\PopupControl\bin\Debug\PopupControl.dll
+C:\Users\GLB-111\Downloads\simplepopup\SimplePopup\src\PopupControl\bin\Debug\PopupControl.pdb
+C:\Users\GLB-111\Downloads\simplepopup\SimplePopup\src\PopupControl\obj\Debug\PopupControl.dll
+C:\Users\GLB-111\Downloads\simplepopup\SimplePopup\src\PopupControl\obj\Debug\PopupControl.pdb

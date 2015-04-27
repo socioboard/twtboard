@@ -1,0 +1,544 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C9510771-FAAF-4405-97E5-42FB1038C196}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>twtboardpro</RootNamespace>
+    <AssemblyName>twtboardpro</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\TwtDominator.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\TwtDominator.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\TwtDominator.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\TwtDominator.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ChilkatDotNet2, Version=9.2.0.0, Culture=neutral, PublicKeyToken=eb5fc1fc52ef09bd, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\32 Bit\ChilkatDotNet2.dll</HintPath>
+    </Reference>
+    <Reference Include="Interop.BmlDataCarousel">
+      <HintPath>..\Libs and Text Files\Interop.BmlDataCarousel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Interop.SHDocVw">
+      <HintPath>..\Libs and Text Files\Interop.SHDocVw.dll</HintPath>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Libs and Text Files\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.65.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\LD\LibsTextFile\32BitDll\System.Data.SQLite.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="TOR_Activator">
+      <HintPath>..\Libs and Text Files\TOR_Activator.dll</HintPath>
+    </Reference>
+    <Reference Include="WatiN.Core">
+      <HintPath>..\Libs and Text Files\WatiN.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdvancedSearch.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AdvancedSearch.Designer.cs">
+      <DependentUpon>AdvancedSearch.cs</DependentUpon>
+    </Compile>
+    <Compile Include="App_Follow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="App_Follow.Designer.cs">
+      <DependentUpon>App_Follow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Follower.cs" />
+    <Compile Include="frmAccountPasswordUpdate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAccountPasswordUpdate.designer.cs">
+      <DependentUpon>frmAccountPasswordUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmAccounts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmAccounts.Designer.cs">
+      <DependentUpon>frmAccounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmApplicationFollow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmApplicationFollow.Designer.cs">
+      <DependentUpon>frmApplicationFollow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmCampaign.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmCampaign.Designer.cs">
+      <DependentUpon>FrmCampaign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmDirectMessage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmDirectMessage.Designer.cs">
+      <DependentUpon>frmDirectMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmFollowYourFollowers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmFollowYourFollowers.Designer.cs">
+      <DependentUpon>frmFollowYourFollowers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmForPremimumUsersOnly.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmForPremimumUsersOnly.Designer.cs">
+      <DependentUpon>frmForPremimumUsersOnly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmFreeTrial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmFreeTrial.Designer.cs">
+      <DependentUpon>FrmFreeTrial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMain_NewUI.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMain_NewUI.Designer.cs">
+      <DependentUpon>frmMain_NewUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmMentionReplyInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmMentionReplyInterface.Designer.cs">
+      <DependentUpon>frmMentionReplyInterface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmReplyInterface.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmReplyInterface.Designer.cs">
+      <DependentUpon>frmReplyInterface.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmScheduler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScheduler.Designer.cs">
+      <DependentUpon>frmScheduler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmScrapeUsersFromTweets.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScrapeUsersFromTweets.Designer.cs">
+      <DependentUpon>frmScrapeUsersFromTweets.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmScrapMemberUsingUrl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScrapMemberUsingUrl.Designer.cs">
+      <DependentUpon>frmScrapMemberUsingUrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmScrapProfileImge.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmScrapProfileImge.Designer.cs">
+      <DependentUpon>frmScrapProfileImge.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmSettings.Designer.cs">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmStartCampaign.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmStartCampaign.Designer.cs">
+      <DependentUpon>FrmStartCampaign.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrmVerfyingImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmVerfyingImage.Designer.cs">
+      <DependentUpon>FrmVerfyingImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Frm_EmailVerification.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frm_EmailVerification.Designer.cs">
+      <DependentUpon>Frm_EmailVerification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ProxyChecker.cs" />
+    <Compile Include="ProxySettings.cs" />
+    <Compile Include="frmRandomiser.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmRandomiser.Designer.cs">
+      <DependentUpon>frmRandomiser.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TweetAccountContainer.cs" />
+    <Compile Include="TweetAccountManager.cs" />
+    <Compile Include="TwitterDataScrapper.cs" />
+    <Compile Include="TwitterUser.cs" />
+    <Compile Include="WebsitesLiker.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WebsitesLiker.Designer.cs">
+      <DependentUpon>WebsitesLiker.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="AdvancedSearch.resx">
+      <DependentUpon>AdvancedSearch.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="App_Follow.resx">
+      <DependentUpon>App_Follow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAccountPasswordUpdate.resx">
+      <DependentUpon>frmAccountPasswordUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmAccounts.resx">
+      <DependentUpon>frmAccounts.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmApplicationFollow.resx">
+      <DependentUpon>frmApplicationFollow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmCampaign.resx">
+      <DependentUpon>FrmCampaign.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmDirectMessage.resx">
+      <DependentUpon>frmDirectMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmFollowYourFollowers.resx">
+      <DependentUpon>frmFollowYourFollowers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmForPremimumUsersOnly.resx">
+      <DependentUpon>frmForPremimumUsersOnly.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmFreeTrial.resx">
+      <DependentUpon>FrmFreeTrial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMain_NewUI.resx">
+      <DependentUpon>frmMain_NewUI.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmMentionReplyInterface.resx">
+      <DependentUpon>frmMentionReplyInterface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmReplyInterface.resx">
+      <DependentUpon>frmReplyInterface.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmScheduler.resx">
+      <DependentUpon>frmScheduler.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmScrapeUsersFromTweets.resx">
+      <DependentUpon>frmScrapeUsersFromTweets.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmScrapMemberUsingUrl.resx">
+      <DependentUpon>frmScrapMemberUsingUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmScrapProfileImge.resx">
+      <DependentUpon>frmScrapProfileImge.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmSettings.resx">
+      <DependentUpon>FrmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmStartCampaign.resx">
+      <DependentUpon>FrmStartCampaign.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmVerfyingImage.resx">
+      <DependentUpon>FrmVerfyingImage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frm_EmailVerification.resx">
+      <DependentUpon>Frm_EmailVerification.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmRandomiser.resx">
+      <DependentUpon>frmRandomiser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WebsitesLiker.resx">
+      <DependentUpon>WebsitesLiker.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fb_header.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="fb_headerb.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="follow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AccountChecker\AccountChecker.csproj">
+      <Project>{7423F5BC-8E65-403A-AED0-FF514BA82347}</Project>
+      <Name>AccountChecker</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\BaseLib\BaseLib.csproj">
+      <Project>{85977246-DE21-44CC-B798-EE7CACEF001F}</Project>
+      <Name>BaseLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Follower\Follower.csproj">
+      <Project>{9F850B21-C8DC-4CB7-A983-FADEC297E81F}</Project>
+      <Name>Follower</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MentionsReplyInterface\MentionsReplyInterface.csproj">
+      <Project>{6354D08E-916A-44CA-A444-C41402350D88}</Project>
+      <Name>MentionsReplyInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MixedCampaignManager\MixedCampaignManager.csproj">
+      <Project>{BBE6AE68-2631-4C4D-A56A-2967145B5A58}</Project>
+      <Name>MixedCampaignManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ProfileManager\ProfileManager.csproj">
+      <Project>{B431A7FE-4679-4BAA-A74E-8FA600F9C808}</Project>
+      <Name>ProfileManager</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Randomiser\Randomiser.csproj">
+      <Project>{1E9E8F48-1ABF-4F98-B4EC-9DD255438882}</Project>
+      <Name>Randomiser</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ReplyInterface\ReplyInterface.csproj">
+      <Project>{0D706FD3-87C4-4A68-B31B-7CB9A8AD6F6E}</Project>
+      <Name>ReplyInterface</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tweeter\Tweeter.csproj">
+      <Project>{6AFB0389-ECC5-4252-9C51-7DBD35D3E1A4}</Project>
+      <Name>Tweeter</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TwitterSignup\TwitterSignup.csproj">
+      <Project>{70016AA7-27DD-4EDE-8D3C-C295CA2B3486}</Project>
+      <Name>TwitterSignup</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\TDominator_Wsetup.bmp" />
+    <Content Include="Resources\Td_Setup_Banner.bmp" />
+    <Content Include="Resources\Welcome_TD_Banner.bmp" />
+    <None Include="Resources\start who to follow scrape.png" />
+    <None Include="Resources\Image1.bmp" />
+    <None Include="Resources\bt_Start_Unfollowing.png" />
+    <None Include="Resources\bt_Start_Replying.png" />
+    <None Include="Resources\remove duplicate.png" />
+    <None Include="Resources\bt_Export.png" />
+    <None Include="Resources\bt_Start_Extraction.png" />
+    <None Include="Resources\bt_start_creating_tweets.png" />
+    <None Include="Resources\check_email.png" />
+    <None Include="Resources\Get Mentions.png" />
+    <Content Include="Resources\account verification.png" />
+    <Content Include="Resources\resend verification.png" />
+    <None Include="Resources\btBuyNow.png" />
+    <None Include="Resources\Browse.png" />
+    <None Include="Resources\btn_stop.png" />
+    <None Include="Resources\assgin proxy to accounts.png" />
+    <Content Include="account checker.png" />
+    <Content Include="Resources\bt_Start_following.png" />
+    <None Include="Resources\clear_public proxies from database.png" />
+    <None Include="Resources\clear private proxies from database.png" />
+    <None Include="Resources\Loder.gif" />
+    <Content Include="Resources\Account Checker btn.jpg" />
+    <Content Include="Resources\Account Checker new.jpg" />
+    <Content Include="Resources\account checker.png" />
+    <Content Include="Resources\check_email.jpg" />
+    <Content Include="Resources\clear database.png" />
+    <None Include="Resources\rsz_app_bg.jpg" />
+    <None Include="Resources\starts.png" />
+    <None Include="Resources\start.png" />
+    <None Include="Resources\shedule_for_later.png" />
+    <None Include="Resources\star tweeting.png" />
+    <None Include="Resources\start retweeting.png" />
+    <None Include="Resources\start assigning.png" />
+    <None Include="Resources\test.png" />
+    <None Include="Resources\view_campaign.png" />
+    <None Include="Resources\submit.png" />
+    <None Include="Resources\start_campaign.png" />
+    <None Include="Resources\set_compaign_data.png" />
+    <None Include="Resources\save.png" />
+    <None Include="Resources\Remove_Accomplished task.png" />
+    <None Include="Resources\starts - Copy.png" />
+    <None Include="Resources\stop_account_cration.png" />
+    <None Include="Resources\start_assigning.png" />
+    <None Include="Resources\start_checking.png" />
+    <None Include="Resources\stop.png" />
+    <None Include="Resources\export_accounts.PNG" />
+    <None Include="Resources\clear_proxies.png" />
+    <None Include="Resources\clear_accounts.png" />
+    <Content Include="Resources\Account_Creator 123.jpg" />
+    <Content Include="Resources\app_bg.jpg" />
+    <Content Include="Resources\bt_Assign_Proxy_Accounts.jpg" />
+    <Content Include="Resources\bt_Assign_Proxy_To.jpg" />
+    <Content Include="Resources\bt_Browse.jpg" />
+    <Content Include="Resources\bt_clear_public_proxies.jpg" />
+    <Content Include="Resources\bt_clear_public_proxies_from_Database.jpg" />
+    <Content Include="Resources\bt_Create_Private_Proxies_Database.jpg" />
+    <Content Include="Resources\bt_Export.jpg" />
+    <Content Include="Resources\bt_Get_Username_Direct.jpg" />
+    <Content Include="Resources\bt_Get_Username_Direct_Message.jpg" />
+    <Content Include="Resources\bt_Remove_Duplicates.jpg" />
+    <Content Include="Resources\bt_Schedule_for_Later.jpg" />
+    <Content Include="Resources\bt_Sent_Msg.jpg" />
+    <Content Include="Resources\bt_Start.jpg" />
+    <Content Include="Resources\bt_Start_Account_Creation.jpg" />
+    <Content Include="Resources\bt_start_creating_tweets.jpg" />
+    <Content Include="Resources\bt_Start_Extraction.jpg" />
+    <Content Include="Resources\bt_Start_Fake_Email_Creation.jpg" />
+    <Content Include="Resources\bt_Start_Replying.jpg" />
+    <Content Include="Resources\bt_Start_Retweeting.jpg" />
+    <Content Include="Resources\bt_Start_Tweeting.jpg" />
+    <Content Include="Resources\bt_Start_Unfollowing.jpg" />
+    <Content Include="Resources\bt_Stop.jpg" />
+    <Content Include="Resources\bt_Test.jpg" />
+    <None Include="Resources\clear_all_group_names.png" />
+    <None Include="Resources\Edit_compaign_data.png" />
+    <Content Include="Resources\fake email.png" />
+    <Content Include="Resources\false email.png" />
+    <Content Include="Resources\fb_header.jpg" />
+    <Content Include="Resources\fb_headerb.jpg" />
+    <Content Include="Resources\follow.png" />
+    <None Include="Resources\get_hash_tags.png" />
+    <None Include="Resources\load_accouunts1.png" />
+    <None Include="Resources\load_accouunts.png" />
+    <Content Include="Resources\Logo_TD.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

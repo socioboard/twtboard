@@ -1,0 +1,3 @@
+username:password
+username:password:proxyaddress:proxyport
+username:password:proxyaddress:proxyport:proxyusername:proxypassword
