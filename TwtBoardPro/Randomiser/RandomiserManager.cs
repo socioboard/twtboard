@@ -16,10 +16,10 @@ namespace Randomiser
         string UserId = string.Empty;
         string Password = string.Empty;
         string Screen_Name = string.Empty;
-        string ProxyAddress = string.Empty;
-        string ProxyPort = string.Empty;
-        string ProxyUserName = string.Empty;
-        string ProxyPassword = string.Empty;
+        string IPAddress = string.Empty;
+        string IPPort = string.Empty;
+        string IPUsername = string.Empty;
+        string IPpassword = string.Empty;
 
         
 
@@ -29,16 +29,16 @@ namespace Randomiser
         {
         }
 
-        public RandomiserManager(string Username, string userId, string Password, string Screen_name, string proxyAddress, string proxyPort, string proxyUsername, string proxyPassword)
+        public RandomiserManager(string Username, string userId, string Password, string Screen_name, string IPAddress, string IPPort, string IPUsername, string IPpassword)
         {
             this.UserName = Username;
             this.UserId = userId;
             this.Password = Password;
             this.Screen_Name = Screen_name;
-            this.ProxyAddress = proxyAddress;
-            this.ProxyPort = proxyPort;
-            this.ProxyUserName = proxyUsername;
-            this.ProxyPassword = proxyPassword;
+            this.IPAddress = IPAddress;
+            this.IPPort = IPPort;
+            this.IPUsername = IPUsername;
+            this.IPpassword = IPpassword;
         }
 
         public void Tweet(ref Globussoft.GlobusHttpHelper globusHttpHelper, string pgSrc, string postAuthenticityToken, string tweetMessage, out string status)
@@ -50,7 +50,7 @@ namespace Randomiser
                 //Post Tweet To Account
                 string strpostAuthenticityToken = string.Empty;
 
-                string get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), ProxyAddress, ProxyPort, ProxyUserName, ProxyPassword, string.Empty, string.Empty);
+                string get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
 
                 if (!string.IsNullOrEmpty(get_twitter_first) && !string.IsNullOrWhiteSpace(get_twitter_first))
                 {
@@ -99,7 +99,7 @@ namespace Randomiser
 
                 string strpostAuthenticityToken = string.Empty;
 
-                string get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), ProxyAddress, ProxyPort, ProxyUserName, ProxyPassword, string.Empty, string.Empty);
+                string get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
 
                 if (!string.IsNullOrEmpty(get_twitter_first) && !string.IsNullOrWhiteSpace(get_twitter_first))
                 {

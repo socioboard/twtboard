@@ -1509,6 +1509,59 @@ namespace MixedCampaignManager
 
         #region <--- Tweet campaign functions --->
 
+        //public void SaveTweetSettings()
+        //{
+        //    try
+        //    {
+        //        //string query = "Insert into 'Campaign_tweet'(CampaignName, AcFilePath, TweetMsgFilePath, DuplicateMsg, AllTweetParAc, HashTag, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module)"
+        //        //    + " values ('" + _CmpName + "','" + _AccountFilePath + "','" + classes.cls_variables._TweetMSGfilepath + "','" + classes.cls_variables._IsDuplicatMSG + "'"
+        //        //    + ",'" + classes.cls_variables._IsAllTweetParAC + "','" + classes.cls_variables._IsHashTage + "','" + classes.cls_variables._IsTweetParDay + "','" + classes.cls_variables._MaxNoOfTweetsParDay + "','" + classes.cls_variables._NoOfTweetsParAC + "',"
+        //        //    + "'" + +classes.cls_variables._IsScheduledDaily + "','" + classes.cls_variables._StartFrom + "','" + classes.cls_variables._EndTo + "','" + classes.cls_variables._DelayFrom + "', '" + classes.cls_variables._DelayTo + "', '" + Threads + "', 'Tweet')";
+
+
+        //        string query = "Insert into 'Campaign_tweet'(CampaignName, AcFilePath, TweetMsgFilePath, TweetImageFolderPath,TweetUploadUserFilePath,IsUploadUserFilePath, DuplicateMsg, AllTweetParAc, HashTag, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc, TweetWithImage, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList)"
+        //           + " values ('" + _CmpName + "','" + _AccountFilePath + "','" + classes.cls_variables._TweetMSGfilepath + "','" + classes.cls_variables._TweetImageFolderPath + "','" + classes.cls_variables._TweetUploadUserList + "','" + classes.cls_variables._IsTweetUploadUserList + "','" + classes.cls_variables._IsDuplicatMSG + "'"
+        //           + ",'" + classes.cls_variables._IsAllTweetParAC + "','" + classes.cls_variables._IsHashTage + "','" + classes.cls_variables._IsTweetParDay + "','" + classes.cls_variables._MaxNoOfTweetsParDay + "','" + classes.cls_variables._NoOfTweetsParAC + "',"
+        //           + "'" + classes.cls_variables._Istweetwithimage + "','" + +classes.cls_variables._IsScheduledDaily + "','" + classes.cls_variables._StartFrom + "','" + classes.cls_variables._EndTo + "','" + classes.cls_variables._DelayFrom + "', '" + classes.cls_variables._DelayTo + "', '" + Threads + "', 'Tweet','" + classes.cls_variables._IsTweetMentionUserScrapedList + "','" + classes.cls_variables._TweetMentionUserName + "','" + classes.cls_variables._IsTweetFollowerList + "','" + classes.cls_variables._IsTweetFollowingList + "','" + classes.cls_variables._NoOfTweetMentionUserName + "','" + classes.cls_variables._NoOfTweetScrapedUser + "')";
+
+
+        //        RepositoryClasses.cls_DbRepository.InsertQuery(query, "Campaign_tweet");
+
+        //        AddToCampaignLoggerListBox("[ " + DateTime.Now + " ] => [  " + _CmpName + " is Save. ]");
+
+        //        //Reload all Saved campaign....
+        //        LoadCampaign();
+
+        //        //Re- start scheduled campaigns ... 
+        //        if (classes.cls_variables._IsScheduledDaily == 1)
+        //        {
+        //            ScheduledTasks_Updated(_CmpName);
+        //        }
+
+        //        ///Clear campaign 
+        //        ClearCamapigns("Tweet");
+
+        //        classes.cls_variables._TweetMSGfilepath = string.Empty;
+        //        //classes.cls_variables._TweetImageFolderPath = string.Empty;
+        //        //classes.cls_variables._TweetUploadUserList = string.Empty;
+        //        classes.cls_variables._IsDuplicatMSG = 0;
+        //        classes.cls_variables._IsAllTweetParAC = 0;
+        //        classes.cls_variables._IsHashTage = 0;
+        //        classes.cls_variables._IsTweetParDay = 0;
+        //        classes.cls_variables._MaxNoOfTweetsParDay = 10;
+        //        classes.cls_variables._NoOfTweetsParAC = 10;
+        //        classes.cls_variables._Istweetwithimage = 0;
+        //        classes.cls_variables._IsTweetUploadUserList = 0;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrorLogger.AddToErrorLogText("20.SaveTweetSettings :" + ex.Message);
+        //    }
+        //}
+
+
+        #region Sonu Edited Code
+
         public void SaveTweetSettings()
         {
             try
@@ -1519,10 +1572,10 @@ namespace MixedCampaignManager
                 //    + "'" + +classes.cls_variables._IsScheduledDaily + "','" + classes.cls_variables._StartFrom + "','" + classes.cls_variables._EndTo + "','" + classes.cls_variables._DelayFrom + "', '" + classes.cls_variables._DelayTo + "', '" + Threads + "', 'Tweet')";
 
 
-                string query = "Insert into 'Campaign_tweet'(CampaignName, AcFilePath, TweetMsgFilePath, TweetImageFolderPath,TweetUploadUserFilePath,IsUploadUserFilePath, DuplicateMsg, AllTweetParAc, HashTag, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc, TweetWithImage, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList)"
+                string query = "Insert into 'Campaign_tweet' (CampaignName, AcFilePath, TweetMsgFilePath, TweetImageFolderPath,TweetUploadUserFilePath,IsUploadUserFilePath, DuplicateMsg, AllTweetParAc, HashTag, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc, TweetWithImage, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList,NoOfDayTweetedByUser,IsTweetedInLastSpecificDay)"
                    + " values ('" + _CmpName + "','" + _AccountFilePath + "','" + classes.cls_variables._TweetMSGfilepath + "','" + classes.cls_variables._TweetImageFolderPath + "','" + classes.cls_variables._TweetUploadUserList + "','" + classes.cls_variables._IsTweetUploadUserList + "','" + classes.cls_variables._IsDuplicatMSG + "'"
                    + ",'" + classes.cls_variables._IsAllTweetParAC + "','" + classes.cls_variables._IsHashTage + "','" + classes.cls_variables._IsTweetParDay + "','" + classes.cls_variables._MaxNoOfTweetsParDay + "','" + classes.cls_variables._NoOfTweetsParAC + "',"
-                   + "'" + classes.cls_variables._Istweetwithimage + "','" + +classes.cls_variables._IsScheduledDaily + "','" + classes.cls_variables._StartFrom + "','" + classes.cls_variables._EndTo + "','" + classes.cls_variables._DelayFrom + "', '" + classes.cls_variables._DelayTo + "', '" + Threads + "', 'Tweet','" + classes.cls_variables._IsTweetMentionUserScrapedList + "','" + classes.cls_variables._TweetMentionUserName + "','" + classes.cls_variables._IsTweetFollowerList + "','" + classes.cls_variables._IsTweetFollowingList + "','" + classes.cls_variables._NoOfTweetMentionUserName + "','" + classes.cls_variables._NoOfTweetScrapedUser + "')";
+                   + "'" + classes.cls_variables._Istweetwithimage + "','" + +classes.cls_variables._IsScheduledDaily + "','" + classes.cls_variables._StartFrom + "','" + classes.cls_variables._EndTo + "','" + classes.cls_variables._DelayFrom + "', '" + classes.cls_variables._DelayTo + "', '" + Threads + "', 'Tweet','" + classes.cls_variables._IsTweetMentionUserScrapedList + "','" + classes.cls_variables._TweetMentionUserName + "','" + classes.cls_variables._IsTweetFollowerList + "','" + classes.cls_variables._IsTweetFollowingList + "','" + classes.cls_variables._NoOfTweetMentionUserName + "','" + classes.cls_variables._NoOfTweetScrapedUser + "','" + classes.cls_variables._NoOfDaysBeforeTweeted + "','" + classes.cls_variables._IsTweetedInLastSpecificDay + "')";
 
 
                 RepositoryClasses.cls_DbRepository.InsertQuery(query, "Campaign_tweet");
@@ -1567,7 +1620,7 @@ namespace MixedCampaignManager
                         + " , DuplicateMsg= '" + classes.cls_variables._IsDuplicatMSG + "' , AllTweetParAc='" + classes.cls_variables._IsAllTweetParAC + "',HashTag='" + classes.cls_variables._IsHashTage + "', TweetParDay='" + classes.cls_variables._IsTweetParDay + "'"
                         + ", NoOfTweetParDay='" + classes.cls_variables._MaxNoOfTweetsParDay + "', NoOfTweetPerAc= '" + classes.cls_variables._NoOfTweetsParAC + "', TweetWithImage= '" + classes.cls_variables._Istweetwithimage + "', ScheduledDaily='" + classes.cls_variables._IsScheduledDaily + "',"
                         + " StartTime='" + classes.cls_variables._StartFrom + "', EndTime='" + classes.cls_variables._EndTo + "',DelayFrom='" + classes.cls_variables._DelayFrom + "',DelayTo='" + classes.cls_variables._DelayTo + "', Threads='" + Threads + "'"
-                        + " ,TweetUploadUserFilePath = '" + classes.cls_variables._TweetUploadUserList + "' , IsUploadUserFilePath = '" + classes.cls_variables._IsTweetUploadUserList + "', IsTweetMentionUserScrapedList='" + classes.cls_variables._IsTweetMentionUserScrapedList + "',TweetMentionUserNameScrapedList='" + classes.cls_variables._TweetMentionUserName + "',IsTweetFollowersScrapedList='" + classes.cls_variables._IsTweetFollowerList + "',IsTweetFollowingScrapedList='" + classes.cls_variables._IsTweetFollowingList + "',NoOfTweetMentionUserScrapedList='" + classes.cls_variables._NoOfTweetMentionUserName + "',NoOfScrapedUserScrapedList='" + classes.cls_variables._NoOfTweetScrapedUser + "' where  CampaignName='" + _CmpName + "';";
+                        + " ,TweetUploadUserFilePath = '" + classes.cls_variables._TweetUploadUserList + "' , IsUploadUserFilePath = '" + classes.cls_variables._IsTweetUploadUserList + "', IsTweetMentionUserScrapedList='" + classes.cls_variables._IsTweetMentionUserScrapedList + "',TweetMentionUserNameScrapedList='" + classes.cls_variables._TweetMentionUserName + "',IsTweetFollowersScrapedList='" + classes.cls_variables._IsTweetFollowerList + "',IsTweetFollowingScrapedList='" + classes.cls_variables._IsTweetFollowingList + "',NoOfTweetMentionUserScrapedList='" + classes.cls_variables._NoOfTweetMentionUserName + "',NoOfScrapedUserScrapedList='" + classes.cls_variables._NoOfTweetScrapedUser + "' ,NoOfDayTweetedByUser='" + classes.cls_variables._NoOfDaysBeforeTweeted + "',IsTweetedInLastSpecificDay='" + classes.cls_variables._IsTweetedInLastSpecificDay + "'   where  CampaignName='" + _CmpName + "';";
 
                 RepositoryClasses.cls_DbRepository.UpdateQuery(query, "Campaign_tweet");
 
@@ -1618,6 +1671,8 @@ namespace MixedCampaignManager
                 classes.cls_variables._NoOfTweetsParAC = 10;
                 classes.cls_variables._Istweetwithimage = 0;
                 classes.cls_variables._IsTweetUploadUserList = 0;
+                classes.cls_variables._IsTweetedInLastSpecificDay = 0;
+                classes.cls_variables._NoOfDaysBeforeTweeted = 10;
             }
             catch (Exception ex)
             {
@@ -1640,13 +1695,13 @@ namespace MixedCampaignManager
                 {
                     ErrorLogger.AddToErrorLogText("22.startTweet :" + ex.Message);
                 }
-                string query = "Select indx, CampaignName, AcFilePath, FollowingFilePath, '0' as Image,DividEql, DivideByUser, NoOfUser, FastFollow, NoOfFollowPerAc, '0' as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'0' as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath,'0' as IsDuplicate, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_follow "
+                string query = "Select indx, CampaignName, AcFilePath, FollowingFilePath, '0' as Image,DividEql, DivideByUser, NoOfUser, FastFollow, NoOfFollowPerAc, '0' as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'0' as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath,'0' as IsDuplicate, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst,'0' as NoOfDayTweetedByUser, '0' as IsTweetedInLastSpecificDay  from Campaign_follow "
                  + " UNION ALL "
-                 + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList from Campaign_tweet "
+                 + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList,NoOfDayTweetedByUser,IsTweetedInLastSpecificDay from Campaign_tweet "
                  + " UNION ALL "
-                 + " SELECT  indx, CampaignName, AcFilePath, Keyword, '0' as Image,IsUsername,'0' as DivideByUser,'0' as NoOfUser, RetweetParDay, NoofRetweetParDay, NoofRetweetParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, '0' as IsDuplicate ,'0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_retweet "
+                 + " SELECT  indx, CampaignName, AcFilePath, Keyword, '0' as Image,IsUsername,'0' as DivideByUser,'0' as NoOfUser, RetweetParDay, NoofRetweetParDay, NoofRetweetParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, '0' as IsDuplicate ,'0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst,'0' as NoOfDayTweetedByUser, '0' as IsTweetedInLastSpecificDay from Campaign_retweet "
                  + " UNION ALL "
-                 + " SELECT  indx, CampaignName, AcFilePath, ReplyFilePath, Keyword as Image,  IsUsername,'0' as DivideByUser,'0' as NoOfUser, ReplyParDay, NoofReplyParDay, NoofReplyParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, IsDuplicateMessage, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_reply ";
+                 + " SELECT  indx, CampaignName, AcFilePath, ReplyFilePath, Keyword as Image,  IsUsername,'0' as DivideByUser,'0' as NoOfUser, ReplyParDay, NoofReplyParDay, NoofReplyParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, IsDuplicateMessage, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst,'0' as NoOfDayTweetedByUser, '0' as IsTweetedInLastSpecificDay from Campaign_reply ";
 
                 CompaignsDataSet = RepositoryClasses.cls_DbRepository.selectQuery(query, "Union");
                 //Get Detals from Data Set table by Campaign Name
@@ -1690,7 +1745,7 @@ namespace MixedCampaignManager
                         }
                         Thread.Sleep(15 * 1000);
                     }
-                    
+
 
                 }
                 else
@@ -1705,8 +1760,6 @@ namespace MixedCampaignManager
                 ErrorLogger.AddToErrorLogText("23.startTweet :" + ex.Message);
             }
         }
-
-
 
         public void startTweetusingthreadPool(object parameters)
         {
@@ -1736,13 +1789,13 @@ namespace MixedCampaignManager
                     //modified date [11-02-15]
                     try
                     {
-                        string query = "Select indx, CampaignName, AcFilePath, FollowingFilePath, '0' as Image,DividEql, DivideByUser, NoOfUser, FastFollow, NoOfFollowPerAc, '0' as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'0' as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath,'0' as IsDuplicate, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_follow "
+                        string query = "Select indx, CampaignName, AcFilePath, FollowingFilePath, '0' as Image,DividEql, DivideByUser, NoOfUser, FastFollow, NoOfFollowPerAc, '0' as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'0' as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath,'0' as IsDuplicate, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst'0' as NoOfDayTweetedByUser, '0' as IsTweetedInLastSpecificDay from Campaign_follow "
                  + " UNION ALL "
-                 + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList from Campaign_tweet "
+                 + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList,NoOfDayTweetedByUser,IsTweetedInLastSpecificDay from Campaign_tweet "
                  + " UNION ALL "
-                 + " SELECT  indx, CampaignName, AcFilePath, Keyword, '0' as Image,IsUsername,'0' as DivideByUser,'0' as NoOfUser, RetweetParDay, NoofRetweetParDay, NoofRetweetParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, '0' as IsDuplicate ,'0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_retweet "
+                 + " SELECT  indx, CampaignName, AcFilePath, Keyword, '0' as Image,IsUsername,'0' as DivideByUser,'0' as NoOfUser, RetweetParDay, NoofRetweetParDay, NoofRetweetParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, '0' as IsDuplicate ,'0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst'0' as NoOfDayTweetedByUser, '0' as IsTweetedInLastSpecificDay from Campaign_retweet "
                  + " UNION ALL "
-                 + " SELECT  indx, CampaignName, AcFilePath, ReplyFilePath, Keyword as Image,  IsUsername,'0' as DivideByUser,'0' as NoOfUser, ReplyParDay, NoofReplyParDay, NoofReplyParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, IsDuplicateMessage, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_reply ";
+                 + " SELECT  indx, CampaignName, AcFilePath, ReplyFilePath, Keyword as Image,  IsUsername,'0' as DivideByUser,'0' as NoOfUser, ReplyParDay, NoofReplyParDay, NoofReplyParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, IsDuplicateMessage, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst'0' as NoOfDayTweetedByUser, '0' as IsTweetedInLastSpecificDay from Campaign_reply ";
 
                         CompaignsDataSet = RepositoryClasses.cls_DbRepository.selectQuery(query, "Union");
                     }
@@ -1808,7 +1861,7 @@ namespace MixedCampaignManager
                         }
                         Thread.Sleep(15 * 1000);
                     }
-                    
+
 
                 }
                 else
@@ -1823,8 +1876,6 @@ namespace MixedCampaignManager
                 ErrorLogger.AddToErrorLogText("25.startTweetusingthreadPool :" + ex.Message);
             }
         }
-
-
 
 
         public void startTweetusingthreadPool_AfterStop(object parameters)
@@ -1913,7 +1964,7 @@ namespace MixedCampaignManager
                             {
                                 string query = "Select indx, CampaignName, AcFilePath, FollowingFilePath, '0' as Image,DividEql, DivideByUser, NoOfUser, FastFollow, NoOfFollowPerAc, '0' as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'0' as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath,'0' as IsDuplicate, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_follow "
                          + " UNION ALL "
-                         + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList from Campaign_tweet "
+                         + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList,NoOfDayTweetedByUser,IsTweetedInLastSpecificDay from Campaign_tweet "
                          + " UNION ALL "
                          + " SELECT  indx, CampaignName, AcFilePath, Keyword, '0' as Image,IsUsername,'0' as DivideByUser,'0' as NoOfUser, RetweetParDay, NoofRetweetParDay, NoofRetweetParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, '0' as IsDuplicate ,'0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_retweet "
                          + " UNION ALL "
@@ -1979,7 +2030,7 @@ namespace MixedCampaignManager
                         }
                         Thread.Sleep(15 * 1000);
                     }
-                    
+
 
                 }
                 else
@@ -1994,7 +2045,6 @@ namespace MixedCampaignManager
                 ErrorLogger.AddToErrorLogText("27.startTweetusingthreadPool_AfterStop :" + ex.Message);
             }
         }
-
 
         public void startFollowusingthreadPool_AfterStop(object parameters)
         {
@@ -2156,7 +2206,7 @@ namespace MixedCampaignManager
                         }
                         Thread.Sleep(15 * 1000);
                     }
-                    
+
 
                 }
                 else
@@ -2172,8 +2222,6 @@ namespace MixedCampaignManager
             }
         }
 
-
-        
         public void editingTweetCampaign(String CampaignName, String featurName)
         {
             try
@@ -2235,6 +2283,9 @@ namespace MixedCampaignManager
                 bool IsTweetFollowingScrapedList = (Convert.ToInt32(DrCampaignDetails.ItemArray[26]) == 1) ? true : false;
                 int NoOfTweetMentionUserScrapedList = Convert.ToInt32(DrCampaignDetails.ItemArray[27]);
                 int NoOfTweetScrapedUserScrapedLIst = Convert.ToInt32(DrCampaignDetails.ItemArray[28]);
+
+                bool IsFilterUserNotTweetdByNoOfDaysList = (Convert.ToInt32(DrCampaignDetails.ItemArray[30]) == 1) ? true : false;
+                int NoOfDaysFromUserHaveNotTweeted = Convert.ToInt32(DrCampaignDetails.ItemArray[29]);
 
 
 
@@ -2466,6 +2517,51 @@ namespace MixedCampaignManager
                     }
                 }
 
+
+                TweetMentionUserUsingScrapedList = new MixedCampaignManager.CustomUserControls.TweetMentionUserUsingScrapedList();
+                frmusercontrols = TweetMentionUserUsingScrapedList.Controls.Find("txtFilterUserThatHaveNotTweetedInLastDayInCampagin", true)[0];
+                if (frmusercontrols != null)
+                {
+                    if (frmusercontrols.Name == "txtFilterUserThatHaveNotTweetedInLastDayInCampagin")
+                    {
+                        //frmusercontrols.Invoke(new MethodInvoker(delegate
+                        //{
+                        if (!string.IsNullOrEmpty(NoOfDaysFromUserHaveNotTweeted.ToString()))
+                        {
+                            frmusercontrols.Text = string.Empty;
+                            frmusercontrols.Text = NoOfDaysFromUserHaveNotTweeted.ToString();
+                        }
+                        else
+                        {
+                            frmusercontrols.Text = NoOfDaysFromUserHaveNotTweeted.ToString();
+                        }
+                        // }));
+                    }
+                }
+
+                TweetMentionUserUsingScrapedList = new MixedCampaignManager.CustomUserControls.TweetMentionUserUsingScrapedList();
+                frmusercontrols = TweetMentionUserUsingScrapedList.Controls.Find("chkBoxFilterUserNotTwetedinLastDayCampagin", true)[0];
+                if (frmusercontrols != null)
+                {
+                    if (frmusercontrols.Name == "chkBoxFilterUserNotTwetedinLastDayCampagin")
+                    {
+                        //frmusercontrols.Invoke(new MethodInvoker(delegate
+                        //{
+                        CheckBox chkBox = (CheckBox)frmusercontrols;
+                        chkBox.Checked = false;
+                        if (IsFilterUserNotTweetdByNoOfDaysList == true)
+                        {
+                            chkBox.Checked = true;
+                        }
+                        else
+                        {
+                            chkBox.Checked = true;
+                            chkBox.Checked = false;
+                        }
+                        //}));
+                    }
+                }
+
                 #endregion
 
 
@@ -2656,9 +2752,9 @@ namespace MixedCampaignManager
                     #region
 
                     chkbox_IsScheduledDaily.Invoke(new MethodInvoker(delegate
-                        {
-                            chkbox_IsScheduledDaily.Checked = true;
-                        }));
+                    {
+                        chkbox_IsScheduledDaily.Checked = true;
+                    }));
 
                     dateTimePicker_Start.Invoke(new MethodInvoker(delegate
                     {
@@ -2702,12 +2798,1165 @@ namespace MixedCampaignManager
             {
                 ErrorLogger.AddToErrorLogText("30.editingtweetcampaign :" + ex.Message);
             }
-            
+
         }
+
 
         #endregion
 
-        
+
+
+        //public void UpdatetweetCampaign()
+        //{
+        //    try
+        //    {
+        //        string query = "UPDATE Campaign_tweet SET AcFilePath ='" + _AccountFilePath + "',TweetMsgFilePath='" + classes.cls_variables._TweetMSGfilepath + "',TweetImageFolderPath='" + classes.cls_variables._TweetImageFolderPath + "'"
+        //                + " , DuplicateMsg= '" + classes.cls_variables._IsDuplicatMSG + "' , AllTweetParAc='" + classes.cls_variables._IsAllTweetParAC + "',HashTag='" + classes.cls_variables._IsHashTage + "', TweetParDay='" + classes.cls_variables._IsTweetParDay + "'"
+        //                + ", NoOfTweetParDay='" + classes.cls_variables._MaxNoOfTweetsParDay + "', NoOfTweetPerAc= '" + classes.cls_variables._NoOfTweetsParAC + "', TweetWithImage= '" + classes.cls_variables._Istweetwithimage + "', ScheduledDaily='" + classes.cls_variables._IsScheduledDaily + "',"
+        //                + " StartTime='" + classes.cls_variables._StartFrom + "', EndTime='" + classes.cls_variables._EndTo + "',DelayFrom='" + classes.cls_variables._DelayFrom + "',DelayTo='" + classes.cls_variables._DelayTo + "', Threads='" + Threads + "'"
+        //                + " ,TweetUploadUserFilePath = '" + classes.cls_variables._TweetUploadUserList + "' , IsUploadUserFilePath = '" + classes.cls_variables._IsTweetUploadUserList + "', IsTweetMentionUserScrapedList='" + classes.cls_variables._IsTweetMentionUserScrapedList + "',TweetMentionUserNameScrapedList='" + classes.cls_variables._TweetMentionUserName + "',IsTweetFollowersScrapedList='" + classes.cls_variables._IsTweetFollowerList + "',IsTweetFollowingScrapedList='" + classes.cls_variables._IsTweetFollowingList + "',NoOfTweetMentionUserScrapedList='" + classes.cls_variables._NoOfTweetMentionUserName + "',NoOfScrapedUserScrapedList='" + classes.cls_variables._NoOfTweetScrapedUser + "' where  CampaignName='" + _CmpName + "';";
+
+        //        RepositoryClasses.cls_DbRepository.UpdateQuery(query, "Campaign_tweet");
+
+        //        //  LoadCampaign();
+
+
+        //        //LoadUpdatedCampaign(_CmpName);
+        //        foreach (DataGridViewRow dRow in dgv_campaign.Rows)
+        //        {
+        //            string dgv_CampaignName = dRow.Cells["CampaignName"].Value.ToString();
+        //            //string dgv_Module = dRow.Cells["Module"].Value.ToString();
+
+        //            if (_CmpName == dgv_CampaignName)
+        //            {
+        //                //dRow.Cells["CampaignName"].Value = "HardCoded";
+        //                if (classes.cls_variables._IsScheduledDaily == 1)
+        //                {
+        //                    dRow.Cells["BtnOnOff"].Value = (System.Drawing.Image)Properties.Resources.off;
+        //                }
+        //                else
+        //                {
+        //                    dRow.Cells["BtnOnOff"].Value = (System.Drawing.Image)Properties.Resources.on;
+        //                }
+
+        //                //dgv_campaign.Refresh();
+        //            }
+        //        }
+        //        chklstbox_campaign.Invoke(new MethodInvoker(delegate
+        //        {
+        //            chklstbox_campaign.SelectionMode = SelectionMode.One;
+        //        }));
+        //        AddToCampaignLoggerListBox("[ " + DateTime.Now + " ] => [ " + _CmpName + " is Updated. ]");
+
+        //        // ScheduledTasks();
+        //        ScheduledTasks_Updated(_CmpName);
+
+        //        ///Clear campaign 
+        //        ClearCamapigns("Tweet");
+
+        //        classes.cls_variables._TweetMSGfilepath = string.Empty;
+        //        //classes.cls_variables._TweetImageFolderPath = string.Empty;
+        //        //classes.cls_variables._TweetUploadUserList = string.Empty;
+        //        classes.cls_variables._IsDuplicatMSG = 0;
+        //        classes.cls_variables._IsAllTweetParAC = 0;
+        //        classes.cls_variables._IsHashTage = 0;
+        //        classes.cls_variables._IsTweetParDay = 0;
+        //        classes.cls_variables._MaxNoOfTweetsParDay = 10;
+        //        classes.cls_variables._NoOfTweetsParAC = 10;
+        //        classes.cls_variables._Istweetwithimage = 0;
+        //        classes.cls_variables._IsTweetUploadUserList = 0;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrorLogger.AddToErrorLogText("21.UpdatetweetCampaign :" + ex.Message);
+        //    }
+        //}
+
+        #region startTweet
+        //public void startTweet(String CampaignName, String featurName)
+        //{
+
+        //    //Add List Of Working thread
+        //    //we are using this list when we stop/abort running camp processes..
+        //    try
+        //    {
+        //        try
+        //        {
+        //            MixedCampaignManager.classes.cls_variables.Lst_WokingThreads.Add(CampaignName, Thread.CurrentThread);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ErrorLogger.AddToErrorLogText("22.startTweet :" + ex.Message);
+        //        }
+        //        string query = "Select indx, CampaignName, AcFilePath, FollowingFilePath, '0' as Image,DividEql, DivideByUser, NoOfUser, FastFollow, NoOfFollowPerAc, '0' as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'0' as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath,'0' as IsDuplicate, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_follow "
+        //         + " UNION ALL "
+        //         + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList from Campaign_tweet "
+        //         + " UNION ALL "
+        //         + " SELECT  indx, CampaignName, AcFilePath, Keyword, '0' as Image,IsUsername,'0' as DivideByUser,'0' as NoOfUser, RetweetParDay, NoofRetweetParDay, NoofRetweetParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, '0' as IsDuplicate ,'0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_retweet "
+        //         + " UNION ALL "
+        //         + " SELECT  indx, CampaignName, AcFilePath, ReplyFilePath, Keyword as Image,  IsUsername,'0' as DivideByUser,'0' as NoOfUser, ReplyParDay, NoofReplyParDay, NoofReplyParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, IsDuplicateMessage, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_reply ";
+
+        //        CompaignsDataSet = RepositoryClasses.cls_DbRepository.selectQuery(query, "Union");
+        //        //Get Detals from Data Set table by Campaign Name
+        //        DataRow[] drModelDetails = CompaignsDataSet.Tables[0].Select("CampaignName = '" + CampaignName + "'");
+
+        //        if (drModelDetails.Count() == 0)
+        //        {
+        //            return;
+        //        }
+
+        //        //Get 1st row from arrey 
+        //        DataRow DrCampaignDetails = drModelDetails[0];
+        //        bool IsSchedulDaily = (Convert.ToInt32(DrCampaignDetails.ItemArray[12]) == 1) ? true : false;
+        //        DateTime SchedulerStartTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[13].ToString());
+        //        DateTime SchedulerEndTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[14].ToString());
+
+        //        //Create Object of tweetProcess class 
+
+        //        classes.Cls_StartTweetProcess ObjTweetProcess = new Cls_StartTweetProcess();
+
+        //        ObjTweetProcess.CampaignTweetLogEvents.addToLogger += new EventHandler(logEvents_addToLogger);
+
+        //        if (IsSchedulDaily)
+        //        {
+        //            if (_tempcount == 0)
+        //            {
+        //                //MessageBox.Show(CampaignName + " task is scheduled. Task start timing  :- " + SchedulerStartTime);
+        //            }
+        //            _tempcount++;
+        //            AddToCampaignLoggerListBox("[ " + DateTime.Now + " ] => [ " + CampaignName + " task is scheduled. Task start timing :- " + SchedulerStartTime + " ]");
+
+        //            while (true)
+        //            {
+        //                if ((SchedulerStartTime.Hour) == (DateTime.Now.Hour) && SchedulerStartTime.Minute == (DateTime.Now.Minute) && (ObjTweetProcess._IsTweetProcessStart == true))
+        //                {
+        //                    Cls_StartTweetProcess.campName = CampaignName;
+        //                    //ObjTweetProcess._IsTweetProcessStart = false;
+        //                    ObjTweetProcess._IsTweetProcessStart = false;
+        //                    ObjTweetProcess.startTweeting(CampaignName, featurName, DrCampaignDetails);
+        //                    break;
+        //                }
+        //                Thread.Sleep(15 * 1000);
+        //            }
+                    
+
+        //        }
+        //        else
+        //        {
+
+        //            //Start Process
+        //            ObjTweetProcess.startTweeting(CampaignName, featurName, DrCampaignDetails);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrorLogger.AddToErrorLogText("23.startTweet :" + ex.Message);
+        //    }
+        //}
+        #endregion
+
+
+        //public void startTweetusingthreadPool(object parameters)
+        //{
+
+        //    //Add List Of Working thread
+        //    //we are using this list when we stop/abort running camp processes..
+        //    try
+        //    {
+        //        Array paramsArray = new object[2];
+        //        paramsArray = (Array)parameters;
+        //        string CampaignName = (string)paramsArray.GetValue(0);
+        //        string featurName = (string)paramsArray.GetValue(1);
+        //        try
+        //        {
+        //            MixedCampaignManager.classes.cls_variables.Lst_WokingThreads.Add(CampaignName, Thread.CurrentThread);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ErrorLogger.AddToErrorLogText("24.startTweetusingthreadPool :" + ex.Message);
+        //        }
+
+
+        //        //Get Detals from Data Set table by Campaign Name
+        //        DataRow[] drModelDetails;
+        //        lock (this)
+        //        {
+        //            //modified date [11-02-15]
+        //            try
+        //            {
+        //                string query = "Select indx, CampaignName, AcFilePath, FollowingFilePath, '0' as Image,DividEql, DivideByUser, NoOfUser, FastFollow, NoOfFollowPerAc, '0' as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'0' as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath,'0' as IsDuplicate, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_follow "
+        //         + " UNION ALL "
+        //         + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList from Campaign_tweet "
+        //         + " UNION ALL "
+        //         + " SELECT  indx, CampaignName, AcFilePath, Keyword, '0' as Image,IsUsername,'0' as DivideByUser,'0' as NoOfUser, RetweetParDay, NoofRetweetParDay, NoofRetweetParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, '0' as IsDuplicate ,'0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_retweet "
+        //         + " UNION ALL "
+        //         + " SELECT  indx, CampaignName, AcFilePath, ReplyFilePath, Keyword as Image,  IsUsername,'0' as DivideByUser,'0' as NoOfUser, ReplyParDay, NoofReplyParDay, NoofReplyParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, IsDuplicateMessage, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_reply ";
+
+        //                CompaignsDataSet = RepositoryClasses.cls_DbRepository.selectQuery(query, "Union");
+        //            }
+        //            catch (Exception ex)
+        //            {
+        //                ErrorLogger.AddToErrorLogText("25.startTweetusingthreadPool :" + ex.Message);
+        //            }
+
+        //            drModelDetails = CompaignsDataSet.Tables[0].Select("CampaignName = '" + CampaignName + "'");
+
+        //        }
+
+        //        if (drModelDetails.Count() == 0)
+        //        {
+        //            return;
+        //        }
+
+        //        //string selectQuery = "Select * from Campaign_tweet where CampaignName = "+ CampaignName;
+        //        //DataSet ds = MixedCampaignManager.RepositoryClasses.cls_DbRepository.selectQuery(selectQuery, "Campaign_tweet");
+
+        //        //bool IsSchedulDaily = (Convert.ToInt32(ds.Tables["Campaign_tweet"].Rows[0]["ScheduledDaily"].ToString()) == 1) ? true : false;
+        //        //DateTime SchedulerStartTime = Convert.ToDateTime(ds.Tables["Campaign_tweet"].Rows[0]["StartTime"].ToString());
+        //        //DateTime SchedulerEndTime = Convert.ToDateTime(ds.Tables["Campaign_tweet"].Rows[0]["EndTime"].ToString());
+
+        //        //Get 1st row from arrey 
+        //        DataRow DrCampaignDetails = drModelDetails[0];
+        //        bool IsSchedulDaily = (Convert.ToInt32(DrCampaignDetails.ItemArray[12]) == 1) ? true : false;
+        //        DateTime SchedulerStartTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[13].ToString());
+        //        DateTime SchedulerEndTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[14].ToString());
+
+        //        int startTime = SchedulerStartTime.Hour * 60 + SchedulerStartTime.Minute;
+        //        int sysTime = DateTime.Now.Hour * 60 + DateTime.Now.Minute;
+        //        int endTime = SchedulerEndTime.Hour * 60 + SchedulerEndTime.Minute;
+
+
+        //        //Create Object of tweetProcess class 
+
+        //        classes.Cls_StartTweetProcess ObjTweetProcess = new Cls_StartTweetProcess();
+
+        //        ObjTweetProcess.CampaignTweetLogEvents.addToLogger += new EventHandler(logEvents_addToLogger);
+
+        //        if (IsSchedulDaily)
+        //        {
+        //            if (_tempcount == 0)
+        //            {
+        //                //MessageBox.Show(CampaignName + " task is scheduled. Task start timing  :- " + SchedulerStartTime);
+        //            }
+        //            _tempcount++;
+        //            AddToCampaignLoggerListBox("[ " + DateTime.Now + " ] => [ " + CampaignName + " task is scheduled. Task start timing :- " + SchedulerStartTime + " ]");
+
+        //            while (true)
+        //            {
+        //                if ((SchedulerStartTime.Hour) == (DateTime.Now.Hour) && SchedulerStartTime.Minute == (DateTime.Now.Minute))
+        //                //if (startTime <= sysTime && endTime >= sysTime && (Cls_FollowStart._IsFollowProcessStart == true))
+        //                {
+
+        //                    Cls_StartTweetProcess.campName = CampaignName;
+        //                    //ObjTweetProcess._IsTweetProcessStart = false;
+        //                    ObjTweetProcess._IsTweetProcessStart = false;
+        //                    ObjTweetProcess.startTweeting(CampaignName, featurName, DrCampaignDetails);
+        //                    break;
+
+        //                }
+        //                Thread.Sleep(15 * 1000);
+        //            }
+                    
+
+        //        }
+        //        else
+        //        {
+
+        //            //Start Process
+        //            ObjTweetProcess.startTweeting(CampaignName, featurName, DrCampaignDetails);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrorLogger.AddToErrorLogText("25.startTweetusingthreadPool :" + ex.Message);
+        //    }
+        //}
+
+
+
+        #region startTweetusingthreadPool_AfterStop
+        //public void startTweetusingthreadPool_AfterStop(object parameters)
+        //{
+
+        //    //Add List Of Working thread
+        //    //we are using this list when we stop/abort running camp processes..
+        //    try
+        //    {
+        //        Array paramsArray = new object[2];
+        //        paramsArray = (Array)parameters;
+        //        string CampaignName = (string)paramsArray.GetValue(0);
+        //        string featurName = (string)paramsArray.GetValue(1);
+        //        try
+        //        {
+        //            MixedCampaignManager.classes.cls_variables.Lst_WokingThreads.Add(CampaignName, Thread.CurrentThread);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ErrorLogger.AddToErrorLogText("26.startTweetusingthreadPool_AfterStop :" + ex.Message);
+        //        }
+
+
+        //        //Get Detals from Data Set table by Campaign Name
+        //        DataRow[] drModelDetails;
+        //        lock (this)
+        //        {
+        //            drModelDetails = CompaignsDataSet.Tables[0].Select("CampaignName = '" + CampaignName + "'");
+
+        //        }
+
+        //        if (drModelDetails.Count() == 0)
+        //        {
+        //            return;
+        //        }
+
+        //        //Get 1st row from arrey 
+        //        DataRow DrCampaignDetails = drModelDetails[0];
+        //        bool IsSchedulDaily = (Convert.ToInt32(DrCampaignDetails.ItemArray[12]) == 1) ? true : false;
+        //        DateTime SchedulerStartTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[13].ToString());
+        //        DateTime SchedulerEndTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[14].ToString());
+
+        //        //Create Object of tweetProcess class 
+
+        //        classes.Cls_StartTweetProcess ObjTweetProcess = new Cls_StartTweetProcess();
+
+        //        ObjTweetProcess.CampaignTweetLogEvents.addToLogger += new EventHandler(logEvents_addToLogger);
+
+        //        if (IsSchedulDaily)
+        //        {
+        //            if (_tempcount == 0)
+        //            {
+        //                //MessageBox.Show(CampaignName + " task is scheduled. Task start timing  :- " + SchedulerStartTime);
+        //            }
+        //            _tempcount++;
+        //            AddToCampaignLoggerListBox("[ " + DateTime.Now + " ] => [ " + CampaignName + " task is scheduled. Task start timing :- " + SchedulerStartTime + " ]");
+
+        //            foreach (DataGridViewRow dRow in dgv_campaign.Rows)
+        //            {
+        //                string dgv_CampaignName = dRow.Cells["CampaignName"].Value.ToString();
+        //                //string dgv_Module = dRow.Cells["Module"].Value.ToString();
+
+        //                if (CampaignName == dgv_CampaignName)
+        //                {
+        //                    //dRow.Cells["CampaignName"].Value = "HardCoded";
+        //                    //if (classes.cls_variables._IsScheduledDaily == 1)
+        //                    {
+        //                        dgv_campaign.Invoke(new MethodInvoker(delegate
+        //                        {
+        //                            dRow.Cells["BtnOnOff"].Value = (System.Drawing.Image)Properties.Resources.on;
+        //                        }));
+        //                    }
+
+
+        //                    //dgv_campaign.Refresh();
+        //                }
+        //            }
+
+        //            while (true)
+        //            {
+        //                //Update dataset
+        //                lock (this)
+        //                {
+        //                    //modified date [11-02-15]
+        //                    try
+        //                    {
+        //                        string query = "Select indx, CampaignName, AcFilePath, FollowingFilePath, '0' as Image,DividEql, DivideByUser, NoOfUser, FastFollow, NoOfFollowPerAc, '0' as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'0' as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath,'0' as IsDuplicate, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_follow "
+        //                 + " UNION ALL "
+        //                 + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList from Campaign_tweet "
+        //                 + " UNION ALL "
+        //                 + " SELECT  indx, CampaignName, AcFilePath, Keyword, '0' as Image,IsUsername,'0' as DivideByUser,'0' as NoOfUser, RetweetParDay, NoofRetweetParDay, NoofRetweetParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, '0' as IsDuplicate ,'0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_retweet "
+        //                 + " UNION ALL "
+        //                 + " SELECT  indx, CampaignName, AcFilePath, ReplyFilePath, Keyword as Image,  IsUsername,'0' as DivideByUser,'0' as NoOfUser, ReplyParDay, NoofReplyParDay, NoofReplyParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, IsDuplicateMessage, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_reply ";
+
+        //                        CompaignsDataSet = RepositoryClasses.cls_DbRepository.selectQuery(query, "Union");
+        //                    }
+        //                    catch (Exception)
+        //                    {
+
+        //                    }
+
+        //                    drModelDetails = CompaignsDataSet.Tables[0].Select("CampaignName = '" + CampaignName + "'");
+        //                    if (drModelDetails.Count() == 0)
+        //                    {
+        //                        return;
+        //                    }
+        //                }
+
+        //                DrCampaignDetails = drModelDetails[0];
+        //                IsSchedulDaily = (Convert.ToInt32(DrCampaignDetails.ItemArray[12]) == 1) ? true : false;
+        //                SchedulerStartTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[13].ToString());
+        //                SchedulerEndTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[14].ToString());
+
+        //                int startTime = SchedulerStartTime.Hour * 60 + SchedulerStartTime.Minute;
+        //                int sysTime = DateTime.Now.Hour * 60 + DateTime.Now.Minute;
+        //                int endTime = SchedulerEndTime.Hour * 60 + SchedulerEndTime.Minute;
+
+        //                if ((SchedulerStartTime.Hour) == (DateTime.Now.Hour) && SchedulerStartTime.Minute == (DateTime.Now.Minute))
+        //                //if (startTime <= sysTime && endTime >= sysTime && (Cls_FollowStart._IsFollowProcessStart == true))
+        //                {
+
+
+        //                    foreach (DataGridViewRow dRow in dgv_campaign.Rows)
+        //                    {
+        //                        string dgv_CampaignName = dRow.Cells["CampaignName"].Value.ToString();
+        //                        //string dgv_Module = dRow.Cells["Module"].Value.ToString();
+
+        //                        if (CampaignName == dgv_CampaignName)
+        //                        {
+        //                            //dRow.Cells["CampaignName"].Value = "HardCoded";
+        //                            //if (classes.cls_variables._IsScheduledDaily == 1)
+        //                            {
+        //                                dgv_campaign.Invoke(new MethodInvoker(delegate
+        //                                {
+        //                                    dRow.Cells["BtnOnOff"].Value = (System.Drawing.Image)Properties.Resources.off;
+        //                                }));
+        //                            }
+
+
+        //                            //dgv_campaign.Refresh();
+        //                        }
+        //                    }
+
+
+
+        //                    Cls_StartTweetProcess.campName = CampaignName;
+        //                    //ObjTweetProcess._IsTweetProcessStart = false;
+        //                    ObjTweetProcess._IsTweetProcessStart = false;
+        //                    ObjTweetProcess.startTweeting(CampaignName, featurName, DrCampaignDetails);
+        //                    break;
+
+        //                }
+        //                Thread.Sleep(15 * 1000);
+        //            }
+                    
+
+        //        }
+        //        else
+        //        {
+
+        //            //Start Process
+        //            ObjTweetProcess.startTweeting(CampaignName, featurName, DrCampaignDetails);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrorLogger.AddToErrorLogText("27.startTweetusingthreadPool_AfterStop :" + ex.Message);
+        //    }
+        //}
+        #endregion
+
+        //public void startFollowusingthreadPool_AfterStop(object parameters)
+        //{
+
+        //    //Add List Of Working thread
+        //    //we are using this list when we stop/abort running camp processes..
+        //    try
+        //    {
+        //        Array paramsArray = new object[2];
+        //        paramsArray = (Array)parameters;
+        //        string CampaignName = (string)paramsArray.GetValue(0);
+        //        string featurName = (string)paramsArray.GetValue(1);
+        //        try
+        //        {
+        //            MixedCampaignManager.classes.cls_variables.Lst_WokingThreads.Add(CampaignName, Thread.CurrentThread);
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            ErrorLogger.AddToErrorLogText("28.startFollowusingthreadPool_AfterStop :" + ex.Message);
+        //        }
+
+
+        //        //Get Detals from Data Set table by Campaign Name
+        //        DataRow[] drModelDetails;
+        //        lock (this)
+        //        {
+        //            drModelDetails = CompaignsDataSet.Tables[0].Select("CampaignName = '" + CampaignName + "'");
+
+        //        }
+
+        //        if (drModelDetails.Count() == 0)
+        //        {
+        //            return;
+        //        }
+
+        //        //Get 1st row from arrey 
+        //        DataRow DrCampaignDetails = drModelDetails[0];
+        //        bool IsSchedulDaily = (Convert.ToInt32(DrCampaignDetails.ItemArray[12]) == 1) ? true : false;
+        //        DateTime SchedulerStartTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[13].ToString());
+        //        DateTime SchedulerEndTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[14].ToString());
+
+        //        //Create Object of tweetProcess class 
+
+        //        classes.Cls_FollowStart ObjFollowProcess = new Cls_FollowStart();
+
+        //        ObjFollowProcess.CampaignFollowLogEvents.addToLogger += new EventHandler(logEvents_addToLogger);
+
+        //        if (IsSchedulDaily)
+        //        {
+        //            if (_tempcount == 0)
+        //            {
+        //                //MessageBox.Show(CampaignName + " task is scheduled. Task start timing  :- " + SchedulerStartTime);
+        //            }
+        //            _tempcount++;
+        //            AddToCampaignLoggerListBox("[ " + DateTime.Now + " ] => [ " + CampaignName + " task is scheduled. Task start timing :- " + SchedulerStartTime + " ]");
+
+        //            foreach (DataGridViewRow dRow in dgv_campaign.Rows)
+        //            {
+        //                string dgv_CampaignName = dRow.Cells["CampaignName"].Value.ToString();
+        //                //string dgv_Module = dRow.Cells["Module"].Value.ToString();
+
+        //                if (CampaignName == dgv_CampaignName)
+        //                {
+        //                    //dRow.Cells["CampaignName"].Value = "HardCoded";
+        //                    //if (classes.cls_variables._IsScheduledDaily == 1)
+        //                    {
+        //                        dgv_campaign.Invoke(new MethodInvoker(delegate
+        //                        {
+        //                            dRow.Cells["BtnOnOff"].Value = (System.Drawing.Image)Properties.Resources.on;
+        //                        }));
+        //                    }
+
+
+        //                    //dgv_campaign.Refresh();
+        //                }
+        //            }
+
+        //            while (true)
+        //            {
+        //                //Update dataset
+        //                lock (this)
+        //                {
+        //                    //modified date [11-02-15]
+        //                    try
+        //                    {
+        //                        string query = "Select indx, CampaignName, AcFilePath, FollowingFilePath, '0' as Image,DividEql, DivideByUser, NoOfUser, FastFollow, NoOfFollowPerAc, '0' as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'0' as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath,'0' as IsDuplicate, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_follow "
+        //                 + " UNION ALL "
+        //                 + "Select indx, CampaignName, AcFilePath, TweetMsgFilePath,TweetImageFolderPath as Image,DuplicateMsg, AllTweetParAc as DivideByUser, HashTag as NoOfUser, TweetParDay, NoOfTweetParDay, NoOfTweetPerAc as TweetPac,TweetWithImage as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,'' as IsUniqueMessage, TweetUploadUserFilePath, IsUploadUserFilePath, '0' as IsDuplicate,IsTweetMentionUserScrapedList,TweetMentionUserNameScrapedList,IsTweetFollowersScrapedList,IsTweetFollowingScrapedList,NoOfTweetMentionUserScrapedList,NoOfScrapedUserScrapedList from Campaign_tweet "
+        //                 + " UNION ALL "
+        //                 + " SELECT  indx, CampaignName, AcFilePath, Keyword, '0' as Image,IsUsername,'0' as DivideByUser,'0' as NoOfUser, RetweetParDay, NoofRetweetParDay, NoofRetweetParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, '0' as IsDuplicate ,'0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_retweet "
+        //                 + " UNION ALL "
+        //                 + " SELECT  indx, CampaignName, AcFilePath, ReplyFilePath, Keyword as Image,  IsUsername,'0' as DivideByUser,'0' as NoOfUser, ReplyParDay, NoofReplyParDay, NoofReplyParAc as TweetPac, '0' as TweetWImg, ScheduledDaily, StartTime, EndTime, DelayFrom, DelayTo, Threads, Module,UniqueMessage as IsUniqueMessage,'0' as TweetUploadUserFilePath,'0' as IsUploadUserFilePath, IsDuplicateMessage, '0' as IsMentionUserScrapedList,'0' as TweetMentionUserNameScrapedList,'0' as IsTweetFollowerScrapedList,'0' as IsTweetFollowingScrapedList,'0' as NoOfTweetMentionUserScrapedList,'0' as NoOfTweetScrapedUserScrapedLIst from Campaign_reply ";
+
+        //                        CompaignsDataSet = RepositoryClasses.cls_DbRepository.selectQuery(query, "Union");
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        ErrorLogger.AddToErrorLogText("28.startFollowusingthreadPool_AfterStop :" + ex.Message);
+        //                    }
+
+        //                    drModelDetails = CompaignsDataSet.Tables[0].Select("CampaignName = '" + CampaignName + "'");
+        //                    if (drModelDetails.Count() == 0)
+        //                    {
+        //                        return;
+        //                    }
+        //                }
+
+
+        //                try
+        //                {
+        //                    DrCampaignDetails = drModelDetails[0];
+        //                    IsSchedulDaily = (Convert.ToInt32(DrCampaignDetails.ItemArray[12]) == 1) ? true : false;
+        //                    SchedulerStartTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[13].ToString());
+        //                    SchedulerEndTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[14].ToString());
+
+
+        //                    int startTime = SchedulerStartTime.Hour * 60 + SchedulerStartTime.Minute;
+        //                    int sysTime = DateTime.Now.Hour * 60 + DateTime.Now.Minute;
+        //                    int endTime = SchedulerEndTime.Hour * 60 + SchedulerEndTime.Minute;
+
+        //                    if ((SchedulerStartTime.Hour) == (DateTime.Now.Hour) && SchedulerStartTime.Minute == (DateTime.Now.Minute))
+        //                    //if (startTime <= sysTime && endTime >= sysTime && (Cls_FollowStart._IsFollowProcessStart == true))
+        //                    {
+
+
+        //                        foreach (DataGridViewRow dRow in dgv_campaign.Rows)
+        //                        {
+        //                            string dgv_CampaignName = dRow.Cells["CampaignName"].Value.ToString();
+        //                            //string dgv_Module = dRow.Cells["Module"].Value.ToString();
+
+        //                            if (CampaignName == dgv_CampaignName)
+        //                            {
+        //                                //dRow.Cells["CampaignName"].Value = "HardCoded";
+        //                                //if (classes.cls_variables._IsScheduledDaily == 1)
+        //                                {
+        //                                    dgv_campaign.Invoke(new MethodInvoker(delegate
+        //                                    {
+        //                                        dRow.Cells["BtnOnOff"].Value = (System.Drawing.Image)Properties.Resources.off;
+        //                                    }));
+        //                                }
+
+
+        //                                //dgv_campaign.Refresh();
+        //                            }
+        //                        }
+
+
+
+        //                        //Cls_FollowStart._IsFollowProcessStart = false;  temprory commented.
+        //                        Cls_FollowStart.campName = CampaignName;
+        //                        ObjFollowProcess.StartProcess(CampaignName, featurName, DrCampaignDetails);
+        //                        break;
+
+        //                    }
+        //                }
+        //                catch (Exception ex)
+        //                {
+        //                    ErrorLogger.AddToErrorLogText("128.startprocessfollow :" + ex.Message);
+        //                }
+        //                Thread.Sleep(15 * 1000);
+        //            }
+                    
+
+        //        }
+        //        else
+        //        {
+
+        //            //Start Process
+        //            ObjFollowProcess.StartProcess(CampaignName, featurName, DrCampaignDetails);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrorLogger.AddToErrorLogText("29.startFollowusingthreadPool_AfterStop :" + ex.Message);
+        //    }
+        //}
+
+
+        #region commented editingTweetCampaign
+        //public void editingTweetCampaign(String CampaignName, String featurName)
+        //{
+        //    try
+        //    {
+        //        DataRow[] drModelDetails = CompaignsDataSet.Tables[0].Select("CampaignName = '" + CampaignName + "'");
+
+        //        if (drModelDetails.Count() == 0)
+        //        {
+
+        //        }
+
+        //        //Get 1st row from arrey 
+        //        DataRow DrCampaignDetails = drModelDetails[0];
+
+        //        #region
+        //        //_CmpName = string.Empty;
+        //        //_CmpName = DrCampaignDetails.ItemArray[1].ToString();
+        //        //string AcFilePath = DrCampaignDetails.ItemArray[2].ToString();
+        //        //string TweetFilePath = DrCampaignDetails.ItemArray[3].ToString();
+        //        //bool IsDuplicatMsg = (Convert.ToInt32(DrCampaignDetails.ItemArray[5]) == 1) ? true : false;
+        //        //bool IsAllTweetParAc = (Convert.ToInt32(DrCampaignDetails.ItemArray[6]) == 1) ? true : false;
+        //        //bool IsHashTag = (Convert.ToInt32(DrCampaignDetails.ItemArray[7]) == 1) ? true : false;
+        //        //bool IsTweetParDey = (Convert.ToInt32(DrCampaignDetails.ItemArray[8]) == 1) ? true : false;
+        //        //int NoOfTweetPerday = Convert.ToInt32(DrCampaignDetails.ItemArray[9]);
+        //        //int NoOfTweetPerAc = Convert.ToInt32(DrCampaignDetails.ItemArray[10]);
+        //        //bool IsSchedulDaily = (Convert.ToInt32(DrCampaignDetails.ItemArray[11]) == 1) ? true : false;
+        //        //DateTime SchedulerStartTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[12].ToString());
+        //        //DateTime SchedulerEndTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[13].ToString());
+        //        //int DelayStar = Convert.ToInt32(DrCampaignDetails.ItemArray[14]);
+        //        //int DelayEnd = Convert.ToInt32(DrCampaignDetails.ItemArray[15]);
+        //        //int Threads = Convert.ToInt32(DrCampaignDetails.ItemArray[16]);
+        //        #endregion
+
+        //        _CmpName = string.Empty;
+        //        _CmpName = DrCampaignDetails.ItemArray[1].ToString();
+        //        string AcFilePath = DrCampaignDetails.ItemArray[2].ToString();
+        //        string TweetFilePath = DrCampaignDetails.ItemArray[3].ToString();
+        //        string TweetImageFolderPath = DrCampaignDetails.ItemArray[4].ToString();
+        //        bool IsDuplicatMsg = (Convert.ToInt32(DrCampaignDetails.ItemArray[5]) == 1) ? true : false;
+        //        bool IsAllTweetParAc = (Convert.ToInt32(DrCampaignDetails.ItemArray[6]) == 1) ? true : false;
+        //        bool IsHashTag = (Convert.ToInt32(DrCampaignDetails.ItemArray[7]) == 1) ? true : false;
+        //        bool IsTweetParDey = (Convert.ToInt32(DrCampaignDetails.ItemArray[8]) == 1) ? true : false;
+        //        int NoOfTweetPerday = Convert.ToInt32(DrCampaignDetails.ItemArray[9]);
+        //        int NoOfTweetPerAc = Convert.ToInt32(DrCampaignDetails.ItemArray[10]);
+        //        bool IsTweetWithImage = (Convert.ToInt32(DrCampaignDetails.ItemArray[11]) == 1) ? true : false;
+        //        bool IsSchedulDaily = (Convert.ToInt32(DrCampaignDetails.ItemArray[12]) == 1) ? true : false;
+        //        DateTime SchedulerStartTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[13].ToString());
+        //        DateTime SchedulerEndTime = Convert.ToDateTime(DrCampaignDetails.ItemArray[14].ToString());
+        //        int DelayStar = Convert.ToInt32(DrCampaignDetails.ItemArray[15]);
+        //        int DelayEnd = Convert.ToInt32(DrCampaignDetails.ItemArray[16]);
+        //        int Threads = Convert.ToInt32(DrCampaignDetails.ItemArray[17]);
+        //        string UserListFilePath = DrCampaignDetails.ItemArray[20].ToString();
+        //        bool IsUserList = (Convert.ToInt32(DrCampaignDetails.ItemArray[21]) == 1) ? true : false;
+
+
+        //        bool IsTweetMentionUserScrapedList = (Convert.ToInt32(DrCampaignDetails.ItemArray[23]) == 1) ? true : false;
+        //        string TweetMentionUserNameScrapedList = DrCampaignDetails.ItemArray[24].ToString();
+        //        bool IsTweetFollowerScrapedList = (Convert.ToInt32(DrCampaignDetails.ItemArray[25]) == 1) ? true : false;
+        //        bool IsTweetFollowingScrapedList = (Convert.ToInt32(DrCampaignDetails.ItemArray[26]) == 1) ? true : false;
+        //        int NoOfTweetMentionUserScrapedList = Convert.ToInt32(DrCampaignDetails.ItemArray[27]);
+        //        int NoOfTweetScrapedUserScrapedLIst = Convert.ToInt32(DrCampaignDetails.ItemArray[28]);
+
+
+
+        //        chklstbox_campaign.Invoke(new MethodInvoker(delegate
+        //        {
+        //            chklstbox_campaign.SetItemCheckState(1, CheckState.Checked);
+        //            chklstbox_campaign.SelectedIndex = 1;
+        //            chklstbox_campaign.SelectionMode = SelectionMode.None;
+        //        }));
+
+        //        txt_CampaignName.Invoke(new MethodInvoker(delegate
+        //        {
+        //            txt_CampaignName.ReadOnly = true;
+        //            txt_CampaignName.Text = CampaignName;
+        //        }));
+        //        txt_accountfilepath.Invoke(new MethodInvoker(delegate
+        //        {
+        //            txt_accountfilepath.Text = "";
+        //            txt_accountfilepath.Text = AcFilePath;
+        //        }));
+
+        //        // create control class OBJ 
+        //        Control frmusercontrols;
+
+        //        // Get control from user page
+        //        //and put all save value in boxes 
+
+        //        #region
+        //        //Put file address in Tweet MSG text box.
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("txt_CmpTweetMessageFile", true)[0];
+
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "txt_CmpTweetMessageFile")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    if (!string.IsNullOrEmpty(TweetFilePath))
+        //                        frmusercontrols.Text = TweetFilePath;
+        //                    else
+        //                        frmusercontrols.Text = TweetFilePath;
+        //                }));
+
+        //                //txt_accountfilepath.Invoke(new MethodInvoker(delegate
+        //                //{
+        //                //    txt_accountfilepath.Text = "";
+        //                //    txt_accountfilepath.Text = AcFilePath;
+        //                //}));
+        //            }
+        //        }
+        //        #endregion
+
+
+        //        // Is Tweet With Image 
+
+        //        #region
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("chk_TweetWithImage", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "chk_TweetWithImage")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    CheckBox chkBox = (CheckBox)frmusercontrols;
+        //                    if (IsTweetWithImage == true)
+        //                        chkBox.Checked = true;
+        //                    else
+        //                        chkBox.Checked = false;
+        //                }));
+        //            }
+        //        }
+
+        //        if (IsTweetWithImage)
+        //        {
+        //            frmusercontrols = new Control();
+        //            frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("txt_TweetImageFilePath", true)[0];
+        //            if (frmusercontrols != null)
+        //            {
+        //                if (frmusercontrols.Name == "txt_TweetImageFilePath")
+        //                {
+        //                    frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                    {
+
+        //                        if (!string.IsNullOrEmpty(TweetImageFolderPath))
+        //                            frmusercontrols.Text = TweetImageFolderPath;
+        //                        else
+        //                            frmusercontrols.Text = TweetImageFolderPath;
+        //                    }));
+        //                }
+        //            }
+        //        }
+        //        #endregion
+
+
+        //        #region  IScrapedUserListMentionUser
+
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("chkTweetMentionUserScrapedList", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "chkTweetMentionUserScrapedList")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    CheckBox chkBox = (CheckBox)frmusercontrols;
+        //                    chkBox.Checked = false;
+        //                    if (IsTweetMentionUserScrapedList == true)
+        //                        chkBox.Checked = true;
+        //                    else
+        //                        chkBox.Checked = false;
+        //                }));
+        //            }
+        //        }
+
+        //        //frmusercontrols = new Control();
+        //        TweetMentionUserUsingScrapedList = new MixedCampaignManager.CustomUserControls.TweetMentionUserUsingScrapedList();
+        //        frmusercontrols = TweetMentionUserUsingScrapedList.Controls.Find("txtRetweetMentionUserName", true)[0];
+
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "txtRetweetMentionUserName")
+        //            {
+        //                //frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                //{
+
+        //                if (!string.IsNullOrEmpty(TweetMentionUserNameScrapedList))
+        //                    frmusercontrols.Text = TweetMentionUserNameScrapedList;
+        //                else
+        //                    frmusercontrols.Text = TweetMentionUserNameScrapedList;
+        //                //}));
+        //            }
+        //        }
+
+
+
+        //        //frmusercontrols = new Control();
+        //        TweetMentionUserUsingScrapedList = new MixedCampaignManager.CustomUserControls.TweetMentionUserUsingScrapedList();
+        //        frmusercontrols = TweetMentionUserUsingScrapedList.Controls.Find("chkTweetFollowers", true)[0];
+
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "chkTweetFollowers")
+        //            {
+        //                //frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                //{
+        //                CheckBox chkBox = (CheckBox)frmusercontrols;
+        //                chkBox.Checked = false;
+        //                if (IsTweetFollowerScrapedList == true)
+        //                {
+        //                    chkBox.Checked = true;
+        //                }
+        //                else
+        //                {
+        //                    chkBox.Checked = true;
+        //                    chkBox.Checked = false;
+        //                }
+        //                //}));
+        //            }
+        //        }
+
+        //        //frmusercontrols = new Control();
+        //        TweetMentionUserUsingScrapedList = new MixedCampaignManager.CustomUserControls.TweetMentionUserUsingScrapedList();
+        //        frmusercontrols = TweetMentionUserUsingScrapedList.Controls.Find("chkTweetFollowing", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "chkTweetFollowing")
+        //            {
+        //                //frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                //{
+        //                CheckBox chkBox = (CheckBox)frmusercontrols;
+        //                chkBox.Checked = false;
+        //                if (IsTweetFollowingScrapedList == true)
+        //                {
+        //                    chkBox.Checked = true;
+        //                }
+        //                else
+        //                {
+        //                    chkBox.Checked = true;
+        //                    chkBox.Checked = false;
+        //                }
+        //                //}));
+        //            }
+        //        }
+
+        //        //frmusercontrols = new Control();
+        //        TweetMentionUserUsingScrapedList = new MixedCampaignManager.CustomUserControls.TweetMentionUserUsingScrapedList();
+        //        frmusercontrols = TweetMentionUserUsingScrapedList.Controls.Find("txtTweetMentionNoofUserCount", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "txtTweetMentionNoofUserCount")
+        //            {
+        //                //frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                //{
+        //                if (!string.IsNullOrEmpty(NoOfTweetMentionUserScrapedList.ToString()))
+        //                {
+        //                    frmusercontrols.Text = string.Empty;
+        //                    frmusercontrols.Text = NoOfTweetMentionUserScrapedList.ToString();
+        //                }
+        //                else
+        //                {
+        //                    frmusercontrols.Text = NoOfTweetMentionUserScrapedList.ToString();
+        //                }
+        //                // }));
+        //            }
+        //        }
+
+        //        //frmusercontrols = new Control();
+        //        TweetMentionUserUsingScrapedList = new MixedCampaignManager.CustomUserControls.TweetMentionUserUsingScrapedList();
+        //        frmusercontrols = TweetMentionUserUsingScrapedList.Controls.Find("txtTweetCountMentinUser", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "txtTweetCountMentinUser")
+        //            {
+        //                //frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                //{
+        //                if (!string.IsNullOrEmpty(NoOfTweetScrapedUserScrapedLIst.ToString()))
+        //                {
+        //                    frmusercontrols.Text = string.Empty;
+        //                    frmusercontrols.Text = NoOfTweetScrapedUserScrapedLIst.ToString();
+
+        //                }
+        //                else
+        //                {
+        //                    frmusercontrols.Text = NoOfTweetScrapedUserScrapedLIst.ToString();
+        //                }
+        //                //}));
+        //            }
+        //        }
+
+        //        #endregion
+
+
+        //        #region  Put Folder path in Tweet Image text box.
+
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("chkTweetMentionUserScrapedList", true)[0];
+
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "chkTweetMentionUserScrapedList")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+
+        //                }));
+        //            }
+        //        }
+        //        #endregion
+
+
+        //        #region  Put UserUPload text box.
+
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("txt_CmpTweetMentionUserList", true)[0];
+
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "txt_CmpTweetMentionUserList")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    if (!string.IsNullOrEmpty(UserListFilePath))
+        //                        frmusercontrols.Text = UserListFilePath;
+        //                    else
+        //                        frmusercontrols.Text = UserListFilePath;
+        //                }));
+        //            }
+        //        }
+        //        #endregion
+
+        //        // check if UserUpload is checked
+        //        #region
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("chkCampTweetMentionUser", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "chkCampTweetMentionUser")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    CheckBox chkBox = (CheckBox)frmusercontrols;
+        //                    if (IsUserList == true)
+        //                        chkBox.Checked = true;
+        //                    else
+        //                        chkBox.Checked = false;
+        //                }));
+        //            }
+        //        }
+        //        #endregion
+        //        // check if user MSg with Duplicate
+        //        #region
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("chkboxKeepSingleMessage", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "chkboxKeepSingleMessage")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    CheckBox chkBox = (CheckBox)frmusercontrols;
+        //                    if (IsDuplicatMsg == true)
+        //                        chkBox.Checked = true;
+        //                    else
+        //                        chkBox.Checked = false;
+        //                }));
+        //            }
+        //        }
+        //        #endregion
+
+        //        // check if All Tweets par account is checked
+
+        //        #region
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("chkAllTweetsPerAccount", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "chkAllTweetsPerAccount")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    CheckBox chkBox = (CheckBox)frmusercontrols;
+        //                    if (IsAllTweetParAc == true)
+        //                        chkBox.Checked = true;
+        //                    else
+        //                        chkBox.Checked = false;
+        //                }));
+        //            }
+        //        }
+        //        #endregion
+
+        //        // check if hash tag is checked
+        //        #region
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("chkbosUseHashTags", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "chkbosUseHashTags")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    CheckBox chkBox = (CheckBox)frmusercontrols;
+        //                    if (IsHashTag == true)
+        //                        chkBox.Checked = true;
+        //                    else
+        //                        chkBox.Checked = false;
+        //                }));
+        //            }
+        //        }
+        //        #endregion
+
+        //        // check if Tweet Per day checked 
+
+        //        #region
+        //        frmusercontrols = new Control();
+        //        frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("ChkboxTweetPerday", true)[0];
+        //        if (frmusercontrols != null)
+        //        {
+        //            if (frmusercontrols.Name == "ChkboxTweetPerday")
+        //            {
+        //                frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    CheckBox chkBox = (CheckBox)frmusercontrols;
+        //                    if (IsTweetParDey == true)
+        //                        chkBox.Checked = true;
+        //                    else
+        //                        chkBox.Checked = false;
+        //                }));
+        //            }
+        //        }
+        //        #endregion
+
+
+        //        if (NoOfTweetPerday != 0)
+        //        {
+        //            #region
+        //            //Put file address in Tweet MSG text box.
+        //            frmusercontrols = new Control();
+        //            frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("txtMaximumTweet", true)[0];
+
+        //            if (frmusercontrols != null)
+        //            {
+        //                if (frmusercontrols.Name == "txtMaximumTweet")
+        //                {
+        //                    frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                    {
+        //                        frmusercontrols.Text = NoOfTweetPerday.ToString();
+        //                    }));
+        //                }
+        //            }
+        //            #endregion
+        //        }
+
+
+        //        if (NoOfTweetPerAc != 0)
+        //        {
+        //            #region
+        //            //Put file address in Tweet MSG text box.
+        //            frmusercontrols = new Control();
+        //            frmusercontrols = tweetusercontrol.TopLevelControl.Controls.Find("txtNoOfTweets", true)[0];
+
+        //            if (frmusercontrols != null)
+        //            {
+        //                if (frmusercontrols.Name == "txtNoOfTweets")
+        //                {
+        //                    frmusercontrols.Invoke(new MethodInvoker(delegate
+        //                    {
+        //                        frmusercontrols.Text = NoOfTweetPerAc.ToString();
+        //                    }));
+        //                }
+        //            }
+        //            #endregion
+        //        }
+
+
+        //        if (IsSchedulDaily == true)
+        //        {
+        //            #region
+
+        //            chkbox_IsScheduledDaily.Invoke(new MethodInvoker(delegate
+        //                {
+        //                    chkbox_IsScheduledDaily.Checked = true;
+        //                }));
+
+        //            dateTimePicker_Start.Invoke(new MethodInvoker(delegate
+        //            {
+        //                dateTimePicker_Start.MinDate = SchedulerStartTime.Date;
+
+        //                dateTimePicker_Start.Value = (SchedulerStartTime);
+        //            }));
+
+        //            dateTimePicker_End.Invoke(new MethodInvoker(delegate
+        //            {
+        //                dateTimePicker_End.MinDate = SchedulerEndTime.Date;
+
+        //                dateTimePicker_End.Value = (SchedulerEndTime);
+        //            }));
+        //            #endregion
+        //        }
+        //        else
+        //        {
+        //            chkbox_IsScheduledDaily.Invoke(new MethodInvoker(delegate
+        //            {
+        //                chkbox_IsScheduledDaily.Checked = false;
+        //            }));
+        //        }
+
+        //        if (DelayStar != 0)
+        //        {
+        //            txt_DelayFrom.Invoke(new MethodInvoker(delegate { txt_DelayFrom.Text = DelayStar.ToString(); }));
+        //        }
+
+        //        if (DelayEnd != 0)
+        //        {
+        //            txt_DelayTo.Invoke(new MethodInvoker(delegate { txt_DelayTo.Text = DelayEnd.ToString(); }));
+        //        }
+        //        if (Threads != 0)
+        //        {
+        //            txtNoOfFollowThreads.Invoke(new MethodInvoker(delegate { txtNoOfFollowThreads.Text = Threads.ToString(); }));
+        //        }
+        //        UpdatePopUpofmentionUser("");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        ErrorLogger.AddToErrorLogText("30.editingtweetcampaign :" + ex.Message);
+        //    }
+
+        //}
+        #endregion
+
+        #endregion
+
+
         #region <--- Retweet campaign functions --->
 
         public void SavingReTweetSettings()

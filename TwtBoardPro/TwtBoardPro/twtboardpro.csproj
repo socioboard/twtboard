@@ -127,12 +127,14 @@
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.SQLite, Version=1.0.65.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\LD\LibsTextFile\32BitDll\System.Data.SQLite.dll</HintPath>
     </Reference>
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -445,6 +447,27 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\Account Checker btn.png" />
+    <None Include="Resources\assgin IP to accounts.png" />
+    <None Include="Resources\bt_Assign_IP_Accounts.png" />
+    <None Include="Resources\bt_Assign_Proxy_Accounts.png" />
+    <None Include="Resources\bt_Browse.png" />
+    <None Include="Resources\bt_clear_public_proxies.png" />
+    <None Include="Resources\bt_clear_public_proxies_from_Database.png" />
+    <None Include="Resources\bt_Create_Private_Proxies_Database.png" />
+    <None Include="Resources\bt_Export 2.png" />
+    <None Include="Resources\bt_Get_Username_Direct.png" />
+    <None Include="Resources\bt_Remove_Duplicates.png" />
+    <None Include="Resources\bt_Schedule_for_Later.png" />
+    <None Include="Resources\bt_Sent_Msg.png" />
+    <None Include="Resources\bt_Start.png" />
+    <None Include="Resources\bt_Start_Account_Creation.png" />
+    <None Include="Resources\bt_Start_Fake_Email_Creation.png" />
+    <None Include="Resources\bt_Start_Retweeting.png" />
+    <None Include="Resources\bt_Start_Tweeting.png" />
+    <None Include="Resources\bt_Stop.png" />
+    <None Include="Resources\bt_Test.png" />
+    <None Include="Resources\rsz_app_bg11.jpg" />
     <Content Include="Resources\TDominator_Wsetup.bmp" />
     <Content Include="Resources\Td_Setup_Banner.bmp" />
     <Content Include="Resources\Welcome_TD_Banner.bmp" />

@@ -83,9 +83,9 @@ namespace twtboardpro.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap assgin_proxy_to_accounts {
+        internal static System.Drawing.Bitmap assgin_IP_to_accounts {
             get {
-                object obj = ResourceManager.GetObject("assgin proxy to accounts", resourceCulture);
+                object obj = ResourceManager.GetObject("assgin IP to accounts", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

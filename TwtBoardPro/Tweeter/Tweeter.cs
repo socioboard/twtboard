@@ -76,9 +76,9 @@ namespace Tweeter
                                  try
                                  {
 
-                                     //WebProxy proxyObj = new WebProxy("http://192.227.234.242:80");
-                                     //proxyObj.Credentials = CredentialCache.DefaultCredentials;
-                                     //webclient.Proxy = proxyObj;
+                                     //WebIP IPObj = new WebIP("http://192.227.234.242:80");
+                                     //IPObj.Credentials = CredentialCache.DefaultCredentials;
+                                     //webclient.IP = IPObj;
 
                                      byte[] args = webclient.DownloadData(ImageUrl);
 
@@ -289,6 +289,38 @@ namespace Tweeter
                 Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> Tweeter() - ReTweet --> " + ex.Message, Globals.Path_TwtErrorLogs);
             }
         }
+        public void ReTweetAndFollow(ref Globussoft.GlobusHttpHelper globusHttpHelper, string pgSrc, string postAuthenticityToken, string tweetID, string tweetMessage, string UserID, out string status)
+        {
+            Follower.Follower objFollower = new Follower.Follower();
+            try
+            {
+                string TweetId = tweetID;// "197682704844734464";
+                string ReTweetData = "authenticity_token=" + postAuthenticityToken + "&id=" + tweetID;
+                string ReTweetPostUrl = "https://twitter.com/i/tweet/retweet";
+
+                string res_Post_Retweet = globusHttpHelper.postFormData(new Uri(ReTweetPostUrl), ReTweetData, "https://twitter.com/", postAuthenticityToken, "XMLHttpRequest", "true", "");
+
+                string pagesource = globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com"), "", "");
+                //string TweetId = tweetID;// "197682704844734464";
+                //string ReTweetData = "post_authenticity_token=" + postAuthenticityToken;
+                //string ReTweetPostUrl = "https://api.twitter.com/1/statuses/retweet/" + TweetId + ".json";
+                //string res_Post_Retweet = globusHttpHelper.postFormData(new Uri(ReTweetPostUrl), ReTweetData, "https://api.twitter.com/receiver.html", postAuthenticityToken, "XMLHttpRequest", "true", "");
+
+                status = "posted";
+
+                objFollower.FollowUsingProfileID_New(ref globusHttpHelper, pgSrc, postAuthenticityToken, UserID, out status);
+
+            }
+            catch (Exception ex)
+            {
+                status = "not posted";
+                //Log("Method>>ReTweet  --- class>>Tweeter.cs : ReTweet Exception " + ex.Message);
+                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> Tweeter() - ReTweet --> " + ex.Message, Globals.Path_TweetingErroLog);
+                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> Tweeter() - ReTweet --> " + ex.Message, Globals.Path_TwtErrorLogs);
+            }
+        }
+
+
 
         public void Reply(ref Globussoft.GlobusHttpHelper globusHttpHelper, string pgSrc, string postAuthenticityToken, string tweetID, string screenName, string tweetMessage, out string status)
         {

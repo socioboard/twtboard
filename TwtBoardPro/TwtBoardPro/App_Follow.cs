@@ -25,21 +25,21 @@ namespace twtboardpro
         }
         enum AppFollowStatus
         {
-            AppFollowload, ConnectPage, RedirectClicked, SignInClicked, LoggedOut, LoggedOutSucceed, ProxyCatch, SuccessfullyLogout,ProxyNotWorked ,None
+            AppFollowload, ConnectPage, RedirectClicked, SignInClicked, LoggedOut, LoggedOutSucceed, IPCatch, SuccessfullyLogout,IPNotWorked ,None
         }
 
         public int count = 0;
         List<string> lstProxies = new List<string>();
         List<string> App_Follow_listUserName = new List<string>();
         List<string> App_Follow_listUserPssword = new List<string>();
-        List<string> App_Follow_Proxy =new List<string>();
-        List<string> App_Follow_ProxyPort =new List<string>();
+        List<string> App_Follow_IP =new List<string>();
+        List<string> App_Follow_IPPort =new List<string>();
         List<Thread> lst_App_FollowThreads = new List<Thread>();
         int App_FollowCounter = 0;
         
         bool IsStopApp_Follow;
         AppFollowStatus appFollowStatus;
-        string proxyDetails = string.Empty;
+        string IPDetails = string.Empty;
 
         private void App_Follow_Load(object sender, EventArgs e)
         {
@@ -101,8 +101,8 @@ namespace twtboardpro
             //    App_Follow_listUserPssword.Add(EmailArr[1]);
             //    if (EmailArr.Length > 2)
             //    {
-            //        App_Follow_Proxy.Add(EmailArr[2]);
-            //        App_Follow_ProxyPort.Add(EmailArr[3]);
+            //        App_Follow_IP.Add(EmailArr[2]);
+            //        App_Follow_IPPort.Add(EmailArr[3]);
             //    }
             //}
             //NavigateApp_Follow();          

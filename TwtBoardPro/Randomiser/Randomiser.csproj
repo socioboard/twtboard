@@ -8,7 +8,7 @@
     <ProjectGuid>{1E9E8F48-1ABF-4F98-B4EC-9DD255438882}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TwtDominator</RootNamespace>
+    <RootNamespace>twtboardpro</RootNamespace>
     <AssemblyName>Randomiser</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

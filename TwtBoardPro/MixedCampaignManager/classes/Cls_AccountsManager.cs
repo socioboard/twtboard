@@ -24,72 +24,72 @@ namespace MixedCampaignManager.classes
                     string accountUser = account.Split(':')[0];
                     string accountPass = account.Split(':')[1];
                     string screanName = string.Empty;
-                    string proxyAddress = string.Empty;
-                    string proxyPort = string.Empty;
-                    string proxyUserName = string.Empty;
-                    string proxyPassword = string.Empty;
+                    string IPAddress = string.Empty;
+                    string IPPort = string.Empty;
+                    string IPUsername = string.Empty;
+                    string IPpassword = string.Empty;
                     string status = string.Empty;
 
                     int DataCount = account.Split(':').Length;
                     if (DataCount == 2)
                     {
-                        //Globals.accountMode = AccountMode.NoProxy;
+                        //Globals.accountMode = AccountMode.NoIP;
                         accountUser = account.Split(':')[0];
                         accountPass = account.Split(':')[1];
 
                     }
                     else if (DataCount == 3)
                     {
-                        //Globals.accountMode = AccountMode.PublicProxy;
+                        //Globals.accountMode = AccountMode.PublicIP;
                         screanName = account.Split(':')[2];
                     }
                     else if (DataCount == 4)
                     {
-                        //Globals.accountMode = AccountMode.PublicProxy;
+                        //Globals.accountMode = AccountMode.PublicIP;
                         accountUser = account.Split(':')[0];
                         accountPass = account.Split(':')[1];
-                        proxyAddress = account.Split(':')[2];
-                        proxyPort = account.Split(':')[3];
+                        IPAddress = account.Split(':')[2];
+                        IPPort = account.Split(':')[3];
                     }
                     else if (DataCount == 5)
                     {
-                        //Globals.accountMode = AccountMode.PublicProxy;
+                        //Globals.accountMode = AccountMode.PublicIP;
                         screanName = account.Split(':')[2];
-                        proxyAddress = account.Split(':')[3];
-                        proxyPort = account.Split(':')[4];
+                        IPAddress = account.Split(':')[3];
+                        IPPort = account.Split(':')[4];
                     }
                     else if (DataCount > 5 && DataCount < 7)
                     {
-                        //Globals.accountMode = AccountMode.PrivateProxy;
+                        //Globals.accountMode = AccountMode.PrivateIP;
                         accountUser = account.Split(':')[0];
                         accountPass = account.Split(':')[1];
-                        proxyAddress = account.Split(':')[2];
-                        proxyPort = account.Split(':')[3];
-                        proxyUserName = account.Split(':')[4];
-                        proxyPassword = account.Split(':')[5];
-                        //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, proxyAddress, proxyPort, proxyUserName, proxyPassword, "", "0");
+                        IPAddress = account.Split(':')[2];
+                        IPPort = account.Split(':')[3];
+                        IPUsername = account.Split(':')[4];
+                        IPpassword = account.Split(':')[5];
+                        //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, IPAddress, IPPort, IPUsername, IPpassword, "", "0");
                     }
                     else if (DataCount == 7)
                     {
-                        //Globals.accountMode = AccountMode.PrivateProxy;
+                        //Globals.accountMode = AccountMode.PrivateIP;
                         accountUser = account.Split(':')[0];
                         accountPass = account.Split(':')[1];
-                        proxyAddress = account.Split(':')[3];
-                        proxyPort = account.Split(':')[4];
-                        proxyUserName = account.Split(':')[5];
-                        proxyPassword = account.Split(':')[6];
-                        //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, proxyAddress, proxyPort, proxyUserName, proxyPassword, "", "0");
+                        IPAddress = account.Split(':')[3];
+                        IPPort = account.Split(':')[4];
+                        IPUsername = account.Split(':')[5];
+                        IPpassword = account.Split(':')[6];
+                        //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, IPAddress, IPPort, IPUsername, IPpassword, "", "0");
                     }
                     else if (DataCount == 9)
                     {
-                        //Globals.accountMode = AccountMode.PrivateProxy;
+                        //Globals.accountMode = AccountMode.PrivateIP;
                         accountUser = account.Split(':')[0];
                         accountPass = account.Split(':')[1];
-                        proxyAddress = account.Split(':')[2];
-                        proxyPort = account.Split(':')[3];
-                        proxyUserName = account.Split(':')[4];
-                        proxyPassword = account.Split(':')[5];
-                        //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, proxyAddress, proxyPort, proxyUserName, proxyPassword, "", "0");
+                        IPAddress = account.Split(':')[2];
+                        IPPort = account.Split(':')[3];
+                        IPUsername = account.Split(':')[4];
+                        IPpassword = account.Split(':')[5];
+                        //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, IPAddress, IPPort, IPUsername, IPpassword, "", "0");
                     }
                     //if (Globals.IsFreeVersion)
                     //{
@@ -103,17 +103,17 @@ namespace MixedCampaignManager.classes
                     //    }
                     //}
 
-                    //dt.Rows.Add(accountUser, accountPass, screanName, string.Empty, proxyAddress, proxyPort, proxyUserName, proxyPassword, "", "0");
+                    //dt.Rows.Add(accountUser, accountPass, screanName, string.Empty, IPAddress, IPPort, IPUsername, IPpassword, "", "0");
 
                     try
                     {
                         CampaignAccountManager twitter = new CampaignAccountManager();
                         twitter.Username = accountUser;
                         twitter.Password = accountPass;
-                        twitter.proxyAddress = proxyAddress;
-                        twitter.proxyPort = proxyPort;
-                        twitter.proxyUsername = proxyUserName;
-                        twitter.proxyPassword = proxyPassword;
+                        twitter.IPAddress = IPAddress;
+                        twitter.IPPort = IPPort;
+                        twitter.IPUsername = IPUsername;
+                        twitter.IPpassword = IPpassword;
                         twitter.Screen_name = screanName;
                        // twitter.profileStatus = 0;
                         twitter.AccountStatus = "";

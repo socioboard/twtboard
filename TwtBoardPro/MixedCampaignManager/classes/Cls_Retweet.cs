@@ -150,10 +150,56 @@ namespace MixedCampaignManager.classes
                     }
 
 
-                    Thread threadGetStartProcessForRetweet = new Thread(startRetweeting);
-                    threadGetStartProcessForRetweet.Name = CampaignName + "_" + Account.Key;
-                    threadGetStartProcessForRetweet.IsBackground = true;
-                    threadGetStartProcessForRetweet.Start(new object[] { Account, lst_Struct_TweetData, _IsRetweetParDay, _NoofRetweetParDay, _NoofRetweetParAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime });
+
+                    #region New Licensing Feature Added by Sonu
+                    try
+                    {
+                        if (Globals.IsBasicVersion || Globals.IsProVersion || Globals.IsFreeVersion)
+                        {
+                            string queryCheckDataBaseEmpty = "select * from tb_FBAccount";
+                            DataSet DS1 = DataBaseHandler.SelectQuery(queryCheckDataBaseEmpty, "tb_FBAccount");
+                            if (!(DS1.Tables[0].Rows.Count == 0))
+                            {
+                                DataTable DT = DS1.Tables[0];
+                                bool check = DT.Select().Any(x => x.ItemArray[0].ToString() == Account.Key);
+                                if (!check)
+                                {
+                                    System.Windows.Forms.MessageBox.Show("Please Upload this Account in Account Manager");
+                                    return;
+                                }
+                                else
+                                {
+                                    Thread threadGetStartProcessForRetweet = new Thread(startRetweeting);
+                                    threadGetStartProcessForRetweet.Name = CampaignName + "_" + Account.Key;
+                                    threadGetStartProcessForRetweet.IsBackground = true;
+                                    threadGetStartProcessForRetweet.Start(new object[] { Account, lst_Struct_TweetData, _IsRetweetParDay, _NoofRetweetParDay, _NoofRetweetParAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime });
+                                }
+                            }
+                            else
+                            {
+                                System.Windows.Forms.MessageBox.Show("Please Upload this Account in Account Manager");
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            Thread threadGetStartProcessForRetweet = new Thread(startRetweeting);
+                            threadGetStartProcessForRetweet.Name = CampaignName + "_" + Account.Key;
+                            threadGetStartProcessForRetweet.IsBackground = true;
+                            threadGetStartProcessForRetweet.Start(new object[] { Account, lst_Struct_TweetData, _IsRetweetParDay, _NoofRetweetParDay, _NoofRetweetParAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime });
+                        }
+                    }
+                    catch { };
+
+
+                    #endregion
+
+                    #region old Code
+                    //Thread threadGetStartProcessForRetweet = new Thread(startRetweeting);
+                    //threadGetStartProcessForRetweet.Name = CampaignName + "_" + Account.Key;
+                    //threadGetStartProcessForRetweet.IsBackground = true;
+                    //threadGetStartProcessForRetweet.Start(new object[] { Account, lst_Struct_TweetData, _IsRetweetParDay, _NoofRetweetParDay, _NoofRetweetParAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime }); 
+                    #endregion
 
                     Thread.Sleep(1000);
                     LstCounter++;

@@ -39,7 +39,6 @@
             this.label40 = new System.Windows.Forms.Label();
             this.chkFollowings = new System.Windows.Forms.CheckBox();
             this.splitContainerMain = new System.Windows.Forms.SplitContainer();
-            this.label67 = new System.Windows.Forms.Label();
             this.labelAccountcreator = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
@@ -213,6 +212,7 @@
             this.txtNoOfTweetThreads = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.grpTweetInput = new System.Windows.Forms.GroupBox();
+            this.CheckBoxScrapTweets = new System.Windows.Forms.CheckBox();
             this.UseMentionUser = new System.Windows.Forms.GroupBox();
             this.chkTweetUsedIdToScrap = new System.Windows.Forms.CheckBox();
             this.useCheckLength = new System.Windows.Forms.CheckBox();
@@ -388,41 +388,41 @@
             this.label73 = new System.Windows.Forms.Label();
             this.gbTweetReplyLogger = new System.Windows.Forms.GroupBox();
             this.lstLogger_WaitReply = new System.Windows.Forms.ListBox();
-            this.tabProxy = new System.Windows.Forms.TabPage();
-            this.gbProxyLogger = new System.Windows.Forms.GroupBox();
-            this.lstLoggerProxy = new System.Windows.Forms.ListBox();
-            this.grpAccountProxy = new System.Windows.Forms.GroupBox();
+            this.tabIP = new System.Windows.Forms.TabPage();
+            this.gbIPLogger = new System.Windows.Forms.GroupBox();
+            this.lstLoggerIP = new System.Windows.Forms.ListBox();
+            this.grpAccountIP = new System.Windows.Forms.GroupBox();
             this.label74 = new System.Windows.Forms.Label();
             this.lblRequestThreads = new System.Windows.Forms.Label();
-            this.txtAccountsPerProxy = new System.Windows.Forms.TextBox();
-            this.grpPrivateProxy = new System.Windows.Forms.GroupBox();
-            this.btnAssignPrivateProxyStop = new System.Windows.Forms.Button();
+            this.txtAccountsPerIP = new System.Windows.Forms.TextBox();
+            this.grpPrivateIP = new System.Windows.Forms.GroupBox();
+            this.btnAssignPrivateIPStop = new System.Windows.Forms.Button();
             this.btnTestPvtProxies = new System.Windows.Forms.Button();
             this.label58 = new System.Windows.Forms.Label();
             this.btnClearPrivateProxies = new System.Windows.Forms.Button();
-            this.btnAssignProxy = new System.Windows.Forms.Button();
-            this.btnPvtProxyThree = new System.Windows.Forms.Button();
+            this.btnAssignIP = new System.Windows.Forms.Button();
+            this.btnPvtIPThree = new System.Windows.Forms.Button();
             this.label39 = new System.Windows.Forms.Label();
-            this.txtPvtProxyThree = new System.Windows.Forms.TextBox();
-            this.btnPvtProxyFour = new System.Windows.Forms.Button();
-            this.txtPvtProxyFour = new System.Windows.Forms.TextBox();
+            this.txtPvtIPThree = new System.Windows.Forms.TextBox();
+            this.btnPvtIPFour = new System.Windows.Forms.Button();
+            this.txtPvtIPFour = new System.Windows.Forms.TextBox();
             this.label37 = new System.Windows.Forms.Label();
             this.label36 = new System.Windows.Forms.Label();
             this.label38 = new System.Windows.Forms.Label();
-            this.grpPublicProxy = new System.Windows.Forms.GroupBox();
-            this.btn_StopProxyTesting = new System.Windows.Forms.Button();
-            this.txtProxyUrl = new System.Windows.Forms.TextBox();
-            this.chkboxUseUrlProxy = new System.Windows.Forms.CheckBox();
-            this.btnAsssignPublicProxy = new System.Windows.Forms.Button();
-            this.chkboxImportPublicProxy = new System.Windows.Forms.CheckBox();
+            this.grpPublicIP = new System.Windows.Forms.GroupBox();
+            this.btn_StopIPTesting = new System.Windows.Forms.Button();
+            this.txtIPUrl = new System.Windows.Forms.TextBox();
+            this.chkboxUseUrlIP = new System.Windows.Forms.CheckBox();
+            this.btnAsssignPublicIP = new System.Windows.Forms.Button();
+            this.chkboxImportPublicIP = new System.Windows.Forms.CheckBox();
             this.label46 = new System.Windows.Forms.Label();
-            this.txtNumberOfProxyThreads = new System.Windows.Forms.TextBox();
+            this.txtNumberOfIPThreads = new System.Windows.Forms.TextBox();
             this.btnClearPublicProxies = new System.Windows.Forms.Button();
-            this.btnTestPublicProxy = new System.Windows.Forms.Button();
-            this.btnPublicProxy = new System.Windows.Forms.Button();
-            this.txtPublicProxy = new System.Windows.Forms.TextBox();
+            this.btnTestPublicIP = new System.Windows.Forms.Button();
+            this.btnPublicIP = new System.Windows.Forms.Button();
+            this.txtPublicIP = new System.Windows.Forms.TextBox();
             this.label35 = new System.Windows.Forms.Label();
-            this.grpWorkingProxy = new System.Windows.Forms.GroupBox();
+            this.grpWorkingIP = new System.Windows.Forms.GroupBox();
             this.lbltotalworkingproxies = new System.Windows.Forms.Label();
             this.tabScrape = new System.Windows.Forms.TabPage();
             this.splitContainer_ScrapeUsers = new System.Windows.Forms.SplitContainer();
@@ -474,6 +474,7 @@
             this.tabTweetCreator = new System.Windows.Forms.TabPage();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.grpKeywordTweetExtractor = new System.Windows.Forms.GroupBox();
+            this.chkBoxScrapeLiveTweet = new System.Windows.Forms.CheckBox();
             this.txtKeywordPageCount = new System.Windows.Forms.TextBox();
             this.label113 = new System.Windows.Forms.Label();
             this.txtKeywordTweetExtractor = new System.Windows.Forms.TextBox();
@@ -562,16 +563,16 @@
             this.grpRetweetandFavoriteSubmitAction = new System.Windows.Forms.GroupBox();
             this.btnStopRetweetAndFavorite = new System.Windows.Forms.Button();
             this.btn_start = new System.Windows.Forms.Button();
-            this.grpRetweetandFavoriteProxySetting = new System.Windows.Forms.GroupBox();
+            this.grpRetweetandFavoriteIPSetting = new System.Windows.Forms.GroupBox();
             this.txtCountFavoriteandRetweet = new System.Windows.Forms.TextBox();
             this.label122 = new System.Windows.Forms.Label();
             this.txtThreadRTFav = new System.Windows.Forms.TextBox();
             this.lbltxtThreadRTFav = new System.Windows.Forms.Label();
             this.groupBox70 = new System.Windows.Forms.GroupBox();
             this.lst_retweetAndFavoritelogger = new System.Windows.Forms.ListBox();
-            this.grpRetweetandFavoriteProxy = new System.Windows.Forms.GroupBox();
-            this.chk_RetweetAndFavoritePrivateproxy = new System.Windows.Forms.CheckBox();
-            this.chk_RetweetAndFavoritePublicproxy = new System.Windows.Forms.CheckBox();
+            this.grpRetweetandFavoriteIP = new System.Windows.Forms.GroupBox();
+            this.chk_RetweetAndFavoritePrivateIP = new System.Windows.Forms.CheckBox();
+            this.chk_RetweetAndFavoritePublicIP = new System.Windows.Forms.CheckBox();
             this.grpRetweetandFavorite = new System.Windows.Forms.GroupBox();
             this.chkUsingKeyWord = new System.Windows.Forms.CheckBox();
             this.label105 = new System.Windows.Forms.Label();
@@ -634,7 +635,7 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.schedulerToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
-            this.label4 = new System.Windows.Forms.Label();
+            this.chkBoxRetweetAndFollow = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerMain)).BeginInit();
             this.splitContainerMain.Panel1.SuspendLayout();
             this.splitContainerMain.Panel2.SuspendLayout();
@@ -731,12 +732,12 @@
             this.grpTweetReplyThreadSetting.SuspendLayout();
             this.grpTweetReplyNote.SuspendLayout();
             this.gbTweetReplyLogger.SuspendLayout();
-            this.tabProxy.SuspendLayout();
-            this.gbProxyLogger.SuspendLayout();
-            this.grpAccountProxy.SuspendLayout();
-            this.grpPrivateProxy.SuspendLayout();
-            this.grpPublicProxy.SuspendLayout();
-            this.grpWorkingProxy.SuspendLayout();
+            this.tabIP.SuspendLayout();
+            this.gbIPLogger.SuspendLayout();
+            this.grpAccountIP.SuspendLayout();
+            this.grpPrivateIP.SuspendLayout();
+            this.grpPublicIP.SuspendLayout();
+            this.grpWorkingIP.SuspendLayout();
             this.tabScrape.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer_ScrapeUsers)).BeginInit();
             this.splitContainer_ScrapeUsers.Panel1.SuspendLayout();
@@ -768,9 +769,9 @@
             this.groupBox3.SuspendLayout();
             this.groupBox45.SuspendLayout();
             this.grpRetweetandFavoriteSubmitAction.SuspendLayout();
-            this.grpRetweetandFavoriteProxySetting.SuspendLayout();
+            this.grpRetweetandFavoriteIPSetting.SuspendLayout();
             this.groupBox70.SuspendLayout();
-            this.grpRetweetandFavoriteProxy.SuspendLayout();
+            this.grpRetweetandFavoriteIP.SuspendLayout();
             this.grpRetweetandFavorite.SuspendLayout();
             this.grpRetweetandFavoriteOption.SuspendLayout();
             this.tb_AccountManger.SuspendLayout();
@@ -801,7 +802,7 @@
             this.imageList1.Images.SetKeyName(10, "account checker.png");
             this.imageList1.Images.SetKeyName(11, "fake email.png");
             this.imageList1.Images.SetKeyName(12, "false email.png");
-            this.imageList1.Images.SetKeyName(13, "proxy setting.png");
+            this.imageList1.Images.SetKeyName(13, "IP setting.png");
             this.imageList1.Images.SetKeyName(14, "scrape twitter.png");
             this.imageList1.Images.SetKeyName(15, "twitter creator.png");
             this.imageList1.Images.SetKeyName(16, "unfollow.jpg");
@@ -820,7 +821,7 @@
             this.txtInterval_WaitReply.Text = "10";
             this.txtInterval_WaitReply.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip.SetToolTip(this.txtInterval_WaitReply, "Use a relatively large Interval to allow sending of specified no of Tweets after " +
-        "sending a Reply");
+                    "sending a Reply");
             // 
             // chkUnfollowDateFilter
             // 
@@ -901,8 +902,6 @@
             // splitContainerMain.Panel1
             // 
             this.splitContainerMain.Panel1.BackColor = System.Drawing.Color.Transparent;
-            this.splitContainerMain.Panel1.Controls.Add(this.label4);
-            this.splitContainerMain.Panel1.Controls.Add(this.label67);
             this.splitContainerMain.Panel1.Controls.Add(this.labelAccountcreator);
             this.splitContainerMain.Panel1.Controls.Add(this.pictureBox1);
             this.splitContainerMain.Panel1.Controls.Add(this.menuStrip1);
@@ -916,23 +915,12 @@
             this.splitContainerMain.TabIndex = 5;
             this.splitContainerMain.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainerMain_Paint);
             // 
-            // label67
-            // 
-            this.label67.AutoSize = true;
-            this.label67.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label67.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.label67.Location = new System.Drawing.Point(356, 92);
-            this.label67.Name = "label67";
-            this.label67.Size = new System.Drawing.Size(54, 21);
-            this.label67.TabIndex = 4;
-            this.label67.Text = ">>>>";
-            // 
             // labelAccountcreator
             // 
             this.labelAccountcreator.AutoSize = true;
             this.labelAccountcreator.Font = new System.Drawing.Font("Times New Roman", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelAccountcreator.ForeColor = System.Drawing.Color.MidnightBlue;
-            this.labelAccountcreator.Location = new System.Drawing.Point(138, 91);
+            this.labelAccountcreator.Location = new System.Drawing.Point(624, 120);
             this.labelAccountcreator.Name = "labelAccountcreator";
             this.labelAccountcreator.Size = new System.Drawing.Size(147, 22);
             this.labelAccountcreator.TabIndex = 3;
@@ -941,12 +929,13 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.AccessibleRole = System.Windows.Forms.AccessibleRole.Slider;
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.BackgroundImage")));
             this.pictureBox1.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pictureBox1.ErrorImage")));
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(8, 9);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(282, 53);
+            this.pictureBox1.Size = new System.Drawing.Size(380, 93);
             this.pictureBox1.TabIndex = 1;
             this.pictureBox1.TabStop = false;
             // 
@@ -1123,7 +1112,7 @@
             this.Tb_AccountManager.Controls.Add(this.tabPageAccountChecker);
             this.Tb_AccountManager.Controls.Add(this.tabUnfollower);
             this.Tb_AccountManager.Controls.Add(this.tabWaitReply);
-            this.Tb_AccountManager.Controls.Add(this.tabProxy);
+            this.Tb_AccountManager.Controls.Add(this.tabIP);
             this.Tb_AccountManager.Controls.Add(this.tabScrape);
             this.Tb_AccountManager.Controls.Add(this.tabTweetCreator);
             this.Tb_AccountManager.Controls.Add(this.tab_WhiteAndBlackListUers);
@@ -1241,7 +1230,6 @@
             // btnProfilePicsFolder
             // 
             this.btnProfilePicsFolder.BackColor = System.Drawing.Color.Transparent;
-            this.btnProfilePicsFolder.BackgroundImage = global::twtboardpro.Properties.Resources.Browse;
             this.btnProfilePicsFolder.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnProfilePicsFolder.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnProfilePicsFolder.ForeColor = System.Drawing.Color.Black;
@@ -1395,7 +1383,7 @@
             this.label72.Size = new System.Drawing.Size(497, 13);
             this.label72.TabIndex = 1;
             this.label72.Text = "2. ProfileURLs.txt , ProfileDescriptions.txt , ProfileUsernames.txt ,  ProfileLoc" +
-    "ations.txt";
+                "ations.txt";
             // 
             // label66
             // 
@@ -1407,7 +1395,7 @@
             this.label66.Size = new System.Drawing.Size(594, 13);
             this.label66.TabIndex = 0;
             this.label66.Text = "1. For Images only use file with extension *.jpg and .gif. Also Upload Profile Fo" +
-    "lder with text in Names ";
+                "lder with text in Names ";
             // 
             // btnStop_ProfileThreads
             // 
@@ -3044,6 +3032,7 @@
             // 
             // grpTweetInput
             // 
+            this.grpTweetInput.Controls.Add(this.CheckBoxScrapTweets);
             this.grpTweetInput.Controls.Add(this.UseMentionUser);
             this.grpTweetInput.Controls.Add(this.useCheckLength);
             this.grpTweetInput.Controls.Add(this.chkAllTweetsPerAccount);
@@ -3064,6 +3053,19 @@
             this.grpTweetInput.TabIndex = 55;
             this.grpTweetInput.TabStop = false;
             this.grpTweetInput.Text = "Tweet";
+            // 
+            // CheckBoxScrapTweets
+            // 
+            this.CheckBoxScrapTweets.AutoSize = true;
+            this.CheckBoxScrapTweets.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.CheckBoxScrapTweets.ForeColor = System.Drawing.Color.Black;
+            this.CheckBoxScrapTweets.Location = new System.Drawing.Point(820, 85);
+            this.CheckBoxScrapTweets.Name = "CheckBoxScrapTweets";
+            this.CheckBoxScrapTweets.Size = new System.Drawing.Size(107, 17);
+            this.CheckBoxScrapTweets.TabIndex = 89;
+            this.CheckBoxScrapTweets.Text = "Scrap Tweets ";
+            this.CheckBoxScrapTweets.UseVisualStyleBackColor = true;
+            this.CheckBoxScrapTweets.CheckedChanged += new System.EventHandler(this.CheckBoxScrapTweets_CheckedChanged);
             // 
             // UseMentionUser
             // 
@@ -3381,12 +3383,12 @@
             // 
             // grpTweetRetweetReply
             // 
+            this.grpTweetRetweetReply.Controls.Add(this.chkBoxRetweetAndFollow);
             this.grpTweetRetweetReply.Controls.Add(this.chkRetweetDivideTweets);
             this.grpTweetRetweetReply.Controls.Add(this.btnUploadRetweetKeyword);
             this.grpTweetRetweetReply.Controls.Add(this.btnReplyBySpecificTweet);
             this.grpTweetRetweetReply.Controls.Add(this.chkReplyBySpecificTweet);
             this.grpTweetRetweetReply.Controls.Add(this.chkUniqueReply);
-            this.grpTweetRetweetReply.Controls.Add(this.chkReplyPerTweet);
             this.grpTweetRetweetReply.Controls.Add(this.chkAutoFavorite);
             this.grpTweetRetweetReply.Controls.Add(this.chkCheckDatabaseInEvery2Minutes);
             this.grpTweetRetweetReply.Controls.Add(this.chk_retweetbyUser);
@@ -3435,7 +3437,7 @@
             this.btnReplyBySpecificTweet.BackgroundImage = global::twtboardpro.Properties.Resources.Browse;
             this.btnReplyBySpecificTweet.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnReplyBySpecificTweet.ForeColor = System.Drawing.Color.Black;
-            this.btnReplyBySpecificTweet.Location = new System.Drawing.Point(31, 77);
+            this.btnReplyBySpecificTweet.Location = new System.Drawing.Point(48, 77);
             this.btnReplyBySpecificTweet.Name = "btnReplyBySpecificTweet";
             this.btnReplyBySpecificTweet.Size = new System.Drawing.Size(80, 27);
             this.btnReplyBySpecificTweet.TabIndex = 86;
@@ -3449,9 +3451,9 @@
             this.chkReplyBySpecificTweet.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.chkReplyBySpecificTweet.Location = new System.Drawing.Point(20, 51);
             this.chkReplyBySpecificTweet.Name = "chkReplyBySpecificTweet";
-            this.chkReplyBySpecificTweet.Size = new System.Drawing.Size(108, 17);
+            this.chkReplyBySpecificTweet.Size = new System.Drawing.Size(144, 17);
             this.chkReplyBySpecificTweet.TabIndex = 85;
-            this.chkReplyBySpecificTweet.Text = "Specific Tweet";
+            this.chkReplyBySpecificTweet.Text = "Reply Specific Tweet";
             this.chkReplyBySpecificTweet.UseVisualStyleBackColor = true;
             this.chkReplyBySpecificTweet.CheckedChanged += new System.EventHandler(this.chkReplyBySpecificTweet_CheckedChanged);
             // 
@@ -3472,7 +3474,7 @@
             // 
             this.chkReplyPerTweet.AutoSize = true;
             this.chkReplyPerTweet.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkReplyPerTweet.Location = new System.Drawing.Point(721, 17);
+            this.chkReplyPerTweet.Location = new System.Drawing.Point(40, -9);
             this.chkReplyPerTweet.Name = "chkReplyPerTweet";
             this.chkReplyPerTweet.Size = new System.Drawing.Size(97, 17);
             this.chkReplyPerTweet.TabIndex = 83;
@@ -3585,6 +3587,7 @@
             // 
             this.grpTweetNoOfRetweetReply.Controls.Add(this.label9);
             this.grpTweetNoOfRetweetReply.Controls.Add(this.txtNoOfRetweets);
+            this.grpTweetNoOfRetweetReply.Controls.Add(this.chkReplyPerTweet);
             this.grpTweetNoOfRetweetReply.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpTweetNoOfRetweetReply.ForeColor = System.Drawing.Color.Black;
             this.grpTweetNoOfRetweetReply.Location = new System.Drawing.Point(567, 49);
@@ -3622,9 +3625,9 @@
             this.grpTweetRetweetReplyPerDay.Controls.Add(this.label86);
             this.grpTweetRetweetReplyPerDay.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.grpTweetRetweetReplyPerDay.ForeColor = System.Drawing.Color.Black;
-            this.grpTweetRetweetReplyPerDay.Location = new System.Drawing.Point(140, 44);
+            this.grpTweetRetweetReplyPerDay.Location = new System.Drawing.Point(176, 44);
             this.grpTweetRetweetReplyPerDay.Name = "grpTweetRetweetReplyPerDay";
-            this.grpTweetRetweetReplyPerDay.Size = new System.Drawing.Size(406, 69);
+            this.grpTweetRetweetReplyPerDay.Size = new System.Drawing.Size(375, 69);
             this.grpTweetRetweetReplyPerDay.TabIndex = 80;
             this.grpTweetRetweetReplyPerDay.TabStop = false;
             this.grpTweetRetweetReplyPerDay.Text = "Retweet/Reply Per Day";
@@ -3633,7 +3636,7 @@
             // 
             this.txtMaximumNoRetweet.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtMaximumNoRetweet.ForeColor = System.Drawing.Color.Black;
-            this.txtMaximumNoRetweet.Location = new System.Drawing.Point(337, 38);
+            this.txtMaximumNoRetweet.Location = new System.Drawing.Point(300, 38);
             this.txtMaximumNoRetweet.Name = "txtMaximumNoRetweet";
             this.txtMaximumNoRetweet.Size = new System.Drawing.Size(31, 21);
             this.txtMaximumNoRetweet.TabIndex = 77;
@@ -5264,58 +5267,58 @@
             this.lstLogger_WaitReply.Size = new System.Drawing.Size(1029, 84);
             this.lstLogger_WaitReply.TabIndex = 1;
             // 
-            // tabProxy
+            // tabIP
             // 
-            this.tabProxy.BackColor = System.Drawing.Color.Transparent;
-            this.tabProxy.Controls.Add(this.gbProxyLogger);
-            this.tabProxy.Controls.Add(this.grpAccountProxy);
-            this.tabProxy.Controls.Add(this.grpPrivateProxy);
-            this.tabProxy.Controls.Add(this.grpPublicProxy);
-            this.tabProxy.Controls.Add(this.grpWorkingProxy);
-            this.tabProxy.ImageKey = "proxy setting.png";
-            this.tabProxy.Location = new System.Drawing.Point(204, 4);
-            this.tabProxy.Name = "tabProxy";
-            this.tabProxy.Padding = new System.Windows.Forms.Padding(3);
-            this.tabProxy.Size = new System.Drawing.Size(1035, 499);
-            this.tabProxy.TabIndex = 7;
-            this.tabProxy.Text = " Proxy Setting";
-            this.tabProxy.Paint += new System.Windows.Forms.PaintEventHandler(this.tabProxy_Paint);
+            this.tabIP.BackColor = System.Drawing.Color.Transparent;
+            this.tabIP.Controls.Add(this.gbIPLogger);
+            this.tabIP.Controls.Add(this.grpAccountIP);
+            this.tabIP.Controls.Add(this.grpPrivateIP);
+            this.tabIP.Controls.Add(this.grpPublicIP);
+            this.tabIP.Controls.Add(this.grpWorkingIP);
+            this.tabIP.ImageKey = "IP setting.png";
+            this.tabIP.Location = new System.Drawing.Point(204, 4);
+            this.tabIP.Name = "tabIP";
+            this.tabIP.Padding = new System.Windows.Forms.Padding(3);
+            this.tabIP.Size = new System.Drawing.Size(1035, 499);
+            this.tabIP.TabIndex = 7;
+            this.tabIP.Text = "IP  Setting";
+            this.tabIP.Paint += new System.Windows.Forms.PaintEventHandler(this.tabIP_Paint);
             // 
-            // gbProxyLogger
+            // gbIPLogger
             // 
-            this.gbProxyLogger.Controls.Add(this.lstLoggerProxy);
-            this.gbProxyLogger.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.gbProxyLogger.Location = new System.Drawing.Point(8, 371);
-            this.gbProxyLogger.Name = "gbProxyLogger";
-            this.gbProxyLogger.Size = new System.Drawing.Size(1011, 122);
-            this.gbProxyLogger.TabIndex = 59;
-            this.gbProxyLogger.TabStop = false;
-            this.gbProxyLogger.Text = "Process Logger";
+            this.gbIPLogger.Controls.Add(this.lstLoggerIP);
+            this.gbIPLogger.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gbIPLogger.Location = new System.Drawing.Point(8, 371);
+            this.gbIPLogger.Name = "gbIPLogger";
+            this.gbIPLogger.Size = new System.Drawing.Size(1011, 122);
+            this.gbIPLogger.TabIndex = 59;
+            this.gbIPLogger.TabStop = false;
+            this.gbIPLogger.Text = "Process Logger";
             // 
-            // lstLoggerProxy
+            // lstLoggerIP
             // 
-            this.lstLoggerProxy.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lstLoggerProxy.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lstLoggerProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lstLoggerProxy.FormattingEnabled = true;
-            this.lstLoggerProxy.Location = new System.Drawing.Point(3, 17);
-            this.lstLoggerProxy.Name = "lstLoggerProxy";
-            this.lstLoggerProxy.Size = new System.Drawing.Size(1005, 102);
-            this.lstLoggerProxy.TabIndex = 3;
+            this.lstLoggerIP.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.lstLoggerIP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lstLoggerIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lstLoggerIP.FormattingEnabled = true;
+            this.lstLoggerIP.Location = new System.Drawing.Point(3, 17);
+            this.lstLoggerIP.Name = "lstLoggerIP";
+            this.lstLoggerIP.Size = new System.Drawing.Size(1005, 102);
+            this.lstLoggerIP.TabIndex = 3;
             // 
-            // grpAccountProxy
+            // grpAccountIP
             // 
-            this.grpAccountProxy.Controls.Add(this.label74);
-            this.grpAccountProxy.Controls.Add(this.lblRequestThreads);
-            this.grpAccountProxy.Controls.Add(this.txtAccountsPerProxy);
-            this.grpAccountProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpAccountProxy.ForeColor = System.Drawing.Color.Black;
-            this.grpAccountProxy.Location = new System.Drawing.Point(9, 307);
-            this.grpAccountProxy.Name = "grpAccountProxy";
-            this.grpAccountProxy.Size = new System.Drawing.Size(654, 56);
-            this.grpAccountProxy.TabIndex = 57;
-            this.grpAccountProxy.TabStop = false;
-            this.grpAccountProxy.Text = "Accounts/Proxy (For Public and Private)";
+            this.grpAccountIP.Controls.Add(this.label74);
+            this.grpAccountIP.Controls.Add(this.lblRequestThreads);
+            this.grpAccountIP.Controls.Add(this.txtAccountsPerIP);
+            this.grpAccountIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpAccountIP.ForeColor = System.Drawing.Color.Black;
+            this.grpAccountIP.Location = new System.Drawing.Point(9, 307);
+            this.grpAccountIP.Name = "grpAccountIP";
+            this.grpAccountIP.Size = new System.Drawing.Size(654, 56);
+            this.grpAccountIP.TabIndex = 57;
+            this.grpAccountIP.TabStop = false;
+            this.grpAccountIP.Text = "Accounts/IPs (For Public and Private)";
             // 
             // label74
             // 
@@ -5324,9 +5327,9 @@
             this.label74.ForeColor = System.Drawing.Color.Black;
             this.label74.Location = new System.Drawing.Point(282, 25);
             this.label74.Name = "label74";
-            this.label74.Size = new System.Drawing.Size(365, 13);
+            this.label74.Size = new System.Drawing.Size(326, 13);
             this.label74.TabIndex = 56;
-            this.label74.Text = "NOTE : Accounts Per Proxy For both Public and Private Proxies";
+            this.label74.Text = "NOTE : Accounts Per IPs For both Public and Private IPs";
             // 
             // lblRequestThreads
             // 
@@ -5335,56 +5338,56 @@
             this.lblRequestThreads.ForeColor = System.Drawing.Color.Black;
             this.lblRequestThreads.Location = new System.Drawing.Point(36, 29);
             this.lblRequestThreads.Name = "lblRequestThreads";
-            this.lblRequestThreads.Size = new System.Drawing.Size(162, 13);
+            this.lblRequestThreads.Size = new System.Drawing.Size(141, 13);
             this.lblRequestThreads.TabIndex = 55;
-            this.lblRequestThreads.Text = "No. Of accounts per proxy:";
+            this.lblRequestThreads.Text = "No. Of accounts per IP:";
             // 
-            // txtAccountsPerProxy
+            // txtAccountsPerIP
             // 
-            this.txtAccountsPerProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAccountsPerProxy.ForeColor = System.Drawing.Color.Black;
-            this.txtAccountsPerProxy.Location = new System.Drawing.Point(199, 26);
-            this.txtAccountsPerProxy.Name = "txtAccountsPerProxy";
-            this.txtAccountsPerProxy.Size = new System.Drawing.Size(43, 21);
-            this.txtAccountsPerProxy.TabIndex = 54;
-            this.txtAccountsPerProxy.Text = "5";
-            this.txtAccountsPerProxy.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtAccountsPerIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAccountsPerIP.ForeColor = System.Drawing.Color.Black;
+            this.txtAccountsPerIP.Location = new System.Drawing.Point(199, 26);
+            this.txtAccountsPerIP.Name = "txtAccountsPerIP";
+            this.txtAccountsPerIP.Size = new System.Drawing.Size(43, 21);
+            this.txtAccountsPerIP.TabIndex = 54;
+            this.txtAccountsPerIP.Text = "5";
+            this.txtAccountsPerIP.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
-            // grpPrivateProxy
+            // grpPrivateIP
             // 
-            this.grpPrivateProxy.BackColor = System.Drawing.Color.Transparent;
-            this.grpPrivateProxy.Controls.Add(this.btnAssignPrivateProxyStop);
-            this.grpPrivateProxy.Controls.Add(this.btnTestPvtProxies);
-            this.grpPrivateProxy.Controls.Add(this.label58);
-            this.grpPrivateProxy.Controls.Add(this.btnClearPrivateProxies);
-            this.grpPrivateProxy.Controls.Add(this.btnAssignProxy);
-            this.grpPrivateProxy.Controls.Add(this.btnPvtProxyThree);
-            this.grpPrivateProxy.Controls.Add(this.label39);
-            this.grpPrivateProxy.Controls.Add(this.txtPvtProxyThree);
-            this.grpPrivateProxy.Controls.Add(this.btnPvtProxyFour);
-            this.grpPrivateProxy.Controls.Add(this.txtPvtProxyFour);
-            this.grpPrivateProxy.Controls.Add(this.label37);
-            this.grpPrivateProxy.Controls.Add(this.label36);
-            this.grpPrivateProxy.Controls.Add(this.label38);
-            this.grpPrivateProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpPrivateProxy.ForeColor = System.Drawing.Color.Black;
-            this.grpPrivateProxy.Location = new System.Drawing.Point(9, 168);
-            this.grpPrivateProxy.Name = "grpPrivateProxy";
-            this.grpPrivateProxy.Size = new System.Drawing.Size(1010, 133);
-            this.grpPrivateProxy.TabIndex = 1;
-            this.grpPrivateProxy.TabStop = false;
-            this.grpPrivateProxy.Text = "Private Proxy";
+            this.grpPrivateIP.BackColor = System.Drawing.Color.Transparent;
+            this.grpPrivateIP.Controls.Add(this.btnAssignPrivateIPStop);
+            this.grpPrivateIP.Controls.Add(this.btnTestPvtProxies);
+            this.grpPrivateIP.Controls.Add(this.label58);
+            this.grpPrivateIP.Controls.Add(this.btnClearPrivateProxies);
+            this.grpPrivateIP.Controls.Add(this.btnAssignIP);
+            this.grpPrivateIP.Controls.Add(this.btnPvtIPThree);
+            this.grpPrivateIP.Controls.Add(this.label39);
+            this.grpPrivateIP.Controls.Add(this.txtPvtIPThree);
+            this.grpPrivateIP.Controls.Add(this.btnPvtIPFour);
+            this.grpPrivateIP.Controls.Add(this.txtPvtIPFour);
+            this.grpPrivateIP.Controls.Add(this.label37);
+            this.grpPrivateIP.Controls.Add(this.label36);
+            this.grpPrivateIP.Controls.Add(this.label38);
+            this.grpPrivateIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpPrivateIP.ForeColor = System.Drawing.Color.Black;
+            this.grpPrivateIP.Location = new System.Drawing.Point(9, 168);
+            this.grpPrivateIP.Name = "grpPrivateIP";
+            this.grpPrivateIP.Size = new System.Drawing.Size(1010, 133);
+            this.grpPrivateIP.TabIndex = 1;
+            this.grpPrivateIP.TabStop = false;
+            this.grpPrivateIP.Text = "Private IP";
             // 
-            // btnAssignPrivateProxyStop
+            // btnAssignPrivateIPStop
             // 
-            this.btnAssignPrivateProxyStop.BackgroundImage = global::twtboardpro.Properties.Resources.btn_stop;
-            this.btnAssignPrivateProxyStop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnAssignPrivateProxyStop.Location = new System.Drawing.Point(739, 86);
-            this.btnAssignPrivateProxyStop.Name = "btnAssignPrivateProxyStop";
-            this.btnAssignPrivateProxyStop.Size = new System.Drawing.Size(77, 27);
-            this.btnAssignPrivateProxyStop.TabIndex = 85;
-            this.btnAssignPrivateProxyStop.UseVisualStyleBackColor = true;
-            this.btnAssignPrivateProxyStop.Click += new System.EventHandler(this.btnAssignPrivateProxyStop_Click);
+            this.btnAssignPrivateIPStop.BackgroundImage = global::twtboardpro.Properties.Resources.btn_stop;
+            this.btnAssignPrivateIPStop.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnAssignPrivateIPStop.Location = new System.Drawing.Point(739, 86);
+            this.btnAssignPrivateIPStop.Name = "btnAssignPrivateIPStop";
+            this.btnAssignPrivateIPStop.Size = new System.Drawing.Size(77, 27);
+            this.btnAssignPrivateIPStop.TabIndex = 85;
+            this.btnAssignPrivateIPStop.UseVisualStyleBackColor = true;
+            this.btnAssignPrivateIPStop.Click += new System.EventHandler(this.btnAssignPrivateIPStop_Click);
             // 
             // btnTestPvtProxies
             // 
@@ -5407,9 +5410,9 @@
             this.label58.ForeColor = System.Drawing.Color.Black;
             this.label58.Location = new System.Drawing.Point(487, 53);
             this.label58.Name = "label58";
-            this.label58.Size = new System.Drawing.Size(327, 13);
+            this.label58.Size = new System.Drawing.Size(303, 13);
             this.label58.TabIndex = 58;
-            this.label58.Text = "NOTE: Clear Proxies From DataBase Not From Accounts";
+            this.label58.Text = "NOTE: Clear IPs From DataBase Not From Accounts";
             // 
             // btnClearPrivateProxies
             // 
@@ -5425,32 +5428,32 @@
             this.btnClearPrivateProxies.UseVisualStyleBackColor = false;
             this.btnClearPrivateProxies.Click += new System.EventHandler(this.btnClearPrivateProxies_Click);
             // 
-            // btnAssignProxy
+            // btnAssignIP
             // 
-            this.btnAssignProxy.BackColor = System.Drawing.Color.Transparent;
-            this.btnAssignProxy.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAssignProxy.BackgroundImage")));
-            this.btnAssignProxy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnAssignProxy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAssignProxy.ForeColor = System.Drawing.Color.Black;
-            this.btnAssignProxy.Location = new System.Drawing.Point(229, 84);
-            this.btnAssignProxy.Name = "btnAssignProxy";
-            this.btnAssignProxy.Size = new System.Drawing.Size(159, 29);
-            this.btnAssignProxy.TabIndex = 17;
-            this.btnAssignProxy.UseVisualStyleBackColor = false;
-            this.btnAssignProxy.Click += new System.EventHandler(this.btnAssignProxy_Click);
+            this.btnAssignIP.BackColor = System.Drawing.Color.Transparent;
+            this.btnAssignIP.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAssignIP.BackgroundImage")));
+            this.btnAssignIP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnAssignIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAssignIP.ForeColor = System.Drawing.Color.Black;
+            this.btnAssignIP.Location = new System.Drawing.Point(205, 84);
+            this.btnAssignIP.Name = "btnAssignIP";
+            this.btnAssignIP.Size = new System.Drawing.Size(183, 29);
+            this.btnAssignIP.TabIndex = 17;
+            this.btnAssignIP.UseVisualStyleBackColor = false;
+            this.btnAssignIP.Click += new System.EventHandler(this.btnAssignIP_Click);
             // 
-            // btnPvtProxyThree
+            // btnPvtIPThree
             // 
-            this.btnPvtProxyThree.Enabled = false;
-            this.btnPvtProxyThree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPvtProxyThree.Location = new System.Drawing.Point(506, 294);
-            this.btnPvtProxyThree.Name = "btnPvtProxyThree";
-            this.btnPvtProxyThree.Size = new System.Drawing.Size(59, 23);
-            this.btnPvtProxyThree.TabIndex = 8;
-            this.btnPvtProxyThree.Text = "....";
-            this.btnPvtProxyThree.UseVisualStyleBackColor = true;
-            this.btnPvtProxyThree.Visible = false;
-            this.btnPvtProxyThree.Click += new System.EventHandler(this.btnPvtProxyThree_Click);
+            this.btnPvtIPThree.Enabled = false;
+            this.btnPvtIPThree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPvtIPThree.Location = new System.Drawing.Point(506, 294);
+            this.btnPvtIPThree.Name = "btnPvtIPThree";
+            this.btnPvtIPThree.Size = new System.Drawing.Size(59, 23);
+            this.btnPvtIPThree.TabIndex = 8;
+            this.btnPvtIPThree.Text = "....";
+            this.btnPvtIPThree.UseVisualStyleBackColor = true;
+            this.btnPvtIPThree.Visible = false;
+            this.btnPvtIPThree.Click += new System.EventHandler(this.btnPvtIPThree_Click);
             // 
             // label39
             // 
@@ -5463,39 +5466,39 @@
             this.label39.Text = "OR";
             this.label39.Visible = false;
             // 
-            // txtPvtProxyThree
+            // txtPvtIPThree
             // 
-            this.txtPvtProxyThree.Enabled = false;
-            this.txtPvtProxyThree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPvtProxyThree.Location = new System.Drawing.Point(99, 294);
-            this.txtPvtProxyThree.Name = "txtPvtProxyThree";
-            this.txtPvtProxyThree.Size = new System.Drawing.Size(375, 22);
-            this.txtPvtProxyThree.TabIndex = 6;
-            this.txtPvtProxyThree.Visible = false;
+            this.txtPvtIPThree.Enabled = false;
+            this.txtPvtIPThree.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPvtIPThree.Location = new System.Drawing.Point(99, 294);
+            this.txtPvtIPThree.Name = "txtPvtIPThree";
+            this.txtPvtIPThree.Size = new System.Drawing.Size(375, 22);
+            this.txtPvtIPThree.TabIndex = 6;
+            this.txtPvtIPThree.Visible = false;
             // 
-            // btnPvtProxyFour
+            // btnPvtIPFour
             // 
-            this.btnPvtProxyFour.BackColor = System.Drawing.Color.Transparent;
-            this.btnPvtProxyFour.BackgroundImage = global::twtboardpro.Properties.Resources.Browse;
-            this.btnPvtProxyFour.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnPvtProxyFour.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPvtProxyFour.ForeColor = System.Drawing.Color.Black;
-            this.btnPvtProxyFour.Location = new System.Drawing.Point(820, 23);
-            this.btnPvtProxyFour.Name = "btnPvtProxyFour";
-            this.btnPvtProxyFour.Size = new System.Drawing.Size(80, 27);
-            this.btnPvtProxyFour.TabIndex = 5;
-            this.btnPvtProxyFour.UseVisualStyleBackColor = false;
-            this.btnPvtProxyFour.Click += new System.EventHandler(this.btnPvtProxyFour_Click);
+            this.btnPvtIPFour.BackColor = System.Drawing.Color.Transparent;
+            this.btnPvtIPFour.BackgroundImage = global::twtboardpro.Properties.Resources.Browse;
+            this.btnPvtIPFour.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnPvtIPFour.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPvtIPFour.ForeColor = System.Drawing.Color.Black;
+            this.btnPvtIPFour.Location = new System.Drawing.Point(820, 23);
+            this.btnPvtIPFour.Name = "btnPvtIPFour";
+            this.btnPvtIPFour.Size = new System.Drawing.Size(80, 27);
+            this.btnPvtIPFour.TabIndex = 5;
+            this.btnPvtIPFour.UseVisualStyleBackColor = false;
+            this.btnPvtIPFour.Click += new System.EventHandler(this.btnPvtIPFour_Click);
             // 
-            // txtPvtProxyFour
+            // txtPvtIPFour
             // 
-            this.txtPvtProxyFour.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPvtProxyFour.ForeColor = System.Drawing.Color.Black;
-            this.txtPvtProxyFour.Location = new System.Drawing.Point(205, 26);
-            this.txtPvtProxyFour.Name = "txtPvtProxyFour";
-            this.txtPvtProxyFour.ReadOnly = true;
-            this.txtPvtProxyFour.Size = new System.Drawing.Size(609, 21);
-            this.txtPvtProxyFour.TabIndex = 4;
+            this.txtPvtIPFour.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPvtIPFour.ForeColor = System.Drawing.Color.Black;
+            this.txtPvtIPFour.Location = new System.Drawing.Point(205, 26);
+            this.txtPvtIPFour.Name = "txtPvtIPFour";
+            this.txtPvtIPFour.ReadOnly = true;
+            this.txtPvtIPFour.Size = new System.Drawing.Size(609, 21);
+            this.txtPvtIPFour.TabIndex = 4;
             // 
             // label37
             // 
@@ -5504,9 +5507,9 @@
             this.label37.ForeColor = System.Drawing.Color.Black;
             this.label37.Location = new System.Drawing.Point(115, 29);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(89, 13);
+            this.label37.Size = new System.Drawing.Size(68, 13);
             this.label37.TabIndex = 2;
-            this.label37.Text = "Private Proxy:";
+            this.label37.Text = "Private IP:";
             // 
             // label36
             // 
@@ -5515,9 +5518,9 @@
             this.label36.ForeColor = System.Drawing.Color.Black;
             this.label36.Location = new System.Drawing.Point(202, 53);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(269, 13);
+            this.label36.Size = new System.Drawing.Size(227, 13);
             this.label36.TabIndex = 1;
-            this.label36.Text = "ProxyAddress:ProxyPort:Username:Password";
+            this.label36.Text = "IPAddress:IPPort:Username:Password";
             this.label36.Visible = false;
             // 
             // label38
@@ -5527,97 +5530,97 @@
             this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label38.Location = new System.Drawing.Point(112, 306);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(150, 15);
+            this.label38.Size = new System.Drawing.Size(112, 15);
             this.label38.TabIndex = 3;
-            this.label38.Text = "ProxyAddress:ProxyPort:IP";
+            this.label38.Text = "IPAddress:IPPort:IP";
             this.label38.Visible = false;
             // 
-            // grpPublicProxy
+            // grpPublicIP
             // 
-            this.grpPublicProxy.Controls.Add(this.btn_StopProxyTesting);
-            this.grpPublicProxy.Controls.Add(this.txtProxyUrl);
-            this.grpPublicProxy.Controls.Add(this.chkboxUseUrlProxy);
-            this.grpPublicProxy.Controls.Add(this.btnAsssignPublicProxy);
-            this.grpPublicProxy.Controls.Add(this.chkboxImportPublicProxy);
-            this.grpPublicProxy.Controls.Add(this.label46);
-            this.grpPublicProxy.Controls.Add(this.txtNumberOfProxyThreads);
-            this.grpPublicProxy.Controls.Add(this.btnClearPublicProxies);
-            this.grpPublicProxy.Controls.Add(this.btnTestPublicProxy);
-            this.grpPublicProxy.Controls.Add(this.btnPublicProxy);
-            this.grpPublicProxy.Controls.Add(this.txtPublicProxy);
-            this.grpPublicProxy.Controls.Add(this.label35);
-            this.grpPublicProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpPublicProxy.ForeColor = System.Drawing.Color.Black;
-            this.grpPublicProxy.Location = new System.Drawing.Point(8, 6);
-            this.grpPublicProxy.Name = "grpPublicProxy";
-            this.grpPublicProxy.Size = new System.Drawing.Size(1011, 158);
-            this.grpPublicProxy.TabIndex = 0;
-            this.grpPublicProxy.TabStop = false;
-            this.grpPublicProxy.Text = "Public Proxy";
+            this.grpPublicIP.Controls.Add(this.btn_StopIPTesting);
+            this.grpPublicIP.Controls.Add(this.txtIPUrl);
+            this.grpPublicIP.Controls.Add(this.chkboxUseUrlIP);
+            this.grpPublicIP.Controls.Add(this.btnAsssignPublicIP);
+            this.grpPublicIP.Controls.Add(this.chkboxImportPublicIP);
+            this.grpPublicIP.Controls.Add(this.label46);
+            this.grpPublicIP.Controls.Add(this.txtNumberOfIPThreads);
+            this.grpPublicIP.Controls.Add(this.btnClearPublicProxies);
+            this.grpPublicIP.Controls.Add(this.btnTestPublicIP);
+            this.grpPublicIP.Controls.Add(this.btnPublicIP);
+            this.grpPublicIP.Controls.Add(this.txtPublicIP);
+            this.grpPublicIP.Controls.Add(this.label35);
+            this.grpPublicIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpPublicIP.ForeColor = System.Drawing.Color.Black;
+            this.grpPublicIP.Location = new System.Drawing.Point(8, 6);
+            this.grpPublicIP.Name = "grpPublicIP";
+            this.grpPublicIP.Size = new System.Drawing.Size(1011, 158);
+            this.grpPublicIP.TabIndex = 0;
+            this.grpPublicIP.TabStop = false;
+            this.grpPublicIP.Text = "Public IP";
             // 
-            // btn_StopProxyTesting
+            // btn_StopIPTesting
             // 
-            this.btn_StopProxyTesting.BackgroundImage = global::twtboardpro.Properties.Resources.btn_stop;
-            this.btn_StopProxyTesting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btn_StopProxyTesting.Location = new System.Drawing.Point(738, 123);
-            this.btn_StopProxyTesting.Name = "btn_StopProxyTesting";
-            this.btn_StopProxyTesting.Size = new System.Drawing.Size(77, 27);
-            this.btn_StopProxyTesting.TabIndex = 84;
-            this.btn_StopProxyTesting.UseVisualStyleBackColor = true;
-            this.btn_StopProxyTesting.Click += new System.EventHandler(this.btn_StopProxyTesting_Click);
+            this.btn_StopIPTesting.BackgroundImage = global::twtboardpro.Properties.Resources.btn_stop;
+            this.btn_StopIPTesting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btn_StopIPTesting.Location = new System.Drawing.Point(738, 123);
+            this.btn_StopIPTesting.Name = "btn_StopIPTesting";
+            this.btn_StopIPTesting.Size = new System.Drawing.Size(77, 27);
+            this.btn_StopIPTesting.TabIndex = 84;
+            this.btn_StopIPTesting.UseVisualStyleBackColor = true;
+            this.btn_StopIPTesting.Click += new System.EventHandler(this.btn_StopIPTesting_Click);
             // 
-            // txtProxyUrl
+            // txtIPUrl
             // 
-            this.txtProxyUrl.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtProxyUrl.ForeColor = System.Drawing.Color.Black;
-            this.txtProxyUrl.Location = new System.Drawing.Point(206, 57);
-            this.txtProxyUrl.Name = "txtProxyUrl";
-            this.txtProxyUrl.Size = new System.Drawing.Size(609, 21);
-            this.txtProxyUrl.TabIndex = 83;
-            this.txtProxyUrl.Visible = false;
+            this.txtIPUrl.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtIPUrl.ForeColor = System.Drawing.Color.Black;
+            this.txtIPUrl.Location = new System.Drawing.Point(206, 57);
+            this.txtIPUrl.Name = "txtIPUrl";
+            this.txtIPUrl.Size = new System.Drawing.Size(609, 21);
+            this.txtIPUrl.TabIndex = 83;
+            this.txtIPUrl.Visible = false;
             // 
-            // chkboxUseUrlProxy
+            // chkboxUseUrlIP
             // 
-            this.chkboxUseUrlProxy.AutoSize = true;
-            this.chkboxUseUrlProxy.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.chkboxUseUrlProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkboxUseUrlProxy.ForeColor = System.Drawing.Color.Black;
-            this.chkboxUseUrlProxy.Location = new System.Drawing.Point(16, 58);
-            this.chkboxUseUrlProxy.Name = "chkboxUseUrlProxy";
-            this.chkboxUseUrlProxy.Size = new System.Drawing.Size(135, 17);
-            this.chkboxUseUrlProxy.TabIndex = 82;
-            this.chkboxUseUrlProxy.Text = "Use Url From Proxy";
-            this.chkboxUseUrlProxy.UseVisualStyleBackColor = true;
-            this.chkboxUseUrlProxy.Visible = false;
-            this.chkboxUseUrlProxy.CheckedChanged += new System.EventHandler(this.chkboxUseUrlProxy_CheckedChanged);
+            this.chkboxUseUrlIP.AutoSize = true;
+            this.chkboxUseUrlIP.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.chkboxUseUrlIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkboxUseUrlIP.ForeColor = System.Drawing.Color.Black;
+            this.chkboxUseUrlIP.Location = new System.Drawing.Point(16, 58);
+            this.chkboxUseUrlIP.Name = "chkboxUseUrlIP";
+            this.chkboxUseUrlIP.Size = new System.Drawing.Size(114, 17);
+            this.chkboxUseUrlIP.TabIndex = 82;
+            this.chkboxUseUrlIP.Text = "Use Url From IP";
+            this.chkboxUseUrlIP.UseVisualStyleBackColor = true;
+            this.chkboxUseUrlIP.Visible = false;
+            this.chkboxUseUrlIP.CheckedChanged += new System.EventHandler(this.chkboxUseUrlIP_CheckedChanged);
             // 
-            // btnAsssignPublicProxy
+            // btnAsssignPublicIP
             // 
-            this.btnAsssignPublicProxy.BackColor = System.Drawing.Color.Transparent;
-            this.btnAsssignPublicProxy.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAsssignPublicProxy.BackgroundImage")));
-            this.btnAsssignPublicProxy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnAsssignPublicProxy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAsssignPublicProxy.ForeColor = System.Drawing.Color.Black;
-            this.btnAsssignPublicProxy.Location = new System.Drawing.Point(230, 123);
-            this.btnAsssignPublicProxy.Name = "btnAsssignPublicProxy";
-            this.btnAsssignPublicProxy.Size = new System.Drawing.Size(159, 29);
-            this.btnAsssignPublicProxy.TabIndex = 80;
-            this.btnAsssignPublicProxy.UseVisualStyleBackColor = false;
-            this.btnAsssignPublicProxy.Click += new System.EventHandler(this.txtAsssignPublicProxy_Click);
+            this.btnAsssignPublicIP.BackColor = System.Drawing.Color.Transparent;
+            this.btnAsssignPublicIP.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("btnAsssignPublicIP.BackgroundImage")));
+            this.btnAsssignPublicIP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnAsssignPublicIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAsssignPublicIP.ForeColor = System.Drawing.Color.Black;
+            this.btnAsssignPublicIP.Location = new System.Drawing.Point(230, 123);
+            this.btnAsssignPublicIP.Name = "btnAsssignPublicIP";
+            this.btnAsssignPublicIP.Size = new System.Drawing.Size(184, 29);
+            this.btnAsssignPublicIP.TabIndex = 80;
+            this.btnAsssignPublicIP.UseVisualStyleBackColor = false;
+            this.btnAsssignPublicIP.Click += new System.EventHandler(this.txtAsssignPublicIP_Click);
             // 
-            // chkboxImportPublicProxy
+            // chkboxImportPublicIP
             // 
-            this.chkboxImportPublicProxy.AutoSize = true;
-            this.chkboxImportPublicProxy.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.chkboxImportPublicProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkboxImportPublicProxy.ForeColor = System.Drawing.Color.Black;
-            this.chkboxImportPublicProxy.Location = new System.Drawing.Point(276, 89);
-            this.chkboxImportPublicProxy.Name = "chkboxImportPublicProxy";
-            this.chkboxImportPublicProxy.Size = new System.Drawing.Size(155, 17);
-            this.chkboxImportPublicProxy.TabIndex = 79;
-            this.chkboxImportPublicProxy.Text = "Import Without Testing";
-            this.chkboxImportPublicProxy.UseVisualStyleBackColor = true;
-            this.chkboxImportPublicProxy.CheckedChanged += new System.EventHandler(this.chkboxImportPublicProxy_CheckedChanged);
+            this.chkboxImportPublicIP.AutoSize = true;
+            this.chkboxImportPublicIP.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.chkboxImportPublicIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkboxImportPublicIP.ForeColor = System.Drawing.Color.Black;
+            this.chkboxImportPublicIP.Location = new System.Drawing.Point(276, 89);
+            this.chkboxImportPublicIP.Name = "chkboxImportPublicIP";
+            this.chkboxImportPublicIP.Size = new System.Drawing.Size(155, 17);
+            this.chkboxImportPublicIP.TabIndex = 79;
+            this.chkboxImportPublicIP.Text = "Import Without Testing";
+            this.chkboxImportPublicIP.UseVisualStyleBackColor = true;
+            this.chkboxImportPublicIP.CheckedChanged += new System.EventHandler(this.chkboxImportPublicIP_CheckedChanged);
             // 
             // label46
             // 
@@ -5626,20 +5629,20 @@
             this.label46.ForeColor = System.Drawing.Color.Black;
             this.label46.Location = new System.Drawing.Point(13, 92);
             this.label46.Name = "label46";
-            this.label46.Size = new System.Drawing.Size(192, 13);
+            this.label46.Size = new System.Drawing.Size(171, 13);
             this.label46.TabIndex = 78;
-            this.label46.Text = "No. Of Proxy Checking Threads:";
+            this.label46.Text = "No. Of IP Checking Threads:";
             // 
-            // txtNumberOfProxyThreads
+            // txtNumberOfIPThreads
             // 
-            this.txtNumberOfProxyThreads.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNumberOfProxyThreads.ForeColor = System.Drawing.Color.Black;
-            this.txtNumberOfProxyThreads.Location = new System.Drawing.Point(206, 89);
-            this.txtNumberOfProxyThreads.Name = "txtNumberOfProxyThreads";
-            this.txtNumberOfProxyThreads.Size = new System.Drawing.Size(43, 21);
-            this.txtNumberOfProxyThreads.TabIndex = 77;
-            this.txtNumberOfProxyThreads.Text = "5";
-            this.txtNumberOfProxyThreads.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtNumberOfIPThreads.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNumberOfIPThreads.ForeColor = System.Drawing.Color.Black;
+            this.txtNumberOfIPThreads.Location = new System.Drawing.Point(206, 89);
+            this.txtNumberOfIPThreads.Name = "txtNumberOfIPThreads";
+            this.txtNumberOfIPThreads.Size = new System.Drawing.Size(43, 21);
+            this.txtNumberOfIPThreads.TabIndex = 77;
+            this.txtNumberOfIPThreads.Text = "5";
+            this.txtNumberOfIPThreads.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // btnClearPublicProxies
             // 
@@ -5655,44 +5658,44 @@
             this.btnClearPublicProxies.UseVisualStyleBackColor = false;
             this.btnClearPublicProxies.Click += new System.EventHandler(this.btnClearPublicProxies_Click);
             // 
-            // btnTestPublicProxy
+            // btnTestPublicIP
             // 
-            this.btnTestPublicProxy.BackColor = System.Drawing.Color.White;
-            this.btnTestPublicProxy.BackgroundImage = global::twtboardpro.Properties.Resources.test;
-            this.btnTestPublicProxy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnTestPublicProxy.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.btnTestPublicProxy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnTestPublicProxy.ForeColor = System.Drawing.Color.Black;
-            this.btnTestPublicProxy.Location = new System.Drawing.Point(654, 122);
-            this.btnTestPublicProxy.Name = "btnTestPublicProxy";
-            this.btnTestPublicProxy.Size = new System.Drawing.Size(80, 28);
-            this.btnTestPublicProxy.TabIndex = 4;
-            this.btnTestPublicProxy.UseVisualStyleBackColor = false;
-            this.btnTestPublicProxy.Click += new System.EventHandler(this.btnTestPublicProxy_Click);
+            this.btnTestPublicIP.BackColor = System.Drawing.Color.White;
+            this.btnTestPublicIP.BackgroundImage = global::twtboardpro.Properties.Resources.test;
+            this.btnTestPublicIP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnTestPublicIP.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.btnTestPublicIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTestPublicIP.ForeColor = System.Drawing.Color.Black;
+            this.btnTestPublicIP.Location = new System.Drawing.Point(654, 122);
+            this.btnTestPublicIP.Name = "btnTestPublicIP";
+            this.btnTestPublicIP.Size = new System.Drawing.Size(80, 28);
+            this.btnTestPublicIP.TabIndex = 4;
+            this.btnTestPublicIP.UseVisualStyleBackColor = false;
+            this.btnTestPublicIP.Click += new System.EventHandler(this.btnTestPublicIP_Click);
             // 
-            // btnPublicProxy
+            // btnPublicIP
             // 
-            this.btnPublicProxy.BackColor = System.Drawing.Color.Transparent;
-            this.btnPublicProxy.BackgroundImage = global::twtboardpro.Properties.Resources.Browse;
-            this.btnPublicProxy.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnPublicProxy.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnPublicProxy.ForeColor = System.Drawing.Color.Black;
-            this.btnPublicProxy.Location = new System.Drawing.Point(821, 16);
-            this.btnPublicProxy.Name = "btnPublicProxy";
-            this.btnPublicProxy.Size = new System.Drawing.Size(80, 27);
-            this.btnPublicProxy.TabIndex = 3;
-            this.btnPublicProxy.UseVisualStyleBackColor = false;
-            this.btnPublicProxy.Click += new System.EventHandler(this.btnPublicProxy_Click);
+            this.btnPublicIP.BackColor = System.Drawing.Color.Transparent;
+            this.btnPublicIP.BackgroundImage = global::twtboardpro.Properties.Resources.Browse;
+            this.btnPublicIP.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.btnPublicIP.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnPublicIP.ForeColor = System.Drawing.Color.Black;
+            this.btnPublicIP.Location = new System.Drawing.Point(821, 16);
+            this.btnPublicIP.Name = "btnPublicIP";
+            this.btnPublicIP.Size = new System.Drawing.Size(80, 27);
+            this.btnPublicIP.TabIndex = 3;
+            this.btnPublicIP.UseVisualStyleBackColor = false;
+            this.btnPublicIP.Click += new System.EventHandler(this.btnPublicIP_Click);
             // 
-            // txtPublicProxy
+            // txtPublicIP
             // 
-            this.txtPublicProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtPublicProxy.ForeColor = System.Drawing.Color.Black;
-            this.txtPublicProxy.Location = new System.Drawing.Point(206, 21);
-            this.txtPublicProxy.Name = "txtPublicProxy";
-            this.txtPublicProxy.ReadOnly = true;
-            this.txtPublicProxy.Size = new System.Drawing.Size(609, 21);
-            this.txtPublicProxy.TabIndex = 2;
+            this.txtPublicIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtPublicIP.ForeColor = System.Drawing.Color.Black;
+            this.txtPublicIP.Location = new System.Drawing.Point(206, 21);
+            this.txtPublicIP.Name = "txtPublicIP";
+            this.txtPublicIP.ReadOnly = true;
+            this.txtPublicIP.Size = new System.Drawing.Size(609, 21);
+            this.txtPublicIP.TabIndex = 2;
             // 
             // label35
             // 
@@ -5701,21 +5704,21 @@
             this.label35.ForeColor = System.Drawing.Color.Black;
             this.label35.Location = new System.Drawing.Point(100, 24);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(105, 13);
+            this.label35.Size = new System.Drawing.Size(84, 13);
             this.label35.TabIndex = 0;
-            this.label35.Text = "Public Proxy File:";
+            this.label35.Text = "Public IP File:";
             // 
-            // grpWorkingProxy
+            // grpWorkingIP
             // 
-            this.grpWorkingProxy.Controls.Add(this.lbltotalworkingproxies);
-            this.grpWorkingProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpWorkingProxy.ForeColor = System.Drawing.Color.Black;
-            this.grpWorkingProxy.Location = new System.Drawing.Point(703, 307);
-            this.grpWorkingProxy.Name = "grpWorkingProxy";
-            this.grpWorkingProxy.Size = new System.Drawing.Size(316, 55);
-            this.grpWorkingProxy.TabIndex = 58;
-            this.grpWorkingProxy.TabStop = false;
-            this.grpWorkingProxy.Text = "Working Proxies";
+            this.grpWorkingIP.Controls.Add(this.lbltotalworkingproxies);
+            this.grpWorkingIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpWorkingIP.ForeColor = System.Drawing.Color.Black;
+            this.grpWorkingIP.Location = new System.Drawing.Point(703, 307);
+            this.grpWorkingIP.Name = "grpWorkingIP";
+            this.grpWorkingIP.Size = new System.Drawing.Size(316, 55);
+            this.grpWorkingIP.TabIndex = 58;
+            this.grpWorkingIP.TabStop = false;
+            this.grpWorkingIP.Text = "Working IPs";
             // 
             // lbltotalworkingproxies
             // 
@@ -5724,9 +5727,9 @@
             this.lbltotalworkingproxies.ForeColor = System.Drawing.Color.Black;
             this.lbltotalworkingproxies.Location = new System.Drawing.Point(17, 21);
             this.lbltotalworkingproxies.Name = "lbltotalworkingproxies";
-            this.lbltotalworkingproxies.Size = new System.Drawing.Size(137, 13);
+            this.lbltotalworkingproxies.Size = new System.Drawing.Size(113, 13);
             this.lbltotalworkingproxies.TabIndex = 57;
-            this.lbltotalworkingproxies.Text = "Total Working Proxies:";
+            this.lbltotalworkingproxies.Text = "Total Working IPs:";
             // 
             // tabScrape
             // 
@@ -6379,6 +6382,7 @@
             // 
             // grpKeywordTweetExtractor
             // 
+            this.grpKeywordTweetExtractor.Controls.Add(this.chkBoxScrapeLiveTweet);
             this.grpKeywordTweetExtractor.Controls.Add(this.txtKeywordPageCount);
             this.grpKeywordTweetExtractor.Controls.Add(this.label113);
             this.grpKeywordTweetExtractor.Controls.Add(this.txtKeywordTweetExtractor);
@@ -6394,11 +6398,22 @@
             this.grpKeywordTweetExtractor.TabStop = false;
             this.grpKeywordTweetExtractor.Text = "Keyword Tweet Extractor";
             // 
+            // chkBoxScrapeLiveTweet
+            // 
+            this.chkBoxScrapeLiveTweet.AutoSize = true;
+            this.chkBoxScrapeLiveTweet.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkBoxScrapeLiveTweet.Location = new System.Drawing.Point(538, 19);
+            this.chkBoxScrapeLiveTweet.Name = "chkBoxScrapeLiveTweet";
+            this.chkBoxScrapeLiveTweet.Size = new System.Drawing.Size(131, 17);
+            this.chkBoxScrapeLiveTweet.TabIndex = 68;
+            this.chkBoxScrapeLiveTweet.Text = "Scrape Live Tweet";
+            this.chkBoxScrapeLiveTweet.UseVisualStyleBackColor = true;
+            // 
             // txtKeywordPageCount
             // 
             this.txtKeywordPageCount.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtKeywordPageCount.ForeColor = System.Drawing.Color.Black;
-            this.txtKeywordPageCount.Location = new System.Drawing.Point(727, 17);
+            this.txtKeywordPageCount.Location = new System.Drawing.Point(774, 17);
             this.txtKeywordPageCount.Name = "txtKeywordPageCount";
             this.txtKeywordPageCount.Size = new System.Drawing.Size(44, 21);
             this.txtKeywordPageCount.TabIndex = 67;
@@ -6409,7 +6424,7 @@
             // 
             this.label113.AutoSize = true;
             this.label113.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label113.Location = new System.Drawing.Point(639, 20);
+            this.label113.Location = new System.Drawing.Point(686, 20);
             this.label113.Name = "label113";
             this.label113.Size = new System.Drawing.Size(82, 13);
             this.label113.TabIndex = 66;
@@ -6419,7 +6434,7 @@
             // 
             this.txtKeywordTweetExtractor.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtKeywordTweetExtractor.ForeColor = System.Drawing.Color.Black;
-            this.txtKeywordTweetExtractor.Location = new System.Drawing.Point(165, 17);
+            this.txtKeywordTweetExtractor.Location = new System.Drawing.Point(111, 17);
             this.txtKeywordTweetExtractor.Name = "txtKeywordTweetExtractor";
             this.txtKeywordTweetExtractor.ReadOnly = true;
             this.txtKeywordTweetExtractor.Size = new System.Drawing.Size(322, 21);
@@ -6430,7 +6445,7 @@
             this.label64.AutoSize = true;
             this.label64.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label64.ForeColor = System.Drawing.Color.Black;
-            this.label64.Location = new System.Drawing.Point(74, 21);
+            this.label64.Location = new System.Drawing.Point(20, 21);
             this.label64.Name = "label64";
             this.label64.Size = new System.Drawing.Size(85, 13);
             this.label64.TabIndex = 63;
@@ -6443,7 +6458,7 @@
             this.btnKeywordTweetExtrcator.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnKeywordTweetExtrcator.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnKeywordTweetExtrcator.ForeColor = System.Drawing.Color.Black;
-            this.btnKeywordTweetExtrcator.Location = new System.Drawing.Point(493, 14);
+            this.btnKeywordTweetExtrcator.Location = new System.Drawing.Point(439, 14);
             this.btnKeywordTweetExtrcator.Name = "btnKeywordTweetExtrcator";
             this.btnKeywordTweetExtrcator.Size = new System.Drawing.Size(80, 27);
             this.btnKeywordTweetExtrcator.TabIndex = 65;
@@ -6454,9 +6469,9 @@
             // 
             this.btnstartextracting.BackgroundImage = global::twtboardpro.Properties.Resources.bt_Start_Extraction;
             this.btnstartextracting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.btnstartextracting.Location = new System.Drawing.Point(809, 12);
+            this.btnstartextracting.Location = new System.Drawing.Point(856, 11);
             this.btnstartextracting.Name = "btnstartextracting";
-            this.btnstartextracting.Size = new System.Drawing.Size(131, 28);
+            this.btnstartextracting.Size = new System.Drawing.Size(139, 30);
             this.btnstartextracting.TabIndex = 62;
             this.btnstartextracting.UseVisualStyleBackColor = true;
             this.btnstartextracting.Click += new System.EventHandler(this.btnstartextracting_Click);
@@ -6535,9 +6550,9 @@
             this.btnRetweetExtract.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnRetweetExtract.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnRetweetExtract.ForeColor = System.Drawing.Color.Black;
-            this.btnRetweetExtract.Location = new System.Drawing.Point(808, 73);
+            this.btnRetweetExtract.Location = new System.Drawing.Point(832, 69);
             this.btnRetweetExtract.Name = "btnRetweetExtract";
-            this.btnRetweetExtract.Size = new System.Drawing.Size(134, 28);
+            this.btnRetweetExtract.Size = new System.Drawing.Size(150, 32);
             this.btnRetweetExtract.TabIndex = 7;
             this.btnRetweetExtract.UseVisualStyleBackColor = false;
             this.btnRetweetExtract.Click += new System.EventHandler(this.btnUploadRetweetUserID_Click);
@@ -6706,9 +6721,9 @@
             this.btnExtractTweet.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.btnExtractTweet.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnExtractTweet.ForeColor = System.Drawing.Color.Black;
-            this.btnExtractTweet.Location = new System.Drawing.Point(809, 75);
+            this.btnExtractTweet.Location = new System.Drawing.Point(814, 72);
             this.btnExtractTweet.Name = "btnExtractTweet";
-            this.btnExtractTweet.Size = new System.Drawing.Size(131, 29);
+            this.btnExtractTweet.Size = new System.Drawing.Size(154, 31);
             this.btnExtractTweet.TabIndex = 6;
             this.btnExtractTweet.UseVisualStyleBackColor = false;
             this.btnExtractTweet.Click += new System.EventHandler(this.btnExtractTweet_Click);
@@ -6864,7 +6879,7 @@
             this.btnStart_TweetCreator.ForeColor = System.Drawing.Color.Black;
             this.btnStart_TweetCreator.Location = new System.Drawing.Point(809, 43);
             this.btnStart_TweetCreator.Name = "btnStart_TweetCreator";
-            this.btnStart_TweetCreator.Size = new System.Drawing.Size(172, 29);
+            this.btnStart_TweetCreator.Size = new System.Drawing.Size(174, 29);
             this.btnStart_TweetCreator.TabIndex = 12;
             this.btnStart_TweetCreator.UseVisualStyleBackColor = false;
             this.btnStart_TweetCreator.Click += new System.EventHandler(this.btnStart_TweetCreator_Click);
@@ -7315,9 +7330,9 @@
             this.tab_RetweetOrFevorite.Controls.Add(this.groupBox3);
             this.tab_RetweetOrFevorite.Controls.Add(this.groupBox45);
             this.tab_RetweetOrFevorite.Controls.Add(this.grpRetweetandFavoriteSubmitAction);
-            this.tab_RetweetOrFevorite.Controls.Add(this.grpRetweetandFavoriteProxySetting);
+            this.tab_RetweetOrFevorite.Controls.Add(this.grpRetweetandFavoriteIPSetting);
             this.tab_RetweetOrFevorite.Controls.Add(this.groupBox70);
-            this.tab_RetweetOrFevorite.Controls.Add(this.grpRetweetandFavoriteProxy);
+            this.tab_RetweetOrFevorite.Controls.Add(this.grpRetweetandFavoriteIP);
             this.tab_RetweetOrFevorite.Controls.Add(this.grpRetweetandFavorite);
             this.tab_RetweetOrFevorite.Controls.Add(this.grpRetweetandFavoriteOption);
             this.tab_RetweetOrFevorite.Location = new System.Drawing.Point(204, 4);
@@ -7481,20 +7496,20 @@
             this.btn_start.UseVisualStyleBackColor = true;
             this.btn_start.Click += new System.EventHandler(this.btn_start_Click);
             // 
-            // grpRetweetandFavoriteProxySetting
+            // grpRetweetandFavoriteIPSetting
             // 
-            this.grpRetweetandFavoriteProxySetting.Controls.Add(this.txtCountFavoriteandRetweet);
-            this.grpRetweetandFavoriteProxySetting.Controls.Add(this.label122);
-            this.grpRetweetandFavoriteProxySetting.Controls.Add(this.txtThreadRTFav);
-            this.grpRetweetandFavoriteProxySetting.Controls.Add(this.lbltxtThreadRTFav);
-            this.grpRetweetandFavoriteProxySetting.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpRetweetandFavoriteProxySetting.ForeColor = System.Drawing.Color.Black;
-            this.grpRetweetandFavoriteProxySetting.Location = new System.Drawing.Point(505, 154);
-            this.grpRetweetandFavoriteProxySetting.Name = "grpRetweetandFavoriteProxySetting";
-            this.grpRetweetandFavoriteProxySetting.Size = new System.Drawing.Size(262, 72);
-            this.grpRetweetandFavoriteProxySetting.TabIndex = 65;
-            this.grpRetweetandFavoriteProxySetting.TabStop = false;
-            this.grpRetweetandFavoriteProxySetting.Text = "Thread";
+            this.grpRetweetandFavoriteIPSetting.Controls.Add(this.txtCountFavoriteandRetweet);
+            this.grpRetweetandFavoriteIPSetting.Controls.Add(this.label122);
+            this.grpRetweetandFavoriteIPSetting.Controls.Add(this.txtThreadRTFav);
+            this.grpRetweetandFavoriteIPSetting.Controls.Add(this.lbltxtThreadRTFav);
+            this.grpRetweetandFavoriteIPSetting.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpRetweetandFavoriteIPSetting.ForeColor = System.Drawing.Color.Black;
+            this.grpRetweetandFavoriteIPSetting.Location = new System.Drawing.Point(505, 154);
+            this.grpRetweetandFavoriteIPSetting.Name = "grpRetweetandFavoriteIPSetting";
+            this.grpRetweetandFavoriteIPSetting.Size = new System.Drawing.Size(262, 72);
+            this.grpRetweetandFavoriteIPSetting.TabIndex = 65;
+            this.grpRetweetandFavoriteIPSetting.TabStop = false;
+            this.grpRetweetandFavoriteIPSetting.Text = "Thread";
             // 
             // txtCountFavoriteandRetweet
             // 
@@ -7561,49 +7576,49 @@
             this.lst_retweetAndFavoritelogger.Size = new System.Drawing.Size(1023, 134);
             this.lst_retweetAndFavoritelogger.TabIndex = 0;
             // 
-            // grpRetweetandFavoriteProxy
+            // grpRetweetandFavoriteIP
             // 
-            this.grpRetweetandFavoriteProxy.BackColor = System.Drawing.Color.Transparent;
-            this.grpRetweetandFavoriteProxy.Controls.Add(this.chk_RetweetAndFavoritePrivateproxy);
-            this.grpRetweetandFavoriteProxy.Controls.Add(this.chk_RetweetAndFavoritePublicproxy);
-            this.grpRetweetandFavoriteProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.grpRetweetandFavoriteProxy.ForeColor = System.Drawing.Color.Black;
-            this.grpRetweetandFavoriteProxy.Location = new System.Drawing.Point(195, 155);
-            this.grpRetweetandFavoriteProxy.Name = "grpRetweetandFavoriteProxy";
-            this.grpRetweetandFavoriteProxy.Size = new System.Drawing.Size(299, 71);
-            this.grpRetweetandFavoriteProxy.TabIndex = 64;
-            this.grpRetweetandFavoriteProxy.TabStop = false;
-            this.grpRetweetandFavoriteProxy.Text = "Use Proxy";
+            this.grpRetweetandFavoriteIP.BackColor = System.Drawing.Color.Transparent;
+            this.grpRetweetandFavoriteIP.Controls.Add(this.chk_RetweetAndFavoritePrivateIP);
+            this.grpRetweetandFavoriteIP.Controls.Add(this.chk_RetweetAndFavoritePublicIP);
+            this.grpRetweetandFavoriteIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.grpRetweetandFavoriteIP.ForeColor = System.Drawing.Color.Black;
+            this.grpRetweetandFavoriteIP.Location = new System.Drawing.Point(195, 155);
+            this.grpRetweetandFavoriteIP.Name = "grpRetweetandFavoriteIP";
+            this.grpRetweetandFavoriteIP.Size = new System.Drawing.Size(299, 71);
+            this.grpRetweetandFavoriteIP.TabIndex = 64;
+            this.grpRetweetandFavoriteIP.TabStop = false;
+            this.grpRetweetandFavoriteIP.Text = "Use IP";
             // 
-            // chk_RetweetAndFavoritePrivateproxy
+            // chk_RetweetAndFavoritePrivateIP
             // 
-            this.chk_RetweetAndFavoritePrivateproxy.AutoSize = true;
-            this.chk_RetweetAndFavoritePrivateproxy.BackColor = System.Drawing.Color.Transparent;
-            this.chk_RetweetAndFavoritePrivateproxy.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.chk_RetweetAndFavoritePrivateproxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chk_RetweetAndFavoritePrivateproxy.ForeColor = System.Drawing.Color.Black;
-            this.chk_RetweetAndFavoritePrivateproxy.Location = new System.Drawing.Point(153, 31);
-            this.chk_RetweetAndFavoritePrivateproxy.Name = "chk_RetweetAndFavoritePrivateproxy";
-            this.chk_RetweetAndFavoritePrivateproxy.Size = new System.Drawing.Size(135, 17);
-            this.chk_RetweetAndFavoritePrivateproxy.TabIndex = 1;
-            this.chk_RetweetAndFavoritePrivateproxy.Text = "Use Private Proxies";
-            this.chk_RetweetAndFavoritePrivateproxy.UseVisualStyleBackColor = false;
-            this.chk_RetweetAndFavoritePrivateproxy.CheckedChanged += new System.EventHandler(this.chk_RetweetAndFavoritePrivateproxy_CheckedChanged);
+            this.chk_RetweetAndFavoritePrivateIP.AutoSize = true;
+            this.chk_RetweetAndFavoritePrivateIP.BackColor = System.Drawing.Color.Transparent;
+            this.chk_RetweetAndFavoritePrivateIP.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.chk_RetweetAndFavoritePrivateIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chk_RetweetAndFavoritePrivateIP.ForeColor = System.Drawing.Color.Black;
+            this.chk_RetweetAndFavoritePrivateIP.Location = new System.Drawing.Point(153, 31);
+            this.chk_RetweetAndFavoritePrivateIP.Name = "chk_RetweetAndFavoritePrivateIP";
+            this.chk_RetweetAndFavoritePrivateIP.Size = new System.Drawing.Size(135, 17);
+            this.chk_RetweetAndFavoritePrivateIP.TabIndex = 1;
+            this.chk_RetweetAndFavoritePrivateIP.Text = "Use Private Proxies";
+            this.chk_RetweetAndFavoritePrivateIP.UseVisualStyleBackColor = false;
+            this.chk_RetweetAndFavoritePrivateIP.CheckedChanged += new System.EventHandler(this.chk_RetweetAndFavoritePrivateIP_CheckedChanged);
             // 
-            // chk_RetweetAndFavoritePublicproxy
+            // chk_RetweetAndFavoritePublicIP
             // 
-            this.chk_RetweetAndFavoritePublicproxy.AutoSize = true;
-            this.chk_RetweetAndFavoritePublicproxy.BackColor = System.Drawing.Color.Transparent;
-            this.chk_RetweetAndFavoritePublicproxy.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.chk_RetweetAndFavoritePublicproxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chk_RetweetAndFavoritePublicproxy.ForeColor = System.Drawing.Color.Black;
-            this.chk_RetweetAndFavoritePublicproxy.Location = new System.Drawing.Point(15, 31);
-            this.chk_RetweetAndFavoritePublicproxy.Name = "chk_RetweetAndFavoritePublicproxy";
-            this.chk_RetweetAndFavoritePublicproxy.Size = new System.Drawing.Size(128, 17);
-            this.chk_RetweetAndFavoritePublicproxy.TabIndex = 0;
-            this.chk_RetweetAndFavoritePublicproxy.Text = "Use Public Proxies";
-            this.chk_RetweetAndFavoritePublicproxy.UseVisualStyleBackColor = false;
-            this.chk_RetweetAndFavoritePublicproxy.CheckedChanged += new System.EventHandler(this.chk_RetweetAndFavoritePublicproxy_CheckedChanged);
+            this.chk_RetweetAndFavoritePublicIP.AutoSize = true;
+            this.chk_RetweetAndFavoritePublicIP.BackColor = System.Drawing.Color.Transparent;
+            this.chk_RetweetAndFavoritePublicIP.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.chk_RetweetAndFavoritePublicIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chk_RetweetAndFavoritePublicIP.ForeColor = System.Drawing.Color.Black;
+            this.chk_RetweetAndFavoritePublicIP.Location = new System.Drawing.Point(15, 31);
+            this.chk_RetweetAndFavoritePublicIP.Name = "chk_RetweetAndFavoritePublicIP";
+            this.chk_RetweetAndFavoritePublicIP.Size = new System.Drawing.Size(128, 17);
+            this.chk_RetweetAndFavoritePublicIP.TabIndex = 0;
+            this.chk_RetweetAndFavoritePublicIP.Text = "Use Public Proxies";
+            this.chk_RetweetAndFavoritePublicIP.UseVisualStyleBackColor = false;
+            this.chk_RetweetAndFavoritePublicIP.CheckedChanged += new System.EventHandler(this.chk_RetweetAndFavoritePublicIP_CheckedChanged);
             // 
             // grpRetweetandFavorite
             // 
@@ -8249,15 +8264,17 @@
             this.schedulerToolStripMenuItem2.Size = new System.Drawing.Size(71, 20);
             this.schedulerToolStripMenuItem2.Text = "Scheduler";
             // 
-            // label4
+            // chkBoxRetweetAndFollow
             // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.Color.FloralWhite;
-            this.label4.Location = new System.Drawing.Point(52, 59);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(111, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "A Socioboard Product";
+            this.chkBoxRetweetAndFollow.AutoSize = true;
+            this.chkBoxRetweetAndFollow.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkBoxRetweetAndFollow.ForeColor = System.Drawing.Color.Black;
+            this.chkBoxRetweetAndFollow.Location = new System.Drawing.Point(721, 17);
+            this.chkBoxRetweetAndFollow.Name = "chkBoxRetweetAndFollow";
+            this.chkBoxRetweetAndFollow.Size = new System.Drawing.Size(137, 17);
+            this.chkBoxRetweetAndFollow.TabIndex = 89;
+            this.chkBoxRetweetAndFollow.Text = "Retweet And Follow";
+            this.chkBoxRetweetAndFollow.UseVisualStyleBackColor = true;
             // 
             // frmMain_NewUI
             // 
@@ -8423,16 +8440,16 @@
             this.grpTweetReplyNote.ResumeLayout(false);
             this.grpTweetReplyNote.PerformLayout();
             this.gbTweetReplyLogger.ResumeLayout(false);
-            this.tabProxy.ResumeLayout(false);
-            this.gbProxyLogger.ResumeLayout(false);
-            this.grpAccountProxy.ResumeLayout(false);
-            this.grpAccountProxy.PerformLayout();
-            this.grpPrivateProxy.ResumeLayout(false);
-            this.grpPrivateProxy.PerformLayout();
-            this.grpPublicProxy.ResumeLayout(false);
-            this.grpPublicProxy.PerformLayout();
-            this.grpWorkingProxy.ResumeLayout(false);
-            this.grpWorkingProxy.PerformLayout();
+            this.tabIP.ResumeLayout(false);
+            this.gbIPLogger.ResumeLayout(false);
+            this.grpAccountIP.ResumeLayout(false);
+            this.grpAccountIP.PerformLayout();
+            this.grpPrivateIP.ResumeLayout(false);
+            this.grpPrivateIP.PerformLayout();
+            this.grpPublicIP.ResumeLayout(false);
+            this.grpPublicIP.PerformLayout();
+            this.grpWorkingIP.ResumeLayout(false);
+            this.grpWorkingIP.PerformLayout();
             this.tabScrape.ResumeLayout(false);
             this.splitContainer_ScrapeUsers.Panel1.ResumeLayout(false);
             this.splitContainer_ScrapeUsers.Panel2.ResumeLayout(false);
@@ -8477,11 +8494,11 @@
             this.groupBox45.ResumeLayout(false);
             this.groupBox45.PerformLayout();
             this.grpRetweetandFavoriteSubmitAction.ResumeLayout(false);
-            this.grpRetweetandFavoriteProxySetting.ResumeLayout(false);
-            this.grpRetweetandFavoriteProxySetting.PerformLayout();
+            this.grpRetweetandFavoriteIPSetting.ResumeLayout(false);
+            this.grpRetweetandFavoriteIPSetting.PerformLayout();
             this.groupBox70.ResumeLayout(false);
-            this.grpRetweetandFavoriteProxy.ResumeLayout(false);
-            this.grpRetweetandFavoriteProxy.PerformLayout();
+            this.grpRetweetandFavoriteIP.ResumeLayout(false);
+            this.grpRetweetandFavoriteIP.PerformLayout();
             this.grpRetweetandFavorite.ResumeLayout(false);
             this.grpRetweetandFavorite.PerformLayout();
             this.grpRetweetandFavoriteOption.ResumeLayout(false);
@@ -8527,7 +8544,6 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
         private System.Windows.Forms.Label labelAccountcreator;
-        private System.Windows.Forms.Label label67;
         private System.Drawing.Printing.PrintDocument printDocument1;
         private System.Windows.Forms.ToolStripMenuItem accountsToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem schedulerToolStripMenuItem3;
@@ -8880,41 +8896,41 @@
         private System.Windows.Forms.Label label73;
         private System.Windows.Forms.GroupBox gbTweetReplyLogger;
         private System.Windows.Forms.ListBox lstLogger_WaitReply;
-        private System.Windows.Forms.TabPage tabProxy;
-        private System.Windows.Forms.GroupBox gbProxyLogger;
-        private System.Windows.Forms.ListBox lstLoggerProxy;
-        private System.Windows.Forms.GroupBox grpAccountProxy;
+        private System.Windows.Forms.TabPage tabIP;
+        private System.Windows.Forms.GroupBox gbIPLogger;
+        private System.Windows.Forms.ListBox lstLoggerIP;
+        private System.Windows.Forms.GroupBox grpAccountIP;
         private System.Windows.Forms.Label label74;
         private System.Windows.Forms.Label lblRequestThreads;
-        private System.Windows.Forms.TextBox txtAccountsPerProxy;
-        private System.Windows.Forms.GroupBox grpPrivateProxy;
-        private System.Windows.Forms.Button btnAssignPrivateProxyStop;
+        private System.Windows.Forms.TextBox txtAccountsPerIP;
+        private System.Windows.Forms.GroupBox grpPrivateIP;
+        private System.Windows.Forms.Button btnAssignPrivateIPStop;
         private System.Windows.Forms.Button btnTestPvtProxies;
         private System.Windows.Forms.Label label58;
         private System.Windows.Forms.Button btnClearPrivateProxies;
-        private System.Windows.Forms.Button btnAssignProxy;
-        private System.Windows.Forms.Button btnPvtProxyThree;
+        private System.Windows.Forms.Button btnAssignIP;
+        private System.Windows.Forms.Button btnPvtIPThree;
         private System.Windows.Forms.Label label39;
-        private System.Windows.Forms.TextBox txtPvtProxyThree;
-        private System.Windows.Forms.Button btnPvtProxyFour;
-        private System.Windows.Forms.TextBox txtPvtProxyFour;
+        private System.Windows.Forms.TextBox txtPvtIPThree;
+        private System.Windows.Forms.Button btnPvtIPFour;
+        private System.Windows.Forms.TextBox txtPvtIPFour;
         private System.Windows.Forms.Label label37;
         private System.Windows.Forms.Label label36;
         private System.Windows.Forms.Label label38;
-        private System.Windows.Forms.GroupBox grpPublicProxy;
-        private System.Windows.Forms.Button btn_StopProxyTesting;
-        private System.Windows.Forms.TextBox txtProxyUrl;
-        private System.Windows.Forms.CheckBox chkboxUseUrlProxy;
-        private System.Windows.Forms.Button btnAsssignPublicProxy;
-        private System.Windows.Forms.CheckBox chkboxImportPublicProxy;
+        private System.Windows.Forms.GroupBox grpPublicIP;
+        private System.Windows.Forms.Button btn_StopIPTesting;
+        private System.Windows.Forms.TextBox txtIPUrl;
+        private System.Windows.Forms.CheckBox chkboxUseUrlIP;
+        private System.Windows.Forms.Button btnAsssignPublicIP;
+        private System.Windows.Forms.CheckBox chkboxImportPublicIP;
         private System.Windows.Forms.Label label46;
-        private System.Windows.Forms.TextBox txtNumberOfProxyThreads;
+        private System.Windows.Forms.TextBox txtNumberOfIPThreads;
         private System.Windows.Forms.Button btnClearPublicProxies;
-        private System.Windows.Forms.Button btnTestPublicProxy;
-        private System.Windows.Forms.Button btnPublicProxy;
-        private System.Windows.Forms.TextBox txtPublicProxy;
+        private System.Windows.Forms.Button btnTestPublicIP;
+        private System.Windows.Forms.Button btnPublicIP;
+        private System.Windows.Forms.TextBox txtPublicIP;
         private System.Windows.Forms.Label label35;
-        private System.Windows.Forms.GroupBox grpWorkingProxy;
+        private System.Windows.Forms.GroupBox grpWorkingIP;
         private System.Windows.Forms.Label lbltotalworkingproxies;
         private System.Windows.Forms.TabPage tabScrape;
         private System.Windows.Forms.SplitContainer splitContainer_ScrapeUsers;
@@ -9054,16 +9070,16 @@
         private System.Windows.Forms.GroupBox grpRetweetandFavoriteSubmitAction;
         private System.Windows.Forms.Button btnStopRetweetAndFavorite;
         private System.Windows.Forms.Button btn_start;
-        private System.Windows.Forms.GroupBox grpRetweetandFavoriteProxySetting;
+        private System.Windows.Forms.GroupBox grpRetweetandFavoriteIPSetting;
         private System.Windows.Forms.TextBox txtCountFavoriteandRetweet;
         private System.Windows.Forms.Label label122;
         private System.Windows.Forms.TextBox txtThreadRTFav;
         private System.Windows.Forms.Label lbltxtThreadRTFav;
         private System.Windows.Forms.GroupBox groupBox70;
         private System.Windows.Forms.ListBox lst_retweetAndFavoritelogger;
-        private System.Windows.Forms.GroupBox grpRetweetandFavoriteProxy;
-        private System.Windows.Forms.CheckBox chk_RetweetAndFavoritePrivateproxy;
-        private System.Windows.Forms.CheckBox chk_RetweetAndFavoritePublicproxy;
+        private System.Windows.Forms.GroupBox grpRetweetandFavoriteIP;
+        private System.Windows.Forms.CheckBox chk_RetweetAndFavoritePrivateIP;
+        private System.Windows.Forms.CheckBox chk_RetweetAndFavoritePublicIP;
         private System.Windows.Forms.GroupBox grpRetweetandFavorite;
         private System.Windows.Forms.CheckBox chkUsingKeyWord;
         private System.Windows.Forms.Label label105;
@@ -9110,7 +9126,9 @@
         private System.Windows.Forms.CheckBox chk_AcManagerUserName;
         private System.Windows.Forms.TextBox txt_AcManagerFolderPath;
         private System.Windows.Forms.Label lb_ACManagreUsername;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.CheckBox CheckBoxScrapTweets;
+        private System.Windows.Forms.CheckBox chkBoxScrapeLiveTweet;
+        public System.Windows.Forms.CheckBox chkBoxRetweetAndFollow;
     }
 }
 

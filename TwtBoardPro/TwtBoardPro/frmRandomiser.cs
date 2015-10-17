@@ -358,7 +358,7 @@ namespace twtboardpro
 
                     TweetAccountManager tweetAccountManager = keyValue.Value;
 
-                    Randomiser.Randomiser obj_Randomiser = new Randomiser.Randomiser(tweetAccountManager.Username, tweetAccountManager.userID, tweetAccountManager.Password, tweetAccountManager.Screen_name, tweetAccountManager.proxyAddress, tweetAccountManager.proxyPort, tweetAccountManager.proxyUsername, tweetAccountManager.proxyPassword);
+                    Randomiser.Randomiser obj_Randomiser = new Randomiser.Randomiser(tweetAccountManager.Username, tweetAccountManager.userID, tweetAccountManager.Password, tweetAccountManager.Screen_name, tweetAccountManager.IPAddress, tweetAccountManager.IPPort, tweetAccountManager.IPUsername, tweetAccountManager.IPpassword);
 
                     if (lstQuotes.Count > 0)
                     {

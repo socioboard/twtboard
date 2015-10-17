@@ -25,8 +25,10 @@ namespace twtboardpro
             public string wholeTweetMessage { get; set; }
         }
 
+
         public static List<StructTweetIDs> lst_structTweetIDs { get; set; }
 
+        public bool chkStatusRetweetAndFollow = false;
         //public static List<string> lstTweetIds;
 
         public static int noOfRecords = 20;
@@ -388,7 +390,7 @@ namespace twtboardpro
                     PageSource = httpHelper.getHtmlfromUrl(new Uri("https://api.twitter.com/1/statuses/user_timeline.xml?include_entities=true&inc%E2%80%8C%E2%80%8Blude_rts=true&include_rts=1&screen_name=" + username + "&count=" + noOfstatus), "", "");
                 }
 
-                if (!string.IsNullOrEmpty(PageSource) && PageSource.Contains("Sorry, that page does not exist"))
+                if (!string.IsNullOrEmpty(PageSource) && PageSource.Contains("Sorry, that page does not exist"))      //https://api.twitter.com/1/statuses/user_timeline.xml?include_entities=true&inc%E2%80%8C%E2%80%8Blude_rts=true&include_rts=1&screen_name=vikas&count=20" + username + "&count=" + noOfstatus), "", ""
                 {
                     return tooManyLinks;
                 }
@@ -1525,59 +1527,71 @@ namespace twtboardpro
                         try
                         {
 
+                            #region previous Code of Find Text
+                            //int startindex = item.IndexOf("js-tweet-text tweet-text\""); //TweetTextSize  js-tweet-text tweet-text
+                            //if (startindex == -1)
+                            //{
+                            //    startindex = 0;
+                            //    startindex = item.IndexOf("js-tweet-text tweet-text");
+                            //}
 
-                            int startindex = item.IndexOf("js-tweet-text tweet-text\"");
-                            if (startindex == -1)
+                            //string start = item.Substring(startindex).Replace("js-tweet-text tweet-text\"", "").Replace("js-tweet-text tweet-text tweet-text-rtl\"", "");
+                            //int endindex = start.IndexOf("</p>");
+
+                            //if (endindex == -1)
+                            //{
+                            //    endindex = 0;
+                            //    endindex = start.IndexOf("stream-item-footer");
+                            //}
+
+                            //string end = start.Substring(0, endindex);
+                            //end = regx.StripTagsRegex(end);
+                            //text = end.Replace("&nbsp;", "").Replace("a href=", "").Replace("/a", "").Replace("<span", "").Replace("</span", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("<strong>", "").Replace("target=\\\"_blank\\\"", "").Replace("class=\\\"twitter-timeline-link\\\"", "").Replace("</strong>", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=", "");
+                            //text = text.Replace("&quot;", "").Replace("<", "").Replace(">", "").Replace("\"", "").Replace("\\", "").Replace("title=", "");
+
+                            //string[] array = Regex.Split(text, "http");
+                            //text = string.Empty;
+                            //foreach (string itemData in array)
+                            //{
+                            //    if (!itemData.Contains("t.co"))
+                            //    {
+                            //        string data = string.Empty;
+                            //        if (itemData.Contains("//"))
+                            //        {
+                            //            data = ("http" + itemData).Replace(" span ", string.Empty);
+                            //            if (!text.Contains(itemData.Replace(" ", "")))// && !data.Contains("class") && !text.Contains(data))
+                            //            {
+                            //                text += data.Replace("u003c", string.Empty).Replace("u003e", string.Empty);
+                            //            }
+                            //        }
+                            //        else
+                            //        {
+                            //            if (!text.Contains(itemData.Replace(" ", "")))
+                            //            {
+                            //                text += itemData.Replace("u003c", string.Empty).Replace("u003e", string.Empty).Replace("js-tweet-text tweet-text", "");
+                            //            }
+                            //        }
+                            //    }
+                            //}
+                            #endregion
+
+                            string[] getTweetText = Regex.Split(item, "TweetTextSize  js-tweet-text tweet-text");
+                            try
                             {
-                                startindex = 0;
-                                startindex = item.IndexOf("js-tweet-text tweet-text");
+                                text = Utils.getBetween(getTweetText[1], "data-aria-label-part=", "href=");
+                                text = text.Replace("\\\"0\\\"\\u003e", "").Replace("\\u003ca", "");
                             }
+                            catch { };
 
-                            string start = item.Substring(startindex).Replace("js-tweet-text tweet-text\"", "").Replace("js-tweet-text tweet-text tweet-text-rtl\"", "");
-                            int endindex = start.IndexOf("</p>");
-
-                            if (endindex == -1)
-                            {
-                                endindex = 0;
-                                endindex = start.IndexOf("stream-item-footer");
-                            }
-
-                            string end = start.Substring(0, endindex);
-                            end = regx.StripTagsRegex(end);
-                            text = end.Replace("&nbsp;", "").Replace("a href=", "").Replace("/a", "").Replace("<span", "").Replace("</span", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("<strong>", "").Replace("target=\\\"_blank\\\"", "").Replace("class=\\\"twitter-timeline-link\\\"", "").Replace("</strong>", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=", "");
-                            text = text.Replace("&quot;", "").Replace("<", "").Replace(">", "").Replace("\"", "").Replace("\\", "").Replace("title=", "");
-
-                            string[] array = Regex.Split(text, "http");
-                            text = string.Empty;
-                            foreach (string itemData in array)
-                            {
-                                if (!itemData.Contains("t.co"))
-                                {
-                                    string data = string.Empty;
-                                    if (itemData.Contains("//"))
-                                    {
-                                        data = ("http" + itemData).Replace(" span ", string.Empty);
-                                        if (!text.Contains(itemData.Replace(" ", "")))// && !data.Contains("class") && !text.Contains(data))
-                                        {
-                                            text += data.Replace("u003c", string.Empty).Replace("u003e", string.Empty);
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (!text.Contains(itemData.Replace(" ", "")))
-                                        {
-                                            text += itemData.Replace("u003c", string.Empty).Replace("u003e", string.Empty).Replace("js-tweet-text tweet-text", "");
-                                        }
-                                    }
-                                }
-                            }
                         }
                         catch { };
 
 
 
+
                         StructTweetIDs structTweetIDs = new StructTweetIDs();
 
+                        if(text.Contains(""))
                         if (id != "null")
                         {
                             structTweetIDs.ID_Tweet = tweetUserid;
@@ -3302,12 +3316,17 @@ namespace twtboardpro
                 
                 //string[] splitRes = Regex.Split(DataHtml, "js-stream-item stream-item stream-item expanding-stream-item");//Regex.Split(res_Get_searchURL, "{\"created_at\"");
                 string[] splitRes = Regex.Split(DataHtml, "ProfileTweet u-textBreak js-tweet js-stream-tweet js-actionable-tweet");
+                if (splitRes.Count() == 1)
+                {
+                    splitRes = Regex.Split(DataHtml, "js-stream-item stream-item stream-item expanding-stream-item");
+                }
                 splitRes = splitRes.Skip(1).ToArray();
                 GlobusRegex regx = new GlobusRegex();
                 foreach (string item in splitRes)
                 {
                     string text = string.Empty;
                     string tweetUserid = string.Empty;
+                    string tweetURL = string.Empty;
                     ///Tweet Text 
                     try
                     {
@@ -3328,8 +3347,8 @@ namespace twtboardpro
 
                         string end = start.Substring(0, endindex);
                         end = regx.StripTagsRegex(end);
-                        text = end.Replace("&nbsp;", "").Replace("a href=", "").Replace("/a", "").Replace("<span", "").Replace("</span", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("<strong>", "").Replace("target=\\\"_blank\\\"", "").Replace("class=\\\"twitter-timeline-link\\\"", "").Replace("</strong>", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=", "").Replace("dir=\"ltr\"", "");
-                        text = text.Replace("&quot;", "").Replace("<", "").Replace(">", "").Replace("\"", "").Replace("\\", "").Replace("title=", "").Replace("&amp;", "&").Replace("&#39;", "'").Replace("&lt;", "<").Replace("&gt;", ">");
+                        text = end.Replace("&nbsp;", "").Replace("a href=", "").Replace("/a", "").Replace("<span", "").Replace("</span", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("<strong>", "").Replace("target=\\\"_blank\\\"", "").Replace("class=\\\"twitter-timeline-link\\\"", "").Replace("</strong>", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=", "").Replace("dir=\"ltr\"", "").Replace("&#10;", " ");
+                        text = text.Replace("&quot;", "").Replace("<", "").Replace(">", "").Replace("\"", "").Replace("\\", "").Replace("title=", "").Replace("&amp;", "&").Replace("&#39;", "'").Replace("&lt;", "<").Replace("&gt;", ">").Replace("&#10;", " ");
                         
                       
                         string[] array = Regex.Split(text, "http");
@@ -3358,7 +3377,7 @@ namespace twtboardpro
                         }
                         if (text.Contains("data-aria-label-part=0"))
                         {
-                            text = globushttpHelper.getBetween(text + ":&$#@", "data-aria-label-part=0", ":&$#@");
+                            text = globushttpHelper.getBetween(text + ":&$#@", "data-aria-label-part=0", ":&$#@").Replace("&#10;", " ");
                         }
                        
                         try
@@ -3376,6 +3395,18 @@ namespace twtboardpro
                             Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetPhotoFromUsername() -- " + keyword + " -- from_user_id --> " + ex.Message, Globals.Path_TwtErrorLogs);
                         }
 
+                        #region Scrap Url 
+                        try
+                        {
+                            //data-permalink-path="
+                            int startIndex = item.IndexOf("data-permalink-path=\"");
+                            string start1 = item.Substring(startIndex).Replace("data-permalink-path=\"", "");
+                            int endIndex = start1.IndexOf("\"");
+                            string end1 = start1.Substring(0, endIndex).Replace("from_user_id\":", "").Replace("\"", "").Replace(":", "").Replace("{", "").Replace("_str", "").Replace("user", "").Replace("}", "").Replace("]", "");
+                            tweetURL = "https://twitter.com" + end1;
+                        }
+                        catch { };
+                        #endregion
                         //Remove RT or @ mentions 
 
                         #region -----RT or @ mentions-------
@@ -3387,14 +3418,29 @@ namespace twtboardpro
 
                         #endregion
 
-                       
+                        //Path_TweetExtractorCSV
 
                         if (lst_Tweets.Count() < NoOfTweets)
                         {
-                            string txtdata = keyword + ":" + tweetUserid + ":" + (text.Replace("\n", string.Empty).Replace("..", string.Empty).Replace("\n \"", string.Empty).Replace("\\n", string.Empty).Replace("\\", string.Empty).Replace("js-tweet-text tweet-text", string.Empty).Replace("dir=ltr", "").Replace("lang=en                 data-aria-label-part=0", "").Trim());
+                            string txtdata = keyword + ":" + tweetUserid + ":" + (text.Replace("\n", string.Empty).Replace("..", string.Empty).Replace("\n \"", string.Empty).Replace("\\n", string.Empty).Replace("\\", string.Empty).Replace("js-tweet-text tweet-text", string.Empty).Replace("dir=ltr", "").Replace("lang=en                 data-aria-label-part=0", "").Trim()).Replace("&#10;", " ");
                             Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(txtdata, Globals.Path_TweetExtractor);
                             Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(text.Replace("\n", string.Empty).Replace("..", string.Empty).Replace("\n \"", string.Empty).Replace("\\n", string.Empty).Replace("\\", string.Empty).Replace("js-tweet-text tweet-text", string.Empty).Replace("dir=ltr", "").Replace("lang=en                 data-aria-label-part=0", "").Trim(), Globals.Path_TweetExtractorUpload);
                             lst_Tweets.Add(txtdata);
+
+                            //string tweetData=text.Replace("\n", string.Empty).Replace("..", string.Empty).Replace("\n \"", string.Empty).Replace("\\n", string.Empty).Replace("\\", string.Empty).Replace("js-tweet-text tweet-text", string.Empty).Replace("dir=ltr", "").Replace("lang=en                 data-aria-label-part=0", "").Trim();
+                            //ScrapTweetsForTweetModule
+                            if (!File.Exists(Globals.Path_TweetExtractorCSV))
+                            {
+                                string Header = "UserId" + "," + "Keyword" + ","+"Message"+"," + "URL";
+                                GlobusFileHelper.AppendStringToTextfileNewLine(Header, Globals.Path_TweetExtractorCSV);
+                            }
+
+                            string CheckTweetExtractor = tweetUserid + "," + keyword.Replace(",", " ") + "," + text.Replace(",", " ").Replace("&#10;", " ") + "," + tweetURL;
+                            if (!string.IsNullOrEmpty(tweetURL))
+                            {
+                                GlobusFileHelper.AppendStringToTextfileNewLine(CheckTweetExtractor, Globals.Path_TweetExtractorCSV);
+                                //AddToLog_Checker("[ " + DateTime.Now + " ] => [ " + userEmail + "-" + userID + "-" + ScreanName + " ]");
+                            }
                         }
 
                         status = "No Error";
@@ -3596,31 +3642,54 @@ namespace twtboardpro
                 }
 
                 string[] splitRes = Regex.Split(DataHtml, "ProfileTweet u-textBreak js-tweet js-stream-tweet js-actionable-tweet");//Regex.Split(res_Get_searchURL, "{\"created_at\"");
+                if (splitRes.Count() == 1)
+                {
+                    splitRes = Regex.Split(DataHtml, "ProfileTweet-action ProfileTweet-action--more js-more-ProfileTweet-actions");
+                }
+
                 splitRes = splitRes.Skip(1).ToArray();
                 GlobusRegex regx = new GlobusRegex();
                 foreach (string item in splitRes)
                 {
                     string text = string.Empty;
+                    string tweetURL = string.Empty;
+                    string tweetUserid = string.Empty;
 
-                    if (item.Contains("retweeted Icon"))
+                    if (item.Contains("Icon--retweeted"))//retweeted Icon
                     {
                         try
                         {
-                            int startindex = item.IndexOf("ProfileTweet-text js-tweet-text u-dir");
+                            //int startindex = item.IndexOf("ProfileTweet-text js-tweet-text u-dir");
 
-                            string start = item.Substring(startindex).Replace("ProfileTweet-text js-tweet-text u-dir", "").Replace("js-tweet-text tweet-text tweet-text-rtl\\\"", "");
-                            int endindex = start.IndexOf("</p>");
+                            //string start = item.Substring(startindex).Replace("ProfileTweet-text js-tweet-text u-dir", "").Replace("js-tweet-text tweet-text tweet-text-rtl\\\"", "");
+                            //int endindex = start.IndexOf("</p>");
 
-                            if (endindex == -1)
+                            //if (endindex == -1)
+                            //{
+                            //    endindex = 0;
+                            //    endindex = start.IndexOf("stream-item-footer");
+                            //}
+
+                            //string end = start.Substring(0, endindex);
+                            //end = regx.StripTagsRegex(end);
+
+                            #region sonu edited code
+
+                            try
                             {
-                                endindex = 0;
-                                endindex = start.IndexOf("stream-item-footer");
+                            string[] getText = Regex.Split(item, "TweetTextSize TweetTextSize--16px js-tweet-text tweet-text");
+                            try
+                            {
+                                text = Utils.getBetween(getText[1], ">", "<");
                             }
+                            catch { };
+                            }catch{};
 
-                            string end = start.Substring(0, endindex);
-                            end = regx.StripTagsRegex(end);
-                            text = end.Replace("&nbsp;", "").Replace("a href=", "").Replace("/a", "").Replace("<span", "").Replace("</span", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("<strong>", "").Replace("target=\\\"_blank\\\"", "").Replace("class=\\\"twitter-timeline-link\\\"", "").Replace("</strong>", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=", "");
-                            text = text.Replace("&quot;", "").Replace("<", "").Replace(">", "").Replace("\"", "").Replace("&#39;", "'").Replace("&amp;", "&").Replace("=&gt;", "=>").Replace("&#10;", " ").Replace("\\", "").Replace("title=", "").Replace("js-tweet-text tweet-text", "");
+                            #endregion
+
+                            //text = end.Replace("&nbsp;", "").Replace("a href=", "").Replace("/a", "").Replace("<span", "").Replace("</span", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("<strong>", "").Replace("target=\\\"_blank\\\"", "").Replace("class=\\\"twitter-timeline-link\\\"", "").Replace("</strong>", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=", "");
+                            text = text.Replace("&nbsp;", "").Replace("a href=", "").Replace("/a", "").Replace("<span", "").Replace("</span", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("<strong>", "").Replace("target=\\\"_blank\\\"", "").Replace("class=\\\"twitter-timeline-link\\\"", "").Replace("</strong>", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=", "").Replace("&#10;"," ");
+                            text = text.Replace("&quot;", "").Replace("<", "").Replace(">", "").Replace("\"", "").Replace("&#39;", "'").Replace("&amp;", "&").Replace("=&gt;", "=>").Replace("&#10;", " ").Replace("\\", "").Replace("title=", "").Replace("js-tweet-text tweet-text", "").Replace("&#10;", " ");
 
                             string[] array = Regex.Split(text, "http");
                             text = string.Empty;
@@ -3648,9 +3717,36 @@ namespace twtboardpro
                             }
                             if (text.Contains("data-aria-label-part=0"))
                             {
-                                text = globushttpHelper.getBetween(text + ":&$#@", "data-aria-label-part=0", ":&$#@");
+                                text = globushttpHelper.getBetween(text + ":&$#@", "data-aria-label-part=0", ":&$#@").Replace("&#10;"," ");
                             }
+                            //data-permalink-path="
 
+                            #region Scrap 
+                            try
+                            {
+                                //data-permalink-path="
+                                int startIndex = item.IndexOf("data-tweet-id=\"");
+                                string start1 = item.Substring(startIndex).Replace("data-tweet-id=\"", "");
+                                int endIndex = start1.IndexOf("\"");
+                                string end1 = start1.Substring(0, endIndex).Replace("from_user_id\":", "").Replace("\"", "").Replace(":", "").Replace("{", "").Replace("_str", "").Replace("user", "").Replace("}", "").Replace("]", "");
+                                tweetUserid = end1;
+                            }
+                            catch { };
+                            #endregion
+
+
+                            #region Scrap Url
+                            try
+                            {
+                                //data-permalink-path="
+                                int startIndex = item.IndexOf("data-permalink-path=\"");
+                                string start1 = item.Substring(startIndex).Replace("data-permalink-path=\"", "");
+                                int endIndex = start1.IndexOf("\"");
+                                string end1 = start1.Substring(0, endIndex).Replace("from_user_id\":", "").Replace("\"", "").Replace(":", "").Replace("{", "").Replace("_str", "").Replace("user", "").Replace("}", "").Replace("]", "");
+                                tweetURL = "https://twitter.com" + end1;
+                            }
+                            catch { };
+                            #endregion
 
                             //Remove RT or @ mentions 
 
@@ -3667,10 +3763,24 @@ namespace twtboardpro
 
                             if (lst_ReTweetIDs.Count() < RetweetExtractcount)
                             {
-                                string txtdata = keyword + ":" + (text.Replace("\n", string.Empty).Replace("..", string.Empty).Replace("\n \"", string.Empty).Replace("\\n", string.Empty).Replace("\\", string.Empty).Replace("js-tweet-text tweet-text", string.Empty).Replace("#", string.Empty)).Replace("dir=ltr", "");
+                                string txtdata = keyword + ":" + (text.Replace("\n", string.Empty).Replace("..", string.Empty).Replace("\n \"", string.Empty).Replace("\\n", string.Empty).Replace("\\", string.Empty).Replace("js-tweet-text tweet-text", string.Empty).Replace("#", string.Empty)).Replace("dir=ltr", "").Replace("&#10;", " ");
                                 Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(txtdata, Globals.Path_RETweetExtractor);
                                 Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(text.Replace("\n", string.Empty).Replace("..", string.Empty).Replace("\n \"", string.Empty).Replace("\\n", string.Empty).Replace("\\", string.Empty).Replace("js-tweet-text tweet-text", string.Empty).Replace("#", string.Empty).Replace("dir=ltr", "").Trim(), Globals.Path_RETweetExtractorUpload);
                                 lst_ReTweetIDs.Add(txtdata);
+
+                                //generate CSV file
+                                if (!File.Exists(Globals.Path_RETweetExtractorCSV))
+                                {
+                                    string Header = "UserId" + "," + "Keyword" + "," + "Message" + "," + "URL";
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Header, Globals.Path_RETweetExtractorCSV);
+                                }
+
+                                string CheckReTweetExtractor = tweetUserid + "," + keyword + "," + text.Replace(","," ") + "," + tweetURL;
+                                if (!string.IsNullOrEmpty(tweetURL))
+                                {
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(CheckReTweetExtractor, Globals.Path_RETweetExtractorCSV);
+                                    //AddToLog_Checker("[ " + DateTime.Now + " ] => [ " + userEmail + "-" + userID + "-" + ScreanName + " ]");
+                                }
                             }
 
                             status = "No Error";
@@ -3839,188 +3949,249 @@ namespace twtboardpro
             string cursor = "-1";
             string FollowingUrl = string.Empty;
             List<string> lstIds = new List<string>();
-            try
+            int noofpages = (TweetAccountManager.noOfUnfollows / 18)  + 1;
+            Globussoft.GlobusHttpHelper HttpHelper = new Globussoft.GlobusHttpHelper();
+            ReturnStatus = "";
+            HttpHelper = Ghelper;
+            string min_position = string.Empty;
+            for (int i = 1; i <= noofpages; i++)
             {
-
-                Globussoft.GlobusHttpHelper HttpHelper = new Globussoft.GlobusHttpHelper();
-                HttpHelper = Ghelper;
-
+                try
+                {
                 StartAgain:
-                if (NumberHelper.ValidateNumber(userID))
-                {
-                    string UserPageUrl = string.Empty;
-                    if (cursor == "-1")
+                    if (NumberHelper.ValidateNumber(userID))
                     {
-                        //UserPageUrl = "https://twitter.com/account/redirect_by_id?id=" + userID;
-                        UserPageUrl = "https://twitter.com/" + Screen_name;
+                        string UserPageUrl = string.Empty;
+                        if (cursor == "-1")
+                        {
+                            //UserPageUrl = "https://twitter.com/account/redirect_by_id?id=" + userID;
+                            UserPageUrl = "https://twitter.com/" + Screen_name;
+                        }
+                        else
+                        {
+                            // UserPageUrl = "https://twitter.com/" + Screen_name + "/followers/users?cursor=" + cursor + "&cursor_index=&cursor_offset=&include_available_features=1&include_entities=1&is_forward=true";
+                           // UserPageUrl = "https://twitter.com/" + Screen_name + "/followers/users?include_available_features=1&include_entities=1&max_position=" + cursor;
+
+                            UserPageUrl="https://twitter.com/"+Screen_name+"/followers/users?include_available_features=1&include_entities=1&max_position="+min_position;
+
+                        }
+                        //FollowingUrl = "https://api.twitter.com/1/followers/ids.json?cursor=" + cursor + "&id=" + userID + "";//"https://api.twitter.com/1/friends/ids.json?cursor=-1&screen_name=SocioPro";
+                        string GetUSerPage = HttpHelper.getHtmlfromUrl(new Uri(UserPageUrl), "", "");
+
+                        FollowingUrl = HttpHelper.gResponse.ResponseUri + "/followers";
+
                     }
                     else
                     {
-                        UserPageUrl = "https://twitter.com/" + Screen_name + "/followers/users?cursor=" + cursor + "&cursor_index=&cursor_offset=&include_available_features=1&include_entities=1&is_forward=true";
-                    }
-                    //FollowingUrl = "https://api.twitter.com/1/followers/ids.json?cursor=" + cursor + "&id=" + userID + "";//"https://api.twitter.com/1/friends/ids.json?cursor=-1&screen_name=SocioPro";
-                    string GetUSerPage = HttpHelper.getHtmlfromUrl(new Uri(UserPageUrl), "", "");
-
-                    FollowingUrl = HttpHelper.gResponse.ResponseUri + "/followers";
-
-                }
-                else
-                {
-                    FollowingUrl = "https://twitter.com/" + userID + "/followers";
-                }
-
-                String DataCursor = string.Empty;
-
-
-                string Data = HttpHelper.getHtmlfromUrl(new Uri(FollowingUrl), "", "");
-
-                String DataCursor1 = string.Empty;
-
-                if (!Data.Contains("Rate limit exceeded") && !Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}") && !string.IsNullOrEmpty(Data))
-                {
-
-                    String[] DataDivArr;
-                    if (Data.Contains("js-stream-item stream-item stream-item"))
-                    {
-                        DataDivArr = Regex.Split(Data, "js-stream-item stream-item stream-item");
-                    }
-                    else
-                    {
-                        DataDivArr = Regex.Split(Data, "js-stream-item");
+                        FollowingUrl = "https://twitter.com/" + userID + "/followers";
                     }
 
-                    foreach (var DataDivArr_item in DataDivArr)
+                    String DataCursor = string.Empty;
+                    string Data = HttpHelper.getHtmlfromUrl(new Uri(FollowingUrl), "", "");
+
+
+                    String DataCursor1 = string.Empty;
+
+                    if (!Data.Contains("Rate limit exceeded") && !Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}") && !string.IsNullOrEmpty(Data))
                     {
-                        if (DataDivArr_item.Contains("data-cursor"))
+
+                        String[] DataDivArr;
+                        if (Data.Contains("js-stream-item stream-item stream-item"))
                         {
-                            String DataCurso = System.Text.RegularExpressions.Regex.Split(Data, "data-cursor")[1];
-                            DataCursor1 = DataCurso.Substring(DataCurso.IndexOf("="), DataCurso.IndexOf(">")).Replace(">", string.Empty).Replace("\n", string.Empty).Replace("\"", string.Empty).Replace("=", string.Empty).Trim();
+                            DataDivArr = Regex.Split(Data, "js-stream-item stream-item stream-item");
                         }
-                        if (DataDivArr_item.Contains("<!DOCTYPE html>") || DataDivArr_item.Contains("cursor"))
+                        else
                         {
-                            continue;
+                            DataDivArr = Regex.Split(Data, "js-stream-item");
                         }
 
-                        if (DataDivArr_item.Contains("data-screen-name") && DataDivArr_item.Contains(" data-user-id"))
+                        foreach (var DataDivArr_item in DataDivArr)
                         {
-                            int endIndex = 0;
-                            int startIndex = DataDivArr_item.IndexOf("data-screen-name");
-                            try
+                            if (DataDivArr_item.Contains("data-cursor"))
                             {
-                                endIndex = DataDivArr_item.IndexOf(">");
+                                String DataCurso = System.Text.RegularExpressions.Regex.Split(Data, "data-cursor")[1];
+                                DataCursor1 = DataCurso.Substring(DataCurso.IndexOf("="), DataCurso.IndexOf(">")).Replace(">", string.Empty).Replace("\n", string.Empty).Replace("\"", string.Empty).Replace("=", string.Empty).Trim();
                             }
-                            catch { }
-
-                            if (endIndex == -1)
+                            if (DataDivArr_item.Contains("<!DOCTYPE html>") || DataDivArr_item.Contains("cursor"))
                             {
-                                endIndex = DataDivArr_item.IndexOf("data-feedback-token");
+                                continue;
                             }
 
-                            string GetDataStr = DataDivArr_item.Substring(startIndex, endIndex);
-
-                            string _SCRNameID = string.Empty;
-                            string _SCRName = string.Empty;
-                            try
+                            if (DataDivArr_item.Contains("data-screen-name") && DataDivArr_item.Contains(" data-user-id"))
                             {
-                                 _SCRNameID = (GetDataStr.Substring(GetDataStr.IndexOf("data-user-id"), GetDataStr.IndexOf("data-feedback-token", GetDataStr.IndexOf("data-user-id")) - GetDataStr.IndexOf("data-user-id")).Replace("data-user-id", string.Empty).Replace("=", string.Empty).Replace("\"", "").Replace("\\\\n", string.Empty).Replace("data-screen-name=", string.Empty).Replace("\\", "").Trim());
-                                 _SCRName = (GetDataStr.Substring(GetDataStr.IndexOf("data-screen-name="), GetDataStr.IndexOf("data-user-id", GetDataStr.IndexOf("data-screen-name=")) - GetDataStr.IndexOf("data-screen-name=")).Replace("data-screen-name=", string.Empty).Replace("=", string.Empty).Replace("\"", "").Replace("\\\\n", string.Empty).Replace("data-screen-name=", string.Empty).Replace("\\", "").Trim());
-
-                            }
-                            catch { }
-                            if (TweetAccountManager.noOfUnfollows > lstIds.Count)
-                            {
-                                if (!string.IsNullOrEmpty(_SCRName))
+                                int endIndex = 0;
+                                int startIndex = DataDivArr_item.IndexOf("data-screen-name");
+                                try
                                 {
-                                    lstIds.Add(_SCRName + ":" + _SCRNameID);
+                                    endIndex = DataDivArr_item.IndexOf(">");
+                                }
+                                catch { }
+
+                                if (endIndex == -1)
+                                {
+                                    endIndex = DataDivArr_item.IndexOf("data-feedback-token");
+                                }
+
+                                string GetDataStr = DataDivArr_item.Substring(startIndex, endIndex);
+
+                                string _SCRNameID = string.Empty;
+                                string _SCRName = string.Empty;
+                                try
+                                {
+                                    _SCRNameID = (GetDataStr.Substring(GetDataStr.IndexOf("data-user-id"), GetDataStr.IndexOf("data-feedback-token", GetDataStr.IndexOf("data-user-id")) - GetDataStr.IndexOf("data-user-id")).Replace("data-user-id", string.Empty).Replace("=", string.Empty).Replace("\"", "").Replace("\\\\n", string.Empty).Replace("data-screen-name=", string.Empty).Replace("\\", "").Trim());
+                                    _SCRName = (GetDataStr.Substring(GetDataStr.IndexOf("data-screen-name="), GetDataStr.IndexOf("data-user-id", GetDataStr.IndexOf("data-screen-name=")) - GetDataStr.IndexOf("data-screen-name=")).Replace("data-screen-name=", string.Empty).Replace("=", string.Empty).Replace("\"", "").Replace("\\\\n", string.Empty).Replace("data-screen-name=", string.Empty).Replace("\\", "").Trim());
+
+                                }
+                                catch { }
+                                if (TweetAccountManager.noOfUnfollows > lstIds.Count)
+                                {
+                                    if (!string.IsNullOrEmpty(_SCRName))
+                                    {
+                                        lstIds.Add(_SCRName + ":" + _SCRNameID);
+                                    }
+                                }
+
+
+                            }
+
+                        }
+
+
+                        if (TweetAccountManager.noOfUnfollows != lstIds.Count)
+                        {
+
+
+                            if (Data.Contains("data-cursor"))
+                            {
+                                int startindex = Data.IndexOf("data-cursor");
+                                string start = Data.Substring(startindex).Replace("data-cursor", "");
+                                int lastindex = start.IndexOf("<div class=\"stream profile-stream\">");
+                                if (lastindex == -1)
+                                {
+                                    lastindex = start.IndexOf("\n");
+                                }
+                                string end = start.Substring(0, lastindex).Replace("\"", "").Replace("\n", string.Empty).Replace("=", string.Empty).Replace(">", string.Empty).Trim();
+                                cursor = end;
+
+
+                                if (cursor != "0" && (TweetAccountManager.noOfUnfollows < lstIds.Count))
+                                {
+                                    continue;
+                                   // goto StartAgain;
                                 }
                             }
-                           
-
-                        }
-
-                    }
-                    
-
-                    if (TweetAccountManager.noOfUnfollows != lstIds.Count)
-                    {
-
-
-                        if (Data.Contains("data-cursor"))
-                        {
-                            int startindex = Data.IndexOf("data-cursor");
-                            string start = Data.Substring(startindex).Replace("data-cursor", "");
-                            int lastindex = start.IndexOf("<div class=\"stream profile-stream\">");
-                            if (lastindex == -1)
-                            {
-                                lastindex = start.IndexOf("\n");
-                            }
-                            string end = start.Substring(0, lastindex).Replace("\"", "").Replace("\n", string.Empty).Replace("=", string.Empty).Replace(">", string.Empty).Trim();
-                            cursor = end;
-
-
-                            if (cursor != "0")
-                            {
-
-
-                                goto StartAgain;
-                            }
-                        }
-
-                        if (Data.Contains("cursor"))
-                        {
-                            int startindex = Data.IndexOf("cursor");
-                            string start = Data.Substring(startindex).Replace("cursor", "");
-                            int lastindex = -1;
                             
+                            //string[] getMinPosition = Regex.Split(Data,"");
+                            try 
+                            {
+                                min_position = Utils.getBetween(Data,"data-min-position=\"","\"");
+                                if (string.IsNullOrEmpty(min_position))
+                                {
+                                    min_position = Utils.getBetween(Data,"data-max-position=\"","\"");
+                                    if (string.IsNullOrEmpty(min_position))
+                                    {
+                                        min_position = Utils.getBetween(Data,"min_position\":\"","\"");
+                                    }
+                                }
+                            }
+                            catch { };
+
+                            if (Data.Contains("cursor"))
+                            {
+                                int startindex = Data.IndexOf("cursor");
+                                string start = Data.Substring(startindex).Replace("cursor", "");
+                                int lastindex = -1;
+
                                 lastindex = start.IndexOf(",");
                                 if (lastindex > 40)
                                 {
                                     lastindex = start.IndexOf("\n");
 
                                 }
-                            string end = start.Substring(0, lastindex).Replace("\"", "").Replace("\n", string.Empty).Replace("=", string.Empty).Replace(":", string.Empty).Trim();
-                            cursor = end;
-                            if (cursor != "0")
-                            {
-                                goto StartAgain;
+                                string end = start.Substring(0, lastindex).Replace("\"", "").Replace("\n", string.Empty).Replace("=", string.Empty).Replace(":", string.Empty).Trim();
+                                cursor = end;
+                                if (cursor != "0")
+                                {
+                                    continue;
+                                   // goto StartAgain;
+                                }
                             }
+
+                            if (Data.Contains("data-min-position=") && TweetAccountManager.noOfUnfollows > lstIds.Count)
+                            {
+                                try
+                                {
+                                    string[] cursorList = Regex.Split(Data, "data-min-position");
+                                    cursor = Utils.getBetween(cursorList[1], "\"", "\"");
+                                    if (cursor != "0")
+                                    {
+                                        continue;
+                                       // goto StartAgain;
+                                    }
+                                }
+                                catch { };
+                            }
+                            if (Data.Contains("min_position") && TweetAccountManager.noOfUnfollows > lstIds.Count)
+                            {
+                                try
+                                {
+                                    string[] cursorList = Regex.Split(Data, "min_position");
+                                    cursor = Utils.getBetween(cursorList[1], ":\"", "\"");
+                                    if (cursor != "0")
+                                    {
+                                        continue;
+                                        //goto StartAgain;
+                                    }
+                                }
+                                catch { };
+                            }
+                            else
+                            {
+                                lstIds.Distinct();
+                                break;
+                            }
+
+
+
+
+
                         }
+                        //FollowingUrl = "https://twitter.com/Iloveindia6SihF/followers/users?cursor=" + DataCursor1 + "&cursor_index=&cursor_offset=&include_available_features=1&include_entities=1&is_forward=true";
+                        //FollowingUrl = "https://twitter.com/Fergie/followers/users?cursor=" + DataCursor1 + "&include_available_features=1&include_entities=1&is_forward=true";
 
+                        ReturnStatus = "No Error";
+                        return lstIds;
                     }
-                    //FollowingUrl = "https://twitter.com/Iloveindia6SihF/followers/users?cursor=" + DataCursor1 + "&cursor_index=&cursor_offset=&include_available_features=1&include_entities=1&is_forward=true";
-                    //FollowingUrl = "https://twitter.com/Fergie/followers/users?cursor=" + DataCursor1 + "&include_available_features=1&include_entities=1&is_forward=true";
-
-                    ReturnStatus = "No Error";
-                    return lstIds;
+                    else if (Data.Contains("401 Unauthorized"))
+                    {
+                        ReturnStatus = "Account is Suspended. ";
+                        return new List<string>();
+                    }
+                    else if (Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}"))
+                    {
+                        ReturnStatus = "Sorry, that page does not exist :" + userID;
+                        return lstIds;
+                    }
+                    else if (Data.Contains("Rate limit exceeded. Clients may not make more than 150 requests per hour."))
+                    {
+                        ReturnStatus = "Rate limit exceeded. Clients may not make more than 150 requests per hour.:-" + userID;
+                        return lstIds;
+                    }
+                    else
+                    {
+                        ReturnStatus = "Error";
+                        return lstIds;
+                    }
                 }
-                else if (Data.Contains("401 Unauthorized"))
+                catch (Exception ex)
                 {
-                    ReturnStatus = "Account is Suspended. ";
-                    return new List<string>();
-                }
-                else if (Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}"))
-                {
-                    ReturnStatus = "Sorry, that page does not exist :" + userID;
-                    return lstIds;
-                }
-                else if (Data.Contains("Rate limit exceeded. Clients may not make more than 150 requests per hour."))
-                {
-                    ReturnStatus = "Rate limit exceeded. Clients may not make more than 150 requests per hour.:-" + userID;
-                    return lstIds;
-                }
-                else
-                {
+                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers1() -- " + userID + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers1() -- " + userID + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
                     ReturnStatus = "Error";
                     return lstIds;
                 }
             }
-            catch (Exception ex)
-            {
-                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers1() -- " + userID + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
-                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers1() -- " + userID + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
-                ReturnStatus = "Error";
-                return lstIds;
-            }
+            return lstIds;
         }
 
         public List<string> GetFollowYourFollowers(string userID, string Screen_name, out string ReturnStatus, Globussoft.GlobusHttpHelper Ghelper)
@@ -4029,6 +4200,7 @@ namespace twtboardpro
             string cursor = "-1";
             string FollowingUrl = string.Empty;
             List<string> lstIds = new List<string>();
+            string data_max_position = string.Empty;
             try
             {
 
@@ -4041,11 +4213,14 @@ namespace twtboardpro
                     string UserPageUrl = string.Empty;
                     if (cursor == "-1")
                     {
-                        UserPageUrl = "https://twitter.com/account/redirect_by_id?id=" + userID;
+                        //UserPageUrl = "https://twitter.com/account/redirect_by_id?id=" + userID;
+                        UserPageUrl = "https://twitter.com/" + Screen_name;
                     }
                     else
                     {
-                        UserPageUrl = "https://twitter.com/" + Screen_name + "/followers/users?cursor=" + cursor + "&cursor_index=&cursor_offset=&include_available_features=1&include_entities=1&is_forward=true";
+                        //UserPageUrl = "https://twitter.com/" + Screen_name + "/followers/users?cursor=" + cursor + "&cursor_index=&cursor_offset=&include_available_features=1&include_entities=1&is_forward=true";
+
+                        UserPageUrl = "https://twitter.com/" + Screen_name + "/followers/users?include_available_features=1&include_entities=1&max_position=" + data_max_position;
                     }
                     //FollowingUrl = "https://api.twitter.com/1/followers/ids.json?cursor=" + cursor + "&id=" + userID + "";//"https://api.twitter.com/1/friends/ids.json?cursor=-1&screen_name=SocioPro";
                     string GetUSerPage = HttpHelper.getHtmlfromUrl(new Uri(UserPageUrl), "", "");
@@ -4055,7 +4230,8 @@ namespace twtboardpro
                 }
                 else
                 {
-                    FollowingUrl = "https://twitter.com/" + userID + "/followers";
+                   //FollowingUrl = "https://twitter.com/" + userID + "/followers";
+                    FollowingUrl = "https://twitter.com/" + Screen_name + "/followers";
                 }
 
                 String DataCursor = string.Empty;
@@ -4081,7 +4257,11 @@ namespace twtboardpro
                             String DataCurso = System.Text.RegularExpressions.Regex.Split(Data, "data-cursor")[1];
                             DataCursor1 = DataCurso.Substring(DataCurso.IndexOf("="), DataCurso.IndexOf(">")).Replace(">", string.Empty).Replace("\n", string.Empty).Replace("\"", string.Empty).Replace("=", string.Empty).Trim();
                         }
-                        if (DataDivArr_item.Contains("<!DOCTYPE html>") || DataDivArr_item.Contains("cursor"))
+                        //if (DataDivArr_item.Contains("<!DOCTYPE html>") || DataDivArr_item.Contains("cursor"))
+                        //{
+                        //    continue;
+                        //}
+                        if (DataDivArr_item.Contains("<!DOCTYPE html>"))
                         {
                             continue;
                         }
@@ -4132,43 +4312,52 @@ namespace twtboardpro
                     if (TweetAccountManager.noOfUnfollows != lstIds.Count)
                     {
 
+                        #region Old Cursor Commented Code
+                        //if (Data.Contains("data-cursor"))
+                        //{
+                        //    int startindex = Data.IndexOf("data-cursor");
+                        //    string start = Data.Substring(startindex).Replace("data-cursor", "");
+                        //    int lastindex = start.IndexOf("<div class=\"stream profile-stream\">");
+                        //    if (lastindex == -1)
+                        //    {
+                        //        lastindex = start.IndexOf("\n");
+                        //    }
+                        //    string end = start.Substring(0, lastindex).Replace("\"", "").Replace("\n", string.Empty).Replace("=", string.Empty).Replace(">", string.Empty).Trim();
+                        //    cursor = end;
+                        //    if (cursor != "0")
+                        //    {
 
-                        if (Data.Contains("data-cursor"))
+
+                        //        goto StartAgain;
+                        //    }
+                        //}
+
+                        //if (Data.Contains("cursor"))
+                        //{
+                        //    int startindex = Data.IndexOf("cursor");
+                        //    string start = Data.Substring(startindex).Replace("cursor", "");
+                        //    int lastindex = start.IndexOf(",");
+                        //    if (lastindex > 40)
+                        //    {
+                        //         lastindex = start.IndexOf("\n");
+                        //    }
+                        //    string end = start.Substring(0, lastindex).Replace("\"", "").Replace("\n", string.Empty).Replace("=", string.Empty).Replace(":", string.Empty).Trim();
+                        //    cursor = end;
+                        //    if (cursor != "0")
+                        //    {
+                        //        goto StartAgain;
+                        //    }
+                        //}
+                        #endregion
+                        data_max_position = Utils.getBetween(Data, "data-max-position=\"", "\"");
+                        if (string.IsNullOrEmpty(data_max_position))
                         {
-                            int startindex = Data.IndexOf("data-cursor");
-                            string start = Data.Substring(startindex).Replace("data-cursor", "");
-                            int lastindex = start.IndexOf("<div class=\"stream profile-stream\">");
-                            if (lastindex == -1)
-                            {
-                                lastindex = start.IndexOf("\n");
-                            }
-                            string end = start.Substring(0, lastindex).Replace("\"", "").Replace("\n", string.Empty).Replace("=", string.Empty).Replace(">", string.Empty).Trim();
-                            cursor = end;
-
-
-                            if (cursor != "0")
-                            {
-
-
-                                goto StartAgain;
-                            }
+                            data_max_position = Utils.getBetween(Data, "data-min-position=\"", "\"");
                         }
-
-                        if (Data.Contains("cursor"))
+                        if (!string.IsNullOrEmpty(data_max_position))
                         {
-                            int startindex = Data.IndexOf("cursor");
-                            string start = Data.Substring(startindex).Replace("cursor", "");
-                            int lastindex = start.IndexOf(",");
-                            if (lastindex > 40)
-                            {
-                                 lastindex = start.IndexOf("\n");
-                            }
-                            string end = start.Substring(0, lastindex).Replace("\"", "").Replace("\n", string.Empty).Replace("=", string.Empty).Replace(":", string.Empty).Trim();
-                            cursor = end;
-                            if (cursor != "0")
-                            {
-                                goto StartAgain;
-                            }
+                            cursor = "1";
+                            goto StartAgain;
                         }
 
                     }
@@ -4208,8 +4397,8 @@ namespace twtboardpro
             }
         }
 
-         
-        public List<string> GetFollowers_New(string userID, out string ReturnStatus, ref Globussoft.GlobusHttpHelper HttpHelper)
+
+        public List<string> GetFollowers_New_WithNo_Followers(string userID, out string ReturnStatus, ref Globussoft.GlobusHttpHelper HttpHelper)
         {
             Log("[ " + DateTime.Now + " ] => [ Searching For Followers For " + userID + " ]");
             string cursor = "0";
@@ -4218,6 +4407,7 @@ namespace twtboardpro
             List<string> lstIds = new List<string>();
             string Data = string.Empty;
             string FindCursor = string.Empty;
+             string Data_Min_Postion = "";
 
             try
             {
@@ -4227,39 +4417,81 @@ namespace twtboardpro
                 string[] splitRes = new string[] { }; 
                 if (counter == 0)
                 {
-                    string aa = "https://twitter.com/" + userID + "/followers";
-                    Data = HttpHelper.getHtmlfromUrl(new Uri(aa), "", "");
-                    if (Data.Contains("<div class=\"stream-container"))
+                    try
                     {
-                        splitRes = Regex.Split(Data, "<div class=\"stream-container");
-                    }
-                    else
-                    {
-                        splitRes = Regex.Split(Data, "<div class=\"GridTimeline-items");
-                    }
-                    splitRes = splitRes.Skip(1).ToArray();
+                        string aa = "https://twitter.com/" + userID + "/followers";
+                       
+                        Data = HttpHelper.getHtmlfromUrl(new Uri(aa), "", "");
+                        try
+                        {
+                            string[] Data_Min_PositionList = Regex.Split(Data, "data-min-position=");
+                            Data_Min_Postion = Utils.getBetween(Data_Min_PositionList[1], "\"", "\"");
+                        }
+                        catch { };
+                        if (Data.Contains("<div class=\"stream-container"))
+                        {
+                            splitRes = Regex.Split(Data, "<div class=\"stream-container");
+                        }
+                        else
+                        {
+                            splitRes = Regex.Split(Data, "<div class=\"GridTimeline-items");
+                        }
+                        splitRes = splitRes.Skip(1).ToArray();
 
-                    if (splitRes[0].Contains("<div class=\"stream profile-stream\">"))
-                    {
-                        splitRes = Regex.Split(splitRes[0], "<div class=\"stream profile-stream\">");
-                        cursor = splitRes[0].Replace("\"", string.Empty).Replace("\n", string.Empty).Replace(">", string.Empty).Replace("data-cursor=", string.Empty).Trim();
+                        if (splitRes[0].Contains("<div class=\"stream profile-stream\">"))
+                        {
+                            splitRes = Regex.Split(splitRes[0], "<div class=\"stream profile-stream\">");
+                            cursor = splitRes[0].Replace("\"", string.Empty).Replace("\n", string.Empty).Replace(">", string.Empty).Replace("data-cursor=", string.Empty).Trim();
 
-                    }
-                    else
-                    {
-                        cursor = (splitRes[0].Substring(splitRes[0].IndexOf("data-cursor="), splitRes[0].IndexOf(">", splitRes[0].IndexOf("data-cursor=")) - splitRes[0].IndexOf("data-cursor=")).Replace("data-cursor=", string.Empty).Replace("\n", string.Empty).Replace("\"", string.Empty).Replace(",", "").Trim());
-                    }
-                    counter++;
-                    cursor = "-1";
-                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                    
+                        }
+                        //else if (splitRes[0].Contains("ProfileCard js-actionable-user"))
+                        //{
+                        //    splitRes = Regex.Split(splitRes[0], "ProfileCard js-actionable-user");
+                        //    cursor = splitRes[0].Replace("\"", string.Empty).Replace("\n", string.Empty).Replace(">", string.Empty).Replace("data-cursor=", string.Empty).Trim();
 
-                    //Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers"), "", "");
+                        //}
+                        else
+                        {
+                            try
+                            {
+                                cursor = (splitRes[0].Substring(splitRes[0].IndexOf("data-cursor="), splitRes[0].IndexOf(">", splitRes[0].IndexOf("data-cursor=")) - splitRes[0].IndexOf("data-cursor=")).Replace("data-cursor=", string.Empty).Replace("\n", string.Empty).Replace("\"", string.Empty).Replace(",", "").Trim());
+                            }
+                            catch { };
+                        }
+                       // counter++;
+                        cursor = "-1";
+                        if (counter == 0 && string.IsNullOrEmpty(Data))
+                        {
+
+                        }
+                        else
+                        {
+ 
+                        }
+                        try
+                        {
+                            Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                            counter++;
+                        }
+                        catch { };
+                        
+
+                        //Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers"), "", "");
+                    }
+                    catch { };
                 }
                 else
                 {
-                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                    if (string.IsNullOrEmpty(Data))
+                  //  Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + Data_Min_Postion), "", "");
+                     try
+                        {
+                            string[] Data_Min_PositionList = Regex.Split(Data, "min_position");
+                            Data_Min_Postion = Utils.getBetween(Data_Min_PositionList[1], ":\"", "\"");
+                        }
+                        catch { };
+                   // Data_Min_Postion = 
+                    if (string.IsNullOrEmpty(Data))  //https://twitter.com/sachin//followers/users?cursor=-1&include_available_features=1&include_entities=1&is_forward=true           //https://twitter.com/sachin/followers/users?include_available_features=1&include_entities=1&max_position=1499136517515463071
                     {
                         
                         for (int i = 1; i <= 3; i++)
@@ -4279,7 +4511,7 @@ namespace twtboardpro
                     if (Data=="Too Many Requestes")
                     {
                         Log("[ " + DateTime.Now + " ] => [ Wait for 15 minutes For furthur Scraping because Twitter banned for scraping. its already too many requestes. ]");
-                        Thread.Sleep(15*60*1000);
+                        Thread.Sleep(20*60*1000);
                         Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
                         if (string.IsNullOrEmpty(Data) || Data=="Too Many Requestes")
                         {
@@ -4460,19 +4692,29 @@ namespace twtboardpro
 
                     if (Data.Contains("\"has_more_items\":true"))
                     {
-                        int startindex = Data.IndexOf("\"cursor\":");
-                        string start = Data.Substring(startindex).Replace("\"cursor\":", "");
-                        int lastindex = start.IndexOf("\",\"");
-                        if (lastindex < 0)
+                        try
                         {
-                            lastindex = start.IndexOf("\"}");
+                            int startindex = Data.IndexOf("\"cursor\":");
+                            string start = Data.Substring(startindex).Replace("\"cursor\":", "");
+                            int lastindex = start.IndexOf("\",\"");
+                            if (lastindex < 0)
+                            {
+                                lastindex = start.IndexOf("\"}");
+                            }
+                            string end = start.Substring(0, lastindex).Replace("\"", "");
+                            cursor = end;
                         }
-                        string end = start.Substring(0, lastindex).Replace("\"", "");
-                        cursor = end;
+                        catch { };
                         if (cursor != "0")
                         {
                             goto StartAgain;
                         }
+                    }
+
+
+                    else if(lstIds.Count < CounterDataNo)
+                    {
+                       goto StartAgain;
                     }
 
                     ReturnStatus = "No Error";
@@ -4507,6 +4749,383 @@ namespace twtboardpro
                 return lstIds;
             }
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public List<string> GetFollowers_New(string userID, out string ReturnStatus, ref Globussoft.GlobusHttpHelper HttpHelper)  //GetFollowers_New    GetFollowers_New_WithNo_Followers
+        {
+            Dictionary<string, string> checkDuplicate = new Dictionary<string, string>();
+            Log("[ " + DateTime.Now + " ] => [ Searching For Followers For " + userID + " ]");
+            string cursor = "0";
+            int counter = 0;
+            string FollowingUrl = string.Empty;
+            List<string> lstIds = new List<string>();
+            string Data = string.Empty;
+            string FindCursor = string.Empty;
+            string Data_Min_Postion = "";
+            int noOfPages = CounterDataNo/18 + 1;
+            ReturnStatus = "";
+
+            for (int j = 1; j <= noOfPages; j++)
+            {
+                try
+                {
+
+                StartAgain:
+
+                    //Thread.Sleep(1000);
+                    string[] splitRes = new string[] { };
+                    if (counter == 0)
+                    {
+                        try
+                        {
+                            string aa = "https://twitter.com/" + userID + "/followers";
+
+                            Data = HttpHelper.getHtmlfromUrl(new Uri(aa), "", "");
+                            try
+                            {
+                                string[] Data_Min_PositionList = Regex.Split(Data, "data-min-position=");
+                                Data_Min_Postion = Utils.getBetween(Data_Min_PositionList[1], "\"", "\"");
+
+                            }
+                            catch { };
+
+                            try
+                            {
+
+                                if (Data.Contains("<div class=\"stream-container"))
+                                {
+                                    splitRes = Regex.Split(Data, "<div class=\"stream-container");
+                                }
+                                else
+                                {
+                                    splitRes = Regex.Split(Data, "<div class=\"GridTimeline-items");
+                                }
+                                splitRes = splitRes.Skip(1).ToArray();
+
+                                if (splitRes[0].Contains("<div class=\"stream profile-stream\">"))
+                                {
+                                    splitRes = Regex.Split(splitRes[0], "<div class=\"stream profile-stream\">");
+                                    cursor = splitRes[0].Replace("\"", string.Empty).Replace("\n", string.Empty).Replace(">", string.Empty).Replace("data-cursor=", string.Empty).Trim();
+
+                                }
+                            }
+                            catch { };
+
+
+                            try
+                            {
+                               // Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                               // Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position="), "", "");
+                              
+                            }
+                            catch { };
+
+                            //Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers"), "", "");
+                        }
+                        catch { };
+                    }
+                    else
+                    {
+                        //  Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                        Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + Data_Min_Postion), "", "");
+
+                        if (string.IsNullOrEmpty(Data))  //https://twitter.com/sachin//followers/users?cursor=-1&include_available_features=1&include_entities=1&is_forward=true           //https://twitter.com/sachin/followers/users?include_available_features=1&include_entities=1&max_position=1499136517515463071
+                        {
+
+                            for (int i = 1; i <= 3; i++)
+                            {
+                                Thread.Sleep(3000);
+                               // Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                                Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + Data_Min_Postion), "", "");
+                                if (!string.IsNullOrEmpty(Data))
+                                {
+                                    break;
+                                }
+                            }
+                           
+                        }
+
+
+
+                        if (Data == "Too Many Requestes")
+                        {
+                            Log("[ " + DateTime.Now + " ] => [ Wait for 15 minutes For furthur Scraping because Twitter banned for scraping. its already too many requestes. ]");
+                            Thread.Sleep(15 * 60 * 1000);
+                          //  Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                            Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + Data_Min_Postion), "", "");
+                            if (string.IsNullOrEmpty(Data) || Data == "Too Many Requestes")
+                            {
+                                Log("[ " + DateTime.Now + " ] => [ Wait for 5 minutes more For furthur Scraping. ]");
+                                Thread.Sleep(5 * 60 * 1000);
+                                for (int i = 1; i <= 3; i++)
+                                {
+                                    Thread.Sleep(3000);
+                                  //  Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + Data_Min_Postion), "", "");
+                                    if (!string.IsNullOrEmpty(Data))
+                                    {
+                                        break;
+                                    }
+                                }
+                                //if (string.IsNullOrEmpty(Data))
+                                //{
+                                //    Log(" pagesource not found ");
+                                //}
+                            }
+                        }
+
+
+                    
+                    }
+
+
+                    if (Data.Contains("401 Unauthorized"))
+                    {
+                        ReturnStatus = "Account is Suspended. ";
+                        //  return lstIds;
+                    }
+                    else if (!Data.Contains("Rate limit exceeded") && !Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}") && !string.IsNullOrEmpty(Data))
+                    {
+                        string[] arraydata = {};
+                        string startWith = string.Empty;
+                        try
+                        {
+                            
+                            if (Data.Contains("js-stream-item stream-item stream-item"))
+                            {
+                                arraydata = Regex.Split(Data, "js-stream-item stream-item stream-item");
+                                startWith = "";
+                            }
+                            else
+                            {
+                                arraydata = Regex.Split(Data, "js-stream-item");
+                                startWith = "\\\" role=\\\"listitem\\\"";
+
+                            }
+                        }
+                        catch { };
+                        arraydata = arraydata.Skip(1).ToArray();
+                        foreach (string id in arraydata)
+                        {
+                            if (id.StartsWith(startWith) || id.StartsWith("\" role=\"listitem\""))
+                            {
+
+                                string userid = string.Empty;
+                                string username = string.Empty;
+                                if (counter == 0)
+                                {
+                                    try
+                                    {
+
+                                        int startindex = id.IndexOf("data-user-id=");
+                                        string start = id.Substring(startindex).Replace("data-user-id=", string.Empty);
+                                        int endindex = start.IndexOf("data-feedback-token");
+                                        string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
+                                        userid = end;
+
+                                    }
+                                    catch { }
+
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        int startindex = id.IndexOf("data-item-id=\\\"");
+                                        string start = id.Substring(startindex).Replace("data-item-id=\\\"", string.Empty);
+                                        int endindex = start.IndexOf("\\\"");
+                                        string end = start.Substring(0, endindex);
+                                        userid = end;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                    }
+                                }
+
+
+                                if (counter == 0)
+                                {
+
+                                    try
+                                    {
+
+                                        int startindex = id.IndexOf("data-screen-name=");
+                                        string start = id.Substring(startindex).Replace("data-screen-name=", string.Empty);
+                                        int endindex = start.IndexOf("data-user-id=");
+                                        string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
+                                        username = end;
+
+                                    }
+                                    catch { }
+                                }
+                                else
+                                {
+
+                                    try
+                                    {
+
+                                        int startindex = id.IndexOf("data-screen-name=\\\"");
+                                        string start = id.Substring(startindex).Replace("data-screen-name=\\\"", "");
+                                        int endindex = start.IndexOf("\\\"");
+                                        string end = start.Substring(0, endindex);
+                                        username = end;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                    }
+                                }
+
+
+
+                                if (CounterDataNo > 0)
+                                {
+                                    if (lstIds.Count == CounterDataNo)
+                                    {
+                                        ReturnStatus = "No Error";
+                                        lstIds = lstIds.Distinct().ToList();
+                                        return lstIds;
+
+                                    }
+                                    else
+                                    {
+                                        Globals.lstScrapedUserIDs.Add(userid);
+                                        lstIds.Add(userid + ":" + username);
+                                        lstIds = lstIds.Distinct().ToList();
+
+                                        if (username.Contains("/span") || userid.Contains("/span"))
+                                        {
+
+                                        }
+
+                                        Log("[ " + DateTime.Now + " ] => [ " + userid + ":" + username + " ]");
+                                        //write to csv
+                                        try
+                                        {
+                                            checkDuplicate.Add(userid, username);
+                                            GlobusFileHelper.AppendStringToTextfileNewLine(userID + "," + userid + "," + username, Globals.Path_ScrapedFollowersList);
+                                            GlobusFileHelper.AppendStringToTextfileNewLine(username, Globals.Path_ScrapedFollowersListtxt);  //for txt format.
+                                        }
+                                        catch(Exception ex)
+                                        {
+                                           // return lstIds;
+                                        }
+                                    }
+                                }
+
+
+
+                                try
+                                {
+                                    //if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(userid))
+                                    //{
+                                    //    string query = "INSERT INTO tb_UsernameDetails (Username , Userid) VALUES ('" + username + "' ,'" + userid + "') ";
+                                    //    DataBaseHandler.InsertQuery(query, "tb_UsernameDetails");
+                                    //}
+                                }
+                                catch (Exception ex)
+                                {
+                                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                }
+                            }
+                        }
+
+
+
+                        if (lstIds.Count == CounterDataNo)
+                        {
+                            ReturnStatus = "No Error";
+                            lstIds = lstIds.Distinct().ToList();
+                            return lstIds;                           
+                        }
+
+
+
+                        else if (Data.Contains("\"has_more_items\":true"))
+                        {
+                            try
+                            {
+                                string[] Data_Min_PositionList = Regex.Split(Data, "min_position");
+                                Data_Min_Postion = Utils.getBetween(Data_Min_PositionList[1], ":\"", "\"");
+                            }
+                            catch { };
+                            lstIds = lstIds.Distinct().ToList();
+                            counter++;
+                            continue;
+                        }
+                      
+                        ReturnStatus = "No Error";
+                        lstIds = lstIds.Distinct().ToList();
+                        //  return lstIds;
+                    }
+                    else if (Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}"))
+                    {
+                        ReturnStatus = "Sorry, that page does not exist :" + userID;
+                        lstIds = lstIds.Distinct().ToList();
+                        // return lstIds;
+                    }
+                    else if (Data.Contains("Rate limit exceeded. Clients may not make more than 150 requests per hour."))
+                    {
+                        ReturnStatus = "Rate limit exceeded. Clients may not make more than 150 requests per hour.:-" + userID;
+                        lstIds = lstIds.Distinct().ToList();
+                        // return lstIds;
+                    }
+                    else
+                    {
+                        ReturnStatus = "Error";
+                        lstIds = lstIds.Distinct().ToList();
+                        // return lstIds;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + userID + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + userID + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                    ReturnStatus = "Error";
+                    lstIds = lstIds.Distinct().ToList();
+                    // return lstIds;
+                }
+
+                counter++; 
+            }
+            lstIds = lstIds.Distinct().ToList();
+            return lstIds;          
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         public List<string> GetFollowers_New_ForMobileVersion(string userID, out string ReturnStatus, ref Globussoft.GlobusHttpHelper HttpHelper)
         {
@@ -5369,290 +5988,406 @@ namespace twtboardpro
             List<string> lstIds = new List<string>();
             string Data = string.Empty;
             string FindCursor = string.Empty;
+            int noOfPages = TweetAccountManager.noOfUnfollows / 18 + 1; //CounterDataNo
+            noOfPages = (CounterDataNo / 18)+1;
+            ReturnStatus = "";
+            string NoOfFollowing = string.Empty;
+            Globals.lstScrapedUserIDs.Clear();
+
+            try 
+            {
+                string followingurl = "https://twitter.com/" + userID + "/following";
+                string pagesourceOfFollowing= HttpHelper.getHtmlfromUrl(new Uri(followingurl), "", "");
+                try
+                {
+                    string[] getNoOfFollowing = Regex.Split(pagesourceOfFollowing, "class=\"ProfileNav-value\"");
+                    try
+                    {
+                        NoOfFollowing = Utils.getBetween(getNoOfFollowing[2], ">", "<");
+                    }
+                    catch { };
+                }
+                catch { };
+            }
+            catch { };
+
+
 
             try
             {
 
             StartAgain:
-                //Thread.Sleep(1000);
-                string[] splitRes = new string[] { };
-                if (counter == 0)
+                for (int j = 1; j <= noOfPages; j++)
                 {
-                    string aa = "https://twitter.com/" + userID + "/following";
-                    Data = HttpHelper.getHtmlfromUrl(new Uri(aa), "", "");
-                    if (Data.Contains("<div class=\"stream-container"))
+                    try
                     {
-                        splitRes = Regex.Split(Data, "<div class=\"stream-container");
-                    }
-                    else
-                    {
-                        splitRes = Regex.Split(Data, "<div class=\"GridTimeline-items");
-                    }
-                    splitRes = splitRes.Skip(1).ToArray();
-
-                    if (splitRes[0].Contains("<div class=\"stream profile-stream\">"))
-                    {
-                        splitRes = Regex.Split(splitRes[0], "<div class=\"stream profile-stream\">");
-                        cursor = splitRes[0].Replace("\"", string.Empty).Replace("\n", string.Empty).Replace(">", string.Empty).Replace("data-cursor=", string.Empty).Trim();
-
-                    }
-                    else
-                    {
-                        try
+                        //Thread.Sleep(1000);
+                        string[] splitRes = new string[] { };
+                        if (cursor == "0")
                         {
-                            cursor = (splitRes[0].Substring(splitRes[0].IndexOf("data-cursor="), splitRes[0].IndexOf(">", splitRes[0].IndexOf("data-cursor=")) - splitRes[0].IndexOf("data-cursor=")).Replace("data-cursor=", string.Empty).Replace("\n", string.Empty).Replace("\"", string.Empty).Replace(",", "").Trim());
-                        }
-                        catch { };
-                    }
-                    counter++;
-                    cursor = "-1";
-                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-
-
-                    //Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers"), "", "");
-                }
-                else
-                {
-                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                    if (string.IsNullOrEmpty(Data))
-                    {
-
-                        for (int i = 1; i <= 3; i++)
-                        {
-                            Thread.Sleep(3000);
-                            Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                            if (!string.IsNullOrEmpty(Data))
+                            string aa = "https://twitter.com/" + userID + "/following";
+                            Data = HttpHelper.getHtmlfromUrl(new Uri(aa), "", "");
+                            if (Data.Contains("<div class=\"stream-container"))
                             {
-                                break;
-                            }
-                        }
-                        //if (string.IsNullOrEmpty(Data))
-                        //{
-                        //    Log(" pagesource not found ");
-                        //}
-                    }
-                    if (Data == "Too Many Requestes")
-                    {
-                        Log("[ " + DateTime.Now + " ] => [ Wait for 15 minutes For furthur Scraping because Twitter banned for scraping. its already too many requestes. ]");
-                        Thread.Sleep(15 * 60 * 1000);
-                        Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                        if (string.IsNullOrEmpty(Data) || Data == "Too Many Requestes")
-                        {
-                            Log("[ " + DateTime.Now + " ] => [ Wait for 5 minutes more For furthur Scraping. ]");
-                            Thread.Sleep(5 * 60 * 1000);
-                            for (int i = 1; i <= 3; i++)
-                            {
-                                Thread.Sleep(3000);
-                                Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                                if (!string.IsNullOrEmpty(Data))
+                                try
                                 {
-                                    break;
+                                    splitRes = Regex.Split(Data, "<div class=\"stream-container");
                                 }
-                            }
-                            //if (string.IsNullOrEmpty(Data))
-                            //{
-                            //    Log(" pagesource not found ");
-                            //}
-                        }
-                    }
-
-                    var avc = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(Data);
-                    cursor = string.Empty;
-                    //string DataHtml = (string)avc["items_html"];
-                    cursor = (string)avc["cursor"];
-                }
-
-                if (cursor == "0")
-                {
-                    Thread.Sleep(2000);
-                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following"), "", "");
-                }
-
-                if (Data.Contains("401 Unauthorized"))
-                {
-                    ReturnStatus = "Account is Suspended. ";
-                    return lstIds;
-                }
-                else if (!Data.Contains("Rate limit exceeded") && !Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}") && !string.IsNullOrEmpty(Data))
-                {
-                    string[] arraydata;
-                    string startWith = string.Empty;
-                    if (Data.Contains("js-stream-item stream-item stream-item"))
-                    {
-                        arraydata = Regex.Split(Data, "js-stream-item stream-item stream-item");
-                        startWith = "";
-                    }
-                    else
-                    {
-                        arraydata = Regex.Split(Data, "js-stream-item");
-                        startWith = "\\\" role=\\\"listitem\\\"";
-
-                    }
-                    arraydata = arraydata.Skip(1).ToArray();
-                    foreach (string id in arraydata)
-                    {
-                        if (!id.StartsWith(startWith))
-                        {
-                            continue;
-                        }
-
-
-                        string userid = string.Empty;
-                        string username = string.Empty;
-                        if (cursor == "0")
-                        {
-                            try
-                            {
-
-                                int startindex = id.IndexOf("data-user-id=");
-                                string start = id.Substring(startindex).Replace("data-user-id=", string.Empty);
-                                int endindex = start.IndexOf("data-feedback-token");
-                                string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
-                                userid = end;
-
-                            }
-                            catch { }
-
-                        }
-                        else
-                        {
-                            try
-                            {
-                                int startindex = id.IndexOf("data-item-id=\\\"");
-                                string start = id.Substring(startindex).Replace("data-item-id=\\\"", string.Empty);
-                                int endindex = start.IndexOf("\\\"");
-                                string end = start.Substring(0, endindex);
-                                userid = end;
-                            }
-                            catch (Exception ex)
-                            {
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
-                            }
-                        }
-
-
-                        if (cursor == "0")
-                        {
-
-                            try
-                            {
-
-                                int startindex = id.IndexOf("data-screen-name=");
-                                string start = id.Substring(startindex).Replace("data-screen-name=", string.Empty);
-                                int endindex = start.IndexOf("data-user-id=");
-                                string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
-                                username = end;
-
-                            }
-                            catch { }
-                        }
-                        else
-                        {
-
-                            try
-                            {
-
-                                int startindex = id.IndexOf("data-screen-name=\\\"");
-                                string start = id.Substring(startindex).Replace("data-screen-name=\\\"", "");
-                                int endindex = start.IndexOf("\\\"");
-                                string end = start.Substring(0, endindex);
-                                username = end;
-                            }
-                            catch (Exception ex)
-                            {
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
-                            }
-                        }
-
-
-
-                        if (CounterDataNo > 0)
-                        {
-                            if (lstIds.Count == CounterDataNo)
-                            {
-                                ReturnStatus = "No Error";
-                                lstIds = lstIds.Distinct().ToList();
-                                return lstIds;
+                                catch { };
                             }
                             else
                             {
-                                Globals.lstScrapedUserIDs.Add(userid);
-                                lstIds.Add(userid + ":" + username);
-                                lstIds = lstIds.Distinct().ToList();
-
-                                if (username.Contains("/span") || userid.Contains("/span"))
+                                try
                                 {
+                                    splitRes = Regex.Split(Data, "<div class=\"GridTimeline-items");
+                                }
+                                catch { };
+                            }
+                            splitRes = splitRes.Skip(1).ToArray();
 
+                            if (splitRes[0].Contains("<div class=\"stream profile-stream\">"))
+                            {
+                                splitRes = Regex.Split(splitRes[0], "<div class=\"stream profile-stream\">");
+                                cursor = splitRes[0].Replace("\"", string.Empty).Replace("\n", string.Empty).Replace(">", string.Empty).Replace("data-cursor=", string.Empty).Trim();
+
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    cursor = (splitRes[0].Substring(splitRes[0].IndexOf("data-cursor="), splitRes[0].IndexOf(">", splitRes[0].IndexOf("data-cursor=")) - splitRes[0].IndexOf("data-cursor=")).Replace("data-cursor=", string.Empty).Replace("\n", string.Empty).Replace("\"", string.Empty).Replace(",", "").Trim());
+                                }
+                                catch { };
+                            }
+                            counter++;
+                            cursor = "-1";
+                            Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+
+
+                            //Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers"), "", "");
+                        }
+                        else
+                        {
+                          //  Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                           // Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + cursor), "", "");
+                            if (j == 2)
+                            {
+                                Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following"), "", "");
+                            }
+                            string max_position = Utils.getBetween(Data, "data-min-position=\"", "\"");
+
+                            if (string.IsNullOrEmpty(max_position))
+                            {
+                               max_position = Utils.getBetween(Data, "{\"min_position\":\"", "\",\"");
+                               //if (max_position == "-1")
+                               //{
+                               //    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                               //}
+                               //else
+                               //{
+                               //    continue;
+                               //}
+                            }
+                            string paginationUrl = "https://twitter.com/"+userID+"/following/users?include_available_features=1&include_entities=1&max_position=" + max_position;
+
+                            Data = HttpHelper.getHtmlfromUrl(new Uri(paginationUrl), "", "");
+
+
+                            if (string.IsNullOrEmpty(Data))
+                            {
+
+                                for (int i = 1; i <= 3; i++)
+                                {
+                                    Thread.Sleep(3000);
+                                  //  Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + cursor), "", "");
+                                    if (!string.IsNullOrEmpty(Data))
+                                    {
+                                        break;
+                                    }
+                                }
+                                //if (string.IsNullOrEmpty(Data))
+                                //{
+                                //    Log(" pagesource not found ");
+                                //}
+                            }
+                            if (Data == "Too Many Requestes")
+                            {
+                                Log("[ " + DateTime.Now + " ] => [ Wait for 15 minutes For furthur Scraping because Twitter banned for scraping. its already too many requestes. ]");
+                                Thread.Sleep(15 * 60 * 1000);
+                                Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                                if (string.IsNullOrEmpty(Data) || Data == "Too Many Requestes")
+                                {
+                                    Log("[ " + DateTime.Now + " ] => [ Wait for 5 minutes more For furthur Scraping. ]");
+                                    Thread.Sleep(5 * 60 * 1000);
+                                    for (int i = 1; i <= 3; i++)
+                                    {
+                                        Thread.Sleep(3000);
+                                       // Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                                        Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + cursor), "", "");
+                                        if (!string.IsNullOrEmpty(Data))
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    //if (string.IsNullOrEmpty(Data))
+                                    //{
+                                    //    Log(" pagesource not found ");
+                                    //}
+                                }
+                            }
+                            try
+                            {
+                                //var avc = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(Data);
+                                //cursor = string.Empty;
+                                ////string DataHtml = (string)avc["items_html"];
+                                //cursor = (string)avc["cursor"];
+                            }
+                            catch { };
+                        }
+
+                        if (cursor == "0")
+                        {
+                            Thread.Sleep(2000);
+                            Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following"), "", "");
+                        }
+
+                        if (Data.Contains("401 Unauthorized"))
+                        {
+                            ReturnStatus = "Account is Suspended. ";
+                            return lstIds;
+                        }
+                        else if (!Data.Contains("Rate limit exceeded") && !Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}") && !string.IsNullOrEmpty(Data))
+                        {
+                            string[] arraydata;
+                            string startWith = string.Empty;
+                            if (Data.Contains("js-stream-item stream-item stream-item"))
+                            {
+                                arraydata = Regex.Split(Data, "js-stream-item stream-item stream-item");
+                                startWith = "";
+                            }
+                            else
+                            {
+                                arraydata = Regex.Split(Data, "js-stream-item");
+                                startWith = "\\\" role=\\\"listitem\\\"";
+
+                            }
+                            arraydata = arraydata.Skip(1).ToArray();
+                            foreach (string id in arraydata)
+                            {
+                                if (!id.StartsWith(startWith))
+                                {
+                                    continue;
                                 }
 
-                                Log("[ " + DateTime.Now + " ] => [ " + userid + ":" + username + " ]");
-                                //write to csv
-                                GlobusFileHelper.AppendStringToTextfileNewLine(userID  + "," + username, Globals.Path_ScrapedFollowingsList);
-                                GlobusFileHelper.AppendStringToTextfileNewLine(username, Globals.Path_ScrapedFollowingsListtxt);  //for txt format.
+
+                                string userid = string.Empty;
+                                string username = string.Empty;
+                                if (cursor == "0")
+                                {
+                                    try
+                                    {
+
+                                        int startindex = id.IndexOf("data-user-id=");
+                                        string start = id.Substring(startindex).Replace("data-user-id=", string.Empty);
+                                        int endindex = start.IndexOf("data-feedback-token");
+                                        string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
+                                        userid = end;
+
+                                    }
+                                    catch { }
+
+                                }
+                                else
+                                {
+                                    try
+                                    {
+                                        int startindex = id.IndexOf("data-item-id=\\\"");
+                                        string start = id.Substring(startindex).Replace("data-item-id=\\\"", string.Empty);
+                                        int endindex = start.IndexOf("\\\"");
+                                        string end = start.Substring(0, endindex);
+                                        userid = end;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                    }
+                                }
+
+
+                                if (cursor == "0")
+                                {
+
+                                    try
+                                    {
+
+                                        int startindex = id.IndexOf("data-screen-name=");
+                                        string start = id.Substring(startindex).Replace("data-screen-name=", string.Empty);
+                                        int endindex = start.IndexOf("data-user-id=");
+                                        string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
+                                        username = end;
+
+                                    }
+                                    catch { }
+                                }
+                                else
+                                {
+
+                                    try
+                                    {
+
+                                        int startindex = id.IndexOf("data-screen-name=\\\"");
+                                        string start = id.Substring(startindex).Replace("data-screen-name=\\\"", "");
+                                        int endindex = start.IndexOf("\\\"");
+                                        string end = start.Substring(0, endindex);
+                                        username = end;
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                    }
+                                }
+
+
+
+                                if (CounterDataNo > 0)
+                                {
+                                    if (lstIds.Count == CounterDataNo)
+                                    {
+                                        ReturnStatus = "No Error";
+                                        lstIds = lstIds.Distinct().ToList();
+                                        return lstIds;
+                                    }
+                                    else
+                                    {
+                                        Globals.lstScrapedUserIDs.Add(userid);
+                                        Globals.lstScrapedUserIDs = Globals.lstScrapedUserIDs.Distinct().ToList();
+                                        lstIds.Add(userid + ":" + username);
+                                        lstIds = lstIds.Distinct().ToList();
+
+                                        if (username.Contains("/span") || userid.Contains("/span"))
+                                        {
+
+                                        }
+
+                                        Log("[ " + DateTime.Now + " ] => [ " + userid + ":" + username + " ]");
+                                        //write to csv
+                                        //duplicateUsername.Add(userID, username);
+                                        try
+                                        {
+                                            GlobusFileHelper.AppendStringToTextfileNewLine(userID + "," + username, Globals.Path_ScrapedFollowingsList);
+                                            GlobusFileHelper.AppendStringToTextfileNewLine(username, Globals.Path_ScrapedFollowingsListtxt);  //for txt format.
+                                        }
+                                        catch { };
+
+                                        try
+                                        {
+                                            if (Globals.lstScrapedUserIDs.Count() >= Convert.ToInt32(NoOfFollowing))
+                                            {
+                                                //return Globals.lstScrapedUserIDs;
+                                                return lstIds;
+                                            }
+                                            //else if (Globals.lstScrapedUserIDs.Count()==CounterDataNo)
+                                            //{
+                                            //    return Globals.lstScrapedUserIDs;
+                                            //}
+                                        }
+                                        catch { };
+                                        try
+                                        {
+                                            if (Globals.lstScrapedUserIDs.Count() == CounterDataNo)
+                                            {
+                                                //return Globals.lstScrapedUserIDs;
+                                                return lstIds;
+                                            }
+                                        }
+                                        catch { };
+                                    }
+                                }
+
+
+
+                                try
+                                {
+                                    //if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(userid))
+                                    //{
+                                    //    string query = "INSERT INTO tb_UsernameDetails (Username , Userid) VALUES ('" + username + "' ,'" + userid + "') ";
+                                    //    DataBaseHandler.InsertQuery(query, "tb_UsernameDetails");
+                                    //}
+                                }
+                                catch (Exception ex)
+                                {
+                                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                }
                             }
-                        }
-
-
-
-                        try
-                        {
-                            //if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(userid))
+                            //if ((Globals.lstScrapedUserIDs.Count() <= CounterDataNo) && (Globals.lstScrapedUserIDs.Count()==Convert.ToInt32(NoOfFollowing)))
                             //{
-                            //    string query = "INSERT INTO tb_UsernameDetails (Username , Userid) VALUES ('" + username + "' ,'" + userid + "') ";
-                            //    DataBaseHandler.InsertQuery(query, "tb_UsernameDetails");
+                            //    return Globals.lstScrapedUserIDs;
                             //}
+
+
+                            if (lstIds.Count < CounterDataNo)
+                            {
+                                if (Data.Contains("data-min-position=") && TweetAccountManager.noOfUnfollows > lstIds.Count)
+                                {
+                                    try
+                                    {
+                                        string[] cursorList = Regex.Split(Data, "data-min-position");
+                                        cursor = Utils.getBetween(cursorList[1], "\"", "\"");
+
+                                    }
+                                    catch { };
+                                }
+                                if (Data.Contains("min_position") && TweetAccountManager.noOfUnfollows > lstIds.Count)
+                                {
+                                    try
+                                    {
+                                        string[] cursorList = Regex.Split(Data, "min_position");
+                                        cursor = Utils.getBetween(cursorList[1], ":\"", "\"");
+
+                                    }
+                                    catch { };
+                                }
+                                if (cursor != "0")
+                                {
+                                    continue;
+                                   // goto StartAgain;
+                                }
+                            }
+
+                            ReturnStatus = "No Error";
+                            lstIds = lstIds.Distinct().ToList();
+                            return lstIds;
                         }
-                        catch (Exception ex)
+                        else if (Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}"))
                         {
-                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwitterDataScrapper);
-                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                            ReturnStatus = "Sorry, that page does not exist :" + userID;
+                            lstIds = lstIds.Distinct().ToList();
+                            return lstIds;
+                        }
+                        else if (Data.Contains("Rate limit exceeded. Clients may not make more than 150 requests per hour."))
+                        {
+                            ReturnStatus = "Rate limit exceeded. Clients may not make more than 150 requests per hour.:-" + userID;
+                            lstIds = lstIds.Distinct().ToList();
+                            return lstIds;
+                        }
+                        else
+                        {
+                            ReturnStatus = "Error";
+                            lstIds = lstIds.Distinct().ToList();
+                            return lstIds;
                         }
                     }
-
-
-
-                    if (Data.Contains("\"has_more_items\":true"))
-                    {
-                        int startindex = Data.IndexOf("\"cursor\":");
-                        string start = Data.Substring(startindex).Replace("\"cursor\":", "");
-                        int lastindex = start.IndexOf("\",\"");
-                        if (lastindex < 0)
-                        {
-                            lastindex = start.IndexOf("\"}");
-                        }
-                        string end = start.Substring(0, lastindex).Replace("\"", "");
-                        cursor = end;
-                        if (cursor != "0")
-                        {
-                            goto StartAgain;
-                        }
-                    }
-
-                    ReturnStatus = "No Error";
-                    lstIds = lstIds.Distinct().ToList();
-                    return lstIds;
+                    catch { };
                 }
-                else if (Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}"))
-                {
-                    ReturnStatus = "Sorry, that page does not exist :" + userID;
-                    lstIds = lstIds.Distinct().ToList();
-                    return lstIds;
-                }
-                else if (Data.Contains("Rate limit exceeded. Clients may not make more than 150 requests per hour."))
-                {
-                    ReturnStatus = "Rate limit exceeded. Clients may not make more than 150 requests per hour.:-" + userID;
-                    lstIds = lstIds.Distinct().ToList();
-                    return lstIds;
-                }
-                else
-                {
-                    ReturnStatus = "Error";
-                    lstIds = lstIds.Distinct().ToList();
-                    return lstIds;
-                }
+            //return lstIds;
+            return Globals.lstScrapedUserIDs;
             }
+               
+
             catch (Exception ex)
             {
                 Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + userID + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
@@ -5661,6 +6396,7 @@ namespace twtboardpro
                 lstIds = lstIds.Distinct().ToList();
                 return lstIds;
             }
+        
         }
 
         public List<string> GetFollowings_NewForUnfollower(string userID, out string ReturnStatus, ref Globussoft.GlobusHttpHelper HttpHelper)
@@ -5676,285 +6412,372 @@ namespace twtboardpro
             List<string> lstIds = new List<string>();
             string Data = string.Empty;
             string FindCursor = string.Empty;
+            int noOfPages = TweetAccountManager.noOfUnfollows / 18 + 1;
+            ReturnStatus = "";
+            string min_position=string.Empty;
 
             try
             {
 
             StartAgain:
-                //Thread.Sleep(1000);
-                string[] splitRes = new string[] { };
-                if (counter == 0)
+                for (int j = 1; j <= noOfPages; j++)
                 {
-                    string aa = "https://twitter.com/" + userID + "/following";
-                    Data = HttpHelper.getHtmlfromUrl(new Uri(aa), "", "");
-                    if (Data.Contains("<div class=\"stream-container"))
-                    {
-                        splitRes = Regex.Split(Data, "<div class=\"stream-container");
-                    }
-                    else
-                    {
-                        splitRes = Regex.Split(Data, "<div class=\"GridTimeline-items");
-                    }
-                    splitRes = splitRes.Skip(1).ToArray();
-
-                    if (splitRes[0].Contains("<div class=\"stream profile-stream\">"))
-                    {
-                        splitRes = Regex.Split(splitRes[0], "<div class=\"stream profile-stream\">");
-                        cursor = splitRes[0].Replace("\"", string.Empty).Replace("\n", string.Empty).Replace(">", string.Empty).Replace("data-cursor=", string.Empty).Trim();
-
-                    }
-                    else
-                    {
-                        cursor = (splitRes[0].Substring(splitRes[0].IndexOf("data-cursor="), splitRes[0].IndexOf(">", splitRes[0].IndexOf("data-cursor=")) - splitRes[0].IndexOf("data-cursor=")).Replace("data-cursor=", string.Empty).Replace("\n", string.Empty).Replace("\"", string.Empty).Replace(",", "").Trim());
-                    }
-                    counter++;
-                    cursor = "-1";
-                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-
-
-                    //Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers"), "", "");
-                }
-                else
-                {
-                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                    if (string.IsNullOrEmpty(Data))
+                    try
                     {
 
-                        for (int i = 1; i <= 3; i++)
-                        {
-                            Thread.Sleep(3000);
-                            Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                            if (!string.IsNullOrEmpty(Data))
-                            {
-                                break;
-                            }
-                        }
-                        //if (string.IsNullOrEmpty(Data))
-                        //{
-                        //    Log(" pagesource not found ");
-                        //}
-                    }
-                    if (Data == "Too Many Requestes")
-                    {
-                        Log("[ " + DateTime.Now + " ] => [ Wait for 15 minutes For furthur Scraping because Twitter banned for scraping. its already too many requestes. ]");
-                        Thread.Sleep(15 * 60 * 1000);
-                        Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                        if (string.IsNullOrEmpty(Data) || Data == "Too Many Requestes")
-                        {
-                            Log("[ " + DateTime.Now + " ] => [ Wait for 5 minutes more For furthur Scraping. ]");
-                            Thread.Sleep(5 * 60 * 1000);
-                            for (int i = 1; i <= 3; i++)
-                            {
-                                Thread.Sleep(3000);
-                                Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
-                                if (!string.IsNullOrEmpty(Data))
-                                {
-                                    break;
-                                }
-                            }
-                            //if (string.IsNullOrEmpty(Data))
-                            //{
-                            //    Log(" pagesource not found ");
-                            //}
-                        }
-                    }
-
-                    var avc = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(Data);
-                    cursor = string.Empty;
-                    //string DataHtml = (string)avc["items_html"];
-                    cursor = (string)avc["cursor"];
-                }
-
-                if (cursor == "0")
-                {
-                    Thread.Sleep(2000);
-                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following"), "", "");
-                }
-
-                if (Data.Contains("401 Unauthorized"))
-                {
-                    ReturnStatus = "Account is Suspended. ";
-                    return lstIds;
-                }
-                else if (!Data.Contains("Rate limit exceeded") && !Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}") && !string.IsNullOrEmpty(Data))
-                {
-                    string[] arraydata;
-                    string startWith = string.Empty;
-                    if (Data.Contains("js-stream-item stream-item stream-item"))
-                    {
-                        arraydata = Regex.Split(Data, "js-stream-item stream-item stream-item");
-                        startWith = "";
-                    }
-                    else
-                    {
-                        arraydata = Regex.Split(Data, "js-stream-item");
-                        startWith = "\\\" role=\\\"listitem\\\"";
-
-                    }
-                    arraydata = arraydata.Skip(1).ToArray();
-                    foreach (string id in arraydata)
-                    {
-                        if (!id.StartsWith(startWith))
-                        {
-                            continue;
-                        }
-
-
-                        string userid = string.Empty;
-                        string username = string.Empty;
+                        //Thread.Sleep(1000);
+                        string[] splitRes = new string[] { };
                         if (cursor == "0")
                         {
+                            string aa = "https://twitter.com/" + userID + "/following";
+                            Data = HttpHelper.getHtmlfromUrl(new Uri(aa), "", "");
+
                             try
                             {
+                                if (Data.Contains("<div class=\"stream-container"))
+                                {
+                                    splitRes = Regex.Split(Data, "<div class=\"stream-container");
+                                }
+                                else
+                                {
+                                    splitRes = Regex.Split(Data, "<div class=\"GridTimeline-items");
+                                }
+                                splitRes = splitRes.Skip(1).ToArray();
 
-                                int startindex = id.IndexOf("data-user-id=");
-                                string start = id.Substring(startindex).Replace("data-user-id=", string.Empty);
-                                int endindex = start.IndexOf("data-feedback-token");
-                                string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
-                                userid = end;
+                                if (splitRes[0].Contains("<div class=\"stream profile-stream\">"))
+                                {
+                                    splitRes = Regex.Split(splitRes[0], "<div class=\"stream profile-stream\">");
+                                    cursor = splitRes[0].Replace("\"", string.Empty).Replace("\n", string.Empty).Replace(">", string.Empty).Replace("data-cursor=", string.Empty).Trim();
+
+                                }
+                                else
+                                {
+                                    cursor = (splitRes[0].Substring(splitRes[0].IndexOf("data-cursor="), splitRes[0].IndexOf(">", splitRes[0].IndexOf("data-cursor=")) - splitRes[0].IndexOf("data-cursor=")).Replace("data-cursor=", string.Empty).Replace("\n", string.Empty).Replace("\"", string.Empty).Replace(",", "").Trim());
+                                }
+
 
                             }
-                            catch { }
+                            catch { };
+                            counter++;
+                            //   cursor = "-1";
+                            //  Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
 
+
+                            //Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers"), "", "");
                         }
                         else
                         {
+                            //  Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following/users?cursor=" + cursor + "&include_available_features=1&include_entities=1&is_forward=true"), "", "");
+                           // Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + min_position),"","");
+                            string followingURL = "https://twitter.com/" + userID + "/following/users?include_available_features=1&include_entities=1&max_position=" + min_position;
+                            Data = HttpHelper.getHtmlfromUrl(new Uri(followingURL), "", "");
+                            
+
+                            if (string.IsNullOrEmpty(Data))
+                            {
+
+                                for (int i = 1; i <= 3; i++)
+                                {
+                                    Thread.Sleep(3000);
+                                    Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + cursor), "", "");
+                                    if (!string.IsNullOrEmpty(Data))
+                                    {
+                                        break;
+                                    }
+                                }
+                                //if (string.IsNullOrEmpty(Data))
+                                //{
+                                //    Log(" pagesource not found ");
+                                //}
+                            }
+                            if (Data == "Too Many Requestes")
+                            {
+                                Log("[ " + DateTime.Now + " ] => [ Wait for 15 minutes For furthur Scraping because Twitter banned for scraping. its already too many requestes. ]");
+                                Thread.Sleep(15 * 60 * 1000);
+                                Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + cursor), "", "");
+                                if (string.IsNullOrEmpty(Data) || Data == "Too Many Requestes")
+                                {
+                                    Log("[ " + DateTime.Now + " ] => [ Wait for 5 minutes more For furthur Scraping. ]");
+                                    Thread.Sleep(5 * 60 * 1000);
+                                    for (int i = 1; i <= 3; i++)
+                                    {
+                                        Thread.Sleep(3000);
+                                        Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/followers/users?include_available_features=1&include_entities=1&max_position=" + cursor), "", "");
+                                        if (!string.IsNullOrEmpty(Data))
+                                        {
+                                            break;
+                                        }
+                                    }
+                                    //if (string.IsNullOrEmpty(Data))
+                                    //{
+                                    //    Log(" pagesource not found ");
+                                    //}
+                                }
+                            }
                             try
                             {
-                                int startindex = id.IndexOf("data-item-id=\\\"");
-                                string start = id.Substring(startindex).Replace("data-item-id=\\\"", string.Empty);
-                                int endindex = start.IndexOf("\\\"");
-                                string end = start.Substring(0, endindex);
-                                userid = end;
+                                //var avc = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(Data);
+                                //cursor = string.Empty;
+                                ////string DataHtml = (string)avc["items_html"];
+                                //cursor = (string)avc["cursor"];
                             }
-                            catch (Exception ex)
-                            {
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
-                            }
+                            catch { };
                         }
-
 
                         if (cursor == "0")
                         {
+                            Thread.Sleep(2000);
+                            Data = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + userID + "/following"), "", "");
+                        }
 
+                        if (Data.Contains("401 Unauthorized"))
+                        {
+                            ReturnStatus = "Account is Suspended. ";
+                            return lstIds;
+                        }
+                        else if (!Data.Contains("Rate limit exceeded") && !Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}") && !string.IsNullOrEmpty(Data))
+                        {
+                            string[] arraydata = { };
+                            string startWith = string.Empty;
                             try
                             {
 
-                                int startindex = id.IndexOf("data-screen-name=");
-                                string start = id.Substring(startindex).Replace("data-screen-name=", string.Empty);
-                                int endindex = start.IndexOf("data-user-id=");
-                                string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
-                                username = end;
+                                if (Data.Contains("js-stream-item stream-item stream-item"))
+                                {
+                                    arraydata = Regex.Split(Data, "js-stream-item stream-item stream-item");
+                                    startWith = "";
+                                }
+                                else
+                                {
+                                    arraydata = Regex.Split(Data, "js-stream-item");
+                                    startWith = "\\\" role=\\\"listitem\\\"";
 
+                                }
+                                arraydata = arraydata.Skip(1).ToArray();
                             }
-                            catch { }
+                            catch { };
+                            foreach (string id in arraydata)
+                            {
+                                if (id.StartsWith(startWith) || id.StartsWith("\" role=\"listitem\""))
+                                {
+
+
+
+
+                                    string userid = string.Empty;
+                                    string username = string.Empty;
+                                    if (cursor == "0")
+                                    {
+                                        try
+                                        {
+
+                                            int startindex = id.IndexOf("data-user-id=");
+                                            string start = id.Substring(startindex).Replace("data-user-id=", string.Empty);
+                                            int endindex = start.IndexOf("data-feedback-token");
+                                            string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
+                                            userid = end;
+                                            userid = userid.Replace("\\", string.Empty).Trim();
+
+                                        }
+                                        catch { }
+
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            //int startindex = id.IndexOf("data-item-id=\\\"");//data-item-id="
+                                            //string start = id.Substring(startindex).Replace("data-item-id=\\\"", string.Empty);
+                                            //int endindex = start.IndexOf("\\\"");
+                                            //string end = start.Substring(0, endindex);
+                                            //userid = end;
+                                            try
+                                            {
+                                                string[] getUserid = Regex.Split(id, "data-item-id=");
+                                                try
+                                                {
+                                                    userid = Utils.getBetween(getUserid[1], "\"", "\"");
+                                                    userid = userid.Replace("\\",string.Empty).Trim();
+                                                }
+                                                catch { };
+                                            }
+                                            catch { };
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + userid + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                        }
+                                    }
+
+
+                                    if (cursor == "0")
+                                    {
+
+                                        try
+                                        {
+
+                                            int startindex = id.IndexOf("data-screen-name=");
+                                            string start = id.Substring(startindex).Replace("data-screen-name=", string.Empty);
+                                            int endindex = start.IndexOf("data-user-id=");
+                                            string end = start.Substring(0, endindex).Replace("\"", string.Empty).Trim();
+                                            username = end;
+                                            username = username.Replace("\\",string.Empty).Trim();
+
+                                        }
+                                        catch { }
+                                    }
+                                    else
+                                    {
+
+                                        try
+                                        {
+
+                                            //int startindex = id.IndexOf("data-screen-name=\\\"");
+                                            //string start = id.Substring(startindex).Replace("data-screen-name=\\\"", "");
+                                            //int endindex = start.IndexOf("\\\"");
+                                            //string end = start.Substring(0, endindex);
+                                            //username = end;
+
+                                            try
+                                            {
+                                                string[] getScreenName = Regex.Split(id, "data-screen-name=");
+                                                try
+                                                {
+                                                    username = Utils.getBetween(getScreenName[1], "\"", "\"");
+                                                    username = username.Replace("\\", string.Empty).Trim();
+                                                }
+                                                catch { };
+                                            }
+                                            catch { };
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                        }
+                                    }
+
+
+
+                                    if (CounterDataNo > 0)
+                                    {
+                                        if (lstIds.Count == CounterDataNo)
+                                        {
+                                            ReturnStatus = "No Error";
+                                            lstIds = lstIds.Distinct().ToList();
+                                            return lstIds;
+                                        }
+                                        else
+                                        {
+                                            Globals.lstScrapedUserIDs.Add(userid);
+                                            lstIds.Add(username + ":" + userid);
+                                            lstIds = lstIds.Distinct().ToList();
+
+                                            if (username.Contains("/span") || userid.Contains("/span"))
+                                            {
+
+                                            }
+
+                                            Log("[ " + DateTime.Now + " ] => [ " + userid + ":" + username + " ]");
+                                            //write to csv
+                                            GlobusFileHelper.AppendStringToTextfileNewLine(userID + "," + userid + "," + username, Globals.Path_ScrapedFollowersList);
+                                            GlobusFileHelper.AppendStringToTextfileNewLine(username, Globals.Path_ScrapedFollowingsListtxt);
+                                        }
+                                    }
+
+
+
+                                    try
+                                    {
+                                        //if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(userid))
+                                        //{
+                                        //    string query = "INSERT INTO tb_UsernameDetails (Username , Userid) VALUES ('" + username + "' ,'" + userid + "') ";
+                                        //    DataBaseHandler.InsertQuery(query, "tb_UsernameDetails");
+                                        //}
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwitterDataScrapper);
+                                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                    }
+                                }
+                            }
+
+
+
+                            if ((lstIds.Count < CounterDataNo))
+                            {
+                                //int startindex = Data.IndexOf("\"cursor\":");
+                                //string start = Data.Substring(startindex).Replace("\"cursor\":", "");
+                                //int lastindex = start.IndexOf("\",\"");
+                                //if (lastindex < 0)
+                                //{
+                                //    lastindex = start.IndexOf("\"}");
+                                //}
+                                //string end = start.Substring(0, lastindex).Replace("\"", "");
+                                //cursor = end;
+
+                                if (Data.Contains("data-min-position=") && TweetAccountManager.noOfUnfollows > lstIds.Count)
+                                {
+                                    try
+                                    {
+                                        string[] cursorList = Regex.Split(Data, "data-min-position");
+                                        //cursor = Utils.getBetween(cursorList[1], "\"", "\"");
+                                        min_position = Utils.getBetween(cursorList[1], "=\"", "\"");
+
+                                    }
+                                    catch { };
+                                }
+                                if (Data.Contains("min_position") && TweetAccountManager.noOfUnfollows > lstIds.Count)
+                                {
+                                    try
+                                    {
+                                        string[] cursorList = Regex.Split(Data, "min_position");
+                                        //cursor = Utils.getBetween(cursorList[1], ":\"", "\"");
+                                        min_position = Utils.getBetween(cursorList[1], "=\"", "\"");
+                                        if (string.IsNullOrEmpty(min_position))
+                                        {
+                                            min_position = Utils.getBetween(cursorList[1],"\":\"","\"");
+                                        }
+                                    }
+                                    catch { };
+                                }
+
+                                if (cursor != "0")
+                                {
+                                    counter++;
+                                    continue;
+                                }
+                            }
+                         
+
+                            ReturnStatus = "No Error";
+                            lstIds = lstIds.Distinct().ToList();
+                            return lstIds;
+                        }
+                        else if (Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}"))
+                        {
+                            ReturnStatus = "Sorry, that page does not exist :" + userID;
+                            lstIds = lstIds.Distinct().ToList();
+                            return lstIds;
+                        }
+                        else if (Data.Contains("Rate limit exceeded. Clients may not make more than 150 requests per hour."))
+                        {
+                            ReturnStatus = "Rate limit exceeded. Clients may not make more than 150 requests per hour.:-" + userID;
+                            lstIds = lstIds.Distinct().ToList();
+                            return lstIds;
                         }
                         else
                         {
-
-                            try
-                            {
-
-                                int startindex = id.IndexOf("data-screen-name=\\\"");
-                                string start = id.Substring(startindex).Replace("data-screen-name=\\\"", "");
-                                int endindex = start.IndexOf("\\\"");
-                                string end = start.Substring(0, endindex);
-                                username = end;
-                            }
-                            catch (Exception ex)
-                            {
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwitterDataScrapper);
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> " + ex.Message, Globals.Path_TwtErrorLogs);
-                            }
-                        }
-
-
-
-                        if (CounterDataNo > 0)
-                        {
-                            if (lstIds.Count == CounterDataNo)
-                            {
-                                ReturnStatus = "No Error";
-                                lstIds = lstIds.Distinct().ToList();
-                                return lstIds;
-                            }
-                            else
-                            {
-                                Globals.lstScrapedUserIDs.Add(userid);
-                                lstIds.Add(username + ":" + userid);
-                                lstIds = lstIds.Distinct().ToList();
-
-                                if (username.Contains("/span") || userid.Contains("/span"))
-                                {
-
-                                }
-
-                                Log("[ " + DateTime.Now + " ] => [ " + userid + ":" + username + " ]");
-                                //write to csv
-                                GlobusFileHelper.AppendStringToTextfileNewLine(userID + "," + userid + "," + username, Globals.Path_ScrapedFollowersList);
-                                GlobusFileHelper.AppendStringToTextfileNewLine(username, Globals.Path_ScrapedFollowingsListtxt);
-                            }
-                        }
-
-
-
-                        try
-                        {
-                            //if (!string.IsNullOrEmpty(username) && !string.IsNullOrEmpty(userid))
-                            //{
-                            //    string query = "INSERT INTO tb_UsernameDetails (Username , Userid) VALUES ('" + username + "' ,'" + userid + "') ";
-                            //    DataBaseHandler.InsertQuery(query, "tb_UsernameDetails");
-                            //}
-                        }
-                        catch (Exception ex)
-                        {
-                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwitterDataScrapper);
-                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> GetFollowers_New() -- " + username + " --> database --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                            ReturnStatus = "Error";
+                            lstIds = lstIds.Distinct().ToList();
+                            return lstIds;
                         }
                     }
-
-
-
-                    if (Data.Contains("\"has_more_items\":true"))
-                    {
-                        int startindex = Data.IndexOf("\"cursor\":");
-                        string start = Data.Substring(startindex).Replace("\"cursor\":", "");
-                        int lastindex = start.IndexOf("\",\"");
-                        if (lastindex < 0)
-                        {
-                            lastindex = start.IndexOf("\"}");
-                        }
-                        string end = start.Substring(0, lastindex).Replace("\"", "");
-                        cursor = end;
-                        if (cursor != "0")
-                        {
-                            goto StartAgain;
-                        }
-                    }
-
-                    ReturnStatus = "No Error";
-                    lstIds = lstIds.Distinct().ToList();
-                    return lstIds;
+                    catch { };
                 }
-                else if (Data.Contains("{\"errors\":[{\"message\":\"Sorry, that page does not exist\",\"code\":34}]}"))
-                {
-                    ReturnStatus = "Sorry, that page does not exist :" + userID;
-                    lstIds = lstIds.Distinct().ToList();
-                    return lstIds;
-                }
-                else if (Data.Contains("Rate limit exceeded. Clients may not make more than 150 requests per hour."))
-                {
-                    ReturnStatus = "Rate limit exceeded. Clients may not make more than 150 requests per hour.:-" + userID;
-                    lstIds = lstIds.Distinct().ToList();
-                    return lstIds;
-                }
-                else
-                {
-                    ReturnStatus = "Error";
-                    lstIds = lstIds.Distinct().ToList();
-                    return lstIds;
-                }
+                return lstIds;
             }
             catch (Exception ex)
             {
@@ -6626,9 +7449,16 @@ namespace twtboardpro
                         datahkj = data.ToString();
                     }
 
-                    //string[] splitRes = Regex.Split(datahkj, "js-stream-item stream-item stream-item expanding-stream-item");//Regex.Split(res_Get_searchURL, "{\"created_at\"");
-                    string[] splitRes = Regex.Split(datahkj, "ProfileTweet u-textBreak js-tweet js-stream-tweet js-actionable-tweet");
+                    string[] splitRes = Regex.Split(datahkj, "js-stream-item stream-item stream-item expanding-stream-item");//Regex.Split(res_Get_searchURL, "{\"created_at\"");
+                    if (splitRes.Count() == 1)
+                    {
+                        splitRes = Regex.Split(datahkj, "ProfileTweet u-textBreak js-tweet js-stream-tweet js-actionable-tweet");
+                    }
                     splitRes = splitRes.Skip(1).ToArray();
+                    if (splitRes[0].Contains("Pinned Tweet"))
+                    {
+                        splitRes = splitRes.Skip(1).ToArray();
+                    }
 
                     foreach (string item in splitRes)
                     {
@@ -6637,6 +7467,11 @@ namespace twtboardpro
                         string TweeterUserId = string.Empty;
                         string TweeterUserScreanName = string.Empty;
                         string Tweetid = string.Empty;
+
+                        if (item.Contains("data-retweet-id="))
+                        {
+                            continue;
+                        }
 
                         ///Tweet ID
                         try
@@ -6684,6 +7519,8 @@ namespace twtboardpro
                         ///Tweet Text 
                         try
                         {
+                            //1st editing
+
                             //int startindex = item.IndexOf("\\\"js-tweet-text tweet-text\\\"");
                             //string start = item.Substring(startindex).Replace("\\\"js-tweet-text tweet-text\\\"", "");
                             //int endindex = start.IndexOf("</p>");
@@ -6691,12 +7528,28 @@ namespace twtboardpro
                             //text = end.Replace("class=\\\"invisible\\\"", "").Replace("<b", "").Replace("</b", "").Replace("<s", "").Replace("</s", "").Replace("class=\\\"twitter-atreply pretty-link\\\" dir=\\\"ltr\\\"", "").Replace(">", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"invisible\\\">", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("&nbsp;", "").Replace("</a", "").Replace("</span", "").Replace("<span", "").Replace("<a href=", "").Replace("rel=nofollow dir=ltr data-expanded-url=", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=\\\"", "").Replace("class=\\\"twitter-timeline-link\\\" target=\\\"_blank\\\" title=\\\"", "");
                             //text = text.Replace("\"", "").Replace("<", "").Replace("\\\"", "").Replace("\\", "");
 
-                            int startindex = item.IndexOf("ProfileTweet-text js-tweet-text u-dir");
-                            string start = item.Substring(startindex).Replace("ProfileTweet-text js-tweet-text u-dir", "");
-                            int endindex = start.IndexOf("</p>");
-                            string end = start.Substring(0, endindex);
-                            text = end.Replace("class=\\\"invisible\\\"", "").Replace("<b", "").Replace("</b", "").Replace("<s", "").Replace("</s", "").Replace("class=\\\"twitter-atreply pretty-link\\\" dir=\\\"ltr\\\"", "").Replace(">", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"invisible\\\">", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("&nbsp;", "").Replace("</a", "").Replace("</span", "").Replace("<span", "").Replace("<a href=", "").Replace("rel=nofollow dir=ltr data-expanded-url=", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=\\\"", "").Replace("class=\\\"twitter-timeline-link\\\" target=\\\"_blank\\\" title=\\\"", "");
+                            //2nd Editing
+
+                            //int startindex = item.IndexOf("ProfileTweet-text js-tweet-text u-dir");
+                            //string start = item.Substring(startindex).Replace("ProfileTweet-text js-tweet-text u-dir", "");
+                            //int endindex = start.IndexOf("</p>");
+                            //string end = start.Substring(0, endindex);
+
+                            try 
+                            {
+                                string[] getText = Regex.Split(item, "TweetTextSize TweetTextSize--16px js-tweet-text tweet-text");
+                                try
+                                {
+                                    text = Utils.getBetween(getText[1],">","<");
+                                }
+                                catch { };
+                            }
+                            catch { };
+
+                            text = text.Replace("class=\\\"invisible\\\"", "").Replace("<b", "").Replace("</b", "").Replace("<s", "").Replace("</s", "").Replace("class=\\\"twitter-atreply pretty-link\\\" dir=\\\"ltr\\\"", "").Replace(">", "").Replace("class=\\\"js-display-url\\\"", "").Replace("class=\\\"invisible\\\">", "").Replace("class=\\\"tco-ellipsis\\\"", "").Replace("class=\\\"invisible\\\"", "").Replace("&nbsp;", "").Replace("</a", "").Replace("</span", "").Replace("<span", "").Replace("<a href=", "").Replace("rel=nofollow dir=ltr data-expanded-url=", "").Replace("rel=\\\"nofollow\\\" dir=\\\"ltr\\\" data-expanded-url=\\\"", "").Replace("class=\\\"twitter-timeline-link\\\" target=\\\"_blank\\\" title=\\\"", "");
                             text = text.Replace("\"", "").Replace("<", "").Replace("\\\"", "").Replace("\\", "");
+
+
 
                             string[] array = Regex.Split(text, "http");
                             text = string.Empty;
@@ -7154,6 +8007,11 @@ namespace twtboardpro
                     dataLst.Add("followers_count", followers_count);
                     counterData++;
                 }
+
+
+
+
+            
                 
                     
                 //else

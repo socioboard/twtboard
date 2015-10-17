@@ -82,6 +82,9 @@ namespace MixedCampaignManager.classes
 
         public static int _IsTweetFollowerList = 0;
         public static int _IsTweetFollowingList = 0;
+
+        public static int _IsTweetedInLastSpecificDay = 0;
+        public static int _NoOfDaysBeforeTweeted = 5;
         #endregion
 
 

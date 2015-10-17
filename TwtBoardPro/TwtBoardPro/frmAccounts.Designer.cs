@@ -39,7 +39,7 @@
             this.PnlPicLodder = new System.Windows.Forms.Panel();
             this.PicLodder = new System.Windows.Forms.PictureBox();
             this.ButonClearProxies = new System.Windows.Forms.Button();
-            this.btnAssignProxy = new System.Windows.Forms.Button();
+            this.btnAssignIP = new System.Windows.Forms.Button();
             this.btnClearAccounts = new System.Windows.Forms.Button();
             this.btnLoadAccounts = new System.Windows.Forms.Button();
             this.textBox12 = new System.Windows.Forms.TextBox();
@@ -48,7 +48,7 @@
             this.dgvAccounts = new System.Windows.Forms.DataGridView();
             this.lstLogger = new System.Windows.Forms.ListBox();
             this.lblRequestThreads = new System.Windows.Forms.Label();
-            this.txtAccountsPerProxy = new System.Windows.Forms.TextBox();
+            this.txtAccountsPerIP = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -78,7 +78,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.gbAccountsDetail);
             this.splitContainer1.Panel2.Controls.Add(this.lstLogger);
             this.splitContainer1.Panel2.Controls.Add(this.lblRequestThreads);
-            this.splitContainer1.Panel2.Controls.Add(this.txtAccountsPerProxy);
+            this.splitContainer1.Panel2.Controls.Add(this.txtAccountsPerIP);
             this.splitContainer1.Size = new System.Drawing.Size(992, 562);
             this.splitContainer1.SplitterDistance = 279;
             this.splitContainer1.TabIndex = 2;
@@ -94,7 +94,7 @@
             this.groupBoxProfileDetails.Controls.Add(this.btnExportAccounts);
             this.groupBoxProfileDetails.Controls.Add(this.PnlPicLodder);
             this.groupBoxProfileDetails.Controls.Add(this.ButonClearProxies);
-            this.groupBoxProfileDetails.Controls.Add(this.btnAssignProxy);
+            this.groupBoxProfileDetails.Controls.Add(this.btnAssignIP);
             this.groupBoxProfileDetails.Controls.Add(this.btnClearAccounts);
             this.groupBoxProfileDetails.Controls.Add(this.btnLoadAccounts);
             this.groupBoxProfileDetails.Controls.Add(this.textBox12);
@@ -124,14 +124,15 @@
             this.chkListBoxExportAccount.Enabled = false;
             this.chkListBoxExportAccount.FormattingEnabled = true;
             this.chkListBoxExportAccount.Items.AddRange(new object[] {
-            "Public Proxies Account",
-            "Private Proxies Account",
-            "Without Proxies Account"});
+            "Public IP Account",
+            "Private IP Account",
+            "Without IP Account"});
             this.chkListBoxExportAccount.Location = new System.Drawing.Point(76, 321);
             this.chkListBoxExportAccount.Name = "chkListBoxExportAccount";
             this.chkListBoxExportAccount.Size = new System.Drawing.Size(164, 52);
             this.chkListBoxExportAccount.TabIndex = 58;
             this.chkListBoxExportAccount.ItemCheck += new System.Windows.Forms.ItemCheckEventHandler(this.chkListBoxExportAccount_ItemCheck);
+            this.chkListBoxExportAccount.SelectedIndexChanged += new System.EventHandler(this.chkListBoxExportAccount_SelectedIndexChanged);
             // 
             // chkExportAccounts
             // 
@@ -198,19 +199,19 @@
             this.ButonClearProxies.UseVisualStyleBackColor = false;
             this.ButonClearProxies.Click += new System.EventHandler(this.ButonClearProxies_Click);
             // 
-            // btnAssignProxy
+            // btnAssignIP
             // 
-            this.btnAssignProxy.BackColor = System.Drawing.Color.White;
-            this.btnAssignProxy.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnAssignProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnAssignProxy.Location = new System.Drawing.Point(92, 430);
-            this.btnAssignProxy.Name = "btnAssignProxy";
-            this.btnAssignProxy.Size = new System.Drawing.Size(114, 27);
-            this.btnAssignProxy.TabIndex = 16;
-            this.btnAssignProxy.Text = "Assign Proxy";
-            this.btnAssignProxy.UseVisualStyleBackColor = false;
-            this.btnAssignProxy.Visible = false;
-            this.btnAssignProxy.Click += new System.EventHandler(this.btnAssignProxy_Click);
+            this.btnAssignIP.BackColor = System.Drawing.Color.White;
+            this.btnAssignIP.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnAssignIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnAssignIP.Location = new System.Drawing.Point(92, 430);
+            this.btnAssignIP.Name = "btnAssignIP";
+            this.btnAssignIP.Size = new System.Drawing.Size(114, 27);
+            this.btnAssignIP.TabIndex = 16;
+            this.btnAssignIP.Text = "Assign IP";
+            this.btnAssignIP.UseVisualStyleBackColor = false;
+            this.btnAssignIP.Visible = false;
+            this.btnAssignIP.Click += new System.EventHandler(this.btnAssignIP_Click);
             // 
             // btnClearAccounts
             // 
@@ -294,19 +295,19 @@
             this.lblRequestThreads.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblRequestThreads.Location = new System.Drawing.Point(7, 379);
             this.lblRequestThreads.Name = "lblRequestThreads";
-            this.lblRequestThreads.Size = new System.Drawing.Size(162, 13);
+            this.lblRequestThreads.Size = new System.Drawing.Size(141, 13);
             this.lblRequestThreads.TabIndex = 53;
-            this.lblRequestThreads.Text = "No. Of accounts per proxy:";
+            this.lblRequestThreads.Text = "No. Of accounts per IP:";
             this.lblRequestThreads.Visible = false;
             // 
-            // txtAccountsPerProxy
+            // txtAccountsPerIP
             // 
-            this.txtAccountsPerProxy.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtAccountsPerProxy.Location = new System.Drawing.Point(173, 375);
-            this.txtAccountsPerProxy.Name = "txtAccountsPerProxy";
-            this.txtAccountsPerProxy.Size = new System.Drawing.Size(45, 21);
-            this.txtAccountsPerProxy.TabIndex = 17;
-            this.txtAccountsPerProxy.Visible = false;
+            this.txtAccountsPerIP.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtAccountsPerIP.Location = new System.Drawing.Point(173, 375);
+            this.txtAccountsPerIP.Name = "txtAccountsPerIP";
+            this.txtAccountsPerIP.Size = new System.Drawing.Size(45, 21);
+            this.txtAccountsPerIP.TabIndex = 17;
+            this.txtAccountsPerIP.Visible = false;
             // 
             // frmAccounts
             // 
@@ -340,7 +341,7 @@
         #endregion
 
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TextBox txtAccountsPerProxy;
+        private System.Windows.Forms.TextBox txtAccountsPerIP;
         private System.Windows.Forms.Label lblRequestThreads;
         private System.Windows.Forms.ListBox lstLogger;
         private System.Windows.Forms.Panel PnlPicLodder;
@@ -348,7 +349,7 @@
         private System.Windows.Forms.GroupBox groupBoxProfileDetails;
         private System.Windows.Forms.Button btnExportAccounts;
         private System.Windows.Forms.Button ButonClearProxies;
-        private System.Windows.Forms.Button btnAssignProxy;
+        private System.Windows.Forms.Button btnAssignIP;
         private System.Windows.Forms.Button btnClearAccounts;
         private System.Windows.Forms.Button btnLoadAccounts;
         private System.Windows.Forms.TextBox textBox12;

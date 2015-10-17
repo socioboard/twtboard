@@ -132,21 +132,21 @@ namespace twtboardpro
             //            int DataCount = account.Split(':').Length;
             //            if (DataCount == 2)
             //            {
-            //                Globals.accountMode = AccountMode.NoProxy;
+            //                Globals.accountMode = AccountMode.NoIP;
             //            }
             //            else if (DataCount == 4)
             //            {
-            //                Globals.accountMode = AccountMode.PublicProxy;
+            //                Globals.accountMode = AccountMode.PublicIP;
             //            }
             //            else if (DataCount > 5)
             //            {
-            //                Globals.accountMode = AccountMode.PrivateProxy;
+            //                Globals.accountMode = AccountMode.PrivateIP;
             //            }
             //        }
 
             //        switch (Globals.accountMode)
             //        {
-            //            case AccountMode.NoProxy:
+            //            case AccountMode.NoIP:
             //                foreach (string item in templist)
             //                {
             //                    try
@@ -157,18 +157,18 @@ namespace twtboardpro
             //                    catch (Exception ex)
             //                    {
             //                        MessageBox.Show("The Accounts file is in Invalid format. The correct format is \n"+
-            //                        "email:password:proxyip:proxyport \n OR \n email:password:proxyip:proxyport:proxyusername:proxypassword");
+            //                        "email:password:IPip:IPPort \n OR \n email:password:IPip:IPPort:IPUsername:IPpassword");
 
             //                    }
             //                }
             //                break;
-            //            case AccountMode.PublicProxy:
+            //            case AccountMode.PublicIP:
             //                foreach (string item in templist)
             //                {
             //                    dgvAccounts.Rows.Add(item.Split(':')[0], item.Split(':')[1], item.Split(':')[2], item.Split(':')[3], "", "", "");
             //                }
             //                break;
-            //            case AccountMode.PrivateProxy:
+            //            case AccountMode.PrivateIP:
             //                foreach (string item in templist)
             //                {
             //                    dgvAccounts.Rows.Add(item.Split(':')[0], item.Split(':')[1], item.Split(':')[2], item.Split(':')[3],item.Split(':')[4], item.Split(':')[5], "");
@@ -194,39 +194,39 @@ namespace twtboardpro
 
             string accountUser = string.Empty;
             string accountPass = string.Empty;
-            string proxyAddress = string.Empty;
-            string proxyPort = string.Empty;
-            string proxyUserName = string.Empty;
-            string proxyPassword = string.Empty;
+            string IPAddress = string.Empty;
+            string IPPort = string.Empty;
+            string IPUsername = string.Empty;
+            string IPpassword = string.Empty;
 
             if (AccArr.Count() > 1)
             {
                 accountUser = account.Split(':')[0];
                 accountPass = account.Split(':')[1];
-                proxyAddress = string.Empty;
-                proxyPort = string.Empty;
-                proxyUserName = string.Empty;
-                proxyPassword = string.Empty;
+                IPAddress = string.Empty;
+                IPPort = string.Empty;
+                IPUsername = string.Empty;
+                IPpassword = string.Empty;
 
                 int DataCount = account.Split(':').Length;
                 if (DataCount == 2)
                 {
-                    //Globals.accountMode = AccountMode.NoProxy;
+                    //Globals.accountMode = AccountMode.NoIP;
 
                 }
                 else if (DataCount == 4)
                 {
-                    //Globals.accountMode = AccountMode.PublicProxy;
-                    proxyAddress = account.Split(':')[2];
-                    proxyPort = account.Split(':')[3];
+                    //Globals.accountMode = AccountMode.PublicIP;
+                    IPAddress = account.Split(':')[2];
+                    IPPort = account.Split(':')[3];
                 }
                 else if (DataCount > 5)
                 {
-                    //Globals.accountMode = AccountMode.PrivateProxy;
-                    proxyAddress = account.Split(':')[2];
-                    proxyPort = account.Split(':')[3];
-                    proxyUserName = account.Split(':')[4];
-                    proxyPassword = account.Split(':')[5];
+                    //Globals.accountMode = AccountMode.PrivateIP;
+                    IPAddress = account.Split(':')[2];
+                    IPPort = account.Split(':')[3];
+                    IPUsername = account.Split(':')[4];
+                    IPpassword = account.Split(':')[5];
                 }
 
                 ///Set this to "0" if loading unprofiled accounts
@@ -236,7 +236,7 @@ namespace twtboardpro
                 try
                 {
                     ///Add to Database
-                    BaseLib.DataBaseHandler.InsertQuery("Insert into tb_FBAccount values('" + accountUser + "','" + accountPass + "','" + proxyAddress + "','" + proxyPort + "','" + proxyUserName + "','" + proxyPassword + "','" + "" + "','" + profileStatus + "')", "tb_FBAccount");
+                    BaseLib.DataBaseHandler.InsertQuery("Insert into tb_FBAccount values('" + accountUser + "','" + accountPass + "','" + IPAddress + "','" + IPPort + "','" + IPUsername + "','" + IPpassword + "','" + "" + "','" + profileStatus + "')", "tb_FBAccount");
                 }
                 catch (Exception ex)
                 {
@@ -260,10 +260,10 @@ namespace twtboardpro
             string accountUser = string.Empty;
             string accountPass = string.Empty;
             string screanName = string.Empty;
-            string proxyAddress = string.Empty;
-            string proxyPort = string.Empty;
-            string proxyUserName = string.Empty;
-            string proxyPassword = string.Empty;
+            string IPAddress = string.Empty;
+            string IPPort = string.Empty;
+            string IPUsername = string.Empty;
+            string IPpassword = string.Empty;
             string status = string.Empty;
 
             if (AccArr.Count() > 1)
@@ -271,54 +271,54 @@ namespace twtboardpro
                 accountUser = account.Split(':')[0];
                 accountPass = account.Split(':')[1];
                 screanName = string.Empty;
-                proxyAddress = string.Empty;
-                proxyPort = string.Empty;
-                proxyUserName = string.Empty;
-                proxyPassword = string.Empty;
+                IPAddress = string.Empty;
+                IPPort = string.Empty;
+                IPUsername = string.Empty;
+                IPpassword = string.Empty;
                 status = string.Empty;
 
                 int DataCount = account.Split(':').Length;
                 if (DataCount == 2)
                 {
-                    //Globals.accountMode = AccountMode.NoProxy;
+                    //Globals.accountMode = AccountMode.NoIP;
                 }
                 else if (DataCount == 3)
                 {
-                    //Globals.accountMode = AccountMode.PublicProxy;
+                    //Globals.accountMode = AccountMode.PublicIP;
                     screanName = account.Split(':')[2];
                 }
                 else if (DataCount == 4)
                 {
-                    //Globals.accountMode = AccountMode.PublicProxy;
-                    proxyAddress = account.Split(':')[2];
-                    proxyPort = account.Split(':')[3];
+                    //Globals.accountMode = AccountMode.PublicIP;
+                    IPAddress = account.Split(':')[2];
+                    IPPort = account.Split(':')[3];
                 }
                 else if (DataCount == 5)
                 {
-                    //Globals.accountMode = AccountMode.PublicProxy;
+                    //Globals.accountMode = AccountMode.PublicIP;
                     screanName = account.Split(':')[2];
-                    proxyAddress = account.Split(':')[3];
-                    proxyPort = account.Split(':')[4];
+                    IPAddress = account.Split(':')[3];
+                    IPPort = account.Split(':')[4];
                 }
                 
                 else if (DataCount > 5 && DataCount < 7)
                 {
-                    //Globals.accountMode = AccountMode.PrivateProxy;
-                    proxyAddress = account.Split(':')[2];
-                    proxyPort = account.Split(':')[3];
-                    proxyUserName = account.Split(':')[4];
-                    proxyPassword = account.Split(':')[5];
-                    //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, proxyAddress, proxyPort, proxyUserName, proxyPassword, "", "0");
+                    //Globals.accountMode = AccountMode.PrivateIP;
+                    IPAddress = account.Split(':')[2];
+                    IPPort = account.Split(':')[3];
+                    IPUsername = account.Split(':')[4];
+                    IPpassword = account.Split(':')[5];
+                    //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, IPAddress, IPPort, IPUsername, IPpassword, "", "0");
                 }
                 else if (DataCount == 7)
                 {
-                    //Globals.accountMode = AccountMode.PrivateProxy;
+                    //Globals.accountMode = AccountMode.PrivateIP;
                     screanName = account.Split(':')[2];
-                    proxyAddress = account.Split(':')[3];
-                    proxyPort = account.Split(':')[4];
-                    proxyUserName = account.Split(':')[5];
-                    proxyPassword = account.Split(':')[6];
-                    //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, proxyAddress, proxyPort, proxyUserName, proxyPassword, "", "0");
+                    IPAddress = account.Split(':')[3];
+                    IPPort = account.Split(':')[4];
+                    IPUsername = account.Split(':')[5];
+                    IPpassword = account.Split(':')[6];
+                    //dt.Rows.Add(accountUser, accountPass, string.Empty , string.Empty, IPAddress, IPPort, IPUsername, IPpassword, "", "0");
                 }
                 
                 if (Globals.IsFreeVersion)
@@ -333,18 +333,18 @@ namespace twtboardpro
                     }
                 }
 
-                //dt.Rows.Add(accountUser, accountPass, screanName, string.Empty, proxyAddress, proxyPort, proxyUserName, proxyPassword, "", "0");
-                BaseLib.DataBaseHandler.InsertQuery("INSERT INTO tb_FBAccount (UserName, Password, Screen_Name, FollowerCount, ProxyAddress, ProxyPort, ProxyUserName, ProxyPassword, ProfileName, ProfileStatus, GroupName , Status) VALUES ('" + accountUser + "','" + accountPass + "', '" + screanName + "', '' , '" + proxyAddress + "','" + proxyPort + "','" + proxyUserName + "','" + proxyPassword + "','" + "" + "' , '" + "" + "' ,'" + "" + "', '0')", "tb_FBAccount");
+                //dt.Rows.Add(accountUser, accountPass, screanName, string.Empty, IPAddress, IPPort, IPUsername, IPpassword, "", "0");
+                BaseLib.DataBaseHandler.InsertQuery("INSERT INTO tb_FBAccount (UserName, Password, Screen_Name, FollowerCount, IPAddress, IPPort, IPUsername, IPpassword, ProfileName, ProfileStatus, GroupName , Status) VALUES ('" + accountUser + "','" + accountPass + "', '" + screanName + "', '' , '" + IPAddress + "','" + IPPort + "','" + IPUsername + "','" + IPpassword + "','" + "" + "' , '" + "" + "' ,'" + "" + "', '0')", "tb_FBAccount");
 
                 try
                 {
                     TweetAccountManager twitter = new TweetAccountManager();
                     twitter.Username = accountUser;
                     twitter.Password = accountPass;
-                    twitter.proxyAddress = proxyAddress;
-                    twitter.proxyPort = proxyPort;
-                    twitter.proxyUsername = proxyUserName;
-                    twitter.proxyPassword = proxyPassword;
+                    twitter.IPAddress = IPAddress;
+                    twitter.IPPort = IPPort;
+                    twitter.IPUsername = IPUsername;
+                    twitter.IPpassword = IPpassword;
                     twitter.profileStatus = 0;
                     twitter.AccountStatus = "";
 
@@ -369,14 +369,17 @@ namespace twtboardpro
 
         DataSet ds = null;
         List<string> lst_AccountForUpload = new List<string>();
+      
+
         private void LoadAccountsMod()
         {
             try
             {
                 if (Globals.IsFreeVersion)
                 {
-                    string DeleteQuery = "Delete from tb_FBAccount";
-                    DataBaseHandler.DeleteQuery(DeleteQuery, "tb_FBAccount");
+
+                    // string DeleteQuery = "Delete from tb_FBAccount";
+                    // DataBaseHandler.DeleteQuery(DeleteQuery, "tb_FBAccount");
 
                     LoadDataGrid();
                 }
@@ -439,6 +442,56 @@ namespace twtboardpro
                             catch { }
 
                         }
+                        if (Globals.IsBasicVersion)
+                        {
+
+
+                            try
+                            {
+                                string selectQuery = "select count(UserName) from tb_FBAccount";
+                                DataSet DS = DataBaseHandler.SelectQuery(selectQuery, "tb_FBAccount");
+                                int countLoadedAccounts = Convert.ToInt32(DS.Tables[0].Rows[0].ItemArray[0].ToString());
+
+                                if (countLoadedAccounts >= 5)
+                                {
+                                    LoadDataGrid();
+                                    MessageBox.Show("You Are Using TD Basic Version 5 Accounts allready loaded..");
+                                    return;
+                                }
+                                else
+                                {
+                                    int RemainingAccount = 5 - countLoadedAccounts;
+
+                                    lst_AccountForUpload.RemoveRange(RemainingAccount, lst_AccountForUpload.Count - RemainingAccount);
+
+                                }
+                            }
+                            catch { }
+                        }
+
+                        if (Globals.IsProVersion)
+                        {
+                            try
+                            {
+                                string selectQuery = "select count(UserName) from tb_FBAccount";
+                                DataSet DS = DataBaseHandler.SelectQuery(selectQuery, "tb_FBAccount");
+                                int countLoadedAccounts = Convert.ToInt32(DS.Tables[0].Rows[0].ItemArray[0].ToString());
+
+                                if (countLoadedAccounts >= 15)
+                                {
+                                    LoadDataGrid();
+                                    MessageBox.Show("You Are Using TD Pro Version 15 Accounts allready loaded..");
+                                    return;
+                                }
+                                else
+                                {
+                                    int RemainingAccount = 15 - countLoadedAccounts;
+
+                                    lst_AccountForUpload.RemoveRange(RemainingAccount, lst_AccountForUpload.Count - RemainingAccount);
+                                }
+                            }
+                            catch { }
+                        }
                         //try
                         //{
                         //    if (PnlPicLodder.Visible != true || PnlPicLodder.Visible != true)
@@ -468,7 +521,7 @@ namespace twtboardpro
                             }
                             catch { }
                         }
-                       
+
 
                         //LoadDataGridAfterAccountCreation();
 
@@ -517,9 +570,9 @@ namespace twtboardpro
                     try
                     {
                         PnlPicLodder.Invoke(new MethodInvoker(delegate
-                                   {
-                                       PnlPicLodder.Visible = false;
-                                   }));
+                        {
+                            PnlPicLodder.Visible = false;
+                        }));
                         PnlPicLodder.Invoke(new MethodInvoker(delegate
                         {
                             PicLodder.Visible = false;
@@ -573,10 +626,10 @@ namespace twtboardpro
                         twitter.Screen_name = dRow[2].ToString();
                         twitter.FollowerCount = dRow[3].ToString();
                         twitter.FollwingCount = dRow[4].ToString();
-                        twitter.proxyAddress = dRow[5].ToString();
-                        twitter.proxyPort = dRow[6].ToString();
-                        twitter.proxyUsername = dRow[7].ToString();
-                        twitter.proxyPassword = dRow[8].ToString();
+                        twitter.IPAddress = dRow[5].ToString();
+                        twitter.IPPort = dRow[6].ToString();
+                        twitter.IPUsername = dRow[7].ToString();
+                        twitter.IPpassword = dRow[8].ToString();
                         twitter.GroupName = dRow[11].ToString();
                         twitter.AccountStatus = dRow[12].ToString();
 
@@ -588,7 +641,7 @@ namespace twtboardpro
                         {
                             if (twitter.AccountStatus != "Suspended")
                             {
-                                Globals.listAccounts.Add(twitter.Username + ":" + twitter.Password + ":" + twitter.proxyAddress + ":" + twitter.proxyPort + ":" + twitter.proxyUsername + ":" + twitter.proxyPassword + ":" + twitter.GroupName + ":" + twitter.AccountStatus);
+                                Globals.listAccounts.Add(twitter.Username + ":" + twitter.Password + ":" + twitter.IPAddress + ":" + twitter.IPPort + ":" + twitter.IPUsername + ":" + twitter.IPpassword + ":" + twitter.GroupName + ":" + twitter.AccountStatus);
                                 TweetAccountContainer.dictionary_TweetAccount.Add(twitter.Username, twitter);
 
                                 dictionary_TweetAccountOne.Add(twitter.Username, twitter);
@@ -667,10 +720,10 @@ namespace twtboardpro
                         twitter.Screen_name = dRow[2].ToString();
                         twitter.FollowerCount = dRow[3].ToString();
                         twitter.FollwingCount = dRow[4].ToString();
-                        twitter.proxyAddress = dRow[5].ToString();
-                        twitter.proxyPort = dRow[6].ToString();
-                        twitter.proxyUsername = dRow[7].ToString();
-                        twitter.proxyPassword = dRow[8].ToString();
+                        twitter.IPAddress = dRow[5].ToString();
+                        twitter.IPPort = dRow[6].ToString();
+                        twitter.IPUsername = dRow[7].ToString();
+                        twitter.IPpassword = dRow[8].ToString();
                         twitter.GroupName = dRow[11].ToString();
                         twitter.AccountStatus = dRow[12].ToString();
 
@@ -682,7 +735,7 @@ namespace twtboardpro
                         {
                             if (twitter.AccountStatus != "Suspended")
                             {
-                                Globals.listAccounts.Add(twitter.Username + ":" + twitter.Password + ":" + twitter.proxyAddress + ":" + twitter.proxyPort + ":" + twitter.proxyUsername + ":" + twitter.proxyPassword + ":" + twitter.GroupName + ":" + twitter.AccountStatus);
+                                Globals.listAccounts.Add(twitter.Username + ":" + twitter.Password + ":" + twitter.IPAddress + ":" + twitter.IPPort + ":" + twitter.IPUsername + ":" + twitter.IPpassword + ":" + twitter.GroupName + ":" + twitter.AccountStatus);
                                 TweetAccountContainer.dictionary_TweetAccount.Add(twitter.Username, twitter);
 
                                 //Checked if user working on free version the it will not allowed to use mex 5 accounts.
@@ -837,22 +890,22 @@ namespace twtboardpro
 
         List<string> lstProxies = new List<string>();
 
-        ProxyUtilitiesFromDataBase proxyFetcher = new ProxyUtilitiesFromDataBase();
+        IPUtilitiesFromDataBase IPFetcher = new IPUtilitiesFromDataBase();
 
-        private void btnAssignProxy_Click(object sender, EventArgs e)
+        private void btnAssignIP_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Assign Private Proxies from Database???", "Confirm delete", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 try
                 {
-                    List<string> lstProxies = proxyFetcher.GetPrivateProxies();
+                    List<string> lstProxies = IPFetcher.GetPrivateProxies();
                     if (lstProxies.Count > 0)
                     {
-                        if (!string.IsNullOrEmpty(txtAccountsPerProxy.Text) && GlobusRegex.ValidateNumber(txtAccountsPerProxy.Text))
+                        if (!string.IsNullOrEmpty(txtAccountsPerIP.Text) && GlobusRegex.ValidateNumber(txtAccountsPerIP.Text))
                         {
-                            accountsPerProxy = int.Parse(txtAccountsPerProxy.Text);
+                            accountsPerIP = int.Parse(txtAccountsPerIP.Text);
                         }
-                        proxyFetcher.AssignProxiesToAccounts(lstProxies, accountsPerProxy);//AssignProxiesToAccounts(lstProxies);
+                        IPFetcher.AssignProxiesToAccounts(lstProxies, accountsPerIP);//AssignProxiesToAccounts(lstProxies);
                         LoadDataGrid();   //Refresh Datagrid
                     }
                     else
@@ -874,11 +927,11 @@ namespace twtboardpro
 
                         lstProxies = GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
 
-                        if (!string.IsNullOrEmpty(txtAccountsPerProxy.Text) && GlobusRegex.ValidateNumber(txtAccountsPerProxy.Text))
+                        if (!string.IsNullOrEmpty(txtAccountsPerIP.Text) && GlobusRegex.ValidateNumber(txtAccountsPerIP.Text))
                         {
-                            accountsPerProxy = int.Parse(txtAccountsPerProxy.Text);
+                            accountsPerIP = int.Parse(txtAccountsPerIP.Text);
                         }
-                        proxyFetcher.AssignProxiesToAccounts(lstProxies, accountsPerProxy);//AssignProxiesToAccounts(lstProxies);
+                        IPFetcher.AssignProxiesToAccounts(lstProxies, accountsPerIP);//AssignProxiesToAccounts(lstProxies);
                         LoadDataGrid();   //Refresh Datagrid
                         //AssignProxiesToAccountsModified();
                     }
@@ -899,7 +952,7 @@ namespace twtboardpro
                 new Thread(() =>
                     {
 
-                        #region Remove Proxy from database
+                        #region Remove IP from database
                         try
                         {
                             DataSet ds = new DataSet();
@@ -907,7 +960,7 @@ namespace twtboardpro
                             using (SQLiteConnection con = new SQLiteConnection(DataBaseHandler.CONstr))
                             {
 
-                                //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE ProxyAddress = '" + proxyAddress + "'", con))
+                                //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE IPAddress = '" + IPAddress + "'", con))
                                 using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount", con))
                                 {
                                     ad.Fill(ds);
@@ -920,7 +973,7 @@ namespace twtboardpro
 
                                             for (int i = 0; i < ds.Tables[0].Rows.Count; i++)
                                             {
-                                                string UpdateQuery = "Update tb_FBAccount Set ProxyAddress='" + "" + "', ProxyPort='" + "" + "', ProxyUserName='" + "" + "', ProxyPassword='" + "" + "' WHERE UserName='" + ds.Tables[0].Rows[i]["UserName"].ToString() + "'";
+                                                string UpdateQuery = "Update tb_FBAccount Set IPAddress='" + "" + "', IPPort='" + "" + "', IPUsername='" + "" + "', IPpassword='" + "" + "' WHERE UserName='" + ds.Tables[0].Rows[i]["UserName"].ToString() + "'";
                                                 DataBaseHandler.UpdateQuery(UpdateQuery, "tb_FBAccount");
                                             }
 
@@ -952,10 +1005,10 @@ namespace twtboardpro
         }
 
 
-        int accountsPerProxy = 10;  //Change this to change Number of Accounts to be set per proxy
+        int accountsPerIP = 10;  //Change this to change Number of Accounts to be set per IP
         static int i = 0;
         /// <summary>
-        /// Assigns "accountsPerProxy" number of proxies to accounts in Database, only picks up only those accounts where ProxyAddress is Null or Empty
+        /// Assigns "accountsPerIP" number of proxies to accounts in Database, only picks up only those accounts where IPAddress is Null or Empty
         /// </summary>
         private void AssignProxiesToAccounts(List<string> lstProxies)
         {
@@ -964,13 +1017,13 @@ namespace twtboardpro
 
             DataSet ds = new DataSet();
 
-            if (!string.IsNullOrEmpty(txtAccountsPerProxy.Text) && GlobusRegex.ValidateNumber(txtAccountsPerProxy.Text))
+            if (!string.IsNullOrEmpty(txtAccountsPerIP.Text) && GlobusRegex.ValidateNumber(txtAccountsPerIP.Text))
             {
-                accountsPerProxy = int.Parse(txtAccountsPerProxy.Text);
+                accountsPerIP = int.Parse(txtAccountsPerIP.Text);
             }
             else
             {
-                MessageBox.Show("You entered invalid Accounts per Proxy... Default value \"10\" Set");
+                MessageBox.Show("You entered invalid Accounts per IP... Default value \"10\" Set");
             }
 
             using (SQLiteConnection con = new SQLiteConnection(DataBaseHandler.CONstr))
@@ -982,45 +1035,45 @@ namespace twtboardpro
 
                     string account = item;
 
-                    string proxyAddress = string.Empty;
-                    string proxyPort = string.Empty;
-                    string proxyUserName = string.Empty;
-                    string proxyPassword = string.Empty;
+                    string IPAddress = string.Empty;
+                    string IPPort = string.Empty;
+                    string IPUsername = string.Empty;
+                    string IPpassword = string.Empty;
 
                     int DataCount = account.Split(':').Length;
 
                     if (DataCount == 2)
                     {
-                        proxyAddress = account.Split(':')[0];
-                        proxyPort = account.Split(':')[1];
+                        IPAddress = account.Split(':')[0];
+                        IPPort = account.Split(':')[1];
                     }
                     else if (DataCount > 2)
                     {
-                        proxyAddress = account.Split(':')[0];
-                        proxyPort = account.Split(':')[1];
-                        proxyUserName = account.Split(':')[2];
-                        proxyPassword = account.Split(':')[3];
+                        IPAddress = account.Split(':')[0];
+                        IPPort = account.Split(':')[1];
+                        IPUsername = account.Split(':')[2];
+                        IPpassword = account.Split(':')[3];
                     }
 
-                    //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE ProxyAddress = '" + proxyAddress + "'", con))
-                    using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE ProxyAddress = '" + proxyAddress + "' and ProxyPort = '" + proxyPort + "'", con))
+                    //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE IPAddress = '" + IPAddress + "'", con))
+                    using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE IPAddress = '" + IPAddress + "' and IPPort = '" + IPPort + "'", con))
                     {
                         ad.Fill(ds);
                         if (ds.Tables[0].Rows.Count == 0)
                         {
                             ds.Clear();
-                            using (SQLiteDataAdapter ad1 = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE ProxyAddress = '" + "" + "' OR ProxyAddress = '" + null + "'", con))
+                            using (SQLiteDataAdapter ad1 = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE IPAddress = '" + "" + "' OR IPAddress = '" + null + "'", con))
                             {
                                 ad1.Fill(ds);
 
-                                int count = accountsPerProxy;  //Set count = accountsPerProxy so that it sets max this number of accounts to each proxy
+                                int count = accountsPerIP;  //Set count = accountsPerIP so that it sets max this number of accounts to each IP
                                 if (ds.Tables[0].Rows.Count < count)
                                 {
                                     count = ds.Tables[0].Rows.Count;
                                 }
                                 for (int i = 0; i < count; i++)
                                 {
-                                    string UpdateQuery = "Update tb_FBAccount Set ProxyAddress='" + proxyAddress + "', ProxyPort='" + proxyPort + "', ProxyUserName='" + proxyUserName + "', ProxyPassword='" + proxyPassword + "' WHERE UserName='" + ds.Tables[0].Rows[i]["UserName"].ToString() + "'";
+                                    string UpdateQuery = "Update tb_FBAccount Set IPAddress='" + IPAddress + "', IPPort='" + IPPort + "', IPUsername='" + IPUsername + "', IPpassword='" + IPpassword + "' WHERE UserName='" + ds.Tables[0].Rows[i]["UserName"].ToString() + "'";
                                     DataBaseHandler.UpdateQuery(UpdateQuery, "tb_FBAccount");
                                 }
                             }
@@ -1052,35 +1105,35 @@ namespace twtboardpro
 
                     string account = item;
 
-                    string proxyAddress = string.Empty;
-                    string proxyPort = string.Empty;
-                    string proxyUserName = string.Empty;
-                    string proxyPassword = string.Empty;
+                    string IPAddress = string.Empty;
+                    string IPPort = string.Empty;
+                    string IPUsername = string.Empty;
+                    string IPpassword = string.Empty;
 
                     int DataCount = account.Split(':').Length;
 
                     //if (DataCount == 2)
                     //{
-                    proxyAddress = account.Split(':')[0];
-                    proxyPort = "7866";
-                    proxyUserName = "idea01";
-                    proxyPassword = "kkidufg";
+                    IPAddress = account.Split(':')[0];
+                    IPPort = "7866";
+                    IPUsername = "idea01";
+                    IPpassword = "kkidufg";
                     //}
                     //else if (DataCount > 2)
                     //{
-                    //    proxyAddress = account.Split(':')[0];
-                    //    proxyPort = account.Split(':')[1];
-                    //    proxyUserName = account.Split(':')[2];
-                    //    proxyPassword = account.Split(':')[3];
+                    //    IPAddress = account.Split(':')[0];
+                    //    IPPort = account.Split(':')[1];
+                    //    IPUsername = account.Split(':')[2];
+                    //    IPpassword = account.Split(':')[3];
                     //}
 
-                    using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE ProxyAddress = '" + proxyAddress + "'", con))
+                    using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE IPAddress = '" + IPAddress + "'", con))
                     {
                         ad.Fill(ds);
                         if (ds.Tables[0].Rows.Count == 0)
                         {
                             ds.Clear();
-                            using (SQLiteDataAdapter ad1 = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE ProxyAddress = '" + "" + "' and ProxyAddress = '" + null + "'", con))
+                            using (SQLiteDataAdapter ad1 = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE IPAddress = '" + "" + "' and IPAddress = '" + null + "'", con))
                             {
                                 ad1.Fill(ds);
 
@@ -1091,12 +1144,12 @@ namespace twtboardpro
                                 }
                                 for (int i = 0; i < count; i++)
                                 {
-                                    //ds.Tables[0].Rows[i]["ProxyAddress"] = proxyAddress;
-                                    //ds.Tables[0].Rows[i]["ProxyPort"] = proxyPort;
-                                    //ds.Tables[0].Rows[i]["ProxyUserName"] = proxyUserName;
-                                    //ds.Tables[0].Rows[i]["ProxyPassword"] = proxyPassword;
+                                    //ds.Tables[0].Rows[i]["IPAddress"] = IPAddress;
+                                    //ds.Tables[0].Rows[i]["IPPort"] = IPPort;
+                                    //ds.Tables[0].Rows[i]["IPUsername"] = IPUsername;
+                                    //ds.Tables[0].Rows[i]["IPpassword"] = IPpassword;
 
-                                    string UpdateQuery = "Update tb_FBAccount Set ProxyAddress='" + proxyAddress + "', ProxyPort='" + proxyPort + "', ProxyUserName='" + proxyUserName + "', ProxyPassword='" + proxyPassword + "' WHERE UserName='" + ds.Tables[0].Rows[i]["UserName"].ToString() + "'";
+                                    string UpdateQuery = "Update tb_FBAccount Set IPAddress='" + IPAddress + "', IPPort='" + IPPort + "', IPUsername='" + IPUsername + "', IPpassword='" + IPpassword + "' WHERE UserName='" + ds.Tables[0].Rows[i]["UserName"].ToString() + "'";
                                     DataBaseHandler.UpdateQuery(UpdateQuery, "tb_FBAccount");
                                 }
                             }
@@ -1170,13 +1223,13 @@ namespace twtboardpro
                     string user = dRow[0].ToString();
                     string pass = dRow[1].ToString();
                     string Username = dRow[2].ToString();
-                    string proxyAdd = dRow[5].ToString();
-                    string proxyPort = dRow[6].ToString();
-                    string proxyUser = dRow[7].ToString();
-                    string proxyPass = dRow[8].ToString();
+                    string IPAdd = dRow[5].ToString();
+                    string IPPort = dRow[6].ToString();
+                    string IPUser = dRow[7].ToString();
+                    string IPPass = dRow[8].ToString();
                     if (!chkExportAccounts.Checked)
                     {
-                        string data = user + ":" + pass + ":" + Username + ":" + proxyAdd + ":" + proxyPort + ":" + proxyUser + ":" + proxyPass;
+                        string data = user + ":" + pass + ":" + Username + ":" + IPAdd + ":" + IPPort + ":" + IPUser + ":" + IPPass;
                         GlobusFileHelper.AppendStringToTextfileNewLine(data, filePath);
                         IsExport = true;
                     }
@@ -1188,32 +1241,32 @@ namespace twtboardpro
                             {
                                 string str = (string)chkListBoxExportAccount.Items[i];
 
-                                if ((!string.IsNullOrEmpty(proxyAdd)) && (!string.IsNullOrEmpty(proxyPort)) && string.IsNullOrEmpty(proxyUser) && string.IsNullOrEmpty(proxyPass))
+                                if ((!string.IsNullOrEmpty(IPAdd)) && (!string.IsNullOrEmpty(IPPort)) && string.IsNullOrEmpty(IPUser) && string.IsNullOrEmpty(IPPass))
                                 {
                                     if (str.Contains("Public Proxies Account"))
                                     {
                                         IsExport = true;
-                                        string data = user + ":" + pass + ":" + Username + ":" + proxyAdd + ":" + proxyPort + ":" + proxyUser + ":" + proxyPass;
+                                        string data = user + ":" + pass + ":" + Username + ":" + IPAdd + ":" + IPPort + ":" + IPUser + ":" + IPPass;
                                         GlobusFileHelper.AppendStringToTextfileNewLine(data, filePath);
                                         break;
                                     }
                                 }
-                                else if ((!string.IsNullOrEmpty(proxyAdd)) && (!string.IsNullOrEmpty(proxyPort)) && (!string.IsNullOrEmpty(proxyUser)) && (!string.IsNullOrEmpty(proxyPass)))
+                                else if ((!string.IsNullOrEmpty(IPAdd)) && (!string.IsNullOrEmpty(IPPort)) && (!string.IsNullOrEmpty(IPUser)) && (!string.IsNullOrEmpty(IPPass)))
                                 {
                                     if (str.Contains("Private Proxies Account"))
                                     {
                                         IsExport = true;
-                                        string data = user + ":" + pass + ":" + Username + ":" + proxyAdd + ":" + proxyPort + ":" + proxyUser + ":" + proxyPass;
+                                        string data = user + ":" + pass + ":" + Username + ":" + IPAdd + ":" + IPPort + ":" + IPUser + ":" + IPPass;
                                         GlobusFileHelper.AppendStringToTextfileNewLine(data, filePath);
                                         break;
                                     }
                                 }
-                                else if ((string.IsNullOrEmpty(proxyAdd)) && (string.IsNullOrEmpty(proxyPort)) && (string.IsNullOrEmpty(proxyUser)) && (string.IsNullOrEmpty(proxyPass)))
+                                else if ((string.IsNullOrEmpty(IPAdd)) && (string.IsNullOrEmpty(IPPort)) && (string.IsNullOrEmpty(IPUser)) && (string.IsNullOrEmpty(IPPass)))
                                 {
                                     if (str.Contains("Without Proxies Account"))
                                     {
                                         IsExport = true;
-                                        string data = user + ":" + pass + ":" + Username + ":" + proxyAdd + ":" + proxyPort + ":" + proxyUser + ":" + proxyPass;
+                                        string data = user + ":" + pass + ":" + Username + ":" + IPAdd + ":" + IPPort + ":" + IPUser + ":" + IPPass;
                                         GlobusFileHelper.AppendStringToTextfileNewLine(data, filePath);
                                         break;
                                     }
@@ -1463,6 +1516,11 @@ namespace twtboardpro
                     }
                 }
             }
+        }
+
+        private void chkListBoxExportAccount_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
 
        

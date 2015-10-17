@@ -72,28 +72,28 @@ namespace TwitterSignup
 
         //****************
 
-        public void SignUpFailedEmails(object objlstProxy)
+        public void SignUpFailedEmails(object objlstIP)
         {
             while (true)
             {
                 try
                 {
-                    List<string> lstProxy = (List<string>)objlstProxy;
+                    List<string> lstIP = (List<string>)objlstIP;
 
                     if (Globals.GetCountqueDataAfterEmailVerification() > 0)
                     {
                         object[] objData = Globals.DequequeDataForSignUp();
-                        string proxy = "";
-                        if (lstProxy.Count == 1)
+                        string IP = "";
+                        if (lstIP.Count == 1)
                         {
-                            proxy = lstProxy[0];
+                            IP = lstIP[0];
                         }
-                        if (lstProxy.Count > 1)
+                        if (lstIP.Count > 1)
                         {
-                            proxy = lstProxy[RandomNumberGenerator.GenerateRandom(0, lstProxy.Count - 1)];
+                            IP = lstIP[RandomNumberGenerator.GenerateRandom(0, lstIP.Count - 1)];
                         }
 
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(SignupMultiThreaded), new object[] { (string)objData[0], (string)objData[1], (string)objData[2], proxy }); 
+                        ThreadPool.QueueUserWorkItem(new WaitCallback(SignupMultiThreaded), new object[] { (string)objData[0], (string)objData[1], (string)objData[2], IP }); 
                     }
                 }
                 catch { }
@@ -101,24 +101,24 @@ namespace TwitterSignup
             }
         }
 
-        static int counter_SignUpFailedEmailsProxyPool = 0;
-        public void SignUpFailedEmailsProxyPool()
+        static int counter_SignUpFailedEmailsIPPool = 0;
+        public void SignUpFailedEmailsIPPool()
         {
             while (true)
             {
                 try
                 {
-                    string proxy = "";
+                    string IP = "";
                    
                     if (Globals.GetCountqueDataAfterEmailVerification() > 0)
                     {
                         object[] objData = Globals.DequequeDataForSignUp();
 
-                        proxy = Globals.DequequeWorkingProxiesForSignUp();
+                        IP = Globals.DequequeWorkingProxiesForSignUp();
 
                         Log("[ " + DateTime.Now + " ] => [ Retrying Signing Up for failed email : " + (string)objData[0] + " ]");
-                        Log("[ " + DateTime.Now + " ] => [ counter_SignUpFailedEmailsProxyPool : " + counter_SignUpFailedEmailsProxyPool++ + " ]");
-                        ThreadPool.QueueUserWorkItem(new WaitCallback(SignupMultiThreaded), new object[] { (string)objData[0], (string)objData[1], (string)objData[2], proxy });
+                        Log("[ " + DateTime.Now + " ] => [ counter_SignUpFailedEmailsIPPool : " + counter_SignUpFailedEmailsIPPool++ + " ]");
+                        ThreadPool.QueueUserWorkItem(new WaitCallback(SignupMultiThreaded), new object[] { (string)objData[0], (string)objData[1], (string)objData[2], IP });
                     }
                     else
                     {
@@ -152,20 +152,20 @@ namespace TwitterSignup
                 string Email = string.Empty;//"allliesams@gmail.com";
                 string Password = string.Empty;//"1JESUS11";
 
-                string proxyAddress = string.Empty;
-                string proxyPort = string.Empty;
-                string proxyUsername = string.Empty;
-                string proxyPassword = string.Empty;
+                string IPAddress = string.Empty;
+                string IPPort = string.Empty;
+                string IPUsername = string.Empty;
+                string IPpassword = string.Empty;
 
                 string emailData = (string)paramsArray.GetValue(0);
                 string username = (string)paramsArray.GetValue(1);
                 string name = (string)paramsArray.GetValue(2);
-                string Proxy = (string)paramsArray.GetValue(3);
+                string IP = (string)paramsArray.GetValue(3);
                 try
                 {
                     //Log("test - " + emailData + " :: " + name);
 
-                    #region Emails & Proxy Settings
+                    #region Emails & IP Settings
                     try
                     {
                         int Count = emailData.Split(':').Length;
@@ -184,17 +184,17 @@ namespace TwitterSignup
                         {
                             Email = emailData.Split(':')[0].Replace("\0", "");
                             Password = emailData.Split(':')[1].Replace("\0", "");
-                            proxyAddress = emailData.Split(':')[2];
-                            proxyPort = emailData.Split(':')[3];
+                            IPAddress = emailData.Split(':')[2];
+                            IPPort = emailData.Split(':')[3];
                         }
                         else if (Count == 6)
                         {
                             Email = emailData.Split(':')[0].Replace("\0", "");
                             Password = emailData.Split(':')[1].Replace("\0", "");
-                            proxyAddress = emailData.Split(':')[2];
-                            proxyPort = emailData.Split(':')[3];
-                            proxyUsername = emailData.Split(':')[4];
-                            proxyPassword = emailData.Split(':')[5];
+                            IPAddress = emailData.Split(':')[2];
+                            IPPort = emailData.Split(':')[3];
+                            IPUsername = emailData.Split(':')[4];
+                            IPpassword = emailData.Split(':')[5];
                         }
                         else
                         {
@@ -219,19 +219,19 @@ namespace TwitterSignup
 
                     try
                     {
-                        if (Proxy.Split(':').Length == 4)
+                        if (IP.Split(':').Length == 4)
                         {
-                            proxyAddress = Proxy.Split(':')[0];
-                            proxyPort = Proxy.Split(':')[1];
-                            proxyUsername = Proxy.Split(':')[2];
-                            proxyPassword = Proxy.Split(':')[3];
+                            IPAddress = IP.Split(':')[0];
+                            IPPort = IP.Split(':')[1];
+                            IPUsername = IP.Split(':')[2];
+                            IPpassword = IP.Split(':')[3];
                         }
                     }
                     catch (Exception ex)
                     {
                         //Console.WriteLine("7 :" + ex.StackTrace);
-                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- Proxy Split --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
-                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- Proxy Split >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- IP Split --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
+                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- IP Split >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
                     }
 
                     #endregion
@@ -270,16 +270,16 @@ namespace TwitterSignup
                     {
                         try
                         {
-                            signUpPage = globusHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/signup"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+                            signUpPage = globusHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/signup"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
                         }
                         catch (Exception ex)
                         {
-                            Log("[ " + DateTime.Now + " ] => [ Error in Loading sign up page  " + proxyAddress + " Exception" + ex.Message + " ]");
+                            Log("[ " + DateTime.Now + " ] => [ Error in Loading sign up page  " + IPAddress + " Exception" + ex.Message + " ]");
                         }
                         if (string.IsNullOrEmpty(signUpPage))
                         {
                             Thread.Sleep(500);
-                            signUpPage = globusHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/signup"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+                            signUpPage = globusHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/signup"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
                         }
 
                         //Check if captchaAvailable, if yes, hit google captcha url
@@ -287,40 +287,40 @@ namespace TwitterSignup
                         {
                             try
                             {
-                                string pagesource1 = globusHelper.getHtmlfromUrlProxy(new Uri("https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+                                string pagesource1 = globusHelper.getHtmlfromUrlIP(new Uri("https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
                             }
                             catch { }
                             try
                             {
-                                pagesourceGoogleCaptcha = globusHelper.getHtmlfromUrlProxy(new Uri("https://www.google.com/recaptcha/api/challenge?k=6LfbTAAAAAAAAE0hk8Vnfd1THHnn9lJuow6fgulO&ajax=1&cachestop=" + cachestop + "&lang=en"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+                                pagesourceGoogleCaptcha = globusHelper.getHtmlfromUrlIP(new Uri("https://www.google.com/recaptcha/api/challenge?k=6LfbTAAAAAAAAE0hk8Vnfd1THHnn9lJuow6fgulO&ajax=1&cachestop=" + cachestop + "&lang=en"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
                             }
                             catch { }
                             if (string.IsNullOrEmpty(pagesourceGoogleCaptcha))
                             {
                                 Thread.Sleep(500);
-                                pagesourceGoogleCaptcha = globusHelper.getHtmlfromUrlProxy(new Uri("https://www.google.com/recaptcha/api/challenge?k=6LfbTAAAAAAAAE0hk8Vnfd1THHnn9lJuow6fgulO&ajax=1&cachestop=" + cachestop + "&lang=en"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+                                pagesourceGoogleCaptcha = globusHelper.getHtmlfromUrlIP(new Uri("https://www.google.com/recaptcha/api/challenge?k=6LfbTAAAAAAAAE0hk8Vnfd1THHnn9lJuow6fgulO&ajax=1&cachestop=" + cachestop + "&lang=en"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
                             }
                         }
                     }
                     catch (Exception ex)
                     {
                         pagesourceGoogleCaptcha = string.Empty;
-                        Log("[ " + DateTime.Now + " ] => [ Error in Loading sign up page  " + proxyAddress + " Exception" + ex.Message + " ]");
+                        Log("[ " + DateTime.Now + " ] => [ Error in Loading sign up page  " + IPAddress + " Exception" + ex.Message + " ]");
                     }
 
                     if (string.IsNullOrEmpty(signUpPage))
                     {
                         NoOfNonCreatedAccounts++;
-                        NoOfNonCreatedAccountsProxy++;
+                        NoOfNonCreatedAccountsIP++;
                         Log("[ " + DateTime.Now + " ] => [ Couldn't load Sign Up Page: " + Email + " ]");
                         lock (Lock_notCreatedaccounts)
                         {
-                            GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
                             GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
                             GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
                         }
 
-                        Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                        Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
 
                         return;
                     }
@@ -331,9 +331,9 @@ namespace TwitterSignup
                         try
                         {
                             Thread.Sleep(500);
-                            //textUrl = globusHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/signup"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
-                            string pagesource1 = globusHelper.getHtmlfromUrlProxy(new Uri("https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
-                            pagesourceGoogleCaptcha = globusHelper.getHtmlfromUrlProxy(new Uri("https://www.google.com/recaptcha/api/challenge?k=6LfbTAAAAAAAAE0hk8Vnfd1THHnn9lJuow6fgulO&ajax=1&cachestop=" + cachestop + "&lang=en"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+                            //textUrl = globusHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/signup"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
+                            string pagesource1 = globusHelper.getHtmlfromUrlIP(new Uri("https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
+                            pagesourceGoogleCaptcha = globusHelper.getHtmlfromUrlIP(new Uri("https://www.google.com/recaptcha/api/challenge?k=6LfbTAAAAAAAAE0hk8Vnfd1THHnn9lJuow6fgulO&ajax=1&cachestop=" + cachestop + "&lang=en"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
                         }
                         catch (Exception ex)
                         {
@@ -371,8 +371,8 @@ namespace TwitterSignup
                                     CaptchaCounter++;
                                     goto StartAgain;
                                 }
-                                Log("[ " + DateTime.Now + " ] => [ Cannot Find challenge Captcha on Page. Email : Password --> " + Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + " ]");
-                                GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.Path_CaptchaRequired);
+                                Log("[ " + DateTime.Now + " ] => [ Cannot Find challenge Captcha on Page. Email : Password --> " + Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + " ]");
+                                GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.Path_CaptchaRequired);
                                 //return;
                             }
                            
@@ -388,17 +388,17 @@ namespace TwitterSignup
                     WebClient webclient = new WebClient();
                     try
                     {
-                        int intProxyPort = 80;
-                        if (!string.IsNullOrEmpty(proxyPort) && GlobusRegex.ValidateNumber(proxyPort))
+                        int intIPPort = 80;
+                        if (!string.IsNullOrEmpty(IPPort) && GlobusRegex.ValidateNumber(IPPort))
                         {
-                            intProxyPort = int.Parse(proxyPort);
+                            intIPPort = int.Parse(IPPort);
                         }
-                        ChangeProxy_WebClient(proxyAddress, intProxyPort, proxyUsername, proxyPassword, ref webclient);
+                        ChangeIP_WebClient(IPAddress, intIPPort, IPUsername, IPpassword, ref webclient);
                     }
                     catch (Exception ex)
                     {
-                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- ChangeProxy_WebClient() --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
-                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- ChangeProxy_WebClient() >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- ChangeIP_WebClient() --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
+                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- ChangeIP_WebClient() >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
                     }
 
                     try
@@ -425,11 +425,11 @@ namespace TwitterSignup
                                 //Log("Couldn't create Account with : " + Email);
                                 lock (Lock_notCreatedaccounts)
                                 {
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
                                     GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
                                 }
 
-                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
 
                                 return;
                             }
@@ -454,8 +454,8 @@ namespace TwitterSignup
 
                         bool Created = true;
                         string url = "https://twitter.com/users/email_available?suggest=1&username=&full_name=&email=" + Uri.EscapeDataString(Email.Replace(" ", "")) + "&suggest_on_username=true&context=signup";
-                        string EmailCheck = globusHelper.getHtmlfromUrlProxy(new Uri(url), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://twitter.com/signup", "");
-                        string Usernamecheck = globusHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/users/username_available?suggest=1&username=" + username + "&full_name=" + name + "&email=&suggest_on_username=true&context=signup"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://twitter.com/signup", "");
+                        string EmailCheck = globusHelper.getHtmlfromUrlIP(new Uri(url), IPAddress, IPPort, IPUsername, IPpassword, "https://twitter.com/signup", "");
+                        string Usernamecheck = globusHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/users/username_available?suggest=1&username=" + username + "&full_name=" + name + "&email=&suggest_on_username=true&context=signup"), IPAddress, IPPort, IPUsername, IPpassword, "https://twitter.com/signup", "");
 
                         if (EmailCheck.Contains("Email has already been taken. An email can only be used on one Twitter account at a time")
                             || (res_PostSignUp.Contains("You already have an account with this username and password")))
@@ -503,7 +503,7 @@ namespace TwitterSignup
                         {
                             //Log("You cannot have a blank email address");
                             Created = false;
-                            Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                            Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
                         }
 
                         if (Created)
@@ -570,8 +570,8 @@ namespace TwitterSignup
                                 Log("[ " + DateTime.Now + " ] => [ Account created With Email :" + Email + " ]");
                                 lock (Lock_Createdaccounts)
                                 {
-                                    //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfulCreatedAccounts);
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfulCreatedAccounts);
+                                    //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfulCreatedAccounts);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfulCreatedAccounts);
                                 }
                                 NoOfSuccessfullyCreatedAccount++;
                                 //After Account creation
@@ -588,12 +588,12 @@ namespace TwitterSignup
                                             bool verified = EmailActivate.EmailVerification(Email.Replace(" ", ""), Password, ref globusHelper);
                                             if (verified)
                                             {
-                                                GlobusFileHelper.AppendStringToTextfileNewLine(emailData.Replace("\0", "") + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_EmailVerifiedAccounts);
+                                                GlobusFileHelper.AppendStringToTextfileNewLine(emailData.Replace("\0", "") + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_EmailVerifiedAccounts);
                                                 Log("[ " + DateTime.Now + " ] => [ Account Verified : " + Email + " ]");
                                             }
                                             else
                                             {
-                                                GlobusFileHelper.AppendStringToTextfileNewLine(emailData.Replace("\0", "") + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_NonEmailVerifiedAccounts);
+                                                GlobusFileHelper.AppendStringToTextfileNewLine(emailData.Replace("\0", "") + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_NonEmailVerifiedAccounts);
                                                 Log("[ " + DateTime.Now + " ] => [ Account Couldn't be Email Verified : " + Email + " ]");
                                             }
 
@@ -610,7 +610,7 @@ namespace TwitterSignup
                                             {
                                                 new Thread(() =>
                                                 {
-                                                    startProfilingAfterAccountCreation(new object[] { Email, Password, proxyAddress, proxyPort, proxyUsername, proxyPassword, pstAuthToken, globusHelper });
+                                                    startProfilingAfterAccountCreation(new object[] { Email, Password, IPAddress, IPPort, IPUsername, IPpassword, pstAuthToken, globusHelper });
                                                 }).Start();
                                             }
                                             catch (Exception)
@@ -636,7 +636,7 @@ namespace TwitterSignup
                                         }
 
                                         clsFBAccount insertUpdateDataBase = new clsFBAccount();
-                                        insertUpdateDataBase.InsertUpdateFBAccount(Email.Replace(" ", ""), Password, username, proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+                                        insertUpdateDataBase.InsertUpdateFBAccount(Email.Replace(" ", ""), Password, username, IPAddress, IPPort, IPUsername, IPpassword, "", "");
                                     }
                                     catch (Exception ex)
                                     {
@@ -651,8 +651,8 @@ namespace TwitterSignup
                                 Log("[ " + DateTime.Now + " ] => [ Account created With Email :" + Email + " ]");
                                 lock (Lock_Createdaccounts)
                                 {
-                                    //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfulCreatedAccounts);
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfulCreatedAccounts);
+                                    //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfulCreatedAccounts);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfulCreatedAccounts);
                                 }
                                 NoOfSuccessfullyCreatedAccount++;
                                 //After Account creation
@@ -669,12 +669,12 @@ namespace TwitterSignup
                                             bool verified = EmailActivate.EmailVerification(Email.Replace(" ", ""), Password, ref globusHelper);
                                             if (verified)
                                             {
-                                                GlobusFileHelper.AppendStringToTextfileNewLine(emailData.Replace("\0", "") + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_EmailVerifiedAccounts);
+                                                GlobusFileHelper.AppendStringToTextfileNewLine(emailData.Replace("\0", "") + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_EmailVerifiedAccounts);
                                                 Log("[ " + DateTime.Now + " ] => [ Account Verified : " + Email + " ]");
                                             }
                                             else
                                             {
-                                                GlobusFileHelper.AppendStringToTextfileNewLine(emailData.Replace("\0", "") + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_NonEmailVerifiedAccounts);
+                                                GlobusFileHelper.AppendStringToTextfileNewLine(emailData.Replace("\0", "") + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_NonEmailVerifiedAccounts);
                                                 Log("[ " + DateTime.Now + " ] => [ Account Couldn't be Email Verified : " + Email + " ]");
                                             }
                                         }
@@ -691,7 +691,7 @@ namespace TwitterSignup
                                             {
                                                 new Thread(() =>
                                                 {
-                                                    startProfilingAfterAccountCreation(new object[] { Email, Password, proxyAddress, proxyPort, proxyUsername, proxyPassword, pstAuthToken, globusHelper });
+                                                    startProfilingAfterAccountCreation(new object[] { Email, Password, IPAddress, IPPort, IPUsername, IPpassword, pstAuthToken, globusHelper });
                                                 }).Start();
                                             }
                                             catch (Exception)
@@ -717,7 +717,7 @@ namespace TwitterSignup
                                         }
 
                                         clsFBAccount insertUpdateDataBase = new clsFBAccount();
-                                        insertUpdateDataBase.InsertUpdateFBAccount(Email.Replace(" ", ""), Password, username, proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+                                        insertUpdateDataBase.InsertUpdateFBAccount(Email.Replace(" ", ""), Password, username, IPAddress, IPPort, IPUsername, IPpassword, "", "");
                                     }
                                     catch (Exception ex)
                                     {
@@ -748,7 +748,7 @@ namespace TwitterSignup
                                 //Password = Password + RandomStringGenerator.RandomString(3);
                                 Log("[ " + DateTime.Now + " ] => [ Please Create Accounts With Secure Password ]");
                                 Log("[ " + DateTime.Now + " ] => [ Password is too obvious ]");
-                                Log("[ " + DateTime.Now + " ] => [ Email : Password --> " + Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + " ]");
+                                Log("[ " + DateTime.Now + " ] => [ Email : Password --> " + Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + " ]");
                                 goto usernameCheckLoop;
                                 //return;
                             }
@@ -756,30 +756,30 @@ namespace TwitterSignup
                             {
                                 lock (Lock_notCreatedaccounts)
                                 {
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
                                     GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
                                 }
                                 NoOfNonCreatedAccounts++;
-                                NoOfNonCreatedAccountsProxy++;
+                                NoOfNonCreatedAccountsIP++;
                                 Log("[ " + DateTime.Now + " ] => [ You can't do that right now. ]");
                                 Log("[ " + DateTime.Now + " ] => [ Sorry, please try again later ]");
-                                Log("[ " + DateTime.Now + " ] => [ and Change proxy to create more accounts. ]");
+                                Log("[ " + DateTime.Now + " ] => [ and Change IP to create more accounts. ]");
 
-                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
 
                                 return;
                             }
                             else
                             {
-                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
                                 lock (Lock_notCreatedaccounts)
                                 {
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
                                     GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
                                 }
                                 NoOfNonCreatedAccounts++;
                                 Log("[ " + DateTime.Now + " ] => [ Couldn't create Account ]");
-                                Log("[ " + DateTime.Now + " ] => [ Email : Password --> " + Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + " ]");
+                                Log("[ " + DateTime.Now + " ] => [ Email : Password --> " + Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + " ]");
                             }
                             //if (Created)
                             //{
@@ -814,17 +814,17 @@ namespace TwitterSignup
                             else if (Usernamecheck.Contains("Username has already been taken"))
                             {
                                 Log("[ " + DateTime.Now + " ] => [ " + username + " : Username has already been taken ]");
-                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
                             }
                             else if (EmailCheck.Contains("You cannot have a blank email address"))
                             {
                                 Log("[ " + DateTime.Now + " ] => [ " + Email + " : You cannot have a blank email address ]");
-                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
                             }
                             else
                             {
-                                ExportFailedAccounts(Email, Password, proxyAddress, proxyPort, proxyUsername, proxyPassword);
-                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                                ExportFailedAccounts(Email, Password, IPAddress, IPPort, IPUsername, IPpassword);
+                                Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
                             }
                         }
                     }
@@ -833,13 +833,13 @@ namespace TwitterSignup
                         NoOfNonCreatedAccounts++;
                         lock (Lock_notCreatedaccounts)
                         {
-                            GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
                             GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
                         }
                         GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- Posting data --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
                         GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- Posting data >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
 
-                        Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                        Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
                     }
                 }
                 catch (Exception ex)
@@ -847,15 +847,15 @@ namespace TwitterSignup
                     NoOfNonCreatedAccounts++;
                     lock (Lock_notCreatedaccounts)
                     {
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
                         GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
                     }
-                    //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+                    //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
                     //Console.WriteLine("4 : " + ex.Message);
                     GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- SignupMultiThreaded Start --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
                     GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- SignupMultiThreaded Start >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
 
-                    Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, Proxy });
+                    Globals.EnquequeDataForSignUp(new object[] { emailData, username, name, IP });
                 }
                 finally
                 {
@@ -870,7 +870,7 @@ namespace TwitterSignup
                     //Log("SuccessFully Created Accounts Count: " + NoOfSuccessfullyCreatedAccount);
                     //Log("Failed Accounts Count: " + NoOfNonCreatedAccounts);
                     //Log("Already Created Accounts Count: " + NoOfAlreadyCreatedAccounts);
-                    //Log("Failed Proxies Count: " + NoOfNonCreatedAccountsProxy);
+                    //Log("Failed Proxies Count: " + NoOfNonCreatedAccountsIP);
                 }
                 
             }
@@ -879,11 +879,11 @@ namespace TwitterSignup
             }
         }
 
-        private void ExportFailedAccounts(string Email, string Password, string proxyAddress, string proxyPort, string proxyUsername, string proxyPassword)
+        private void ExportFailedAccounts(string Email, string Password, string IPAddress, string IPPort, string IPUsername, string IPpassword)
         {
             lock (Lock_notCreatedaccounts)
             {
-                GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+                GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
                 GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
             }
             Log("[ " + DateTime.Now + " ] => [ Couldn't create Account with : " + Email + " ]");
@@ -1052,23 +1052,23 @@ namespace TwitterSignup
 
         }
 
-        public void ChangeProxy_WebClient(string proxyAddress, int port, string proxyUsername, string proxyPassword, ref WebClient wc)
+        public void ChangeIP_WebClient(string IPAddress, int port, string IPUsername, string IPpassword, ref WebClient wc)
         {
             try
             {
-                WebProxy myproxy = new WebProxy(proxyAddress, port);
-                myproxy.BypassProxyOnLocal = false;
+                WebProxy myIP = new WebProxy(IPAddress, port);
+                myIP.BypassProxyOnLocal = false;
 
-                if (!string.IsNullOrEmpty(proxyUsername) && !string.IsNullOrEmpty(proxyPassword))
+                if (!string.IsNullOrEmpty(IPUsername) && !string.IsNullOrEmpty(IPpassword))
                 {
-                    myproxy.Credentials = new NetworkCredential(proxyUsername, proxyPassword);
+                    myIP.Credentials = new NetworkCredential(IPUsername, IPpassword);
                 }
-                wc.Proxy = myproxy;
+                wc.Proxy = myIP;
             }
             catch (Exception ex)
             {
-                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  ChangeProxy_WebClient() --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
-                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  ChangeProxy_WebClient() >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
+                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  ChangeIP_WebClient() --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
+                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  ChangeIP_WebClient() >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
             }
         }
 
@@ -1096,15 +1096,15 @@ namespace TwitterSignup
             string Email = string.Empty;//"allliesams@gmail.com";
             string Password = string.Empty;//"1JESUS11";
 
-            string proxyAddress = string.Empty;
-            string proxyPort = string.Empty;
-            string proxyUsername = string.Empty;
-            string proxyPassword = string.Empty;
+            string IPAddress = string.Empty;
+            string IPPort = string.Empty;
+            string IPUsername = string.Empty;
+            string IPpassword = string.Empty;
 
             string emailData = (string)paramsArray.GetValue(0);
             string username = (string)paramsArray.GetValue(1);
             string name = (string)paramsArray.GetValue(2);
-            string Proxy = (string)paramsArray.GetValue(3);
+            string IP = (string)paramsArray.GetValue(3);
             bool Created = true;
 
             try
@@ -1125,17 +1125,17 @@ namespace TwitterSignup
                 {
                     Email = emailData.Split(':')[0].Replace("\0", "");
                     Password = emailData.Split(':')[1].Replace("\0", "");
-                    proxyAddress = emailData.Split(':')[2];
-                    proxyPort = emailData.Split(':')[3];
+                    IPAddress = emailData.Split(':')[2];
+                    IPPort = emailData.Split(':')[3];
                 }
                 else if (Count == 6)
                 {
                     Email = emailData.Split(':')[0].Replace("\0", "");
                     Password = emailData.Split(':')[1].Replace("\0", "");
-                    proxyAddress = emailData.Split(':')[2];
-                    proxyPort = emailData.Split(':')[3];
-                    proxyUsername = emailData.Split(':')[4];
-                    proxyPassword = emailData.Split(':')[5];
+                    IPAddress = emailData.Split(':')[2];
+                    IPPort = emailData.Split(':')[3];
+                    IPUsername = emailData.Split(':')[4];
+                    IPpassword = emailData.Split(':')[5];
                 }
                 else
                 {
@@ -1158,23 +1158,23 @@ namespace TwitterSignup
 
             try
             {
-                if (Proxy.Split(':').Length == 4)
+                if (IP.Split(':').Length == 4)
                 {
-                    proxyAddress = Proxy.Split(':')[0];
-                    proxyPort = Proxy.Split(':')[1];
-                    proxyUsername = Proxy.Split(':')[2];
-                    proxyPassword = Proxy.Split(':')[3];
+                    IPAddress = IP.Split(':')[0];
+                    IPPort = IP.Split(':')[1];
+                    IPUsername = IP.Split(':')[2];
+                    IPpassword = IP.Split(':')[3];
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine("7 :" + ex.StackTrace);
-                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- Proxy Split --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
-                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- Proxy Split >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
+                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- IP Split --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
+                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- IP Split >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
             }
 
             string url = "https://twitter.com/users/email_available?suggest=1&username=&full_name=&email=" + Email.Replace("@", "%40").Replace(" ", "") + "&suggest_on_username=true&context=signup";
-            string EmailCheck = globusHelper.getHtmlfromUrlProxy(new Uri(url), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://twitter.com/signup", "");
+            string EmailCheck = globusHelper.getHtmlfromUrlIP(new Uri(url), IPAddress, IPPort, IPUsername, IPpassword, "https://twitter.com/signup", "");
             if (EmailCheck.Contains("\"taken\":true"))
             {
                 Log("[ " + DateTime.Now + " ] => [ Email : " + Email + " has already been taken. An email can only be used on one Twitter account at a time ]");
@@ -1220,9 +1220,9 @@ namespace TwitterSignup
 
             try
             {
-                textUrl = globusHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/signup"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
-                string pagesource1 = globusHelper.getHtmlfromUrlProxy(new Uri("https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
-                pagesource2 = globusHelper.getHtmlfromUrlProxy(new Uri("https://www.google.com/recaptcha/api/challenge?k=6LfbTAAAAAAAAE0hk8Vnfd1THHnn9lJuow6fgulO&ajax=1&cachestop=" + cachestop + "&lang=en"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+                textUrl = globusHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/signup"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
+                string pagesource1 = globusHelper.getHtmlfromUrlIP(new Uri("https://www.google.com/recaptcha/api/js/recaptcha_ajax.js"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
+                pagesource2 = globusHelper.getHtmlfromUrlIP(new Uri("https://www.google.com/recaptcha/api/challenge?k=6LfbTAAAAAAAAE0hk8Vnfd1THHnn9lJuow6fgulO&ajax=1&cachestop=" + cachestop + "&lang=en"), IPAddress, IPPort, IPUsername, IPpassword, "", "");
             }
             catch (Exception ex)
             {
@@ -1246,8 +1246,8 @@ namespace TwitterSignup
                 }
                 else
                 {
-                    Log("[ " + DateTime.Now + " ] => [ Cannot Find challenge Captcha on Page. Email : Password --> " + Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + " ]");
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.Path_CaptchaRequired);
+                    Log("[ " + DateTime.Now + " ] => [ Cannot Find challenge Captcha on Page. Email : Password --> " + Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + " ]");
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.Path_CaptchaRequired);
                     nvc.Clear();
                     return nvc;
                 }
@@ -1263,17 +1263,17 @@ namespace TwitterSignup
             WebClient webclient = new WebClient();
             try
             {
-                int intProxyPort = 80;
-                if (!string.IsNullOrEmpty(proxyPort) && GlobusRegex.ValidateNumber(proxyPort))
+                int intIPPort = 80;
+                if (!string.IsNullOrEmpty(IPPort) && GlobusRegex.ValidateNumber(IPPort))
                 {
-                    intProxyPort = int.Parse(proxyPort);
+                    intIPPort = int.Parse(IPPort);
                 }
-                ChangeProxy_WebClient(proxyAddress, intProxyPort, proxyUsername, proxyPassword, ref webclient);
+                ChangeIP_WebClient(IPAddress, intIPPort, IPUsername, IPpassword, ref webclient);
             }
             catch (Exception ex)
             {
-                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- ChangeProxy_WebClient() --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
-                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- ChangeProxy_WebClient() >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
+                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TwitterSignup -  SignupMultiThreaded() -- ChangeIP_WebClient() --> " + ex.Message, Globals.Path_AccountCreatorErrorLog);
+                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> TwitterSignup -  SignupMultiThreaded() -- ChangeIP_WebClient() >>>> " + ex.Message + " || DateTime :- " + DateTime.Now, Globals.Path_TwtErrorLogs);
             }
 
             try
@@ -1314,7 +1314,7 @@ namespace TwitterSignup
             }
 
             string headr = globusHelper.gResponse.Headers.ToString();
-            string Usernamecheck = globusHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/users/username_available?suggest=1&username=" + username + "&full_name=" + name + "&email=&suggest_on_username=true&context=signup"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://twitter.com/signup", "");
+            string Usernamecheck = globusHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/users/username_available?suggest=1&username=" + username + "&full_name=" + name + "&email=&suggest_on_username=true&context=signup"), IPAddress, IPPort, IPUsername, IPpassword, "https://twitter.com/signup", "");
 
             //if (EmailCheck.Contains("\"taken\":true")
             //    || res_PostSignUp.Contains("You already have an account with this username and password"))
@@ -1374,11 +1374,11 @@ namespace TwitterSignup
                 nvc.Add("name", name);
                 nvc.Add("Password", Password);
                 nvc.Add("authenticitytoken", authenticitytoken);
-                nvc.Add("proxyAddress", proxyAddress);
-                nvc.Add("proxyPassword", proxyPassword);
-                nvc.Add("proxyPort", proxyPort);
-                nvc.Add("proxyUsername", proxyUsername);
-                nvc.Add("proxyPassword", proxyPassword);
+                nvc.Add("IPAddress", IPAddress);
+                nvc.Add("IPpassword", IPpassword);
+                nvc.Add("IPPort", IPPort);
+                nvc.Add("IPUsername", IPUsername);
+                nvc.Add("IPpassword", IPpassword);
                 nvc.Add("capcthavalue", capcthavalue);
                 nvc.Add("ImageURL", ImageURL);
                 //nvc.Add("globusHelper", globusHelper);
@@ -1391,7 +1391,7 @@ namespace TwitterSignup
         public static int NoOfSuccessfullyCreatedAccount = 0;
         public static int NoOfNonCreatedAccounts = 0;
         public static int NoOfAlreadyCreatedAccounts = 0;
-        public static int NoOfNonCreatedAccountsProxy = 0;
+        public static int NoOfNonCreatedAccountsIP = 0;
         //public void SubmitCaptcha(System.Collections.Specialized.NameValueCollection nvc, GlobusHttpHelper globusHelper)
         //{
 
@@ -1404,14 +1404,14 @@ namespace TwitterSignup
         //    string ImageURL = nvc["ImageURL"];
 
 
-        //    string proxyAddress = nvc["proxyAddress"];
-        //    string proxyPort = nvc["proxyPort"];
-        //    string proxyUsername = nvc["proxyUsername"];
-        //    string proxyPassword = nvc["proxyPassword"];
+        //    string IPAddress = nvc["IPAddress"];
+        //    string IPPort = nvc["IPPort"];
+        //    string IPUsername = nvc["IPUsername"];
+        //    string IPpassword = nvc["IPpassword"];
 
-        //    if (proxyPassword.Contains(','))
+        //    if (IPpassword.Contains(','))
         //    {
-        //        proxyPassword = proxyPassword.Split(',')[0];
+        //        IPpassword = IPpassword.Split(',')[0];
         //    }
 
         //    string emailData = nvc["emailData"];
@@ -1464,8 +1464,8 @@ namespace TwitterSignup
         //    if (AccountCreatePageSource.Contains("id=\"signout-form\"") && AccountCreatePageSource.Contains("/logout"))
         //    {
         //        Log("[ " + DateTime.Now + " ] => [ Account created With Email :" + Email + " ]");
-        //        //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfulCreatedAccounts);
-        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":"  + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfulCreatedAccounts);
+        //        //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfulCreatedAccounts);
+        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":"  + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfulCreatedAccounts);
         //        //Count no of succesfully create accounts .
         //        NoOfSuccessfullyCreatedAccount++;
 
@@ -1483,12 +1483,12 @@ namespace TwitterSignup
         //                if (verified)
         //                {
         //                    //GlobusFileHelper.AppendStringToTextfileNewLine(Email.Replace("\0", "") + ":" + Password, Globals.path_SuccessfulCreatedAccounts);
-        //                    GlobusFileHelper.AppendStringToTextfileNewLine(Email.Replace("\0", "") + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_EmailVerifiedAccounts);
+        //                    GlobusFileHelper.AppendStringToTextfileNewLine(Email.Replace("\0", "") + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_EmailVerifiedAccounts);
         //                    Log("[ " + DateTime.Now + " ] => [ Account Verified : " + Email + " ]");
         //                }
         //                else
         //                {
-        //                    GlobusFileHelper.AppendStringToTextfileNewLine(Email.Replace("\0", "") + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_NonEmailVerifiedAccounts);
+        //                    GlobusFileHelper.AppendStringToTextfileNewLine(Email.Replace("\0", "") + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_NonEmailVerifiedAccounts);
         //                    Log("[ " + DateTime.Now + " ] => [ Account Couldn't be Email Verified : " + Email + " ]");
         //                }
         //            }
@@ -1512,7 +1512,7 @@ namespace TwitterSignup
         //                {
         //                    new Thread(() =>
         //                        {
-        //                            startProfilingAfterAccountCreation(new object[] { Email, Password, proxyAddress, proxyPort, proxyUsername, proxyPassword, pstAuthToken, globusHelper });
+        //                            startProfilingAfterAccountCreation(new object[] { Email, Password, IPAddress, IPPort, IPUsername, IPpassword, pstAuthToken, globusHelper });
         //                        }).Start();
         //                }
         //                catch (Exception)
@@ -1544,7 +1544,7 @@ namespace TwitterSignup
         //            #endregion
 
         //            clsFBAccount insertUpdateDataBase = new clsFBAccount();
-        //            insertUpdateDataBase.InsertUpdateFBAccount(Email.Replace(" ", ""), Password, username, proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+        //            insertUpdateDataBase.InsertUpdateFBAccount(Email.Replace(" ", ""), Password, username, IPAddress, IPPort, IPUsername, IPpassword, "", "");
 
 
 
@@ -1560,8 +1560,8 @@ namespace TwitterSignup
         //    else if (AccountCreatePageSource.Contains("/welcome/recommendations") && AccountCreatePageSource.Contains(username))
         //    {
         //        Log("[ " + DateTime.Now + " ] => [ Account created With Email :" + Email + " ]");
-        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password +  ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfulCreatedAccounts);
-        //        //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfulCreatedAccounts);
+        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password +  ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfulCreatedAccounts);
+        //        //GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfulCreatedAccounts);
         //        //Count no of succesfully create accounts .
         //        NoOfSuccessfullyCreatedAccount++;
 
@@ -1579,12 +1579,12 @@ namespace TwitterSignup
         //                bool verified = EmailActivate.EmailVerification(Email.Replace(" ", ""), Password, ref globusHelper);
         //                if (verified)
         //                {
-        //                    GlobusFileHelper.AppendStringToTextfileNewLine(Email.Replace("\0", "") + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_EmailVerifiedAccounts);
+        //                    GlobusFileHelper.AppendStringToTextfileNewLine(Email.Replace("\0", "") + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_EmailVerifiedAccounts);
         //                    Log("[ " + DateTime.Now + " ] => [ Account Verified : " + Email + " ]");
         //                }
         //                else
         //                {
-        //                    GlobusFileHelper.AppendStringToTextfileNewLine(Email.Replace("\0", "") + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_NonEmailVerifiedAccounts);
+        //                    GlobusFileHelper.AppendStringToTextfileNewLine(Email.Replace("\0", "") + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_NonEmailVerifiedAccounts);
         //                    Log("[ " + DateTime.Now + " ] => [ Account Couldn't be Email Verified : " + Email + " ]");
         //                }
         //            }
@@ -1608,7 +1608,7 @@ namespace TwitterSignup
         //                {
         //                    new Thread(() =>
         //                    {
-        //                        startProfilingAfterAccountCreation(new object[] { Email, Password, proxyAddress, proxyPort, proxyUsername, proxyPassword, pstAuthToken, globusHelper });
+        //                        startProfilingAfterAccountCreation(new object[] { Email, Password, IPAddress, IPPort, IPUsername, IPpassword, pstAuthToken, globusHelper });
         //                    }).Start();
 
         //                }
@@ -1641,7 +1641,7 @@ namespace TwitterSignup
         //            #endregion
 
         //            clsFBAccount insertUpdateDataBase = new clsFBAccount();
-        //            insertUpdateDataBase.InsertUpdateFBAccount(Email.Replace(" ", ""), Password, username, proxyAddress, proxyPort, proxyUsername, proxyPassword, "", "");
+        //            insertUpdateDataBase.InsertUpdateFBAccount(Email.Replace(" ", ""), Password, username, IPAddress, IPPort, IPUsername, IPpassword, "", "");
         //        }
         //        catch (Exception ex)
         //        {
@@ -1657,8 +1657,8 @@ namespace TwitterSignup
         //        //Password = Password + RandomStringGenerator.RandomString(3);
         //        Log("[ " + DateTime.Now + " ] => [ Please Create Accounts With Secure Password ]");
         //        Log("[ " + DateTime.Now + " ] => [ Password is too obvious ]");
-        //        Log("[ " + DateTime.Now + " ] => [ Email : Password --> " + Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + " ]");
-        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+        //        Log("[ " + DateTime.Now + " ] => [ Email : Password --> " + Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + " ]");
+        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
         //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
         //        //return;
         //    }
@@ -1669,21 +1669,21 @@ namespace TwitterSignup
 
         //        //Write Account Info in Test file 
         //        //if Account creation session is exprired .
-        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
         //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
         //        Log("[ " + DateTime.Now + " ] => [ You can't do that right now. ]");
         //        Log("[ " + DateTime.Now + " ] => [ Sorry, please try again later ]");
-        //        Log("[ " + DateTime.Now + " ] => [ and Change proxy to create more accounts. ]");
+        //        Log("[ " + DateTime.Now + " ] => [ and Change IP to create more accounts. ]");
         //        return;
         //    }
         //    else
         //    {
         //        //Count No Of Failure acccounts 
         //        NoOfNonCreatedAccounts++;
-        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedCreatedAccounts);
+        //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedCreatedAccounts);
         //        GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password, Globals.path_FailedCreatedAccountsOnlyEmailPass);
         //        Log("[ " + DateTime.Now + " ] => [ Couldn't create Account ]");
-        //        Log("[ " + DateTime.Now + " ] => [ Email : Password --> " + Email + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + " ]");
+        //        Log("[ " + DateTime.Now + " ] => [ Email : Password --> " + Email + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + " ]");
         //    }
 
         //}

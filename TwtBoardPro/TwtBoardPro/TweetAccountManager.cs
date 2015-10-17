@@ -32,15 +32,15 @@ namespace twtboardpro
 
         public string pgSrc_Profile = string.Empty;
 
-        public string proxyAddress = string.Empty;
-        public string proxyPort = string.Empty;
-        public string proxyUsername = string.Empty;
-        public string proxyPassword = string.Empty;
+        public string IPAddress = string.Empty;
+        public string IPPort = string.Empty;
+        public string IPUsername = string.Empty;
+        public string IPpassword = string.Empty;
 
-        public string proxyAddress_Socks5 = string.Empty;
-        public string proxyPort_Socks5 = string.Empty;
-        public string proxyUsername_Socks5 = string.Empty;
-        public string proxyPassword_Socks5 = string.Empty;
+        public string IPAddress_Socks5 = string.Empty;
+        public string IPPort_Socks5 = string.Empty;
+        public string IPUsername_Socks5 = string.Empty;
+        public string IPpassword_Socks5 = string.Empty;
 
         public bool UseHashTags = false;
         public Queue<string> que_TweetMessages_Hashtags = new Queue<string>();
@@ -58,6 +58,7 @@ namespace twtboardpro
 
         public static List<TwitterDataScrapper.StructTweetIDs> static_lst_Struct_TweetData { get; set; }
         public static Queue<TwitterDataScrapper.StructTweetIDs> que_lst_Struct_TweetData = new Queue<TwitterDataScrapper.StructTweetIDs>();
+        public Queue<TwitterDataScrapper.StructTweetIDs> que_lst_Struct_TweetData1 = new Queue<TwitterDataScrapper.StructTweetIDs>();
         public static bool IsRetweetDivideRetweet = false;
         public static readonly object locker_qque_lst_Struct_TweetData = new object();
 
@@ -175,14 +176,19 @@ namespace twtboardpro
 
         }
 
-        public TweetAccountManager(string Username, string Password, string Screen_name, string follower_Count, int numberOfMessages, string proxyAddress, string proxyPort, string proxyUsername, string proxyPassword, string currentCity, string HomeTown, string Birthday_Month, string BirthDay_Date, string BirthDay_Year, string AboutMe, string Employer, string College, string HighSchool, string Religion, string profilePic, string FamilyName, string Role, string language, string sex, string activities, string interests, string movies, string music, string books, string favoriteSports, string favoriteTeams, string GroupName, string status)
+        public void TweetAccountManager1(string Username, string Password)
         {
             this.Username = Username;
             this.Password = Password;
-            this.proxyAddress = proxyAddress;
-            this.proxyPort = proxyPort;
-            this.proxyUsername = proxyUsername;
-            this.proxyPassword = proxyPassword;
+        }
+        public TweetAccountManager(string Username, string Password, string Screen_name, string follower_Count, int numberOfMessages, string IPAddress, string IPPort, string IPUsername, string IPpassword, string currentCity, string HomeTown, string Birthday_Month, string BirthDay_Date, string BirthDay_Year, string AboutMe, string Employer, string College, string HighSchool, string Religion, string profilePic, string FamilyName, string Role, string language, string sex, string activities, string interests, string movies, string music, string books, string favoriteSports, string favoriteTeams, string GroupName, string status)
+        {
+            this.Username = Username;
+            this.Password = Password;
+            this.IPAddress = IPAddress;
+            this.IPPort = IPPort;
+            this.IPUsername = IPUsername;
+            this.IPpassword = IPpassword;
             this.Screen_name = Screen_name;
             this.FollowerCount = follower_Count;
             this.GroupName = GroupName;
@@ -229,7 +235,7 @@ namespace twtboardpro
 
             //   string ts = GenerateTimeStamp();
 
-            //    string a = HttpHelper1.getHtmlfromUrlProxy(new Uri("http://twitter.com/"), "173.208.131.234", 8888, "usproxy", "logic");
+            //    string a = HttpHelper1.getHtmlfromUrlIP(new Uri("http://twitter.com/"), "173.208.131.234", 8888, "usIP", "logic");
 
             //    string a2 = HttpHelper1.getHtmlfromUrl(new Uri("http://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "http://twitter.com/", string.Empty);
 
@@ -246,7 +252,7 @@ namespace twtboardpro
 
             //string ts = GenerateTimeStamp();
 
-            //string a = chilkatHttpHelpr.GetHtmlProxy("http://twitter.com/", "", "", "neshkito", "7809062345");//HttpHelper1.getHtmlfromUrl(new Uri("http://twitter.com/"), string.Empty, string.Empty);
+            //string a = chilkatHttpHelpr.GetHtmlIP("http://twitter.com/", "", "", "neshkito", "7809062345");//HttpHelper1.getHtmlfromUrl(new Uri("http://twitter.com/"), string.Empty, string.Empty);
 
             ////string a1 = HttpHelper1.getHtmlfromUrl(new Uri("http://scribe.twitter.com/scribe?category=client_event&log=%7B%22context%22%3A%22front%22%2C%22event_name%22%3A%22web%3Afront%3A%3A%3Aimpression%22%7D&ts=1330691303089"),"http://twitter.com/", string.Empty);
 
@@ -278,13 +284,13 @@ namespace twtboardpro
                 try
                 {
                    // get_twitter_first = globusHttpHelper.getHtmlfromUrl(new Uri(""), "", "");
-                    get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty,string.Empty);
+                    get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty,string.Empty);
                 }
                 catch (Exception ex)
                 {
                     //string get_twitter_first = globusHttpHelper1.getHtmlfromUrlp(new Uri("http://twitter.com/"), string.Empty, string.Empty);
                     Thread.Sleep(1000);
-                    get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                    get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                 }                
 
                 try
@@ -297,7 +303,7 @@ namespace twtboardpro
 
                     //string get_twitter_second = globusHttpHelper.postFormData(new Uri("https://twitter.com/scribe"), "log%5B%5D=%7B%22event_name%22%3A%22web%3Amobile_gallery%3Agallery%3A%3A%3Aimpression%22%2C%22noob_level%22%3Anull%2C%22internal_referer%22%3Anull%2C%22context%22%3A%22mobile_gallery%22%2C%22event_info%22%3A%22mobile_app_download%22%2C%22user_id%22%3A0%2C%22page%22%3A%22mobile_gallery%22%2C%22_category_%22%3A%22client_event%22%2C%22ts%22%3A" + ts + "%7D", "https://twitter.com/?lang=en&logged_out=1#!/download", "", "", "", "");//globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "https://twitter.com/", string.Empty);
 
-                    //string get2nd = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "https://twitter.com/", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                    //string get2nd = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "https://twitter.com/", IPAddress, IPPort, IPUsername, IPpassword);
 
                     //string get_api = globusHttpHelper.getHtmlfromUrl(new Uri("http://api.twitter.com/receiver.html"), "https://twitter.com/", "");
 
@@ -305,7 +311,7 @@ namespace twtboardpro
                 catch { }
                 string postData = "session%5Busername_or_email%5D=" + Uri.EscapeDataString(Username) + "&session%5Bpassword%5D=" + Uri.EscapeDataString(Password) + "&authenticity_token=" + postAuthenticityToken + "&scribe_log=&redirect_after_login=&authenticity_token=" + postAuthenticityToken + "&remember_me=1";
 
-                string response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/sessions"), postData, "https://twitter.com/", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                string response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/sessions"), postData, "https://twitter.com/", IPAddress, IPPort, IPUsername, IPpassword);
 
                 //response_Login = GlobusFileHelper.ReadStringFromTextfile("C:/Users/GLB-111/Desktop/new.txt");
                 if (response_Login.Contains("अपनी पहचान सत्यापित करें") || response_Login.Contains("आपके खाते को सुरक्षित रखेने में हमें मदद करें.") || response_Login.Contains("Help us keep your account safe.") || response_Login.Contains("Verify your identity") || response_Login.Contains("account/login_challenge?"))
@@ -319,12 +325,12 @@ namespace twtboardpro
                         if (response_Login.Contains(" name=\"challenge_type\" value=\"RetypeEmail") && response_Login.Contains("@"))
                         {
                             postData = "authenticity_token=" + postAuthenticityToken + "&challenge_id=" + challenge_id + "&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&platform=web&redirect_after_login=&remember_me=true&challenge_response=" + Screen_name;
-                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&remember_me=true", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&remember_me=true", IPAddress, IPPort, IPUsername, IPpassword);
                         }
                         else
                         {
                             postData = "authenticity_token=" + postAuthenticityToken + "&challenge_id=" + challenge_id + "&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&platform=web&redirect_after_login=&remember_me=true&challenge_response=" + Screen_name;
-                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&remember_me=true", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&remember_me=true", IPAddress, IPPort, IPUsername, IPpassword);
 
                         }
                     }
@@ -375,7 +381,7 @@ namespace twtboardpro
                     //Log("[ " + DateTime.Now + " ] => [ Login Error with " + Username + " ]");
                     IsLoggedIn = false;
                     IsNotSuspended = true;
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                     return;
                 }
                 //else if (responseURI.Contains("captcha"))//(globusHttpHelper.gResponse.ResponseUri.ToString().Contains("captcha"))
@@ -383,7 +389,7 @@ namespace twtboardpro
                 {
                     Log("[ " + DateTime.Now + " ] => [ Asking Captcha with " + Username + " ]");
                     IsLoggedIn = false;
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_AskingCaptchaAccounts);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_AskingCaptchaAccounts);
                     return;
                 }
                 
@@ -396,9 +402,9 @@ namespace twtboardpro
             catch (Exception ex)
             {
                 Log("[ " + DateTime.Now + " ] => [ Error in Login : " + Username + " ]");
-                Globals.proxyNotWorking = true;
-                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
-                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> Login() --> " + Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + " --> " + ex.Message, Globals.Path_TweetAccountManager);
+                Globals.IPNotWorking = true;
+                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
+                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> Login() --> " + Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + " --> " + ex.Message, Globals.Path_TweetAccountManager);
                 return;
             }
           
@@ -483,12 +489,12 @@ namespace twtboardpro
                 string get_twitter_first = string.Empty;
                 try
                 {
-                    get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"),"", proxyAddress, (proxyPort), proxyUsername, proxyPassword);
+                    get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"),"", IPAddress, (IPPort), IPUsername, IPpassword);
                 }
                 catch (Exception ex)
                 {
                     Thread.Sleep(1000);
-                    get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                    get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                 }
 
                 try
@@ -504,7 +510,7 @@ namespace twtboardpro
 
                     string get_twitter_second = globusHttpHelper.postFormData(new Uri("https://twitter.com/scribe"), "log%5B%5D=%7B%22event_name%22%3A%22web%3Amobile_gallery%3Agallery%3A%3A%3Aimpression%22%2C%22noob_level%22%3Anull%2C%22internal_referer%22%3Anull%2C%22context%22%3A%22mobile_gallery%22%2C%22event_info%22%3A%22mobile_app_download%22%2C%22user_id%22%3A0%2C%22page%22%3A%22mobile_gallery%22%2C%22_category_%22%3A%22client_event%22%2C%22ts%22%3A" + ts + "%7D", "https://twitter.com/?lang=en&logged_out=1#!/download", "", "", "", "");//globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "https://twitter.com/", string.Empty);
 
-                    string get2nd = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "https://twitter.com/", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                    string get2nd = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "https://twitter.com/", IPAddress, IPPort, IPUsername, IPpassword);
 
                     string get_api = globusHttpHelper.getHtmlfromUrl(new Uri("http://api.twitter.com/receiver.html"), "https://twitter.com/", "");
 
@@ -515,7 +521,7 @@ namespace twtboardpro
                 }
                 string postData = "session%5Busername_or_email%5D=" + Uri.EscapeDataString(Username) + "&session%5Bpassword%5D=" + Password + "&authenticity_token=" + postAuthenticityToken + "&scribe_log=&redirect_after_login=&authenticity_token=" + postAuthenticityToken + "&remember_me=1";
 
-                string response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/sessions"), postData, "https://twitter.com/", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                string response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/sessions"), postData, "https://twitter.com/", IPAddress, IPPort, IPUsername, IPpassword);
 
                 if (response_Login.Contains("???? ????? ???????? ????") || response_Login.Contains("???? ???? ?? ???????? ????? ??? ???? ??? ????.") || response_Login.Contains("Help us keep your account safe.") || response_Login.Contains("Verify your identity"))
                 {
@@ -529,12 +535,12 @@ namespace twtboardpro
                         if (response_Login.Contains(" name=\"challenge_type\" value=\"RetypeEmail") && response_Login.Contains("@"))
                         {
                             postData = "authenticity_token=" + postAuthenticityToken + "&challenge_id=" + challenge_id + "&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&platform=web&redirect_after_login=&remember_me=true&challenge_response=" + Screen_name;
-                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&remember_me=true", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&remember_me=true", IPAddress, IPPort, IPUsername, IPpassword);
                         }
                         else
                         {
                             postData = "authenticity_token=" + postAuthenticityToken + "&challenge_id=" + challenge_id + "&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&platform=web&redirect_after_login=&remember_me=true&challenge_response=" + Screen_name;
-                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&remember_me=true", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&remember_me=true", IPAddress, IPPort, IPUsername, IPpassword);
 
                         }
                     }
@@ -545,7 +551,7 @@ namespace twtboardpro
                 }
                 //else
                 //{
-                //    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
+                //    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
 
                 //}
 
@@ -560,7 +566,7 @@ namespace twtboardpro
                     if (Apps.Contains("arab-follow"))
                     {
                         LogArabFollower("[ " + DateTime.Now + " ] => [ Arab-Follow => Login => Already Authorized with Account: " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_AlreadtAuthorizedArabFollowAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_AlreadtAuthorizedArabFollowAccounts);
                         return;
                     }
                     postAuthenticityToken = PostAuthenticityToken(response_Login, "postAuthenticityToken");
@@ -598,25 +604,25 @@ namespace twtboardpro
                     string arabconnect = string.Empty;
                     try
                     {
-                        //arabconnect = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://arab-follow.com/connect.php"), proxyAddress, Convert.ToInt32(proxyPort), proxyUsername, proxyPassword);
-                        arabconnect = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://arab-follow.com/connect.php"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        //arabconnect = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://arab-follow.com/connect.php"), IPAddress, Convert.ToInt32(IPPort), IPUsername, IPpassword);
+                        arabconnect = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://arab-follow.com/connect.php"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                     }
                     catch (Exception ex)
                     {
                         Thread.Sleep(1000);
-                        arabconnect = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://arab-follow.com/connect.php"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        arabconnect = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://arab-follow.com/connect.php"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                     }
 
 
                     try
                     {
                         
-                        arabfollowSignUp = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://arab-follow.com/redirect.php"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        arabfollowSignUp = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://arab-follow.com/redirect.php"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                     }
                     catch (Exception ex)
                     {
                         Thread.Sleep(1000);
-                        arabfollowSignUp = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://www.arab-follow.com/redirect.php"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        arabfollowSignUp = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://www.arab-follow.com/redirect.php"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                         Console.Write("Error" + ex.Message);
                     }
 
@@ -632,7 +638,7 @@ namespace twtboardpro
                     try
                     {
                         
-                        outhResp = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://api.twitter.com/oauth/authenticate?" + oauth_token + "&force_login =true"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        outhResp = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://api.twitter.com/oauth/authenticate?" + oauth_token + "&force_login =true"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                     }
                     catch (Exception ex)
                     {
@@ -660,18 +666,18 @@ namespace twtboardpro
                     try
                     {
                         
-                        twitAppResp = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://arab-follow.com//callback.php?" + oauth_token + "&" + oauth_verifier + ""), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        twitAppResp = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://arab-follow.com//callback.php?" + oauth_token + "&" + oauth_verifier + ""), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                     }
                     catch (Exception ex)
                     {
-                         twitAppResp = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://arab-follow.com//callback.php?" + oauth_token + "&" + oauth_verifier + ""), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                         twitAppResp = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://arab-follow.com//callback.php?" + oauth_token + "&" + oauth_verifier + ""), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                          Console.Write("Error" + ex.Message);
                     }
 
                     string finalresponce = string.Empty;
                     try
                     {
-                        //finalresponce = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://arab-follow.com//clearsessions.php"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        //finalresponce = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://arab-follow.com//clearsessions.php"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                     }
                     catch (Exception ex)
                     {
@@ -682,14 +688,14 @@ namespace twtboardpro
                     {
                         //GlobusLogHelper.log.Info("[ Social Sites => Twitter => Arab-Follow => Login => Authorized with Account: " + Username + " ]");
                         //GlobusLogHelper.log.Debug("[ Social Sites => Twitter => Arab-Follow => Login => Authorized in with Account: " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyFollowedArabAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyFollowedArabAccounts);
                         LogArabFollower("[ " + DateTime.Now + " ] => [ Arab-Follow => Login => Authorized finished with Account: " + Username + " ]");
 
 
                     }
                     else 
                     {
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" +Password + ":"  + ":" + proxyAddress + ":" + proxyPort + ":" +proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" +Password + ":"  + ":" + IPAddress + ":" + IPPort + ":" +IPUsername + ":" + IPpassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
                         LogArabFollower("[ " + DateTime.Now + " ] => [ Arab-Follow => Login => Authorized failed with Account: " + Username + " ]");
 
                     }
@@ -698,7 +704,7 @@ namespace twtboardpro
                 {
                     Log("[ " + DateTime.Now + " ] => [ Login Error with " + Username + " ]");
                     IsLoggedIn = false;
-                   // GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, TDGlobals.path_FailedLoginAccounts);
+                   // GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, TDGlobals.path_FailedLoginAccounts);
                     return;
                 }
                 else if (responseURI.Contains("captcha"))//(globusHttpHelper.gResponse.ResponseUri.ToString().Contains("captcha"))
@@ -706,14 +712,14 @@ namespace twtboardpro
                     //GlobusLogHelper.log.Info("[ Social Sites => Twitter => Login => Asking Captcha with " + Username + " ]");
                     //GlobusLogHelper.log.Debug("[ Social Sites => Twitter => Login => Asking Captcha with " + Username + " ]");
                     IsLoggedIn = false;
-                    //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, TDGlobals.path_AskingCaptchaAccounts);
+                    //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, TDGlobals.path_AskingCaptchaAccounts);
                     return;
                 }
                 else
                 {
                     Log("[ " + DateTime.Now + " ] => [ Login Error with " + Username + " ]");
-                   GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
-                   GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                   GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
+                   GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                     IsLoggedIn = false;
                     //Log("Login Error in Account : " + Username + ":" + Password);
                 }
@@ -721,9 +727,9 @@ namespace twtboardpro
             catch (Exception ex)
             {
                 Log("[ " + DateTime.Now + " ] => [ Login Error with " + Username + " ]");
-                //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
-                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
-                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
+                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
+                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                     
                 
                 return;
@@ -758,12 +764,12 @@ namespace twtboardpro
                 string get_twitter_first = string.Empty;
                 try
                 {
-                    get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), "", proxyAddress, (proxyPort), proxyUsername, proxyPassword);
+                    get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), "", IPAddress, (IPPort), IPUsername, IPpassword);
                 }
                 catch (Exception ex)
                 {
                     Thread.Sleep(1000);
-                    get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                    get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                 }
 
                 try
@@ -777,7 +783,7 @@ namespace twtboardpro
                
                 string postData = "session%5Busername_or_email%5D=" + Uri.EscapeDataString(Username) + "&session%5Bpassword%5D=" + Password + "&authenticity_token=" + postAuthenticityToken + "&scribe_log=&redirect_after_login=&authenticity_token=" + postAuthenticityToken + "&remember_me=1";
 
-                string response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/sessions"), postData, "https://twitter.com/", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                string response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/sessions"), postData, "https://twitter.com/", IPAddress, IPPort, IPUsername, IPpassword);
 
                 if (response_Login.Contains("अपनी पहचान सत्यापित करें") || response_Login.Contains("आपके खाते को सुरक्षित रखेने में हमें मदद करें.") || response_Login.Contains("Help us keep your account safe.") || response_Login.Contains("Verify your identity") || response_Login.Contains("account/login_challenge?"))
                 {
@@ -791,12 +797,12 @@ namespace twtboardpro
                         if (response_Login.Contains(" name=\"challenge_type\" value=\"RetypeEmail") && response_Login.Contains("@"))
                         {
                             postData = "authenticity_token=" + postAuthenticityToken + "&challenge_id=" + challenge_id + "&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&platform=web&redirect_after_login=&remember_me=true&challenge_response=" + Screen_name;
-                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&remember_me=true", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&remember_me=true", IPAddress, IPPort, IPUsername, IPpassword);
                         }
                         else
                         {
                             postData = "authenticity_token=" + postAuthenticityToken + "&challenge_id=" + challenge_id + "&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&platform=web&redirect_after_login=&remember_me=true&challenge_response=" + Screen_name;
-                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&remember_me=true", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&remember_me=true", IPAddress, IPPort, IPUsername, IPpassword);
 
                         }
                     }
@@ -816,7 +822,7 @@ namespace twtboardpro
                     if (Apps.Contains("تطبيق ريتويتر الجديد"))
                     {
                         LogArabFollower("[ " + DateTime.Now + " ] => [ Application-Follow => Login => Already Authorized with Account: " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_AlreadtAuthorizedApplicationFollowAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_AlreadtAuthorizedApplicationFollowAccounts);
                         return;
                     }
                     postAuthenticityToken = PostAuthenticityToken(response_Login, "postAuthenticityToken");
@@ -857,12 +863,12 @@ namespace twtboardpro
                     try
                     {
                         
-                        arabconnect = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://www.twitterrt.com/login"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        arabconnect = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://www.twitterrt.com/login"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                     }
                     catch (Exception ex)
                     {
                         Thread.Sleep(1000);
-                        arabconnect = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://www.twitterrt.com/login"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        arabconnect = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://www.twitterrt.com/login"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                     }
 
                     oauth_token = oauthToken(arabconnect, "oauth_token");
@@ -892,11 +898,11 @@ namespace twtboardpro
                     try
                     {
                     
-                        twitAppResp = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://www.twitterrt.com/login?" + oauth_token + "&" + oauth_verifier + ""), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        twitAppResp = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://www.twitterrt.com/login?" + oauth_token + "&" + oauth_verifier + ""), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                     }
                     catch (Exception ex)
                     {
-                        twitAppResp = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://www.twitterrt.com/login?" + oauth_token + "&" + oauth_verifier + ""), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                        twitAppResp = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://www.twitterrt.com/login?" + oauth_token + "&" + oauth_verifier + ""), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                         Console.Write("Error" + ex.Message);
                     }
 
@@ -904,13 +910,13 @@ namespace twtboardpro
                    
                     if (twitAppResp.Contains("logout"))
                     {
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyFollowedApplicationAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyFollowedApplicationAccounts);
                         LogArabFollower("[ " + DateTime.Now + " ] => [ Appliation-Follow => Login => Authorized Successfully finished with Account: " + Username + " ]");
 
                     }
                     else
                     {
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyNotFollowedApplicationAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyNotFollowedApplicationAccounts);
                         LogArabFollower("[ " + DateTime.Now + " ] => [ Appliation-Follow => Login => Authorized failed with Account: " + Username + " ]");
 
                     }
@@ -931,8 +937,8 @@ namespace twtboardpro
                 else
                 {
                     LogArabFollower("[ " + DateTime.Now + " ] => [ Login Error with " + Username + " ]");
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyNotFollowedApplicationAccounts);
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyNotFollowedApplicationAccounts);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                     IsLoggedIn = false;
                     //Log("Login Error in Account : " + Username + ":" + Password);
                 }
@@ -940,9 +946,9 @@ namespace twtboardpro
             catch (Exception ex)
             {
                 Log("[ " + DateTime.Now + " ] => [ Login Error with " + Username + " ]");
-                //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
-                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyNotFollowedApplicationAccounts);
-                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyNotFollowedArabAccounts);
+                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyNotFollowedApplicationAccounts);
+                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
 
                 return;
             }
@@ -1125,7 +1131,7 @@ namespace twtboardpro
                     database.UpdateSuspendedAcc(Username);
                     AccountStatus = "Account Suspended";
                     IsNotSuspended = false;
-                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuspendedEmailAccounts);
+                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuspendedEmailAccounts);
 
                 }
             }
@@ -1162,24 +1168,24 @@ namespace twtboardpro
                         if (profileUpdater.UpdateProfile(profileUsername, profileLocation, profileURL, profileDescription, localImagePath, postAuthenticityToken, ref globusHttpHelper))
                         {
                             Log("[ " + DateTime.Now + " ] => [ Profile Updated : " + Username + " ]");
-                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyProfiledAccounts);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyProfiledAccounts);
                         }
                         else
                         {
                             Log("[ " + DateTime.Now + " ] => [Unable to Update Profile : " + Username + " ]");
-                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedToProfileAccounts);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToProfileAccounts);
                         }
                     }
                     else
                     {
                         Log("[ " + DateTime.Now + " ] => [ >>Couldn't Login with >> " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                     }
                 }
                 else
                 {
                     Log("[ " + DateTime.Now + " ] => [ Account " + Username + " is suspended. ]");
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuspendedEmailAccounts);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuspendedEmailAccounts);
                 }
             }
             catch (Exception ex)
@@ -1213,18 +1219,18 @@ namespace twtboardpro
                         if (profileUpdater.UpdateBackgroundImage(localImagePath, postAuthenticityToken, ref globusHttpHelper))
                         {
                             Log("[ " + DateTime.Now + " ] => [ Backgroud Image Updated : " + Username + " ]");
-                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyProfiledAccounts);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyProfiledAccounts);
                         }
                         else
                         {
                             Log("[ " + DateTime.Now + " ] => [ Unable to Update Background Image : " + Username + " ]");
-                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedToProfileAccounts);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToProfileAccounts);
                         }
                     }
                     else
                     {
                         Log("[ " + DateTime.Now + " ] => [ >>Couldn't Login with >> " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                     }
                 }
                 else
@@ -1266,12 +1272,12 @@ namespace twtboardpro
         //            if (followStatus == "followed")
         //            {
         //                Log(">> Followed >> " + user_id_toFollow + " by " + Username);
-        //                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyFollowAccounts);
+        //                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyFollowAccounts);
         //            }
         //            else
         //            {
         //                Log(">>Couldn't Follow >> " + user_id_toFollow + " by " + Username);
-        //                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedToFollowAccounts);
+        //                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToFollowAccounts);
         //            }
         //        }
         //    }
@@ -1341,7 +1347,7 @@ namespace twtboardpro
         //                    if (followStatus == "followed")
         //                    {
         //                        Log(">> Followed >> " + user_id_toFollow + " by " + Username);
-        //                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyFollowAccounts);
+        //                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyFollowAccounts);
 
         //                        //Insert Update in "tb_Follow"
         //                        queryManager.InsertUpdateFollowTable(Username, user_id, "");
@@ -1349,7 +1355,7 @@ namespace twtboardpro
         //                    else
         //                    {
         //                        Log(">> Couldn't Follow >> " + user_id_toFollow + " by " + Username);
-        //                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedToFollowAccounts);
+        //                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToFollowAccounts);
         //                    }
 
         //                    Log("Follow Delayed for " + delay + " Seconds");
@@ -1386,8 +1392,593 @@ namespace twtboardpro
         //} 
         #endregion
 
-        
-        
+
+        #region old commented code FollowUsingURLs
+        //public void FollowUsingURLs(List<string> list_user_id_toFollow, int minDelay, int maxDelay, bool OtherUser)
+        //{
+        //    int counter = 0;
+        //    int counterChecktotlaFollowr = 0;
+        //    try
+        //    {
+        //        //Login();
+        //        try
+        //        {
+        //            DataSet Dataset = new DataSet();
+        //            if (NoOfFollowPerDay_ChkBox == true)
+        //            {
+        //                Dataset = CheckLimitationOfPerID(Username);
+        //                if (Dataset != null)
+        //                {
+        //                    if (Dataset.Tables.Count != 0)
+        //                    {
+        //                        if (Dataset.Tables[0].Rows.Count != 0)
+        //                        {
+        //                            Log("[ " + DateTime.Now + " ] => [ No Of Follow Per Day - " + NoOfFollowPerDay + " ]");
+        //                            int DataSetTableRowsCount = Dataset.Tables[0].Rows.Count;
+        //                            RemainingNoOfFollowPerDay = NoOfFollowPerDay - DataSetTableRowsCount;
+        //                        }
+        //                        else
+        //                        {
+        //                            RemainingNoOfFollowPerDay = NoOfFollowPerDay;
+        //                        }
+        //                    }
+        //                    else
+        //                    {
+        //                        RemainingNoOfFollowPerDay = NoOfFollowPerDay;
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                RemainingNoOfFollowPerDay = TweetAccountManager.NoOfFollowPerDay;
+        //            }
+
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager -- NoOfFollowPerDay_ChkBox --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //            GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager --  FollowUsingURLs() --  " + Username + " --> " + ex.Message, Globals.Path_TweetAccountManager);
+        //        }
+
+        //        ///Login if Not Logged in
+        //        if (!IsLoggedIn)
+        //        {
+        //            Login();
+        //        }
+
+        //        ///Return if Suspended
+        //        if (AccountStatus == "Account Suspended")
+        //        {
+        //            Log("[ " + DateTime.Now + " ] => [  " + Username + " : Suspended ]");
+        //            return;
+        //        }
+
+               
+        //        if (IsLoggedIn)
+        //        {
+        //            #region trial last tweet date code
+        //            //if (UseDateLastTweeted)
+        //            //{
+        //            //    string PageSource = globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + Screen_name), "", "");
+        //            //    string[] Array = Regex.Split(PageSource, "href=");
+
+        //            //    foreach (string item in Array)
+        //            //    {
+        //            //        if (item.Contains(Screen_name + "/status/") && item.Contains("tweet-timestamp js-permalink js-nav"))
+        //            //        {
+        //            //            try
+        //            //            {
+        //            //                int startIndex = item.IndexOf("title=\"");
+        //            //                string Start = item.Substring(startIndex).Replace("title=\"", "");
+        //            //                int endIndex = Start.IndexOf("\" >");
+        //            //                string End = Start.Substring(0, endIndex);
+
+        //            //                string[] array = Regex.Split(End, " ");
+        //            //                DateTime lastTweetDate = new DateTime(Convert.ToInt32(array[5]), 08, Convert.ToInt32(array[3]), 12, 12, 12);
+
+        //            //                DateTime dt_Now = DateTime.Now;
+
+        //            //                TimeSpan dt_Difference = lastTweetDate.Subtract(dt_Now);
+
+        //            //                TimeSpan t = dt_Now - lastTweetDate;
+        //            //                double NrOfDays = t.TotalDays;
+
+        //            //                if (dt_Difference.Days >= LastTweetDays)
+        //            //                {
+        //            //                    Log("Not Followed as Last Tweeted Day is greated than specified For : " + Username);
+        //            //                    continue;
+        //            //                }
+
+        //            //            }
+        //            //            catch (Exception ex)
+        //            //            {
+
+        //            //            }
+        //            //        }
+        //            //    }
+        //            //} 
+        //            #endregion
+
+        //            int NoOfFollowCounter = 0;
+
+        //            clsDBQueryManager queryManager = new clsDBQueryManager();
+
+        //            TwitterDataScrapper dataScrapper = new TwitterDataScrapper();
+
+        //            ///Get list of Already Followings
+        //            List<string> lst_AlreadyUserid = new List<string>(); ;
+        //            List<string> lst_AlreadyUserName = new List<string>();
+        //            if (list_user_id_toFollow.Count > 0 && !string.IsNullOrEmpty(list_user_id_toFollow[0]))
+        //            {
+        //                foreach (string user_id_toFollow in list_user_id_toFollow)
+        //                {
+        //                    if (NoOfFollowPerDay_ChkBox)
+        //                    {
+        //                        if (NoOfFollowCounter >= RemainingNoOfFollowPerDay)
+        //                        {
+        //                            Log("[ " + DateTime.Now + " ] => [ Finish Follow Limit " + NoOfFollowPerDay + " Today ]");
+        //                            break;
+        //                        }
+        //                    }
+
+        //                    string followStatus;
+        //                    string user_id = string.Empty;
+        //                    string pagesource = string.Empty;
+        //                    string Screen_name = string.Empty;
+        //                    ///Getting Username from User id
+        //                    ///Working from both username n id
+        //                    clsDBQueryManager DB = new clsDBQueryManager();
+
+        //                    #region commented for choosing username and userid
+        //                    //if (!GlobusRegex.ValidateNumber(user_id_toFollow))//(!IsItNumber(user_id_toFollow))
+        //                    //if (frmMain_NewUI.IsFollowerScreanName)
+        //                    //{
+        //                    //    DataSet ds = DB.GetUserId(user_id_toFollow);
+        //                    //    if (ds.Tables.Count != 0 && ds.Tables[0].Rows.Count > 0)
+        //                    //    {
+        //                    //        foreach (DataRow dataRow in ds.Tables["tb_UsernameDetails"].Rows)
+        //                    //        {
+        //                    //            user_id = dataRow.ItemArray[0].ToString();
+        //                    //        }
+        //                    //    }
+        //                    //}
+        //                    //else if (frmMain_NewUI.IsfollowerUserId)
+        //                    //{
+        //                    //    user_id = user_id_toFollow;
+        //                    //    DataSet ds = DB.GetUserName(user_id_toFollow);
+        //                    //    if (ds.Tables[0].Rows.Count > 0)
+        //                    //    {
+        //                    //        foreach (DataRow dataRow in ds.Tables["tb_UsernameDetails"].Rows)
+        //                    //        {
+        //                    //            user_id = dataRow.ItemArray[0].ToString();
+        //                    //        }
+        //                    //    }
+        //                    //}
+        //                    //else
+        //                    //{
+        //                    //    user_id = string.Empty;
+        //                    //    Log("Please enter Valid user Id Or Screan name.  ");
+        //                    //} 
+        //                    #endregion
+
+        //                    #region get check unfollow befor
+        //                    if (TweetAccountManager.UseUnfollowedBeforeFilter)
+        //                    {
+        //                        List<string> lst_AlreadyExist = new List<string>();
+        //                        if (frmMain_NewUI.IsFollowerScreenName)
+        //                        {
+        //                            lst_AlreadyExist = DB.SelectUnFollowDUsernameID_List(Username);
+        //                            bool isAlreadyExist = lst_AlreadyExist.Exists(s => (s == user_id_toFollow));
+        //                            if (isAlreadyExist)
+        //                            {
+        //                                Log("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Is already Unfollowed before from " + Username + " ]");
+        //                                continue;
+        //                            }
+        //                        }
+        //                        else if (frmMain_NewUI.IsfollowerUserId && BaseLib.NumberHelper.ValidateNumber(user_id_toFollow))
+        //                        {
+        //                            lst_AlreadyExist = DB.SelectUnFollowedUsername_List(Username);
+        //                            bool isAlreadyExist = lst_AlreadyExist.Exists(s => (s == user_id_toFollow));
+        //                            if (isAlreadyExist)
+        //                            {
+        //                                Log("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Is already Unfollowed before from " + Username + " ]");
+        //                                continue;
+        //                            }
+        //                        }
+        //                    }
+
+        //                    #endregion
+
+        //                    ///Counter For Follow
+        //                    NoOfFollowCounter++;
+
+        //                    //Check if user_id_toFollow is already being followed or not
+
+        //                    #region user_id_toFollow is already being followed or not
+
+        //                    bool isAlreadyFollowed = false;
+        //                    Log("[ " + DateTime.Now + " ] => [ Checking For Already Followed For " + user_id_toFollow + " From " + Username + " ]");
+        //                    if (frmMain_NewUI.IsFollowerScreenName)
+        //                    {
+        //                        lst_AlreadyUserName = queryManager.SelectFollowDUsername_List(Username);
+        //                        isAlreadyFollowed = lst_AlreadyUserName.Exists(s => (s == user_id_toFollow));
+        //                        Screen_name = user_id_toFollow;
+        //                    }
+        //                    else if (frmMain_NewUI.IsfollowerUserId && BaseLib.NumberHelper.ValidateNumber(user_id_toFollow))
+        //                    {
+        //                        lst_AlreadyUserid = queryManager.SelectFollowDUsernameID_List(Username);
+        //                        isAlreadyFollowed = lst_AlreadyUserid.Exists(s => (s == user_id_toFollow));
+        //                        user_id = user_id_toFollow;
+        //                    }
+        //                    else
+        //                    {
+        //                        Log("[ " + DateTime.Now + " ] => [ UserId/ScreenName Not In Correct Format :- " + user_id_toFollow + " ]");
+        //                        return;
+        //                    }
+
+        //                    #endregion
+
+
+        //                    if (!isAlreadyFollowed)  //If not already being followed, follow now
+        //                    {
+        //                        ///Use FollowingsFollowers Ratio Filter
+        //                        if (UseRatioFilter)
+        //                        {
+        //                            int FollowingsFollowersRatio_user_id = 0;
+
+        //                            //Check FollowingsFollowers Ratio of this user_id
+        //                            try
+        //                            {
+        //                                string returnstatusFollower = string.Empty;
+        //                                string returnstatusFollowing = string.Empty;
+        //                                List<string> Following = dataScrapper.GetFollowings(user_id, out returnstatusFollowing);
+        //                                List<string> Follower = dataScrapper.GetFollowers(user_id, out returnstatusFollower);
+        //                                int count_Followings_user_id = Following.Count;
+        //                                int count_Followers_user_id = Follower.Count;
+
+        //                                FollowingsFollowersRatio_user_id = (count_Followings_user_id * 100) / count_Followers_user_id;
+        //                            }
+        //                            catch (Exception ex)
+        //                            {
+        //                                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> FollowUsingURLs() -- UseRatioFilter --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //                                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager --  FollowUsingURLs() -- UseRatioFilter -- " + Username + " -- " + user_id_toFollow + " --> " + ex.Message, Globals.Path_TweetAccountManager);
+        //                            }
+
+        //                            if (!(FollowingsFollowersRatio_user_id >= FollowingsFollowersRatio)) //If FollowingsFollowersRatio_user_id is less than Required, continue with next user_id_toFollow
+        //                            {
+        //                                Log("[ " + DateTime.Now + " ] => [ Not Followed as FollowingsFollowersRatio : " + FollowingsFollowersRatio_user_id + " for " + user_id_toFollow + " with : " + Username + " ]");
+        //                                continue;
+        //                            }
+        //                        }
+
+
+        //                        #region Old Unfollowed Before Code
+        //                        //if (UseUnfollowedBeforeFilter)
+        //                        //{
+        //                        //    try
+        //                        //    {
+        //                        //        List<string> lst_Followings_Current = dataScrapper.GetFollowings(user_id);
+
+        //                        //        //lst_AlreadyFollowings
+        //                        //    }
+        //                        //    catch { }
+        //                        //} 
+        //                        #endregion
+
+        //                        #region Old Tweet Last Day Code
+        //                        if (UseDateLastTweeted && !string.IsNullOrEmpty(user_id))
+        //                        {
+        //                            try
+        //                            {
+        //                                string strLastTweetDate = dataScrapper.GetUserLastTweetDate(user_id);
+
+        //                                DateTime dt_LastTweetDate = DateTime.Parse(strLastTweetDate);
+
+        //                                DateTime dt_Now = DateTime.Now;
+
+        //                                TimeSpan dt_Difference = dt_Now.Subtract(dt_LastTweetDate);
+
+        //                                if (dt_Difference.Days >= LastTweetDays)
+        //                                {
+        //                                    Log("[ " + DateTime.Now + " ] => [ Not Followed as Last Tweeted Day is greated than specified for :" + user_id_toFollow + " with : " + Username + " ]");
+        //                                    continue;
+        //                                }
+        //                            }
+        //                            catch (Exception ex)
+        //                            {
+        //                                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> FollowUsingURLs() -- Last Tweeted --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //                                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager --  FollowUsingURLs() -- UseDateLastTweeted -- " + Username + " -- " + user_id_toFollow + " --> " + ex.Message, Globals.Path_TweetAccountManager);
+        //                            }
+        //                        }
+        //                        #endregion
+
+        //                        #region Check Profile Picture
+        //                        if (IscontainPicture)
+        //                        {
+        //                            Log("[ " + DateTime.Now + " ] => [ Checking Profile Image For : " + user_id_toFollow + " ]");
+        //                            string containsIamge = TwitterDataScrapper.GetPhotoFromUsername_New(Screen_name);
+        //                            Thread.Sleep(1000);
+        //                            if (containsIamge == "true")
+        //                            {
+        //                                Log("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Contains Image ]");
+        //                            }
+        //                            else if (containsIamge == "false")
+        //                            {
+        //                                Log("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Not Contains Image So Not Following ]");
+        //                                continue;
+        //                            }
+        //                            else if (containsIamge == "Rate limit exceeded")
+        //                            {
+        //                                Log("[ " + DateTime.Now + " ] => [ Cannot Make Request. Rate limit exceeded ]");
+        //                                Log("[ " + DateTime.Now + " ] => [ Please Try After Some Time ]");
+        //                                Thread.Sleep(5000);
+        //                            }
+        //                        }
+        //                        #endregion
+
+        //                        #region Checking Tweet in the last xx days.
+
+        //                        if (IsTweetedInXdays)
+        //                        {
+        //                            Log("[ " + DateTime.Now + " ] => [checking tweeted in the last  " + daysTweetedInxdays + "  days for User :" + user_id_toFollow + " ]");
+        //                            try
+        //                            {
+        //                                string PageSource = globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + user_id_toFollow), "", "");
+        //                                string dateoflastTweet = globusHttpHelper.getBetween(PageSource, "ProfileTweet-timestamp js-permalink js-nav js-tooltip", ">").Replace("\"","").Trim();
+        //                                try
+        //                                {
+        //                                    dateoflastTweet = dateoflastTweet.Split('-')[1].Trim();
+        //                                    DateTime dt_LastTweetDate = DateTime.Parse(dateoflastTweet);
+
+        //                                    DateTime dt_Now = DateTime.Now;
+
+        //                                    TimeSpan dt_Difference = dt_Now.Subtract(dt_LastTweetDate);
+        //                                    if (dt_Difference.Days >= Convert.ToInt32(daysTweetedInxdays))
+        //                                    {
+        //                                        Log("[ " + DateTime.Now + " ] => [ Not Followed as Last Tweeted Day is greated than specified for :" + user_id_toFollow + " with : " + Username + " ]");
+        //                                        continue;
+        //                                    }
+        //                                }
+        //                                catch { }
+                                        
+
+        //                            }
+        //                            catch (Exception ex)
+        //                            {
+
+        //                            }
+        //                        } 
+
+        //                        #endregion
+
+
+        //                        int delay = 10 * 1000;
+        //                        int delay1 = 10 * 1000;
+        //                        try
+        //                        {
+        //                            if (Globals.IsGlobalDelay && Globals.IsCheckValueOfDelay)
+        //                            {
+        //                                if (Globals.FollowerRunningText == "FollowerModule" && Globals.TweetRunningText == "TweetModule")
+        //                                {
+        //                                    delay = RandomNumberGenerator.GenerateRandom(minDelay, maxDelay);
+        //                                    delay1 = RandomNumberGenerator.GenerateRandom(Globals.MinGlobalDelay, Globals.MaxGlobalDelay);
+        //                                }
+        //                                else
+        //                                {
+        //                                    delay = RandomNumberGenerator.GenerateRandom(minDelay, maxDelay);
+        //                                }
+        //                            }
+        //                            else
+        //                            {
+        //                                delay = RandomNumberGenerator.GenerateRandom(minDelay, maxDelay);
+        //                            }
+        //                        }
+        //                        catch (Exception ex)
+        //                        {
+        //                            GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> FollowUsingURLs() -- delay --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //                            GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager --  FollowUsingURLs() -- delay -- " + Username + " -- " + user_id_toFollow + " --> " + ex.Message, Globals.Path_TweetAccountManager);
+        //                        }
+
+        //                        if (Globals.IsCampaign)
+        //                        {
+        //                            lock (locker_que_Follower)
+        //                            {
+        //                                if (string.IsNullOrEmpty(user_id))
+        //                                {
+        //                                    try
+        //                                    {
+        //                                        string PageSource = globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + user_id), "", "");
+        //                                        int startindex = PageSource.IndexOf("data-user-id=\"");
+        //                                        string start = PageSource.Substring(startindex).Replace("data-user-id=\"", "");
+        //                                        int endindex = start.IndexOf("\"");
+        //                                        string end = start.Substring(0, endindex);
+        //                                        user_id = end;
+        //                                    }
+        //                                    catch (Exception ex)
+        //                                    {
+
+        //                                    }
+        //                                }
+        //                                if (string.IsNullOrEmpty(Screen_name))
+        //                                {
+        //                                    try
+        //                                    {
+        //                                        string PageSource = globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/account/redirect_by_id?id=" + user_id), "", "");
+
+        //                                        int startindex = PageSource.IndexOf("user-style-");
+        //                                        string start = PageSource.Substring(startindex).Replace("user-style-", "");
+        //                                        int endindex = start.IndexOf("\"");
+        //                                        string end = start.Substring(0, endindex);
+        //                                        Screen_name = end;
+        //                                    }
+        //                                    catch (Exception ex)
+        //                                    {
+
+        //                                    }
+        //                                }
+
+        //                                string strQuery = "Select * from tb_CampaignReport Where Follower = '" + user_id + "' OR ScreenName = '" + Screen_name + "' AND Campaign_Name = '" + Globals.Campaign_Name + "' ";
+        //                                DataSet ds = DataBaseHandler.SelectQuery(strQuery, "tb_CampaignReport");
+        //                                if (ds.Tables[0].Rows.Count > 0 && Globals.IsCampaign)
+        //                                {
+        //                                    Log("[ " + DateTime.Now + " ] => [ Already Followed Userid : " + user_id + " >>>> ScreenName : " + Screen_name + " ]");
+        //                                }
+        //                                else
+        //                                {
+        //                                    follower.FollowUsingProfileID_New(ref globusHttpHelper, pgSrc_Profile, postAuthenticityToken, user_id_toFollow, out followStatus);
+        //                                    string Screen_Name = string.Empty;
+        //                                    string userid = string.Empty;
+        //                                    if (NumberHelper.ValidateNumber(user_id))
+        //                                    {
+        //                                        userid = user_id;
+        //                                    }
+        //                                    else
+        //                                    {
+        //                                        Screen_name = user_id;
+        //                                    }
+        //                                    Log("[ " + DateTime.Now + " ] => [ Followed Userid : " + user_id + " >>>> ScreenName : " + Screen_name + " ]");
+        //                                    Log("[ " + DateTime.Now + " ] => [ Adding Follower in DataBase ]");
+        //                                    string query = "INSERT INTO tb_CampaignReport (Campaign_Name, UserName, Follower , ScreenName) VALUES ('" + Globals.Campaign_Name + "', '" + Username + "', '" + user_id + "' , '" + Screen_name + "')";
+        //                                    DataBaseHandler.InsertQuery(query, "tb_CampaignReport");
+        //                                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id + ":" + Screen_name + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyFollowAccounts);
+        //                                }
+        //                            }
+        //                        }
+        //                        else
+        //                        {
+        //                            follower.FollowUsingProfileID_New(ref globusHttpHelper, pgSrc_Profile, postAuthenticityToken, user_id_toFollow, out followStatus);
+        //                            if (followStatus == "followed")
+        //                            {
+        //                                Globals.totalcountFollower++;
+        //                                counterChecktotlaFollowr++;
+        //                                Log("[ " + DateTime.Now + " ] => [ >> Followed >> " + user_id_toFollow + " by " + Username + " ]");
+
+        //                                //Adding in text File FOr SuccessFull Paths
+        //                                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id_toFollow + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyFollowAccounts);
+        //                                try
+        //                                {
+        //                                    string username = string.Empty;
+        //                                    string userid = string.Empty;
+        //                                    if (NumberHelper.ValidateNumber(user_id_toFollow))
+        //                                    {
+        //                                        username = TwitterSignup.TwitterSignup_TwitterDataScrapper.GetUserNameFromUserId(user_id_toFollow);
+        //                                        userid = user_id_toFollow;
+        //                                    }
+        //                                    else
+        //                                    {
+        //                                        string outStatus = string.Empty;
+        //                                        userid = TwitterSignup.TwitterSignup_TwitterDataScrapper.GetUserIDFromUsername(user_id_toFollow, out outStatus);
+        //                                        username = user_id_toFollow;
+        //                                    }
+        //                                    queryManager.InsertUpdateFollowTable(Username, userid, username);
+        //                                }
+        //                                catch (Exception)
+        //                                {
+        //                                }
+
+        //                                try
+        //                                {
+        //                                    RemoveFollwerFromTxtFile(FileFollowUrlPath, user_id_toFollow);
+        //                                }
+        //                                catch { }
+        //                            }
+        //                            else if (followStatus == "Already Followed")
+        //                            {
+        //                                Globals.totalcountFollower++;
+        //                                Log("[ " + DateTime.Now + " ] => [ >> Already Followed >> " + user_id_toFollow + " by " + Username + " ]");
+        //                                try
+        //                                {
+        //                                    RemoveFollwerFromTxtFile(FileFollowUrlPath, user_id_toFollow);
+        //                                }
+        //                                catch { }
+        //                            }
+        //                            else
+        //                            {
+        //                                Log("[ " + DateTime.Now + " ] => [ >> Couldn't Follow >> " + user_id_toFollow + " by " + Username + " ]");
+        //                                //Adding in text File for Failed Followed Paths
+        //                                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id + ":" + Screen_name + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToFollowAccounts);
+        //                            }
+
+        //                            //if user is check fast follow option then delay is not working on that condition ...!!
+
+        //                            if (!frmMain_NewUI.IsFastfollow)
+        //                            {
+        //                                if (Globals.IsGlobalDelay && Globals.IsCheckValueOfDelay)
+        //                                {
+        //                                    if (Globals.FollowerRunningText == "FollowerModule" && Globals.TweetRunningText == "TweetModule")
+        //                                    {
+        //                                        //delay = RandomNumberGenerator.GenerateRandom(minDelay, maxDelay);
+        //                                        Log("[ " + DateTime.Now + " ] => [ Follow Delayed for " + delay + " Seconds ]");
+        //                                        Thread.Sleep(delay * 1000);
+
+        //                                        //delay1 = RandomNumberGenerator.GenerateRandom(Globals.MinGlobalDelay, Globals.MaxGlobalDelay);
+        //                                        Log("[ " + DateTime.Now + " ] => [ Follow Global Delayed for " + delay1 + " Seconds ]");
+        //                                        Thread.Sleep(delay1 * 1000);
+        //                                    }
+        //                                    else 
+        //                                    {
+        //                                        Log("[ " + DateTime.Now + " ] => [ Follow Delayed for " + delay + " Seconds ]");
+        //                                        Thread.Sleep(delay * 1000);
+        //                                    }
+        //                                }
+        //                                else
+        //                                {
+        //                                    Log("[ " + DateTime.Now + " ] => [ Follow Delayed for " + delay + " Seconds ]");
+        //                                    Thread.Sleep(delay * 1000);
+        //                                }
+
+                                       
+        //                            }
+
+        //                            if (OtherUser)
+        //                            {
+        //                                counter++;
+                                        
+        //                                if (counter == noOFFollows)
+        //                                {
+        //                                    break;
+        //                                }
+        //                            }
+        //                        }
+        //                    }
+        //                    else //Already Being Followed
+        //                    {
+        //                        Log("[ " + DateTime.Now + " ] => [ Already Followed : " + user_id_toFollow + " with : " + Username + " ]");
+        //                        try
+        //                        {
+        //                            RemoveFollwerFromTxtFile(FileFollowUrlPath, user_id_toFollow);
+        //                        }
+        //                        catch { }
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                Log("[ " + DateTime.Now + " ] => [ Sorry No User To Follow");
+        //                return;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            Log("[ " + DateTime.Now + " ] => [ >> Couldn't Login with>> " + Username + " ]");
+        //            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> FollowUsingURLs() --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager --  FollowUsingURLs() -- " + Username + " --> " + ex.Message, Globals.Path_TweetAccountManager);
+        //    }
+        //    finally
+        //    {
+        //        Log("[ " + DateTime.Now + " ] => [ Finished Following All Users For Username : " + Username + " ]");
+        //        Log("------------------------------------------------------------------------------------------------------------------------------------------");
+        //        GlobusFileHelper.AppendStringToTextfileNewLine("Module Follow count : " + counterChecktotlaFollowr + " using UserName: " + Username, Globals.path_CountNoOfProcessDone);
+        //    }
+        //}
+        #endregion
+
+        #region New updated code of FollowUsingURLs method by sonu
         public void FollowUsingURLs(List<string> list_user_id_toFollow, int minDelay, int maxDelay, bool OtherUser)
         {
             int counter = 0;
@@ -1447,7 +2038,7 @@ namespace twtboardpro
                     return;
                 }
 
-               
+
                 if (IsLoggedIn)
                 {
                     #region trial last tweet date code
@@ -1555,17 +2146,35 @@ namespace twtboardpro
                             //} 
                             #endregion
 
+
+                            string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\TwtDominator\\List_Not_Followed.txt";//Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\TwtDominator\\DB_TwtDominator.db"
+
                             #region get check unfollow befor
                             if (TweetAccountManager.UseUnfollowedBeforeFilter)
                             {
                                 List<string> lst_AlreadyExist = new List<string>();
+
                                 if (frmMain_NewUI.IsFollowerScreenName)
                                 {
                                     lst_AlreadyExist = DB.SelectUnFollowDUsernameID_List(Username);
                                     bool isAlreadyExist = lst_AlreadyExist.Exists(s => (s == user_id_toFollow));
                                     if (isAlreadyExist)
                                     {
-                                        Log("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Is already Unfollowed before from " + Username + " ]");
+                                        try
+                                        {
+                                            Log("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Is already Unfollowed before from " + Username + " ]");
+                                            GlobusFileHelper.AppendStringToTextfileNewLine("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Is already Unfollowed before from " + Username + " ]", path);  //BrowsedUsersPathToFollow
+                                            if (!string.IsNullOrEmpty(FileFollowUrlPath))
+                                            {
+                                                try
+                                                {
+                                                    // GlobusFileHelper.RemoveTextFromFile(user_id_toFollow, FileFollowUrlPath);
+                                                    RemoveFollwerFromTxtFile(FileFollowUrlPath, user_id_toFollow);
+                                                }
+                                                catch { };
+                                            }
+                                        }
+                                        catch { };
                                         continue;
                                     }
                                 }
@@ -1576,6 +2185,16 @@ namespace twtboardpro
                                     if (isAlreadyExist)
                                     {
                                         Log("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Is already Unfollowed before from " + Username + " ]");
+                                        GlobusFileHelper.AppendStringToTextfileNewLine("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Is already Unfollowed before from " + Username + " ]", path);
+                                        if (!string.IsNullOrEmpty(FileFollowUrlPath))
+                                        {
+                                            try
+                                            {
+                                                //  GlobusFileHelper.RemoveTextFromFile(user_id_toFollow, FileFollowUrlPath);
+                                                RemoveFollwerFromTxtFile(FileFollowUrlPath, user_id_toFollow);
+                                            }
+                                            catch { };
+                                        }
                                         continue;
                                     }
                                 }
@@ -1674,7 +2293,22 @@ namespace twtboardpro
 
                                         if (dt_Difference.Days >= LastTweetDays)
                                         {
-                                            Log("[ " + DateTime.Now + " ] => [ Not Followed as Last Tweeted Day is greated than specified for :" + user_id_toFollow + " with : " + Username + " ]");
+                                            try
+                                            {
+                                                Log("[ " + DateTime.Now + " ] => [ Not Followed as Last Tweeted Day is greated than specified for :" + user_id_toFollow + " with : " + Username + " ]");
+                                                GlobusFileHelper.AppendStringToTextfileNewLine("[ " + DateTime.Now + " ] => [ Not Followed as Last Tweeted Day is greated than specified for :" + user_id_toFollow + " with : " + Username + " ]", path);
+                                                if (!string.IsNullOrEmpty(FileFollowUrlPath))
+                                                {
+                                                    try
+                                                    {
+                                                        //GlobusFileHelper.RemoveTextFromFile(user_id_toFollow, FileFollowUrlPath);
+                                                        RemoveFollwerFromTxtFile(FileFollowUrlPath, user_id_toFollow);
+                                                    }
+                                                    catch { };
+                                                }
+                                            }
+                                            catch { };
+
                                             continue;
                                         }
                                     }
@@ -1698,7 +2332,21 @@ namespace twtboardpro
                                     }
                                     else if (containsIamge == "false")
                                     {
-                                        Log("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Not Contains Image So Not Following ]");
+                                        try
+                                        {
+                                            Log("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Not Contains Image So Not Following ]");
+                                            GlobusFileHelper.AppendStringToTextfileNewLine("[ " + DateTime.Now + " ] => [ " + user_id_toFollow + " Not Contains Image So Not Following ]", path);
+                                            if (!string.IsNullOrEmpty(FileFollowUrlPath))
+                                            {
+                                                try
+                                                {
+                                                    // GlobusFileHelper.RemoveTextFromFile(user_id_toFollow, FileFollowUrlPath);
+                                                    RemoveFollwerFromTxtFile(FileFollowUrlPath, user_id_toFollow);
+                                                }
+                                                catch { };
+                                            }
+                                        }
+                                        catch { };
                                         continue;
                                     }
                                     else if (containsIamge == "Rate limit exceeded")
@@ -1717,11 +2365,13 @@ namespace twtboardpro
                                     Log("[ " + DateTime.Now + " ] => [checking tweeted in the last  " + daysTweetedInxdays + "  days for User :" + user_id_toFollow + " ]");
                                     try
                                     {
-                                        string PageSource = globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + user_id_toFollow), "", "");
-                                        string dateoflastTweet = globusHttpHelper.getBetween(PageSource, "ProfileTweet-timestamp js-permalink js-nav js-tooltip", ">").Replace("\"","").Trim();
+                                        string PageSource = globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/" + user_id_toFollow), "", ""); //tweet-timestamp js-permalink js-nav js-tooltip" title="
+                                        //string dateoflastTweet = globusHttpHelper.getBetween(PageSource, "ProfileTweet-timestamp js-permalink js-nav js-tooltip", ">").Replace("\"","").Trim();
+                                        string dateoflastTweet = globusHttpHelper.getBetween(PageSource, "tweet-timestamp js-permalink js-nav js-tooltip\" title=\"", ">").Replace("\"", "").Trim();
                                         try
                                         {
                                             dateoflastTweet = dateoflastTweet.Split('-')[1].Trim();
+                                            //dateoflastTweet = dateoflastTweet.Split('>')[1].Trim();
                                             DateTime dt_LastTweetDate = DateTime.Parse(dateoflastTweet);
 
                                             DateTime dt_Now = DateTime.Now;
@@ -1729,19 +2379,33 @@ namespace twtboardpro
                                             TimeSpan dt_Difference = dt_Now.Subtract(dt_LastTweetDate);
                                             if (dt_Difference.Days >= Convert.ToInt32(daysTweetedInxdays))
                                             {
-                                                Log("[ " + DateTime.Now + " ] => [ Not Followed as Last Tweeted Day is greated than specified for :" + user_id_toFollow + " with : " + Username + " ]");
+                                                try
+                                                {
+                                                    Log("[ " + DateTime.Now + " ] => [ Not Followed as Last Tweeted Day is greated than specified for :" + user_id_toFollow + " with : " + Username + " ]");
+                                                    GlobusFileHelper.AppendStringToTextfileNewLine("[ " + DateTime.Now + " ] => [ Not Followed as Last Tweeted Day is greated than specified for :" + user_id_toFollow + " with : " + Username + " ]", path);
+                                                    if (!string.IsNullOrEmpty(FileFollowUrlPath))
+                                                    {
+                                                        try
+                                                        {
+                                                            // GlobusFileHelper.RemoveTextFromFile(user_id_toFollow, FileFollowUrlPath);
+                                                            RemoveFollwerFromTxtFile(FileFollowUrlPath, user_id_toFollow);
+                                                        }
+                                                        catch { };
+                                                    }
+                                                }
+                                                catch { };
                                                 continue;
                                             }
                                         }
                                         catch { }
-                                        
+
 
                                     }
                                     catch (Exception ex)
                                     {
 
                                     }
-                                } 
+                                }
 
                                 #endregion
 
@@ -1834,7 +2498,7 @@ namespace twtboardpro
                                             Log("[ " + DateTime.Now + " ] => [ Adding Follower in DataBase ]");
                                             string query = "INSERT INTO tb_CampaignReport (Campaign_Name, UserName, Follower , ScreenName) VALUES ('" + Globals.Campaign_Name + "', '" + Username + "', '" + user_id + "' , '" + Screen_name + "')";
                                             DataBaseHandler.InsertQuery(query, "tb_CampaignReport");
-                                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id + ":" + Screen_name + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyFollowAccounts);
+                                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id + ":" + Screen_name + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyFollowAccounts);
                                         }
                                     }
                                 }
@@ -1848,7 +2512,7 @@ namespace twtboardpro
                                         Log("[ " + DateTime.Now + " ] => [ >> Followed >> " + user_id_toFollow + " by " + Username + " ]");
 
                                         //Adding in text File FOr SuccessFull Paths
-                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id_toFollow + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyFollowAccounts);
+                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id_toFollow + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyFollowAccounts);
                                         try
                                         {
                                             string username = string.Empty;
@@ -1890,7 +2554,7 @@ namespace twtboardpro
                                     {
                                         Log("[ " + DateTime.Now + " ] => [ >> Couldn't Follow >> " + user_id_toFollow + " by " + Username + " ]");
                                         //Adding in text File for Failed Followed Paths
-                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id + ":" + Screen_name + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedToFollowAccounts);
+                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id + ":" + Screen_name + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToFollowAccounts);
                                     }
 
                                     //if user is check fast follow option then delay is not working on that condition ...!!
@@ -1909,7 +2573,7 @@ namespace twtboardpro
                                                 Log("[ " + DateTime.Now + " ] => [ Follow Global Delayed for " + delay1 + " Seconds ]");
                                                 Thread.Sleep(delay1 * 1000);
                                             }
-                                            else 
+                                            else
                                             {
                                                 Log("[ " + DateTime.Now + " ] => [ Follow Delayed for " + delay + " Seconds ]");
                                                 Thread.Sleep(delay * 1000);
@@ -1921,13 +2585,13 @@ namespace twtboardpro
                                             Thread.Sleep(delay * 1000);
                                         }
 
-                                       
+
                                     }
 
                                     if (OtherUser)
                                     {
                                         counter++;
-                                        
+
                                         if (counter == noOFFollows)
                                         {
                                             break;
@@ -1941,6 +2605,7 @@ namespace twtboardpro
                                 try
                                 {
                                     RemoveFollwerFromTxtFile(FileFollowUrlPath, user_id_toFollow);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine("[ " + DateTime.Now + " ] => [ Already Followed : " + user_id_toFollow + " with : " + Username + " ]", path);
                                 }
                                 catch { }
                             }
@@ -1955,7 +2620,7 @@ namespace twtboardpro
                 else
                 {
                     Log("[ " + DateTime.Now + " ] => [ >> Couldn't Login with>> " + Username + " ]");
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                 }
             }
             catch (Exception ex)
@@ -1970,6 +2635,8 @@ namespace twtboardpro
                 GlobusFileHelper.AppendStringToTextfileNewLine("Module Follow count : " + counterChecktotlaFollowr + " using UserName: " + Username, Globals.path_CountNoOfProcessDone);
             }
         }
+        #endregion
+
 
 
         public static bool IsUniqueMessagePostForDirectMessage = false;
@@ -2053,14 +2720,14 @@ namespace twtboardpro
                             }
                         }
 
-                        follower.SendDirectMessage(ref globusHttpHelper, pgSrc_Profile, postAuthenticityToken, user_id_toFollow, msgBodyCompose, out followStatus);
+                        follower.SendDirectMessage(ref globusHttpHelper, pgSrc_Profile, postAuthenticityToken, user_id_toFollow, msgBodyCompose, Username, out followStatus);
 
                         if (followStatus == "Message send")
                         {
                             Log("[ " + DateTime.Now + " ] => [ >> Message "+msgBodyCompose+" sent >> " + user_id_toFollow + " by " + Username + " ]");
 
                             //Adding in text File FOr SuccessFull Paths
-                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id_toFollow + ":" + msgBodyCompose+ ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyDirectMessageSend);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id_toFollow + ":" + msgBodyCompose+ ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyDirectMessageSend);
                             
 
                         }
@@ -2073,7 +2740,7 @@ namespace twtboardpro
                         //{
                         //    Log("[ " + DateTime.Now + " ] => [ >> Message not send >> " + user_id_toFollow + " by " + Username + " ]");
                         //    Adding in text File for Failed Followed Paths
-                        //    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id + ":" + Screen_name + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedToFollowAccounts);
+                        //    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + user_id + ":" + Screen_name + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToFollowAccounts);
                         //}
                         int delay = 0; ;
                         try
@@ -2221,7 +2888,7 @@ namespace twtboardpro
                                     }
                                     //Thread.Sleep(RandomNumberGenerator.GenerateRandom(3000, 5000));
                                     
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + user_id_toUnFollow, Globals.path_SuccessfullyUnfollowAccounts);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + user_id_toUnFollow, Globals.path_SuccessfullyUnfollowAccounts);
                                     clsDBQueryManager queryManager = new clsDBQueryManager();
                                     List<string> lst_AlreadyUserName = queryManager.SelectFollowDUsernameID_List(Username);
                                     bool isAlreadyFollowed = lst_AlreadyUserName.Exists(s => (s == user_id_toUnFollow));
@@ -2246,7 +2913,7 @@ namespace twtboardpro
                                 else
                                 {
                                     Log("[ " + DateTime.Now + " ] => [ >> Couldn't Unfollow >> " + user_id_toUnFollow + " by " + Username + " ]");
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + user_id_toUnFollow, Globals.path_FailedToUnfollowAccounts);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + user_id_toUnFollow, Globals.path_FailedToUnfollowAccounts);
                                 }
                                 Log("[ " + DateTime.Now + " ] => [ Unfollow Delayed For " + Delay + " Seconds ]");
                                 Thread.Sleep(Delay * 1000);
@@ -2313,19 +2980,19 @@ namespace twtboardpro
         //        if (tweetStatus == "posted")
         //        {
         //            Log(">> Tweeted >> " + tweetMessage + " by " + Username);
-        //            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyTweetAccounts);
+        //            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyTweetAccounts);
         //            Thread.Sleep(RandomNumberGenerator.GenerateRandom(3000, 5000));
         //        }
         //        else
         //        {
         //            Log(">>Couldn't Post >> " + tweetMessage + " by " + Username);
-        //            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedToTweetAccounts);
+        //            GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToTweetAccounts);
         //        }
         //    }
         //    else
         //    {
         //        Log("Couldn't log in with " + Username);
-        //        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+        //        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
         //    }
 
         //} 
@@ -2507,7 +3174,7 @@ namespace twtboardpro
                                     clsDBQueryManager DataBase = new clsDBQueryManager();
                                     string dbTweetMessage = StringEncoderDecoder.Encode(tweetMessage);
                                     DataBase.InsertMessageData(Username, "Tweet", "null", dbTweetMessage);
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + tweetMessage, Globals.path_SuccessfullyTweetAccounts);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + tweetMessage, Globals.path_SuccessfullyTweetAccounts);
                                     //Log("[ " + DateTime.Now + " ] => [ Tweet Delayed for " + delay + " Seconds ]");
                                     try
                                     {
@@ -2537,7 +3204,7 @@ namespace twtboardpro
                                     que_TweetMessages.Enqueue(tweetMessage);
                                 }
                                 Log("[ " + DateTime.Now + " ] => [ >>Couldn't Post >> " + tweetMessage + " by " + Username + " ]");
-                                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + tweetMessage, Globals.path_FailedToTweetAccounts);
+                                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + tweetMessage, Globals.path_FailedToTweetAccounts);
                                 //Thread.Sleep(delay * 1000);
                                 
                                 //delay = RandomNumberGenerator.GenerateRandom(minDelay, maxDelay);                            
@@ -2711,7 +3378,7 @@ namespace twtboardpro
                                     clsDBQueryManager DataBase = new clsDBQueryManager();
                                     string dbTweetMessage = StringEncoderDecoder.Encode(tweetMessage);
                                     DataBase.InsertMessageData(Username, "Tweet", "null", dbTweetMessage);
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + tweetMessage, Globals.path_SuccessfullyTweetAccounts);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + tweetMessage, Globals.path_SuccessfullyTweetAccounts);
                                     //Log("[ " + DateTime.Now + " ] => [ Tweet Delayed for " + delay + " Seconds ]");
                                     //Thread.Sleep(delay * 1000);
 
@@ -2766,7 +3433,7 @@ namespace twtboardpro
                             else
                             {
                                 Log("[ " + DateTime.Now + " ] => [ >>Couldn't Post >> " + tweetMessage + " by " + Username + " ]");
-                                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + tweetMessage, Globals.path_FailedToTweetAccounts);
+                                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + tweetMessage, Globals.path_FailedToTweetAccounts);
                                 //Thread.Sleep(delay * 1000);
                                 //Log("[ " + DateTime.Now + " ] => [ Tweet Delayed for " + delay + " Seconds ]");
 
@@ -2814,12 +3481,12 @@ namespace twtboardpro
                 else
                 {
                     Log("[ " + DateTime.Now + " ] => [ Couldn't log in with " + Username + " ]");
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                 }
             }
-            else if (Globals.proxyNotWorking)
+            else if (Globals.IPNotWorking)
             {
-                Globals.proxyNotWorking = false;
+                Globals.IPNotWorking = false;
                 Log("[ " + DateTime.Now + " ] => [ " + Username + ">>Error in Login. ]");
                 return;
             }
@@ -2858,6 +3525,7 @@ namespace twtboardpro
 
         public void ReTweet(string tweetMessage, int minDelay, int maxDelay)
         {
+            frmMain_NewUI obj = (frmMain_NewUI)System.Windows.Forms.Application.OpenForms["frmMain_NewUI"];
             try
             {
                 if (!IsLoggedIn)
@@ -2930,8 +3598,14 @@ namespace twtboardpro
                                 GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager --  ReTweet()  -- " + Username + " --> " + ex.Message, Globals.Path_TweetAccountManager);
                             }
 
-
-                            tweeter.ReTweet(ref globusHttpHelper, pgSrc_Profile, postAuthenticityToken, item.ID_Tweet, "", out tweetStatus);
+                            if (obj.chkBoxRetweetAndFollow.Checked)
+                            {
+                                tweeter.ReTweetAndFollow(ref globusHttpHelper, pgSrc_Profile, postAuthenticityToken, item.ID_Tweet, "", item.username__Tweet_User, out tweetStatus);
+                            }
+                            else
+                            {
+                                tweeter.ReTweet(ref globusHttpHelper, pgSrc_Profile, postAuthenticityToken, item.ID_Tweet, "", out tweetStatus);
+                            }
 
                             if (tweetStatus == "posted")
                             {
@@ -2942,6 +3616,16 @@ namespace twtboardpro
                                 DataBase.InsertMessageData(Username, "ReTweet", item.ID_Tweet, dbTweetMessage);
                                 Log("[ " + DateTime.Now + " ] => [ Retweeted " + counter_Retweet + ": >> " + item.username__Tweet_User + " by " + Username + " ]");
                                 GlobusFileHelper.AppendStringToTextfileNewLine( item.username__Tweet_User + " by " + Username , Globals.path_RetweetInformation);
+                            }
+                            else if (tweetStatus == "followed")
+                            {
+                                counter_Retweet++;
+                                AlreadyRetweeted++;
+                                clsDBQueryManager DataBase = new clsDBQueryManager();
+                                string dbTweetMessage = StringEncoderDecoder.Encode(item.wholeTweetMessage);
+                                DataBase.InsertMessageData(Username, "ReTweet", item.ID_Tweet, dbTweetMessage);
+                                Log("[ " + DateTime.Now + " ] => [ Retweeted and Followed " + counter_Retweet + ": >> " + item.username__Tweet_User + " by " + Username + " ]");
+                                GlobusFileHelper.AppendStringToTextfileNewLine(item.username__Tweet_User + " by " + Username, Globals.path_RetweetInformation);
                             }
                             else
                             {
@@ -2959,7 +3643,7 @@ namespace twtboardpro
                     else
                     {
                         Log("[ " + DateTime.Now + " ] => [ Couldn't log in with " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                     }
                 }
                 else
@@ -2979,6 +3663,128 @@ namespace twtboardpro
         }
 
 
+
+        public void ReTweet1(ref TweetAccountManager objTweetAccountManager, int minDelay, int maxDelay)
+        {
+            try
+            {
+                if (!IsLoggedIn)
+                {
+                    Login();
+                }
+
+                if (IsNotSuspended)
+                {
+                    if (IsLoggedIn)
+                    {
+
+                        int counter_Retweet = 0;
+
+
+                        TwitterDataScrapper.StructTweetIDs item = new TwitterDataScrapper.StructTweetIDs();
+                        while (objTweetAccountManager.que_lst_Struct_TweetData1.Count > 0)  //TweetAccountManager.que_lst_Struct_TweetData
+                        {
+                            //foreach (TwitterDataScrapper.StructTweetIDs item in static_lst_Struct_TweetData)
+                            //{
+                            if (!RetweetPerDay)
+                            {
+                                if (counter_Retweet >= noOfRetweets)
+                                {
+                                    Log("[ " + DateTime.Now + " ] => [ " + counter_Retweet + " ReTweets Done For " + Username + " ]");
+                                    break;
+                                }
+                            }
+                            else if (RetweetPerDay)
+                            {
+                                if (AlreadyRetweeted >= NoOFRetweetPerDay)
+                                {
+                                    Log("[ " + DateTime.Now + " ] => [ Already Tweeted " + AlreadyRetweeted + " ]");
+                                    break;
+                                }
+                            }
+
+                            lock (locker_qque_lst_Struct_TweetData)
+                            {
+                                if (objTweetAccountManager.que_lst_Struct_TweetData1.Count > 0)
+                                {
+                                    item = objTweetAccountManager.que_lst_Struct_TweetData1.Dequeue();
+                                }
+                                else
+                                {
+
+                                }
+                            }
+
+
+                            string tweetStatus;
+
+                            int delay = 10 * 1000;
+
+                            try
+                            {
+                                //delay = RandomNumberGenerator.GenerateRandom(minDelay, maxDelay);
+                                if (Globals.IsGlobalDelay && Globals.IsCheckValueOfDelay)
+                                {
+                                    delay = RandomNumberGenerator.GenerateRandom(Globals.MinGlobalDelay, Globals.MaxGlobalDelay);
+                                }
+                                else
+                                {
+                                    delay = RandomNumberGenerator.GenerateRandom(minDelay, maxDelay);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                delay = 10;
+                                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager --  ReTweet()  -- " + Username + " --> " + ex.Message, Globals.Path_TweetAccountManager);
+                            }
+
+
+                            tweeter.ReTweet(ref globusHttpHelper, pgSrc_Profile, postAuthenticityToken, item.ID_Tweet, "", out tweetStatus);
+
+                            if (tweetStatus == "posted")
+                            {
+                                counter_Retweet++;
+                                AlreadyRetweeted++;
+                                clsDBQueryManager DataBase = new clsDBQueryManager();
+                                string dbTweetMessage = StringEncoderDecoder.Encode(item.wholeTweetMessage);
+                                DataBase.InsertMessageData(Username, "ReTweet", item.ID_Tweet, dbTweetMessage);
+                                Log("[ " + DateTime.Now + " ] => [ Retweeted " + counter_Retweet + ": >> " + item.username__Tweet_User + " by " + Username + " ]");
+                                GlobusFileHelper.AppendStringToTextfileNewLine(item.username__Tweet_User + " by " + Username, Globals.path_RetweetInformation);
+                            }
+                            else
+                            {
+                                Log("[ " + DateTime.Now + " ] => [ >>Couldn't Retweet >> " + item.ID_Tweet_User + " by " + Username + " ]");
+                                //GlobusFileHelper.AppendStringToTextfileNewLine("Retweeted " + counter_Retweet + ": >> " + item.username__Tweet_User + " by " + Username, Globals.path_RetweetInformation);
+                            }
+
+                            Log("[ " + DateTime.Now + " ] => [ Retweet Delayed for " + delay + " Seconds ]");
+                            Thread.Sleep(delay * 1000);
+                        }
+
+                        Log("[ " + DateTime.Now + " ] => [ Finished Retweeting with : " + Username + " ]");
+                        Log("------------------------------------------------------------------------------------------------------------------------------------------");
+                    }
+                    else
+                    {
+                        Log("[ " + DateTime.Now + " ] => [ Couldn't log in with " + Username + " ]");
+                        //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                    }
+                }
+                else
+                {
+                    clsDBQueryManager database = new clsDBQueryManager();
+                    database.UpdateSuspendedAcc(Username);
+                    Log("[ " + DateTime.Now + " ] => [ " + Username + ">>Account Suspended ]");
+
+                    return;
+                }
+            }
+            catch (Exception ex)
+            {
+                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager() - retweet --> " + ex.Message, Globals.Path_TweetingErroLog);
+                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> TweetAccountManager --  ReTweet()  -- " + Username + " --> " + ex.Message, Globals.Path_TweetAccountManager);
+            }
+        }
 
 
 
@@ -3087,7 +3893,7 @@ namespace twtboardpro
                     else
                     {
                         Log("[ " + DateTime.Now + " ] => [ Couldn't log in with " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                     }
                 }
                 else
@@ -3386,7 +4192,7 @@ namespace twtboardpro
                             else
                             {
                                 Log("[ " + DateTime.Now + " ] => [ >>Couldn't Reply >> " + tweetMessage + " by " + Username + " ]");
-                                //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedToFollowAccounts);
+                                //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToFollowAccounts);
                             }
 
                             Log("[ " + DateTime.Now + " ] => [ Reply Delayed for " + delay + " Seconds ]");
@@ -3415,7 +4221,7 @@ namespace twtboardpro
                     else
                     {
                         Log("[ " + DateTime.Now + " ] => [ Couldn't log in with " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                     }
                 }
                 else
@@ -3488,12 +4294,12 @@ namespace twtboardpro
                             catch { }
                             DataBase.InsertMessageData(Username, "Reply", item.ID_Tweet, dbTweetMessage);
                             Log("[ " + DateTime.Now + " ] => [ >> Replied : " + counter_Retweet + " : " + tweetMessage + " by " + Username + " ]");
-                            //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyFollowAccounts);
+                            //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyFollowAccounts);
                         }
                         else
                         {
                             Log("[ " + DateTime.Now + " ] => [ >>Couldn't Reply >> " + tweetMessage + " by " + Username + " ]");
-                            //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedToFollowAccounts);
+                            //GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedToFollowAccounts);
                         }
 
                         Log("[ " + DateTime.Now + " ] => [ Reply Delayed for " + delay + " Seconds ]");
@@ -3506,16 +4312,16 @@ namespace twtboardpro
                 else
                 {
                     Log("[ " + DateTime.Now + " ] => [ Couldn't log in with " + Username + " ]");
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                 }
             }
         }
 
         public void BlockUsers()
         {
-            if (string.IsNullOrEmpty(proxyPort))
+            if (string.IsNullOrEmpty(IPPort))
             {
-                proxyPort = "0";
+                IPPort = "0";
             }
 
             if (!IsLoggedIn)
@@ -3527,7 +4333,7 @@ namespace twtboardpro
             {
                 string Page2 = globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/#!/following"), "", "");
                 postAuthenticityToken = GlobusHttpHelper.ParseJson(Page2, "postAuthenticityToken");
-                string Page1 = globusHttpHelper.postFormDataProxy(new Uri("https://api.twitter.com/1/blocks/create.json"), "user_id=556223103&post_authenticity_token=" + postAuthenticityToken, "Referer: https://api.twitter.com/receiver.html", proxyAddress, Convert.ToInt32(proxyPort), proxyUsername, proxyPassword);
+                string Page1 = globusHttpHelper.postFormDataIP(new Uri("https://api.twitter.com/1/blocks/create.json"), "user_id=556223103&post_authenticity_token=" + postAuthenticityToken, "Referer: https://api.twitter.com/receiver.html", IPAddress, Convert.ToInt32(IPPort), IPUsername, IPpassword);
             }
         }
 
@@ -3841,7 +4647,7 @@ namespace twtboardpro
                                         clsDBQueryManager DataBase = new clsDBQueryManager();
                                         string dbTweetMessage = StringEncoderDecoder.Encode(tweetMessage);
                                         DataBase.InsertMessageData(Username, "Tweet", "", dbTweetMessage);
-                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword+":"+tweetMessage, Globals.path_SuccessfullyTweetAccounts);
+                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword+":"+tweetMessage, Globals.path_SuccessfullyTweetAccounts);
                                         countTweetsSent++;
                                         if (!waitAndReplyIsIntervalInsec)
                                         {
@@ -3863,7 +4669,7 @@ namespace twtboardpro
                                     else
                                     {
                                         Log("[ " + DateTime.Now + " ] => [ Couldn't Post : " + tweetMessage + " with image:"+ImagePath+" by " + Username + " ]");
-                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + tweetMessage, Globals.path_FailedToTweetAccounts);
+                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + tweetMessage, Globals.path_FailedToTweetAccounts);
                                         countTweetsSent++;
                                         //Log("[ " + DateTime.Now + " ] => [ Delay For : " + TimeSpan.FromMilliseconds(interval).Minutes + " Minutes ]");
                                         //Thread.Sleep(interval);
@@ -3894,7 +4700,7 @@ namespace twtboardpro
                                         clsDBQueryManager DataBase = new clsDBQueryManager();
                                         string dbTweetMessage = StringEncoderDecoder.Encode(tweetMessage);
                                         DataBase.InsertMessageData(Username, "Tweet", "", dbTweetMessage);
-                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + tweetMessage, Globals.path_SuccessfullyTweetAccounts);
+                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + tweetMessage, Globals.path_SuccessfullyTweetAccounts);
                                         countTweetsSent++;
                                         //Log("[ " + DateTime.Now + " ] => [ Delay For : " + TimeSpan.FromMilliseconds(interval).Minutes + " Minutes ]");
                                         //Thread.Sleep(interval);
@@ -3918,7 +4724,7 @@ namespace twtboardpro
                                     else
                                     {
                                         Log("[ " + DateTime.Now + " ] => [ Couldn't Post : " + tweetMessage + " by " + Username + " ]");
-                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + tweetMessage, Globals.path_FailedToTweetAccounts);
+                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + tweetMessage, Globals.path_FailedToTweetAccounts);
                                         countTweetsSent++;
                                         //Log("[ " + DateTime.Now + " ] => [ Delay For : " + TimeSpan.FromMilliseconds(interval).Minutes + " Minutes ]");
                                         //Thread.Sleep(interval);
@@ -4006,13 +4812,13 @@ namespace twtboardpro
                                         string dbTweetMessage = StringEncoderDecoder.Encode(lst_Struct_TweetData[counterDataScraped].wholeTweetMessage);
                                         DataBase.InsertMessageData(Username, "Reply", lst_Struct_TweetData[counterDataScraped].ID_Tweet_User, lst_Struct_TweetData[counterDataScraped].wholeTweetMessage);
                                         Log("[ " + DateTime.Now + " ] => [ Replied : " + replyMessage + " by " + Username + " ]");
-                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + replyMessage, Globals.path_SuccessfullyRepliedAccounts);
+                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + replyMessage, Globals.path_SuccessfullyRepliedAccounts);
                                     }
                                     else
                                     {
                                         counter_Reply++;
                                         Log("[ " + DateTime.Now + " ] => [ Couldn't Reply : " + replyMessage + " by " + Username + " ]");
-                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + ":" + replyMessage, Globals.path_FailedRepliedAccounts);
+                                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + ":" + replyMessage, Globals.path_FailedRepliedAccounts);
                                     }
                                     //Log("[ " + DateTime.Now + " ] => [ Delay For : " + TimeSpan.FromMilliseconds(interval).Minutes +  " Minutes ]");
                                     //Thread.Sleep(interval);
@@ -4067,7 +4873,7 @@ namespace twtboardpro
                 else
                 {
                     Log("[ " + DateTime.Now + " ] => [ Couldn't log in with :" + Username + " ]");
-                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                 }
             }
             catch (Exception ex)
@@ -4206,7 +5012,7 @@ namespace twtboardpro
                 {
                     if (IsNotSuspended)
                     {
-                        ReplyInterface.ReplyInterface obj_ReplyInterface = new ReplyInterface.ReplyInterface(Username, userID, Password, Screen_name, proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                        ReplyInterface.ReplyInterface obj_ReplyInterface = new ReplyInterface.ReplyInterface(Username, userID, Password, Screen_name, IPAddress, IPPort, IPUsername, IPpassword);
                         obj_ReplyInterface.GetScrapTweetAndReply(ref globusHttpHelper, ref userID, ref Username, ref Screen_name, ref postAuthenticityToken);
                     }
                 }
@@ -4228,7 +5034,7 @@ namespace twtboardpro
                 {
                     if (IsNotSuspended)
                     {
-                        //Randomiser.Randomiser obj_Randomiser = new Randomiser.Randomiser(Username, userID, Password, Screen_name, proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                        //Randomiser.Randomiser obj_Randomiser = new Randomiser.Randomiser(Username, userID, Password, Screen_name, IPAddress, IPPort, IPUsername, IPpassword);
                         obj_Randomiser.StartRandomiser(ref globusHttpHelper, ref userID, ref Username, ref Screen_name, ref postAuthenticityToken);
                     }
                 }
@@ -4250,7 +5056,7 @@ namespace twtboardpro
                 {
                     if (IsNotSuspended)
                     {
-                        MentionsReplyInterface.MentionsReplyInterface obj_ReplyInterface = new MentionsReplyInterface.MentionsReplyInterface(Username, userID, Password, Screen_name, proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                        MentionsReplyInterface.MentionsReplyInterface obj_ReplyInterface = new MentionsReplyInterface.MentionsReplyInterface(Username, userID, Password, Screen_name, IPAddress, IPPort, IPUsername, IPpassword);
                         obj_ReplyInterface.GetScrapTweetAndReply(ref globusHttpHelper, ref userID, ref Username, ref Screen_name, ref postAuthenticityToken);
                     }
                 }
@@ -4272,7 +5078,7 @@ namespace twtboardpro
                 {
                     if (IsNotSuspended)
                     {
-                        Randomiser.Randomiser obj_Randomiser = new Randomiser.Randomiser(Username, userID, Password, Screen_name, proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                        Randomiser.Randomiser obj_Randomiser = new Randomiser.Randomiser(Username, userID, Password, Screen_name, IPAddress, IPPort, IPUsername, IPpassword);
                         obj_Randomiser.GetMentions(ref globusHttpHelper, ref userID, ref Username, ref Screen_name, ref postAuthenticityToken);
                     }
                     else
@@ -4298,7 +5104,7 @@ namespace twtboardpro
                 {
                     if (IsNotSuspended)
                     {
-                        ReplyInterface.ReplyInterface obj_ReplyInterface = new ReplyInterface.ReplyInterface(Username, userID, Password, Screen_name, proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                        ReplyInterface.ReplyInterface obj_ReplyInterface = new ReplyInterface.ReplyInterface(Username, userID, Password, Screen_name, IPAddress, IPPort, IPUsername, IPpassword);
                         obj_ReplyInterface.Reply(ref globusHttpHelper, postAuthenticityToken, tweetID, tweetUserName, screenName, tweetMessage, userName);
                     }
                 }
@@ -4320,7 +5126,7 @@ namespace twtboardpro
                 {
                     if (IsNotSuspended)
                     {
-                        MentionsReplyInterface.MentionsReplyInterface obj_MentionsReplyInterface = new MentionsReplyInterface.MentionsReplyInterface(Username, userID, Password, Screen_name, proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                        MentionsReplyInterface.MentionsReplyInterface obj_MentionsReplyInterface = new MentionsReplyInterface.MentionsReplyInterface(Username, userID, Password, Screen_name, IPAddress, IPPort, IPUsername, IPpassword);
                         obj_MentionsReplyInterface.Reply(ref globusHttpHelper, postAuthenticityToken, tweetID, tweetUserName, screenName, tweetMessage, userName);
                     }
                 }

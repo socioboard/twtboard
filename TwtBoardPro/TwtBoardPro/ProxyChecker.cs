@@ -9,25 +9,25 @@ using Globussoft;
 
 namespace twtboardpro
 {
-    public class ProxyChecker
+    public class IPChecker
     {
-        string proxyAddress { get; set; }
-        string proxyPort { get; set; }
-        string proxyUsername { get; set; }
-        string proxyPassword { get; set; }
+        string IPAddress { get; set; }
+        string IPPort { get; set; }
+        string IPUsername { get; set; }
+        string IPpassword { get; set; }
         public int IsPublic { get; set; }
 
         Globussoft.GlobusHttpHelper httpGbs = new Globussoft.GlobusHttpHelper();
-        public ProxyChecker(string proxyAddress, string proxyPort, string proxyUsername, string proxyPassword, int IsPublic)
+        public IPChecker(string IPAddress, string IPPort, string IPUsername, string IPpassword, int IsPublic)
         {
-            this.proxyAddress = proxyAddress;
-            this.proxyPort = proxyPort;
-            this.proxyUsername = proxyUsername;
-            this.proxyPassword = proxyPassword;
+            this.IPAddress = IPAddress;
+            this.IPPort = IPPort;
+            this.IPUsername = IPUsername;
+            this.IPpassword = IPpassword;
             this.IsPublic = IsPublic;
         }
 
-        public bool CheckProxy()
+        public bool CheckIP()
         {
             try
             {
@@ -36,12 +36,12 @@ namespace twtboardpro
 
                 ChilkatHttpHelpr HttpHelper = new ChilkatHttpHelpr();
                 GlobusHttpHelper HttpHelper1 = new GlobusHttpHelper();
-                string pageSource = HttpHelper1.getHtmlfromUrlProxyChecker(new Uri("https://twitter.com/"), proxyAddress, int.Parse(proxyPort), proxyUsername, proxyPassword);
+                string pageSource = HttpHelper1.getHtmlfromUrlIPChecker(new Uri("https://twitter.com/"), IPAddress, int.Parse(IPPort), IPUsername, IPpassword);
 
                 if (string.IsNullOrEmpty(pageSource))//(string.IsNullOrEmpty(pageSource) && string.IsNullOrEmpty(PgSrcHome))
                 {
                     Thread.Sleep(500);
-                    pageSource = HttpHelper1.getHtmlfromUrlProxyChecker(new Uri("https://twitter.com/"), proxyAddress, int.Parse(proxyPort), proxyUsername, proxyPassword);
+                    pageSource = HttpHelper1.getHtmlfromUrlIPChecker(new Uri("https://twitter.com/"), IPAddress, int.Parse(IPPort), IPUsername, IPpassword);
                     if (string.IsNullOrEmpty(pageSource))
                     {
                         return false;
@@ -57,28 +57,28 @@ namespace twtboardpro
                             using (SQLiteDataAdapter ad = new SQLiteDataAdapter())
                             {
                                 Working = 1;
-                                string query = "Select * from tb_Proxies WHERE ProxyAddress = '" + proxyAddress + "' AND ProxyPort = '" + proxyPort + "' ";
-                                System.Data.DataSet ds = DataBaseHandler.SelectQuery(query, "tb_Proxies");
-                                if (ds.Tables["tb_Proxies"].Rows.Count > 0)
+                                string query = "Select * from tb_IP WHERE IPAddress = '" + IPAddress + "' AND IPPort = '" + IPPort + "' ";
+                                System.Data.DataSet ds = DataBaseHandler.SelectQuery(query, "tb_IP");
+                                if (ds.Tables["tb_IP"].Rows.Count > 0)
                                 {
-                                    //UPDATE tb_Proxies SET Working = 1 WHERE ProxyAddress = '" + proxyAddress + "' , ProxyPort = '" + proxyPort + "' ";
-                                    string UpdateQuery = "UPDATE tb_Proxies SET Working = 1 WHERE ProxyAddress = '" + proxyAddress + "' AND ProxyPort = '" + proxyPort + "' ";
-                                    DataBaseHandler.UpdateQuery(UpdateQuery, "tb_Proxies");
+                                    //UPDATE tb_IP SET Working = 1 WHERE IPAddress = '" + IPAddress + "' , IPPort = '" + IPPort + "' ";
+                                    string UpdateQuery = "UPDATE tb_IP SET Working = 1 WHERE IPAddress = '" + IPAddress + "' AND IPPort = '" + IPPort + "' ";
+                                    DataBaseHandler.UpdateQuery(UpdateQuery, "tb_IP");
                                 }
                                 else
                                 {
-                                    string UpdateQuery = "INSERT INTO tb_Proxies VALUES ('" + proxyAddress + "', '" + proxyPort + "', '" + "" + "', '" + "" + "' , 1 , 0 , '" + "" + "' ) ";
-                                    DataBaseHandler.InsertQuery(UpdateQuery, "tb_Proxies");
+                                    string UpdateQuery = "INSERT INTO tb_IP VALUES ('" + IPAddress + "', '" + IPPort + "', '" + "" + "', '" + "" + "' , 1 , 0 , '" + "" + "' ) ";
+                                    DataBaseHandler.InsertQuery(UpdateQuery, "tb_IP");
                                 }
 
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(proxyAddress + ":" + proxyPort, Globals.Path_ExsistingProxies);
+                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(IPAddress + ":" + IPPort, Globals.Path_ExsistingProxies);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckProxy() 1 --> " + ex.Message, Globals.Path_ProxySettingErroLog);
-                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> CheckProxy() 1 --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckIP() 1 --> " + ex.Message, Globals.Path_IPSettingErroLog);
+                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> CheckIP() 1 --> " + ex.Message, Globals.Path_TwtErrorLogs);
                     }
                     return true;
                 }
@@ -87,13 +87,13 @@ namespace twtboardpro
             }
             catch (Exception ex)
             {
-                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckProxy() 2 --> " + ex.Message, Globals.Path_ProxySettingErroLog);
-                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> CheckProxy() 2--> " + ex.Message, Globals.Path_TwtErrorLogs);
+                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckIP() 2 --> " + ex.Message, Globals.Path_IPSettingErroLog);
+                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> CheckIP() 2--> " + ex.Message, Globals.Path_TwtErrorLogs);
                 return false;
             }
         }
 
-        public bool CheckPvtProxy()
+        public bool CheckPvtIP()
         {
             try
             {
@@ -102,12 +102,12 @@ namespace twtboardpro
 
                 ChilkatHttpHelpr HttpHelper = new ChilkatHttpHelpr();
                 GlobusHttpHelper HttpHelper1 = new GlobusHttpHelper();
-                //string pageSource = HttpHelper.getHtmlfromUrlProxyChecker("https://twitter.com/", proxyAddress, proxyPort, proxyUsername, proxyPassword);
-                string pageSource = HttpHelper1.getHtmlfromUrlProxyChecker(new Uri("https://twitter.com/"), proxyAddress, int.Parse(proxyPort), proxyUsername, proxyPassword);
+                //string pageSource = HttpHelper.getHtmlfromUrlIPChecker("https://twitter.com/", IPAddress, IPPort, IPUsername, IPpassword);
+                string pageSource = HttpHelper1.getHtmlfromUrlIPChecker(new Uri("https://twitter.com/"), IPAddress, int.Parse(IPPort), IPUsername, IPpassword);
                 if (string.IsNullOrEmpty(pageSource))//(string.IsNullOrEmpty(pageSource) && string.IsNullOrEmpty(PgSrcHome))
                 {
                     Thread.Sleep(500);
-                    pageSource = HttpHelper1.getHtmlfromUrlProxyChecker(new Uri("https://twitter.com/"), proxyAddress, int.Parse(proxyPort), proxyUsername, proxyPassword);
+                    pageSource = HttpHelper1.getHtmlfromUrlIPChecker(new Uri("https://twitter.com/"), IPAddress, int.Parse(IPPort), IPUsername, IPpassword);
                     if (string.IsNullOrEmpty(pageSource))
                     {
                         return false;
@@ -124,27 +124,27 @@ namespace twtboardpro
                             using (SQLiteDataAdapter ad = new SQLiteDataAdapter())
                             {
                                 Working = 1;
-                                string query = "Select * from tb_Proxies WHERE ProxyAddress = '" + proxyAddress + "' AND ProxyPort = '" + proxyPort + "' AND  ProxyUsername = '" + proxyUsername + "' AND ProxyPassword = '"+  proxyPassword +"' ";
-                                System.Data.DataSet ds = DataBaseHandler.SelectQuery(query, "tb_Proxies");
-                                if (ds.Tables["tb_Proxies"].Rows.Count > 0)
+                                string query = "Select * from tb_IP WHERE IPAddress = '" + IPAddress + "' AND IPPort = '" + IPPort + "' AND  IPUsername = '" + IPUsername + "' AND IPpassword = '"+  IPpassword +"' ";
+                                System.Data.DataSet ds = DataBaseHandler.SelectQuery(query, "tb_IP");
+                                if (ds.Tables["tb_IP"].Rows.Count > 0)
                                 {
-                                    string UpdateQuery = "UPDATE tb_Proxies SET Working = 1 WHERE ProxyAddress = '" + proxyAddress + "' AND ProxyPort = '" + proxyPort + "'  AND  ProxyUsername = '" + proxyUsername + "' AND ProxyPassword = '" + proxyPassword + "' ";
-                                    DataBaseHandler.UpdateQuery(UpdateQuery, "tb_Proxies");
+                                    string UpdateQuery = "UPDATE tb_IP SET Working = 1 WHERE IPAddress = '" + IPAddress + "' AND IPPort = '" + IPPort + "'  AND  IPUsername = '" + IPUsername + "' AND IPpassword = '" + IPpassword + "' ";
+                                    DataBaseHandler.UpdateQuery(UpdateQuery, "tb_IP");
                                 }
                                 else
                                 {
-                                    string UpdateQuery = "INSERT INTO tb_Proxies VALUES ('" + proxyAddress + "', '" + proxyPort + "', '" + proxyUsername + "','" + proxyPassword  + "', 1 , 1 , '" + "" + "' ) ";
-                                    DataBaseHandler.InsertQuery(UpdateQuery, "tb_Proxies");
+                                    string UpdateQuery = "INSERT INTO tb_IP VALUES ('" + IPAddress + "', '" + IPPort + "', '" + IPUsername + "','" + IPpassword  + "', 1 , 1 , '" + "" + "' ) ";
+                                    DataBaseHandler.InsertQuery(UpdateQuery, "tb_IP");
                                 }
 
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" +proxyPassword, Globals.Path_ExsistingPvtProxies);
+                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(IPAddress + ":" + IPPort + ":" + IPUsername + ":" +IPpassword, Globals.Path_ExsistingPvtProxies);
                             }
                         }
                     }
                     catch (Exception ex)
                     {
-                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckPvtProxy() 1 --> " + ex.Message, Globals.Path_ProxySettingErroLog);
-                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> CheckPvtProxy() 1 --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckPvtIP() 1 --> " + ex.Message, Globals.Path_IPSettingErroLog);
+                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> CheckPvtIP() 1 --> " + ex.Message, Globals.Path_TwtErrorLogs);
                     }
                     return true;
                 }
@@ -153,8 +153,8 @@ namespace twtboardpro
             }
             catch (Exception ex)
             {
-                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckPvtProxy() 2 --> " + ex.Message, Globals.Path_ProxySettingErroLog);
-                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> CheckPvtProxy() 2--> " + ex.Message, Globals.Path_TwtErrorLogs);
+                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckPvtIP() 2 --> " + ex.Message, Globals.Path_IPSettingErroLog);
+                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> CheckPvtIP() 2--> " + ex.Message, Globals.Path_TwtErrorLogs);
                 return false;
             }
         }

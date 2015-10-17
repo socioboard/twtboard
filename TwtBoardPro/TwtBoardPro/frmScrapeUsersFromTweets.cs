@@ -181,10 +181,10 @@ namespace twtboardpro
                     TweetLogin = new TweetAccountManager();
                     TweetLogin.Username = item.Key;
                     TweetLogin.Password = item.Value.Password;
-                    TweetLogin.proxyAddress = item.Value.proxyAddress;
-                    TweetLogin.proxyPort = item.Value.proxyPort;
-                    TweetLogin.proxyUsername = item.Value.proxyUsername;
-                    TweetLogin.proxyPassword = item.Value.proxyPassword;
+                    TweetLogin.IPAddress = item.Value.IPAddress;
+                    TweetLogin.IPPort = item.Value.IPPort;
+                    TweetLogin.IPUsername = item.Value.IPUsername;
+                    TweetLogin.IPpassword = item.Value.IPpassword;
                     TweetLogin.Login();
 
                     if (!TweetLogin.IsLoggedIn)

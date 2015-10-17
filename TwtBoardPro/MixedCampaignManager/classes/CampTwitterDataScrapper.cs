@@ -60,6 +60,10 @@ namespace MixedCampaignManager.classes
 
 
                 string[] splitRes = Regex.Split(res_Get_searchURL, "{\"created_at");//Regex.Split(res_Get_searchURL, "{\"created_at\"");
+                if (splitRes.Count() == 1)
+                {
+                    splitRes = Regex.Split(res_Get_searchURL, "ProfileTweet-actionButton u-textUserColorHover dropdown-toggle js-tooltip js-dropdown-toggle");
+                }
                 splitRes = splitRes.Skip(1).ToArray();
 
                 foreach (string item in splitRes)
@@ -173,6 +177,14 @@ namespace MixedCampaignManager.classes
                     }
 
                     string[] splitRes = Regex.Split(datahkj, "ProfileTweet u-textBreak js-tweet js-stream-tweet js-actionable-tweet");//Regex.Split(res_Get_searchURL, "{\"created_at\"");
+                    if (splitRes.Count() == 1)
+                    {
+                        splitRes = Regex.Split(datahkj, "ProfileTweet-actionButton u-textUserColorHover dropdown-toggle js-tooltip js-dropdown-toggle");
+                        if (splitRes.Count() == 1)
+                        {
+                            splitRes = Regex.Split(datahkj, "js-stream-item stream-item stream-item expanding-stream-item");
+                        }
+                    }
                     splitRes = splitRes.Skip(1).ToArray();
 
                     foreach (string item in splitRes)
@@ -897,7 +909,7 @@ namespace MixedCampaignManager.classes
                 string maxid = string.Empty;
 
                 string TweetId = string.Empty;
-
+                string max_position = string.Empty;
 
                 if (keyword.Trim().Contains(" "))
                 {
@@ -916,14 +928,17 @@ namespace MixedCampaignManager.classes
                 if (counter == 0)
                 {
                     //searchURL = "https://twitter.com/i/search/timeline?type=recent&src=typd&include_available_features=1&include_entities=1&max_id=0&q=" + keyword + "&composed_count=0&count=" + noOfRecords + "";
-                    searchURL = "https://twitter.com/i/search/timeline?q=" + Uri.EscapeDataString(keyword) + "&src=typd&f=realtime";
+                   // searchURL = "https://twitter.com/i/search/timeline?q=" + Uri.EscapeDataString(keyword) + "&src=typd&f=realtime";
+                    searchURL = "https://twitter.com/search?q=" + Uri.EscapeDataString(keyword) + "&src=typd";
                     counter++;
                 }
                 else
                 {
                     //searchURL = "https://twitter.com/i/search/timeline?type=recent&src=typd&include_available_features=1&include_entities=1&max_id=0&q=" + keyword + "&composed_count=0&count=" + noOfRecords + "&scroll_cursor=" + TweetId;
 
-                    searchURL = "https://twitter.com/i/search/timeline?q=" + Uri.EscapeDataString(keyword) + "&src=typd&f=realtime&include_available_features=1&include_entities=1&last_note_ts=0&oldest_unread_id=0&scroll_cursor=" + TweetId + "";
+                    //searchURL = "https://twitter.com/i/search/timeline?q=" + Uri.EscapeDataString(keyword) + "&src=typd&f=realtime&include_available_features=1&include_entities=1&last_note_ts=0&oldest_unread_id=0&scroll_cursor=" + TweetId + "";
+                    searchURL = "https://twitter.com/i/search/timeline?vertical=news&q=" + Uri.EscapeDataString(keyword) + "&src=typd&include_available_features=1&include_entities=1&max_position=" + max_position;
+                    counter++;
                 }
 
                 try
@@ -933,6 +948,18 @@ namespace MixedCampaignManager.classes
                     if (string.IsNullOrEmpty(res_Get_searchURL))
                     {
                         res_Get_searchURL = globushttpHelper.getHtmlfromUrl(new Uri(searchURL), "", "");
+                    }
+                    if (!string.IsNullOrEmpty(res_Get_searchURL))
+                    {
+                        try
+                        {
+                            max_position = Utils.getBetween(res_Get_searchURL, "data-max-position=\"", "\"");
+                            if (string.IsNullOrEmpty(max_position))
+                            {
+                                max_position = Utils.getBetween(res_Get_searchURL, "\"min_position\":\"", "\"");
+                            }
+                        }
+                        catch { };
                     }
                     try
                     {
@@ -974,9 +1001,17 @@ namespace MixedCampaignManager.classes
 
                 if (!string.IsNullOrEmpty(res_Get_searchURL))
                 {
-                    object DEserizedData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(res_Get_searchURL);
-                    string DataHtml = (string)((JObject)DEserizedData)["items_html"];
-                    string[] splitRes = Regex.Split(DataHtml, "data-item-id");
+                    string[] splitRes = { };
+                    if (counter == 1)
+                    {
+                        splitRes = Regex.Split(res_Get_searchURL, "data-item-id");
+                    }
+                    else
+                    {
+                        object DEserizedData = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(res_Get_searchURL);
+                        string DataHtml = (string)((JObject)DEserizedData)["items_html"];
+                        splitRes = Regex.Split(DataHtml, "data-item-id");
+                    }
 
                     splitRes = splitRes.Skip(1).ToArray();
 
@@ -1146,11 +1181,11 @@ namespace MixedCampaignManager.classes
                 }
                 else
                 {
-                    if (res_Get_searchURL.Contains("has_more_items\":false"))
-                    {
-                        return lst_structTweetIDs;
-                    }
-                    else
+                    //if (res_Get_searchURL.Contains("has_more_items\":false"))
+                    //{
+                    //    return lst_structTweetIDs;
+                    //}
+                    //else
                         goto startAgain;
                 }
             }

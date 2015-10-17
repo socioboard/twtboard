@@ -681,18 +681,114 @@ namespace MixedCampaignManager.classes
                             if (IsTweetWithImage)
                             {
                                 ///Tweet message With Image 
-                                Thread threadGetStartProcessForTweet = new Thread(StartTweetingWithImages);
-                                threadGetStartProcessForTweet.Name = CampaignName + "_" + Account.Key;
-                                threadGetStartProcessForTweet.IsBackground = true;
-                                threadGetStartProcessForTweet.Start(new object[] { Account, _lstTweetMsg, _lstTweetImages, IsTweetWithImage, IsAllTweetParAc, IsHashTag, DelayStar, DelayEnd, NoOfTweetPerAc, CampaignName, IsSchedulDaily, SchedulerEndTime, TweetFilePath, IsUserList, UserListFilePath });
+                                ///
+
+                                #region New Licensing Feature Added by Sonu
+
+
+                                try
+                                {
+                                    if (Globals.IsBasicVersion || Globals.IsProVersion || Globals.IsFreeVersion)
+                                    {
+                                        string queryCheckDataBaseEmpty = "select * from tb_FBAccount";
+                                        DataSet DS1 = DataBaseHandler.SelectQuery(queryCheckDataBaseEmpty, "tb_FBAccount");
+                                        if (!(DS1.Tables[0].Rows.Count == 0))
+                                        {
+                                            DataTable DT = DS1.Tables[0];
+                                            bool check = DT.Select().Any(x => x.ItemArray[0].ToString() == Account.Key);
+
+                                            if (!check)
+                                            {
+                                                MessageBox.Show("Please Upload this Account in Account Manager");
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                Thread threadGetStartProcessForTweet = new Thread(StartTweetingWithImages);
+                                                threadGetStartProcessForTweet.Name = CampaignName + "_" + Account.Key;
+                                                threadGetStartProcessForTweet.IsBackground = true;
+                                                threadGetStartProcessForTweet.Start(new object[] { Account, _lstTweetMsg, _lstTweetImages, IsTweetWithImage, IsAllTweetParAc, IsHashTag, DelayStar, DelayEnd, NoOfTweetPerAc, CampaignName, IsSchedulDaily, SchedulerEndTime, TweetFilePath, IsUserList, UserListFilePath });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Please Upload this Account in Account Manager");
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Thread threadGetStartProcessForTweet = new Thread(StartTweetingWithImages);
+                                        threadGetStartProcessForTweet.Name = CampaignName + "_" + Account.Key;
+                                        threadGetStartProcessForTweet.IsBackground = true;
+                                        threadGetStartProcessForTweet.Start(new object[] { Account, _lstTweetMsg, _lstTweetImages, IsTweetWithImage, IsAllTweetParAc, IsHashTag, DelayStar, DelayEnd, NoOfTweetPerAc, CampaignName, IsSchedulDaily, SchedulerEndTime, TweetFilePath, IsUserList, UserListFilePath });
+                                    }
+                                }
+                                catch { }; 
+
+                                #endregion
+
+
+                                #region old Code
+                                //Thread threadGetStartProcessForTweet = new Thread(StartTweetingWithImages);
+                                //threadGetStartProcessForTweet.Name = CampaignName + "_" + Account.Key;
+                                //threadGetStartProcessForTweet.IsBackground = true;
+                                //threadGetStartProcessForTweet.Start(new object[] { Account, _lstTweetMsg, _lstTweetImages, IsTweetWithImage, IsAllTweetParAc, IsHashTag, DelayStar, DelayEnd, NoOfTweetPerAc, CampaignName, IsSchedulDaily, SchedulerEndTime, TweetFilePath, IsUserList, UserListFilePath }); 
+                                #endregion
                             }
                             else
                             {
                                 /// Tweet Only Messages 
-                                Thread threadGetStartProcessForTweet = new Thread(StartCampaignTweeting);
-                                threadGetStartProcessForTweet.Name = CampaignName + "_" + Account.Key;
-                                threadGetStartProcessForTweet.IsBackground = true;
-                                threadGetStartProcessForTweet.Start(new object[] { Account, _lstTweetMsg, IsAllTweetParAc, DelayStar, DelayEnd, NoOfTweetPerAc, CampaignName, IsSchedulDaily, SchedulerEndTime, IsHashTag, TweetFilePath, IsUserList, UserListFilePath });
+                                /// 
+                                #region New Licensing Feature Added by Sonu
+
+                                try
+                                {
+                                    if (Globals.IsBasicVersion || Globals.IsProVersion || Globals.IsFreeVersion)
+                                    {
+                                        string queryCheckDataBaseEmpty = "select * from tb_FBAccount";
+                                        DataSet DS1 = DataBaseHandler.SelectQuery(queryCheckDataBaseEmpty, "tb_FBAccount");
+                                        if (!(DS1.Tables[0].Rows.Count == 0))
+                                        {
+                                            DataTable DT = DS1.Tables[0];
+                                            bool check = DT.Select().Any(x => x.ItemArray[0].ToString() == Account.Key);
+
+                                            if (!check)
+                                            {
+                                                MessageBox.Show("Please Upload this Account in Account Manager");
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                Thread threadGetStartProcessForTweet = new Thread(StartCampaignTweeting);
+                                                threadGetStartProcessForTweet.Name = CampaignName + "_" + Account.Key;
+                                                threadGetStartProcessForTweet.IsBackground = true;
+                                                threadGetStartProcessForTweet.Start(new object[] { Account, _lstTweetMsg, IsAllTweetParAc, DelayStar, DelayEnd, NoOfTweetPerAc, CampaignName, IsSchedulDaily, SchedulerEndTime, IsHashTag, TweetFilePath, IsUserList, UserListFilePath });
+                                            }
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Please Upload this Account in Account Manager");
+                                            return;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Thread threadGetStartProcessForTweet = new Thread(StartCampaignTweeting);
+                                        threadGetStartProcessForTweet.Name = CampaignName + "_" + Account.Key;
+                                        threadGetStartProcessForTweet.IsBackground = true;
+                                        threadGetStartProcessForTweet.Start(new object[] { Account, _lstTweetMsg, IsAllTweetParAc, DelayStar, DelayEnd, NoOfTweetPerAc, CampaignName, IsSchedulDaily, SchedulerEndTime, IsHashTag, TweetFilePath, IsUserList, UserListFilePath });
+                                    }
+                                }
+                                catch { };
+
+                                #endregion
+                                #region old Code
+                                //Thread threadGetStartProcessForTweet = new Thread(StartCampaignTweeting);
+                                //threadGetStartProcessForTweet.Name = CampaignName + "_" + Account.Key;
+                                //threadGetStartProcessForTweet.IsBackground = true;
+                                //threadGetStartProcessForTweet.Start(new object[] { Account, _lstTweetMsg, IsAllTweetParAc, DelayStar, DelayEnd, NoOfTweetPerAc, CampaignName, IsSchedulDaily, SchedulerEndTime, IsHashTag, TweetFilePath, IsUserList, UserListFilePath }); 
+                                #endregion
                             }
                         }
                     }

@@ -20,10 +20,10 @@ namespace Globussoft
         public string UserAgent = "Mozilla/5.0 (Windows NT 6.1; rv:20.0) Gecko/20100101 Firefox/20.0";   //"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.1; WOW64; Trident/4.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; .NET4.0C; .NET4.0E; InfoPath.3)";
         int Timeout = 90000;
 
-        string proxyAddress = string.Empty;
+        string IPAddress = string.Empty;
         int port = 80;
-        string proxyUsername = string.Empty;
-        string proxyPassword = string.Empty;
+        string IPUsername = string.Empty;
+        string IPpassword = string.Empty;
 
         public GlobusHttpHelper()
         {
@@ -71,7 +71,7 @@ namespace Globussoft
 
                 gRequest.Method = "GET";
                 //gRequest.AllowAutoRedirect = false;
-                ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+                ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
                 if (!string.IsNullOrEmpty(Referes))
                 {
@@ -198,7 +198,7 @@ namespace Globussoft
 
                 gRequest.Method = "GET";
                 //gRequest.AllowAutoRedirect = false;
-                ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+                ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
                 if (!string.IsNullOrEmpty(Referes))
                 {
@@ -322,7 +322,7 @@ namespace Globussoft
 
                 gRequest.Method = "GET";
                 //gRequest.AllowAutoRedirect = false;
-                ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+                ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
                 if (!string.IsNullOrEmpty(Referes))
                 {
@@ -418,7 +418,7 @@ namespace Globussoft
 
         }
 
-        public string getHtmlfromUrlProxyChecker(Uri url, string proxyAddress, int port, string proxyUsername, string proxyPassword)
+        public string getHtmlfromUrlIPChecker(Uri url, string IPAddress, int port, string IPUsername, string IPpassword)
         {
             string responseString = string.Empty;
               string responseURI = string.Empty;
@@ -439,13 +439,13 @@ namespace Globussoft
 
                 gRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
-                ///Set Proxy
-                this.proxyAddress = proxyAddress;
+                ///Set IP
+                this.IPAddress = IPAddress;
                 this.port = port;
-                this.proxyUsername = proxyUsername;
-                this.proxyPassword = proxyPassword;
+                this.IPUsername = IPUsername;
+                this.IPpassword = IPpassword;
 
-                ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+                ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
                 gRequest.CookieContainer = new CookieContainer(); //gCookiesContainer;
 
@@ -521,7 +521,7 @@ namespace Globussoft
             return responseString;
         }
    
-        public string getHtmlfromUrlProxy(Uri url, string Referes, string proxyAddress, string strport, string proxyUsername, string proxyPassword)
+        public string getHtmlfromUrlIP(Uri url, string Referes, string IPAddress, string strport, string IPUsername, string IPpassword)
         {
             setExpect100Continue();
             gRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -542,16 +542,16 @@ namespace Globussoft
             {
                 gRequest.Referer = Referes;
             }
-            ///Set Proxy
-            this.proxyAddress = proxyAddress;
+            ///Set IP
+            this.IPAddress = IPAddress;
             if (BaseLib.Globals.IdCheck.IsMatch(strport) && !string.IsNullOrEmpty(strport))
             {
                 this.port = int.Parse(strport);
             }
-            this.proxyUsername = proxyUsername;
-            this.proxyPassword = proxyPassword;
+            this.IPUsername = IPUsername;
+            this.IPpassword = IPpassword;
 
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             gRequest.CookieContainer = new CookieContainer(); //gCookiesContainer;
 
@@ -635,7 +635,7 @@ namespace Globussoft
 
         }
 
-        public string getHtmlfromUrlProxy(Uri url, string proxyAddress, string strport, string proxyUsername, string proxyPassword, string Referes, string Token)
+        public string getHtmlfromUrlIP(Uri url, string IPAddress, string strport, string IPUsername, string IPpassword, string Referes, string Token)
         {
             setExpect100Continue();
             gRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -664,16 +664,16 @@ namespace Globussoft
 
             gRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
-            ///Set Proxy
-            this.proxyAddress = proxyAddress;
+            ///Set IP
+            this.IPAddress = IPAddress;
             if (BaseLib.Globals.IdCheck.IsMatch(strport) && !string.IsNullOrEmpty(strport))
             {
                 this.port = int.Parse(strport);
             }
-            this.proxyUsername = proxyUsername;
-            this.proxyPassword = proxyPassword;
+            this.IPUsername = IPUsername;
+            this.IPpassword = IPpassword;
 
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             gRequest.CookieContainer = new CookieContainer(); //gCookiesContainer;
 
@@ -757,7 +757,7 @@ namespace Globussoft
 
         }
 
-        public string getHtmlfromUrlProxy(Uri url, string proxyAddress, string strport, string proxyUsername, string proxyPassword, string Referes, string Token, string UserAgent)
+        public string getHtmlfromUrlIP(Uri url, string IPAddress, string strport, string IPUsername, string IPpassword, string Referes, string Token, string UserAgent)
         {
             setExpect100Continue();
             gRequest = (HttpWebRequest)WebRequest.Create(url);
@@ -789,16 +789,16 @@ namespace Globussoft
 
             gRequest.AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate;
 
-            ///Set Proxy
-            this.proxyAddress = proxyAddress;
+            ///Set IP
+            this.IPAddress = IPAddress;
             if (BaseLib.Globals.IdCheck.IsMatch(strport) && !string.IsNullOrEmpty(strport))
             {
                 this.port = int.Parse(strport);
             }
-            this.proxyUsername = proxyUsername;
-            this.proxyPassword = proxyPassword;
+            this.IPUsername = IPUsername;
+            this.IPpassword = IPpassword;
 
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             gRequest.CookieContainer = new CookieContainer(); //gCookiesContainer;
 
@@ -959,7 +959,7 @@ namespace Globussoft
         //    gRequest.KeepAlive = true;
         //    gRequest.Credentials = System.Net.CredentialCache.DefaultCredentials;
 
-        //    //ChangeProxy("127.0.0.1", 8888, "", "");
+        //    //ChangeIP("127.0.0.1", 8888, "", "");
 
         //    gRequest.CookieContainer = new CookieContainer(); //gCookiesContainer;
 
@@ -1068,9 +1068,9 @@ namespace Globussoft
 
             gRequest.Referer = "https://twitter.com/settings/profile";
 
-            //ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            //ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             gRequest.CookieContainer = new CookieContainer(); //gCookiesContainer;
 
@@ -1206,9 +1206,9 @@ namespace Globussoft
 
             gRequest.Referer = "https://twitter.com/settings/design/update";
 
-            //ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            //ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             gRequest.CookieContainer = new CookieContainer(); //gCookiesContainer;
 
@@ -1428,7 +1428,7 @@ namespace Globussoft
             }
 
             ///Modified BySumit 18-11-2011
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             #region CookieManagement
             if (this.gCookies != null && this.gCookies.Count > 0)
@@ -1560,7 +1560,7 @@ namespace Globussoft
             }
 
             ///Modified BySumit 18-11-2011
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             #region CookieManagement
             if (this.gCookies != null && this.gCookies.Count > 0)
@@ -1698,7 +1698,7 @@ namespace Globussoft
             }
 
             ///Modified BySumit 18-11-2011
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             #region CookieManagement
             if (this.gCookies != null && this.gCookies.Count > 0)
@@ -1794,7 +1794,7 @@ namespace Globussoft
 
         }
 
-        public string postFormDataProxy(Uri formActionUrl, string postData, string Referes, string proxyAddress, int port, string proxyUsername, string proxyPassword)
+        public string postFormDataIP(Uri formActionUrl, string postData, string Referes, string IPAddress, int port, string IPUsername, string IPpassword)
         {
 
             gRequest = (HttpWebRequest)WebRequest.Create(formActionUrl);
@@ -1814,7 +1814,7 @@ namespace Globussoft
                 gRequest.Referer = Referes;
             }
             ///Modified BySumit 18-11-2011
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             #region CookieManagement
             if (this.gCookies != null && this.gCookies.Count > 0)
@@ -1924,18 +1924,18 @@ namespace Globussoft
             }
         }
 
-        public void ChangeProxy(string proxyAddress, int port, string proxyUsername, string proxyPassword)
+        public void ChangeIP(string IPAddress, int port, string IPUsername, string IPpassword)
         {
             try
             {
-                WebProxy myproxy = new WebProxy(proxyAddress, port);
-                myproxy.BypassProxyOnLocal = false;
+                WebProxy myIP = new WebProxy(IPAddress, port);
+                myIP.BypassProxyOnLocal = false;
 
-                if (!string.IsNullOrEmpty(proxyUsername) && !string.IsNullOrEmpty(proxyPassword))
+                if (!string.IsNullOrEmpty(IPUsername) && !string.IsNullOrEmpty(IPpassword))
                 {
-                    myproxy.Credentials = new NetworkCredential(proxyUsername, proxyPassword);
+                    myIP.Credentials = new NetworkCredential(IPUsername, IPpassword);
                 }
-                gRequest.Proxy = myproxy;
+                gRequest.Proxy = myIP;
             }
             catch (Exception ex)
             {
@@ -2346,9 +2346,9 @@ namespace Globussoft
 
             gRequest.Referer = "https://twitter.com/";
 
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
-            ChangeProxy(proxyAddress, port, proxyUsername, proxyPassword);
+            ChangeIP(IPAddress, port, IPUsername, IPpassword);
 
             gRequest.CookieContainer = new CookieContainer(); //gCookiesContainer;
 

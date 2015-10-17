@@ -18,7 +18,7 @@ using System.Web;
 using System.Globalization;
 using WatiN.Core;
 using System.Net;
-using ProxySettings;
+using IPSettings;
 using Microsoft.Win32;
 //using System.Reflection;
 using System.Drawing.Drawing2D;
@@ -66,7 +66,7 @@ namespace twtboardpro
         List<string> lstDirectMessage = new List<string>();
         List<string> lstUserId_Tweet = new List<string>();
         List<string> lstUserId_Retweet = new List<string>();
-        List<string> lstPublicProxyWOTest = new List<string>();
+        List<string> lstPublicIPWOTest = new List<string>();
         List<string> listOfTwitterEmailIdAndPassword = new List<string>();
         List<string> lstGroupNames = new List<string>();
         List<string> lstSearchByKeywords = new List<string>();
@@ -75,8 +75,8 @@ namespace twtboardpro
         public bool Ismentionsingleuser = false;
         public bool IsMentionUserWithScrapedList = false;
         public bool Ismentionrendomuser = false;
-        public static List<string> LstRunningProxy_ProxyModule = new List<string>();
-        public static readonly object Locker_LstRunningProxy_ProxyModule = new object();
+        public static List<string> LstRunningIP_IPModule = new List<string>();
+        public static readonly object Locker_LstRunningIP_IPModule = new object();
         static int TweetExtractCount = 10;
         static int RetweetExtractCount = 10;
         int counter_Name = 0;
@@ -96,10 +96,10 @@ namespace twtboardpro
         Int64 workingproxiesCount = 0;
         int workingPvtProxiesCount = 0;
         int countParsePvtProxiesThreads = 0;
-        int numberOfProxyThreads = 4;
+        int numberOfIPThreads = 4;
         public int threadcountForFinishMSG = 0;
         public int threadcountForFinishMsgPvt = 0;
-        int accountsPerProxy = 10;  //Change this to change Number of Accounts to be set per proxy
+        int accountsPerIP = 10;  //Change this to change Number of Accounts to be set per IP
         static int i = 0;
         bool IsUsingDivideData = true;
         bool CheckNetConn = false;
@@ -112,7 +112,7 @@ namespace twtboardpro
         Thread thread_AddingKeywordScrape = null;
         Thread thread_UsernameToUserid = null;
         Thread thread_UsernameValue = null;
-        Thread thread_ProxyCheck = null;
+        Thread thread_IPCheck = null;
 
         GlobusHttpHelper globusHelper;
 
@@ -162,9 +162,9 @@ namespace twtboardpro
 
         private static readonly object pvtProxiesThreadLockr = new object();
 
-        ProxyUtilitiesFromDataBase proxyFetcher = new ProxyUtilitiesFromDataBase();
+        IPUtilitiesFromDataBase IPFetcher = new IPUtilitiesFromDataBase();
 
-        List<string> list_pvtProxy = new List<string>();
+        List<string> list_pvtIP = new List<string>();
 
         public static Queue<string> queWorkingProxies = new Queue<string>();
 
@@ -174,7 +174,7 @@ namespace twtboardpro
 
         public static DataSet ds = new DataSet();
 
-        public static readonly object proxyListLockr = new object();
+        public static readonly object IPListLockr = new object();
 
         public static List<string> lst_unfolloweruserlist = new List<string>();
 
@@ -205,7 +205,7 @@ namespace twtboardpro
             txtMaximumNoRetweet.Enabled = false;
             txtTweetUseGroup.Enabled = false;
             txtUseGroup.Enabled = false;
-            txtProxyUrl.Enabled = false;
+            txtIPUrl.Enabled = false;
             grpFollowByKeyword.Enabled = false;
             grpFollowerSetting.Enabled = false;
             chkCheckDatabaseInEvery2Minutes.Enabled = false;
@@ -888,7 +888,7 @@ namespace twtboardpro
             try
             {
                 clsDBQueryManager Db = new clsDBQueryManager();
-                DataSet ds = Db.SelectPublicProxyData();
+                DataSet ds = Db.SelectPublicIPData();
 
                 foreach (DataRow dr in ds.Tables[0].Rows)
                 {
@@ -901,7 +901,7 @@ namespace twtboardpro
             }
             catch (Exception ex)
             {
-                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckingProxies()  --> " + ex.Message, Globals.Path_ProxySettingErroLog);
+                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> CheckingProxies()  --> " + ex.Message, Globals.Path_IPSettingErroLog);
                 GlobusFileHelper.AppendStringToTextfileNewLine("Error --> CheckingProxies() --> " + ex.Message, Globals.Path_TwtErrorLogs);
             }
         }
@@ -918,25 +918,25 @@ namespace twtboardpro
 
                 clsDBQueryManager db = new clsDBQueryManager();
 
-                string proxyAddress = dr[0].ToString();
-                string proxyPort = dr[1].ToString();
-                string proxyUsername = string.Empty;
-                string proxyPassword = string.Empty;
+                string IPAddress = dr[0].ToString();
+                string IPPort = dr[1].ToString();
+                string IPUsername = string.Empty;
+                string IPpassword = string.Empty;
                 int IsPublic = 0;
                 int Working = 0;
 
-                ProxyChecker pc = new ProxyChecker(proxyAddress, proxyPort, proxyUsername, proxyPassword, 0);
-                bool RunningProxy = pc.CheckProxy();
+                IPChecker pc = new IPChecker(IPAddress, IPPort, IPUsername, IPpassword, 0);
+                bool RunningIP = pc.CheckIP();
 
-                if (!RunningProxy)
+                if (!RunningIP)
                 {
                     DataBaseHandler Db = new DataBaseHandler();
-                    DataBaseHandler.DeleteQuery("DELETE FROM tb_Proxies WHERE ProxyAddress ='" + proxyAddress + "' AND ProxyPort ='" + proxyPort + "'", "tb_Proxies");
+                    DataBaseHandler.DeleteQuery("DELETE FROM tb_IP WHERE IPAddress ='" + IPAddress + "' AND IPPort ='" + IPPort + "'", "tb_IP");
                 }
             }
             catch (Exception ex)
             {
-                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ThreadPoolCheckProxies()  --> " + ex.Message, Globals.Path_ProxySettingErroLog);
+                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ThreadPoolCheckProxies()  --> " + ex.Message, Globals.Path_IPSettingErroLog);
                 GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ThreadPoolCheckProxies() --> " + ex.Message, Globals.Path_TwtErrorLogs);
             }
         }
@@ -1145,12 +1145,12 @@ namespace twtboardpro
             }
         }
 
-        void LogEvents_Proxy_Logs(object sender, EventArgs e)
+        void LogEvents_IP_Logs(object sender, EventArgs e)
         {
             if (e is EventsArgs)
             {
                 EventsArgs eArgs = e as EventsArgs;
-                AddToProxysLogs(eArgs.log);
+                AddToIPsLogs(eArgs.log);
             }
         }
 
@@ -1554,10 +1554,10 @@ namespace twtboardpro
                     TweetLogin = new TweetAccountManager();
                     TweetLogin.Username = item.Key;
                     TweetLogin.Password = item.Value.Password;
-                    TweetLogin.proxyAddress = item.Value.proxyAddress;
-                    TweetLogin.proxyPort = item.Value.proxyPort;
-                    TweetLogin.proxyUsername = item.Value.proxyUsername;
-                    TweetLogin.proxyPassword = item.Value.proxyPassword;
+                    TweetLogin.IPAddress = item.Value.IPAddress;
+                    TweetLogin.IPPort = item.Value.IPPort;
+                    TweetLogin.IPUsername = item.Value.IPUsername;
+                    TweetLogin.IPpassword = item.Value.IPpassword;
                     AddToLog_Follower("[ " + DateTime.Now + " ] => [ Logging Process start for scrapping User ]");
                     TweetLogin.Login();
                     if (!TweetLogin.IsLoggedIn)
@@ -1611,7 +1611,8 @@ namespace twtboardpro
                             }
                             string returnStatus = string.Empty;
                             dataScrapeer.logEvents.addToLogger += new EventHandler(DataScraperlogger_addToLogger);
-                            lst_structTweetFollowersIDs = dataScrapeer.GetFollowers_New(keyword.Trim(), out ReturnStatus, ref globusHttpHelper);
+                         //   lst_structTweetFollowersIDs = dataScrapeer.GetFollowers_New(keyword.Trim(), out ReturnStatus, ref globusHttpHelper);
+                            lst_structTweetFollowersIDs = dataScrapeer.GetFollowers_New_WithNo_Followers(keyword.Trim(), out ReturnStatus, ref globusHttpHelper);
 
                             AddToLog_Follower("[ " + DateTime.Now + " ] => [ Followers Scrapped ]");
                             //TwitterDataScrapper.logEvents.addToLogger -= new EventHandler(DataScraperlogger_addToLogger);
@@ -1780,10 +1781,10 @@ namespace twtboardpro
                     TweetLogin = new TweetAccountManager();
                     TweetLogin.Username = item.Key;
                     TweetLogin.Password = item.Value.Password;
-                    TweetLogin.proxyAddress = item.Value.proxyAddress;
-                    TweetLogin.proxyPort = item.Value.proxyPort;
-                    TweetLogin.proxyUsername = item.Value.proxyUsername;
-                    TweetLogin.proxyPassword = item.Value.proxyPassword;
+                    TweetLogin.IPAddress = item.Value.IPAddress;
+                    TweetLogin.IPPort = item.Value.IPPort;
+                    TweetLogin.IPUsername = item.Value.IPUsername;
+                    TweetLogin.IPpassword = item.Value.IPpassword;
                     AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Logging Process start for scrapping User ]");
                     TweetLogin.Login();
                     if (!TweetLogin.IsLoggedIn)
@@ -3066,10 +3067,14 @@ namespace twtboardpro
                 if (chkReplyBySpecificTweet.Checked)
                 {
                     btnReplyBySpecificTweet.Visible = true;
+                    btnStartReTweeting.Enabled = false;
+                    btnUploadRetweetKeyword.Enabled = false;
                 }
                 else
                 {
                     btnReplyBySpecificTweet.Visible = false;
+                    btnStartReTweeting.Enabled = true;
+                    btnUploadRetweetKeyword.Enabled = true;
                 }
             }
             catch { }
@@ -3238,6 +3243,7 @@ namespace twtboardpro
                         new Thread(() =>
                         {
                             {
+                                
                                 //Scrap Tweets using Keyword
                                 AddThreadToDictionary(strModule(Module.Retweet), "GettingRetweetsByKeyword");
                                 try
@@ -3249,6 +3255,10 @@ namespace twtboardpro
                                 catch { }
 
                                 TwitterDataScrapper tweetScrapper = new TwitterDataScrapper();
+                                if (chkBoxRetweetAndFollow.Checked)
+                                {
+                                    tweetScrapper.chkStatusRetweetAndFollow = true;
+                                }
                                 if (chkCheckDatabaseInEvery2Minutes.Checked == true || chkAutoFavorite.Checked == true)
                                 {
                                     TwitterDataScrapper.noOfRecords = (int.Parse(txtNoOfRetweets.Text));
@@ -3336,12 +3346,23 @@ namespace twtboardpro
 
                     ThreadPool.SetMaxThreads(numberOfThreads, 5);
                     int LstCounter = 0;
+
+                    if (!TweetAccountManager.IsRetweetDivideRetweet)
+                    {
+                        Thread static_lst_Struct_TweetDataMethodNewThread = new Thread(() => static_lst_Struct_TweetDataMethod());
+                        static_lst_Struct_TweetDataMethodNewThread.Start();
+                        //  static_lst_Struct_TweetDataMethod();
+                    }
+
+
+
                     foreach (KeyValuePair<string, TweetAccountManager> item in TweetAccountContainer.dictionary_TweetAccount)
                     {
                         if (!string.IsNullOrEmpty(txtNoOfRetweets.Text) && Globals.IdCheck.IsMatch(txtNoOfRetweets.Text))
                         {
                             TweetAccountManager tweet = item.Value;
-                            tweet.noOfRetweets = int.Parse(txtNoOfRetweets.Text);
+                            //tweet.noOfRetweets = int.Parse(txtNoOfRetweets.Text);
+                            tweet.noOfRetweets = int.Parse(txtNoOfRetweets.Text) * lstKeywordRetweetUpload.Count;
                         }
                         string tweetMessage = "";
                         if (chkBoxUseGroup.Checked)
@@ -3416,9 +3437,70 @@ namespace twtboardpro
             }
         }
 
+        public void static_lst_Struct_TweetDataMethod()
+        {
+            while (true)
+            {
+                //try
+                //{
+                //    List<Thread> threadList = ThreadpoolMethod_RetweetThreads;
+                //    foreach (Thread tr in threadList)
+                //    {
+                //        try
+                //        {
+                //            tr.Suspend();
+
+                //        }
+                //        catch { };
+
+                //    }
+                //}
+                //catch{};
+
+                TweetAccountManager.static_lst_Struct_TweetData.Clear();
+                List<string> twtKeyword = GlobusFileHelper.ReadFiletoStringList(txtTweetKeyword.Text);
+                TwitterDataScrapper tweetScrapper = new TwitterDataScrapper();
+                List<TwitterDataScrapper.StructTweetIDs> strList;
+                foreach (string keyword in twtKeyword)
+                {
+                    try
+                    {
+                        strList = tweetScrapper.TweetExtractor_ByUserName_New_New(keyword);
+                        TweetAccountManager.static_lst_Struct_TweetData.Add(strList[0]);
+                    }
+                    catch { };
+                }
+
+                //try
+                //{
+                //    List<Thread> threadList = ThreadpoolMethod_RetweetThreads;
+                //    foreach (Thread tr in threadList)
+                //    {
+                //        try
+                //        {
+                //            tr.Resume();
+
+                //        }
+                //        catch { };
+                //    }
+                //}
+                //catch { };
+                AddToLog_Tweet("[ " + DateTime.Now + " ] => No of Retweets Found From All Keyword :  " + TweetAccountManager.static_lst_Struct_TweetData.Count);
+                AddToLog_Tweet("[ " + DateTime.Now + " ] => searching for new tweet,process will start again after 2 minute");
+                Thread.Sleep(2 * 60 * 1000);
+
+
+
+            }
+
+        }
+
+
+
         private void  ThreadpoolMethod_Retweet(object parameters)
         {
             TweetAccountManager tweetAccountManager = new TweetAccountManager();
+            TweetAccountManager objTweetAccountManager = new TweetAccountManager();
             try
             {
                 Array paramsArray = new object[1];
@@ -3432,6 +3514,11 @@ namespace twtboardpro
                      lst_DivideTweets = (List<TwitterDataScrapper.StructTweetIDs>)paramsArray.GetValue(1);
                 }
                 tweetAccountManager = keyValue.Value;
+                try
+                 {
+                    objTweetAccountManager.TweetAccountManager1(keyValue.Value.Username, keyValue.Value.Password);                  
+                }
+                catch { };
 
                 AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Starting ReTweet For Account : " + keyValue.Key + " ]");
 
@@ -3446,10 +3533,13 @@ namespace twtboardpro
                 }
                 catch { }
 
-                //Create logger Event for lof MSg's .
-                tweetAccountManager.logEvents.addToLogger += new EventHandler(logEvents_Tweet_addToLogger);
+                //Create logger Event for lof MSg's previous.
+                //tweetAccountManager.logEvents.addToLogger += new EventHandler(logEvents_Tweet_addToLogger);
+                //tweetAccountManager.tweeter.logEvents.addToLogger += logEvents_Tweet_addToLogger;
+
+                objTweetAccountManager.logEvents.addToLogger += new EventHandler(logEvents_Tweet_addToLogger);
                 //tweetAccountManager.logEvents.addToLogger += logEvents_Tweet_addToLogger;
-                tweetAccountManager.tweeter.logEvents.addToLogger += logEvents_Tweet_addToLogger;
+                objTweetAccountManager.tweeter.logEvents.addToLogger += logEvents_Tweet_addToLogger;
 
 
                 if (GlobusRegex.ValidateNumber(txtMinDelay_Tweet.Text))
@@ -3502,83 +3592,270 @@ namespace twtboardpro
                             Queue<TwitterDataScrapper.StructTweetIDs> tempQueue = new Queue<TwitterDataScrapper.StructTweetIDs>();
                             TwitterDataScrapper.noOfRecords = 1;
                             AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Searching tweets for  " + keyValue.Key + " ]");
-                            count_tweet = tweetScrapper.countNoOfTweet(txtTweetKeyword.Text.Trim());
+                            //count_tweet = tweetScrapper.countNoOfTweet(txtTweetKeyword.Text.Trim());
+                            #region sonu commented code
+                        //    List<string> twtKeyword = GlobusFileHelper.ReadFiletoStringList(txtTweetKeyword.Text);
 
+                        //startAgain:
+                        //    foreach (string keyword in twtKeyword)
+                        //    {
+                        //        count_tweet = tweetScrapper.countNoOfTweet(keyword);
+
+                        //        //count_tweet = tweetScrapper.countNoOfTweet(GlobusFileHelper.ReadFiletoStringList);
+                        //    #endregion
+
+
+
+                        //        TweetAccountManager.static_lst_Struct_TweetData = tweetScrapper.TweetExtractor_ByUserName_New_New(keyword);
+
+                        //        int count = TweetAccountContainer.dictionary_TweetAccount.Count();
+                        //        foreach (TwitterDataScrapper.StructTweetIDs item in TweetAccountManager.static_lst_Struct_TweetData)
+                        //        {
+                        //            //for (int i = 1; i <= count * TweetAccountManager.static_lst_Struct_TweetData.Count(); i++)
+                        //            {
+                        //                TweetAccountManager.que_lst_Struct_TweetData.Enqueue(item);
+                        //                tempQueue.Enqueue(item);
+                        //            }
+
+                        //        }
+                        //        try
+                        //        {
+                        //            if (TweetAccountManager.que_lst_Struct_TweetData.Count > 0)
+                        //            {
+                        //                item1 = tempQueue.Dequeue();
+                        //            }
+                        //        }
+                        //        catch (Exception ex)
+                        //        {
+                        //            ErrorLogger.AddToErrorLogText(ex.Message);
+                        //            GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TweetingErroLog);
+                        //            GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                        //        }
+
+                        //        try
+                        //        {
+                        //            clsDBQueryManager DbQueryManager = new clsDBQueryManager();
+                        //            DataSet Ds = DbQueryManager.SelectMessageDataForRetweet(keyValue.Key, item1.ID_Tweet, "ReTweet");
+                        //            int count_NO_RoWs = Ds.Tables[0].Rows.Count;
+                        //            if (count_NO_RoWs == 0)
+                        //            {
+                        //                if (chkCheckDatabaseInEvery2Minutes.Checked)
+                        //                {
+                        //                    tweetAccountManager.ReTweet("", retweetMinDealy, retweetMaxDealy);
+                        //                }
+                        //                if (chkAutoFavorite.Checked && tweetAccountManager.IsNotSuspended && tweetAccountManager.IsLoggedIn)
+                        //                {
+                        //                    string TUri = item1.ID_Tweet.ToString();
+                        //                    AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Added To Favorite : " + TUri + " from " + tweetAccountManager.Username + " ]");
+                        //                    FavoriteOfUrl(new object[] { TUri, keyValue, tweetAccountManager });
+                        //                }
+                        //            }
+
+                        //            //AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Searching new tweets will start after 3 minutes from " + tweetAccountManager.Username + " ]");
+                        //            //Thread.Sleep(3 * 60 * 1000);
+                        //            count_tweet1 = tweetScrapper.countNoOfTweet(keyword);
+                        //            if (Convert.ToInt32(count_tweet) == Convert.ToInt32(count_tweet1))
+                        //            {
+                        //                TwitterDataScrapper.noOfRecords = 1;
+                        //            }
+                        //            else if (Convert.ToInt32(count_tweet1) > Convert.ToInt32(count_tweet))
+                        //            {
+                        //                TwitterDataScrapper.noOfRecords = Convert.ToInt32(count_tweet1) - Convert.ToInt32(count_tweet);
+                        //            }
+                        //            else
+                        //            {
+                        //                TwitterDataScrapper.noOfRecords = 1;
+                        //            }
+                        //            TweetAccountManager.static_lst_Struct_TweetData.Clear();
+                        //            TweetAccountManager.que_lst_Struct_TweetData.Clear();
+                        //            tempQueue.Clear();
+                        //            count_tweet = count_tweet1;
+                        //        }
+                        //        catch (Exception ex)
+                        //        {
+                        //            ErrorLogger.AddToErrorLogText(ex.Message);
+                        //            GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TweetingErroLog);
+                        //            GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                        //        }
+                        //        //goto startAgain;
+                        //    }
+                        //    AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Searching new tweets will start after 3 minutes from " + tweetAccountManager.Username + " ]");
+                        //    Thread.Sleep(3 * 60 * 1000);
+                        //    goto startAgain;
+                            #endregion
+
+
+                            #region sonu edited
+                            List<string> twtKeyword = GlobusFileHelper.ReadFiletoStringList(txtTweetKeyword.Text);
+                        //  TweetAccountManager objTweetAccountManager = new TweetAccountManager();
                         startAgain:
-
-                            TweetAccountManager.static_lst_Struct_TweetData = tweetScrapper.TweetExtractor_ByUserName_New_New(txtTweetKeyword.Text.Trim());
-
-                            int count = TweetAccountContainer.dictionary_TweetAccount.Count();
-                            foreach (TwitterDataScrapper.StructTweetIDs item in TweetAccountManager.static_lst_Struct_TweetData)
-                            {
-                                //for (int i = 1; i <= count * TweetAccountManager.static_lst_Struct_TweetData.Count(); i++)
-                                {
-                                    TweetAccountManager.que_lst_Struct_TweetData.Enqueue(item);
-                                    tempQueue.Enqueue(item);
-                                }
-
-                            }
                             try
                             {
-                                if (TweetAccountManager.que_lst_Struct_TweetData.Count > 0)
 
+                                // foreach (string keyword in twtKeyword)
+                                //  {
+                                //    count_tweet = tweetScrapper.countNoOfTweet(keyword);
+
+                                //count_tweet = tweetScrapper.countNoOfTweet(GlobusFileHelper.ReadFiletoStringList);
+                            #endregion
+
+
+
+                                //  TweetAccountManager.static_lst_Struct_TweetData = tweetScrapper.TweetExtractor_ByUserName_New_New(keyword);
+                                try
                                 {
-                                    item1 = tempQueue.Dequeue();
+                                    int count = TweetAccountContainer.dictionary_TweetAccount.Count();
                                 }
-                            }
-                            catch (Exception ex)
-                            {
-                                ErrorLogger.AddToErrorLogText(ex.Message);
-                                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TweetingErroLog);
-                                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TwtErrorLogs);
-                            }
+                                catch { };
+                                //  TweetAccountManager.que_lst_Struct_TweetData.Clear();
 
-                            try
-                            {
-                                clsDBQueryManager DbQueryManager = new clsDBQueryManager();
-                                DataSet Ds = DbQueryManager.SelectMessageDataForRetweet(keyValue.Key, item1.ID_Tweet, "ReTweet");
-                                int count_NO_RoWs = Ds.Tables[0].Rows.Count;
-                                if (count_NO_RoWs == 0)
+                                // que_lst_Struct_TweetData1
+                                List<TwitterDataScrapper.StructTweetIDs> static_lst_Struct_TweetData12 = TweetAccountManager.static_lst_Struct_TweetData;
+                                foreach (TwitterDataScrapper.StructTweetIDs item in static_lst_Struct_TweetData12)
                                 {
-                                    if (chkCheckDatabaseInEvery2Minutes.Checked)
+                                    //for (int i = 1; i <= count * TweetAccountManager.static_lst_Struct_TweetData.Count(); i++)
                                     {
-                                        tweetAccountManager.ReTweet("", retweetMinDealy, retweetMaxDealy);
+                                        try
+                                        {
+                                            objTweetAccountManager.que_lst_Struct_TweetData1.Enqueue(item);
+                                            TweetAccountManager.que_lst_Struct_TweetData.Enqueue(item);
+                                            tempQueue.Enqueue(item);
+                                        }
+                                        catch { };
                                     }
-                                    if (chkAutoFavorite.Checked && tweetAccountManager.IsNotSuspended && tweetAccountManager.IsLoggedIn)
+
+                                }
+                                try
+                                {
+                                    if (objTweetAccountManager.que_lst_Struct_TweetData1.Count > 0)
                                     {
-                                        string TUri = item1.ID_Tweet.ToString();
-                                        AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Added To Favorite : " + TUri + " from " + tweetAccountManager.Username + " ]");
-                                        FavoriteOfUrl(new object[] { TUri, keyValue, tweetAccountManager });
+                                        Queue<TwitterDataScrapper.StructTweetIDs> que_lst_Struct_TweetData12 = new Queue<TwitterDataScrapper.StructTweetIDs>();
+                                        que_lst_Struct_TweetData12.Clear();
+                                        foreach (TwitterDataScrapper.StructTweetIDs item in objTweetAccountManager.que_lst_Struct_TweetData1)
+                                        {
+                                            item1 = item;
+                                            clsDBQueryManager DbQueryManager = new clsDBQueryManager();
+                                            DataSet Ds = DbQueryManager.SelectMessageDataForRetweet(keyValue.Key, item1.ID_Tweet, "ReTweet");
+                                            int count_NO_RoWs = Ds.Tables[0].Rows.Count;
+                                            if (count_NO_RoWs == 0)
+                                            {
+                                                que_lst_Struct_TweetData12.Enqueue(item);
+                                            }
+
+                                        }
+                                        try
+                                        {
+                                            objTweetAccountManager.que_lst_Struct_TweetData1.Clear();
+                                            objTweetAccountManager.que_lst_Struct_TweetData1 = que_lst_Struct_TweetData12;
+                                        }
+                                        catch { };
                                     }
+                                }
+                                catch (Exception ex)
+                                {
+                                    ErrorLogger.AddToErrorLogText(ex.Message);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TweetingErroLog);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TwtErrorLogs);
                                 }
 
-                                AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Searching new tweets will start after 3 minutes from " + tweetAccountManager.Username + " ]");
-                                Thread.Sleep(3 * 60 * 1000);
-                                count_tweet1 = tweetScrapper.countNoOfTweet(txtTweetKeyword.Text.Trim());
-                                if (Convert.ToInt32(count_tweet) == Convert.ToInt32(count_tweet1))
+                                try
                                 {
-                                    TwitterDataScrapper.noOfRecords = 1;
+                                    clsDBQueryManager DbQueryManager = new clsDBQueryManager();
+                                    DataSet Ds = DbQueryManager.SelectMessageDataForRetweet(keyValue.Key, item1.ID_Tweet, "ReTweet");
+                                    int count_NO_RoWs = Ds.Tables[0].Rows.Count;
+                                    if (objTweetAccountManager.que_lst_Struct_TweetData1.Count > 0)
+                                    {
+                                        //if (chkCheckDatabaseInEvery2Minutes.Checked)
+                                        //{
+                                        //    try
+                                        //    {
+                                        //        objTweetAccountManager.ReTweet1(ref objTweetAccountManager, retweetMinDealy, retweetMaxDealy);
+                                        //    }
+                                        //    catch { };
+                                        //}
+                                        //if (chkAutoFavorite.Checked && tweetAccountManager.IsNotSuspended && tweetAccountManager.IsLoggedIn)
+                                        //{
+                                        //    string TUri = item1.ID_Tweet.ToString();
+                                        //    AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Added To Favorite : " + TUri + " from " + tweetAccountManager.Username + " ]");
+                                        //    FavoriteOfUrl(new object[] { TUri, keyValue, tweetAccountManager });
+                                        //}
+
+
+                                        if (chkCheckDatabaseInEvery2Minutes.Checked)
+                                        {
+                                            try
+                                            {
+                                                objTweetAccountManager.ReTweet1(ref objTweetAccountManager, retweetMinDealy, retweetMaxDealy);
+                                            }
+                                            catch { };
+                                        }
+                                        if (chkAutoFavorite.Checked && tweetAccountManager.IsNotSuspended && tweetAccountManager.IsLoggedIn)
+                                        {
+                                            string TUri = item1.ID_Tweet.ToString();
+                                            AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Added To Favorite : " + TUri + " from " + tweetAccountManager.Username + " ]");
+                                            FavoriteOfUrl(new object[] { TUri, keyValue, tweetAccountManager });
+                                        }
+                                        else if (chkAutoFavorite.Checked)
+                                        {
+                                            tweetAccountManager.Login();
+                                            if (tweetAccountManager.IsLoggedIn)
+                                            {
+                                                string TUri = item1.ID_Tweet.ToString();
+                                                AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Added To Favorite : " + TUri + " from " + tweetAccountManager.Username + " ]");
+                                                FavoriteOfUrl(new object[] { TUri, keyValue, tweetAccountManager });
+                                            }
+
+                                        }
+                                    }
+
+                                    // AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Searching new tweets will start after 3 minutes from " + tweetAccountManager.Username + " ]");
+                                    //Thread.Sleep(2 * 60 * 1000);
+                                    //count_tweet1 = tweetScrapper.countNoOfTweet(txtTweetKeyword.Text.Trim());
+                                    //  count_tweet1 = tweetScrapper.countNoOfTweet(keyword);
+                                    try
+                                    {
+                                        if (Convert.ToInt32(count_tweet) == Convert.ToInt32(count_tweet1))
+                                        {
+                                            TwitterDataScrapper.noOfRecords = 1;
+                                        }
+                                        else if (Convert.ToInt32(count_tweet1) > Convert.ToInt32(count_tweet))
+                                        {
+                                            TwitterDataScrapper.noOfRecords = Convert.ToInt32(count_tweet1) - Convert.ToInt32(count_tweet);
+                                        }
+                                        else
+                                        {
+                                            TwitterDataScrapper.noOfRecords = 1;
+                                        }
+                                    }
+                                    catch { };
+                                    // TweetAccountManager.static_lst_Struct_TweetData.Clear();
+                                    // TweetAccountManager.que_lst_Struct_TweetData.Clear();
+                                    try
+                                    {
+                                        objTweetAccountManager.que_lst_Struct_TweetData1.Clear();
+                                        tempQueue.Clear();
+                                        count_tweet = count_tweet1;
+                                    }
+                                    catch { };
                                 }
-                                else if (Convert.ToInt32(count_tweet1) > Convert.ToInt32(count_tweet))
+                                catch (Exception ex)
                                 {
-                                    TwitterDataScrapper.noOfRecords = Convert.ToInt32(count_tweet1) - Convert.ToInt32(count_tweet);
+                                    ErrorLogger.AddToErrorLogText(ex.Message);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TweetingErroLog);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TwtErrorLogs);
                                 }
-                                else
-                                {
-                                    TwitterDataScrapper.noOfRecords = 1;
-                                }
-                                TweetAccountManager.static_lst_Struct_TweetData.Clear();
-                                TweetAccountManager.que_lst_Struct_TweetData.Clear();
-                                tempQueue.Clear();
-                                count_tweet = count_tweet1;
+
+                                //  }
+                                //   AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Searching new tweets will start after 3 minutes from " + tweetAccountManager.Username + " ]");
+                                AddToLog_Tweet("[ " + DateTime.Now + " ] => [Delay For Account - " + tweetAccountManager.Username + " 2 Minutes ]");
+                                Thread.Sleep(2 * 60 * 1000);
                             }
-                            catch (Exception ex)
-                            {
-                                ErrorLogger.AddToErrorLogText(ex.Message);
-                                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TweetingErroLog);
-                                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TwtErrorLogs);
-                            }
+                            catch { };
                             goto startAgain;
+
+
+
+
                         }
                         catch (Exception ex)
                         {
@@ -3586,6 +3863,7 @@ namespace twtboardpro
                             GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TweetingErroLog);
                             GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ThreadpoolMethod_Retweet() --> " + ex.Message, Globals.Path_TwtErrorLogs);
                         }
+                    
                     }
                 }
                 else
@@ -3829,18 +4107,18 @@ namespace twtboardpro
 
                         //    string accountUser = tweetAccountManager.Username;
                         //    string accountPass = tweetAccountManager.Password;
-                        //    string proxyAddress = tweetAccountManager.proxyAddress;
-                        //    string proxyPort = tweetAccountManager.proxyPort;
-                        //    string proxyUserName = tweetAccountManager.proxyUsername;
-                        //    string proxyPassword = tweetAccountManager.proxyPassword;
+                        //    string IPAddress = tweetAccountManager.IPAddress;
+                        //    string IPPort = tweetAccountManager.IPPort;
+                        //    string IPUsername = tweetAccountManager.IPUsername;
+                        //    string IPpassword = tweetAccountManager.IPpassword;
 
                         //    tweetAccountManager = new TweetAccountManager();
                         //    tweetAccountManager.Username = accountUser;
                         //    tweetAccountManager.Password = accountPass;
-                        //    tweetAccountManager.proxyAddress = proxyAddress;
-                        //    tweetAccountManager.proxyPort = proxyPort;
-                        //    tweetAccountManager.proxyUsername = proxyUserName;
-                        //    tweetAccountManager.proxyPassword = proxyPassword;
+                        //    tweetAccountManager.IPAddress = IPAddress;
+                        //    tweetAccountManager.IPPort = IPPort;
+                        //    tweetAccountManager.IPUsername = IPUsername;
+                        //    tweetAccountManager.IPpassword = IPpassword;
 
                         //    tweetAccountManager.logEvents.addToLogger += new EventHandler(logEvents_Tweet_addToLogger);
                         //    //tweetAccountManager.logEvents.addToLogger += logEvents_Tweet_addToLogger;
@@ -4056,6 +4334,22 @@ namespace twtboardpro
                     return;
                 }
 
+                if (CheckBoxScrapTweets.Checked)
+                {
+                    if (ScrapTweetsForTweetModule.Count() > 0)
+                    {
+                        listTweetMessages.Clear();
+                        listTweetMessages = ScrapTweetsForTweetModule;
+                        listTweetMessages.Distinct();
+                    }
+                    else
+                    {
+                        AddToLog_Tweet("[ " + DateTime.Now + " ] => [ No scraped Tweet is Found, Please Scrap Tweets First ]");
+                        return;
+                    }
+
+                }
+
                 if (listTweetMessages.Count >= 1)
                 {
                     new Thread(() =>
@@ -4157,7 +4451,7 @@ namespace twtboardpro
                     if (Ismentionsingleuser && lst_mentionUser.Count != 0)
                     {
                         int countNoofMentionUser = 1;
-                        if (NumberHelper.ValidateNumber(txtNumberOfProxyThreads.Text))
+                        if (NumberHelper.ValidateNumber(txtNumberOfIPThreads.Text))
                         {
                             countNoofMentionUser = Convert.ToInt32(txtTweetMentionNoOfUser.Text.Trim());
                             if (countNoofMentionUser <= 0)
@@ -5254,10 +5548,10 @@ namespace twtboardpro
 
             string email = string.Empty;
             string EmailPass = string.Empty;
-            string proxyAddress = string.Empty;
+            string IPAddress = string.Empty;
             string port = string.Empty;
-            string proxyusername = string.Empty;
-            string proxypass = string.Empty;
+            string IPUsername = string.Empty;
+            string IPpass = string.Empty;
 
             try
             {
@@ -5286,17 +5580,17 @@ namespace twtboardpro
                     {
                         email = EmailArr[0];
                         EmailPass = EmailArr[1];
-                        proxyAddress = EmailArr[2];
+                        IPAddress = EmailArr[2];
                         port = EmailArr[3];
                     }
                     else if (EmailArr.Count() == 6)
                     {
                         email = EmailArr[0];
                         EmailPass = EmailArr[1];
-                        proxyAddress = EmailArr[2];
+                        IPAddress = EmailArr[2];
                         port = EmailArr[3];
-                        proxyusername = EmailArr[4];
-                        proxypass = EmailArr[5];
+                        IPUsername = EmailArr[4];
+                        IPpass = EmailArr[5];
                     }
                     else
                     {
@@ -5317,10 +5611,10 @@ namespace twtboardpro
 
                     AccountManager.Username = email;
                     AccountManager.Password = EmailPass;
-                    AccountManager.proxyAddress = proxyAddress;
-                    AccountManager.proxyPort = port;
-                    AccountManager.proxyUsername = proxyusername;
-                    AccountManager.proxyPassword = proxypass;
+                    AccountManager.IPAddress = IPAddress;
+                    AccountManager.IPPort = port;
+                    AccountManager.IPUsername = IPUsername;
+                    AccountManager.IPpassword = IPpass;
 
                     AccountManager.Login();
 
@@ -5329,28 +5623,28 @@ namespace twtboardpro
                     if (AccountManager.IsLoggedIn && AccountManager.IsNotSuspended && !AccountManager.Isnonemailverifiedaccounts)
                     {
                         AddToLog_Checker("[ " + DateTime.Now + " ] => [ Account : " + AccountManager.Username + " is Active ]");
-                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + proxyAddress + ":" + port + ":" + proxyusername + ":" + proxypass, Globals.path_ActiveEmailAccounts);
+                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + IPAddress + ":" + port + ":" + IPUsername + ":" + IPpass, Globals.path_ActiveEmailAccounts);
                     }
                     else if (!AccountManager.IsLoggedIn && AccountManager.globusHttpHelper.gResponse.ResponseUri.AbsoluteUri.Contains("https://twitter.com/login/captcha"))
                     {
                         AddToLog_Checker("[ " + DateTime.Now + " ] => [ Account : " + AccountManager.Username + " Asking for captcha ]");
-                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + proxyAddress + ":" + port + ":" + proxyusername + ":" + proxypass, Globals.path_EmailisNotCurrectOrIncorrectPass);
+                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + IPAddress + ":" + port + ":" + IPUsername + ":" + IPpass, Globals.path_EmailisNotCurrectOrIncorrectPass);
                     }
                     //Not necesary its allready done on followercount() method in account login
                     //else if (!AccountManager.IsNotSuspended)
                     //{
                     //    AddToLog_Checker("[ " + DateTime.Now + " ] => [ Account : " + AccountManager.Username + " is suspended ]");
-                    //    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + proxyAddress + ":" + port + ":" + proxyusername + ":" + proxypass, Globals.path_SuspendedEmailAccounts);
+                    //    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + IPAddress + ":" + port + ":" + IPUsername + ":" + IPpass, Globals.path_SuspendedEmailAccounts);
                     //}
                     else if (AccountManager.Isnonemailverifiedaccounts)
                     {
                         AddToLog_Checker("[ " + DateTime.Now + " ] => [ Account : " + AccountManager.Username + " is Required Email Verification ]");
-                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + proxyAddress + ":" + port + ":" + proxyusername + ":" + proxypass, Globals.path_RequiredEmailVerificationAccounts);
+                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + IPAddress + ":" + port + ":" + IPUsername + ":" + IPpass, Globals.path_RequiredEmailVerificationAccounts);
                     }
                     else
                     {
                         AddToLog_Checker("[ " + DateTime.Now + " ] => [ Email is not exist/incorrect pass : " + AccountManager.Username + " ]");
-                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + proxyAddress + ":" + port + ":" + proxyusername + ":" + proxypass, Globals.path_EmailisNotCurrectOrIncorrectPass);
+                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(AccountManager.Username + ":" + EmailPass + ":" + IPAddress + ":" + port + ":" + IPUsername + ":" + IPpass, Globals.path_EmailisNotCurrectOrIncorrectPass);
                     }
 
                     AccountManager.logEvents.addToLogger -= new EventHandler(logEvents_addToLogger);
@@ -5579,32 +5873,32 @@ namespace twtboardpro
 
                 string Email = string.Empty;//"allliesams@gmail.com";
 
-                string proxyAddress = string.Empty;
-                string proxyPort = string.Empty;
-                string proxyUsername = string.Empty;
-                string proxyPassword = string.Empty;
+                string IPAddress = string.Empty;
+                string IPPort = string.Empty;
+                string IPUsername = string.Empty;
+                string IPpassword = string.Empty;
 
                 string emailData = (string)paramsArray.GetValue(0);
-                string Proxy = (string)paramsArray.GetValue(1);
+                string IP = (string)paramsArray.GetValue(1);
 
                 Email = emailData.Split(':')[0];
 
-                if (!string.IsNullOrEmpty(Proxy))
+                if (!string.IsNullOrEmpty(IP))
                 {
                     try
                     {
-                        string[] ProxyData = Proxy.Split(':');
-                        if (ProxyData.Count() == 2)
+                        string[] IPData = IP.Split(':');
+                        if (IPData.Count() == 2)
                         {
-                            proxyAddress = ProxyData[0];
-                            proxyPort = ProxyData[1];
+                            IPAddress = IPData[0];
+                            IPPort = IPData[1];
                         }
-                        if (ProxyData.Count() == 4)
+                        if (IPData.Count() == 4)
                         {
-                            proxyAddress = ProxyData[0];
-                            proxyPort = ProxyData[1];
-                            proxyUsername = ProxyData[2];
-                            proxyPassword = ProxyData[3];
+                            IPAddress = IPData[0];
+                            IPPort = IPData[1];
+                            IPUsername = IPData[2];
+                            IPpassword = IPData[3];
                         }
                     }
                     catch (Exception)
@@ -5613,7 +5907,7 @@ namespace twtboardpro
                 }
                 GlobusHttpHelper gHttpHelpr = new GlobusHttpHelper();
 
-                string res_MainPage = gHttpHelpr.getHtmlfromUrlProxy(new Uri("https://twitter.com/account/resend_password"), "", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                string res_MainPage = gHttpHelpr.getHtmlfromUrlIP(new Uri("https://twitter.com/account/resend_password"), "", IPAddress, IPPort, IPUsername, IPpassword);
 
                 string postAuthenticityToken = TweetAccountManager.PostAuthenticityToken(res_MainPage, "postAuthenticityToken");
 
@@ -5828,22 +6122,22 @@ namespace twtboardpro
             catch { }
         }
 
-        private void AddToProxysLogs(string log)
+        private void AddToIPsLogs(string log)
         {
             try
             {
-                if (lstLoggerProxy.InvokeRequired)
+                if (lstLoggerIP.InvokeRequired)
                 {
-                    lstLoggerProxy.Invoke(new MethodInvoker(delegate
+                    lstLoggerIP.Invoke(new MethodInvoker(delegate
                     {
-                        lstLoggerProxy.Items.Add(log);
-                        lstLoggerProxy.SelectedIndex = lstLoggerProxy.Items.Count - 1;
+                        lstLoggerIP.Items.Add(log);
+                        lstLoggerIP.SelectedIndex = lstLoggerIP.Items.Count - 1;
                     }));
                 }
                 else
                 {
-                    lstLoggerProxy.Items.Add(log);
-                    lstLoggerProxy.SelectedIndex = lstLoggerProxy.Items.Count - 1;
+                    lstLoggerIP.Items.Add(log);
+                    lstLoggerIP.SelectedIndex = lstLoggerIP.Items.Count - 1;
                 }
 
                 lbltotalworkingproxies.Invoke(new MethodInvoker(delegate
@@ -5875,7 +6169,7 @@ namespace twtboardpro
             catch { }
         }
 
-        private void AddToProxyAccountCreationLog(string log)
+        private void AddToIPAccountCreationLog(string log)
         {
             try
             {
@@ -6519,18 +6813,18 @@ namespace twtboardpro
 
                         //string accountUser = tweetAccountManager.Username;
                         //string accountPass = tweetAccountManager.Password;
-                        //string proxyAddress = tweetAccountManager.proxyAddress;
-                        //string proxyPort = tweetAccountManager.proxyPort;
-                        //string proxyUserName = tweetAccountManager.proxyUsername;
-                        //string proxyPassword = tweetAccountManager.proxyPassword;
+                        //string IPAddress = tweetAccountManager.IPAddress;
+                        //string IPPort = tweetAccountManager.IPPort;
+                        //string IPUsername = tweetAccountManager.IPUsername;
+                        //string IPpassword = tweetAccountManager.IPpassword;
 
                         //tweetAccountManager = new TweetAccountManager();
                         //tweetAccountManager.Username = accountUser;
                         //tweetAccountManager.Password = accountPass;
-                        //tweetAccountManager.proxyAddress = proxyAddress;
-                        //tweetAccountManager.proxyPort = proxyPort;
-                        //tweetAccountManager.proxyUsername = proxyUserName;
-                        //tweetAccountManager.proxyPassword = proxyPassword;
+                        //tweetAccountManager.IPAddress = IPAddress;
+                        //tweetAccountManager.IPPort = IPPort;
+                        //tweetAccountManager.IPUsername = IPUsername;
+                        //tweetAccountManager.IPpassword = IPpassword;
 
                         //tweetAccountManager.logEvents.addToLogger += new EventHandler(logEvents_Profile_addToLogger);
                         //tweetAccountManager.profileUpdater.logEvents.addToLogger += logEvents_Profile_addToLogger;
@@ -6610,18 +6904,18 @@ namespace twtboardpro
                 #region commneted
                 //string accountUser = tweetAccountManager.Username;
                 //string accountPass = tweetAccountManager.Password;
-                //string proxyAddress = tweetAccountManager.proxyAddress;
-                //string proxyPort = tweetAccountManager.proxyPort;
-                //string proxyUserName = tweetAccountManager.proxyUsername;
-                //string proxyPassword = tweetAccountManager.proxyPassword;
+                //string IPAddress = tweetAccountManager.IPAddress;
+                //string IPPort = tweetAccountManager.IPPort;
+                //string IPUsername = tweetAccountManager.IPUsername;
+                //string IPpassword = tweetAccountManager.IPpassword;
 
                 //tweetAccountManager = new TweetAccountManager();
                 //tweetAccountManager.Username = accountUser;
                 //tweetAccountManager.Password = accountPass;
-                //tweetAccountManager.proxyAddress = proxyAddress;
-                //tweetAccountManager.proxyPort = proxyPort;
-                //tweetAccountManager.proxyUsername = proxyUserName;
-                //tweetAccountManager.proxyPassword = proxyPassword; 
+                //tweetAccountManager.IPAddress = IPAddress;
+                //tweetAccountManager.IPPort = IPPort;
+                //tweetAccountManager.IPUsername = IPUsername;
+                //tweetAccountManager.IPpassword = IPpassword; 
                 #endregion
 
                 tweetAccountManager.logEvents.addToLogger += new EventHandler(logEvents_Profile_addToLogger);
@@ -6989,10 +7283,10 @@ namespace twtboardpro
         //}
 
 
-        List<Thread> LstPublicProxy = new List<Thread>();
-        bool IsStopPublicProxy = false;
+        List<Thread> LstPublicIP = new List<Thread>();
+        bool IsStopPublicIP = false;
 
-        private void btnTestPublicProxy_Click(object sender, EventArgs e)
+        private void btnTestPublicIP_Click(object sender, EventArgs e)
         {
             CheckNetConn = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
 
@@ -7001,31 +7295,31 @@ namespace twtboardpro
                 try
                 {
                     workingproxiesCount = 0;
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Existing Proxies Saved To : ]");
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + Globals.Path_ExsistingProxies + " ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ Existing Proxies Saved To : ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + Globals.Path_ExsistingProxies + " ]");
                     List<string> lstProxies = new List<string>();
-                    if (chkboxUseUrlProxy.Checked && !string.IsNullOrEmpty(txtProxyUrl.Text))
+                    if (chkboxUseUrlIP.Checked && !string.IsNullOrEmpty(txtIPUrl.Text))
                     {
                         GlobusHttpHelper HttpHelper = new GlobusHttpHelper();
-                        string pageSource = HttpHelper.getHtmlfromUrlProxy(new Uri(txtProxyUrl.Text), "", "", "", "", "");
+                        string pageSource = HttpHelper.getHtmlfromUrlIP(new Uri(txtIPUrl.Text), "", "", "", "", "");
                         string[] array = Regex.Split(pageSource, "\n");
                         foreach (string item in array)
                         {
-                            string Proxy = item.Replace("\r", "");
+                            string IP = item.Replace("\r", "");
                             lstProxies.Add(item);
                         }
                     }
-                    else if (!string.IsNullOrEmpty(txtPublicProxy.Text.Trim()))
+                    else if (!string.IsNullOrEmpty(txtPublicIP.Text.Trim()))
                     {
-                        lstProxies = GlobusFileHelper.ReadFiletoStringList(txtPublicProxy.Text);
+                        lstProxies = GlobusFileHelper.ReadFiletoStringList(txtPublicIP.Text);
                     }
                     else
                     {
-                        AddToProxysLogs("[ " + DateTime.Now + " ] => [ Please Upload Either Url or Load Proxy Files ]");
+                        AddToIPsLogs("[ " + DateTime.Now + " ] => [ Please Upload Either Url or Load IP Files ]");
                         return;
                     }
-                    //lstProxies = Globussoft.GlobusFileHelper.ReadFiletoStringList(txtPublicProxy.Text);
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + lstProxies.Count() + " Public Proxies Uploaded ]");
+                    //lstProxies = Globussoft.GlobusFileHelper.ReadFiletoStringList(txtPublicIP.Text);
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + lstProxies.Count() + " Public Proxies Uploaded ]");
                     new Thread(() =>
                     {
                         GetValidProxies(lstProxies);
@@ -7039,7 +7333,7 @@ namespace twtboardpro
             else
             {
                 MessageBox.Show("Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection...");
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
             }
         }
 
@@ -7048,34 +7342,34 @@ namespace twtboardpro
 
             try
             {
-                if (IsStopPublicProxy)
+                if (IsStopPublicIP)
                 {
                     return;
                 }
-                LstPublicProxy.Add(Thread.CurrentThread);
-                LstPublicProxy = LstPublicProxy.Distinct().ToList();
+                LstPublicIP.Add(Thread.CurrentThread);
+                LstPublicIP = LstPublicIP.Distinct().ToList();
                 Thread.CurrentThread.IsBackground = true;
             }
             catch { }
             //try
             //{
             //    Thread.CurrentThread.Name = "main";
-            //    //dictionary_Threads.Add("proxy_", Thread.CurrentThread);
-            //    dictionary_Threads.Add("proxy_", Thread.CurrentThread);
+            //    //dictionary_Threads.Add("IP_", Thread.CurrentThread);
+            //    dictionary_Threads.Add("IP_", Thread.CurrentThread);
             //}
             //catch { };
 
-            numberOfProxyThreads = 25;
+            numberOfIPThreads = 25;
             threadcountForFinishMSG = lstProxies.Count;
-            if (!string.IsNullOrEmpty(txtNumberOfProxyThreads.Text) && GlobusRegex.ValidateNumber(txtNumberOfProxyThreads.Text))
+            if (!string.IsNullOrEmpty(txtNumberOfIPThreads.Text) && GlobusRegex.ValidateNumber(txtNumberOfIPThreads.Text))
             {
-                numberOfProxyThreads = int.Parse(txtNumberOfProxyThreads.Text);
+                numberOfIPThreads = int.Parse(txtNumberOfIPThreads.Text);
             }
 
             //WaitCallback waitCallBack = new WaitCallback(ThreadPoolMethod_Proxies);
             foreach (string item in lstProxies)
             {
-                if (countParseProxiesThreads >= numberOfProxyThreads)
+                if (countParseProxiesThreads >= numberOfIPThreads)
                 {
                     lock (proxiesThreadLockr)
                     {
@@ -7083,7 +7377,7 @@ namespace twtboardpro
                     }
                 }
 
-                ///Code for checking and then adding proxies to FinalProxyList...
+                ///Code for checking and then adding proxies to FinalIPList...
                 //ThreadPool.QueueUserWorkItem(waitCallBack, item);
 
                 Thread GetStartProcessForChAngeAcPassword = new Thread(ThreadPoolMethod_Proxies);
@@ -7094,29 +7388,29 @@ namespace twtboardpro
                 //Thread.Sleep(500);
             }
 
-            //AddToProxysLogs(ValidPublicProxies.Count() + " Public Proxies Valid");
+            //AddToIPsLogs(ValidPublicProxies.Count() + " Public Proxies Valid");
         }
 
-        private void ThreadPoolMethod_Proxies(object objProxy)
+        private void ThreadPoolMethod_Proxies(object objIP)
         {
             try
             {
-                LstPublicProxy.Add(Thread.CurrentThread);
-                LstPublicProxy = LstPublicProxy.Distinct().ToList();
+                LstPublicIP.Add(Thread.CurrentThread);
+                LstPublicIP = LstPublicIP.Distinct().ToList();
                 Thread.CurrentThread.IsBackground = true;
 
                 Interlocked.Increment(ref countParseProxiesThreads);
                 //countParseProxiesThreads++;
 
-                string item = (string)objProxy;
+                string item = (string)objIP;
                 int IsPublic = 0;
                 int Working = 0;
                 string LoggedInIp = string.Empty;
 
-                string proxyAddress = string.Empty;
-                string proxyPort = string.Empty;
-                string proxyUserName = string.Empty;
-                string proxyPassword = string.Empty;
+                string IPAddress = string.Empty;
+                string IPPort = string.Empty;
+                string IPUsername = string.Empty;
+                string IPpassword = string.Empty;
 
                 string account = item;
 
@@ -7124,53 +7418,53 @@ namespace twtboardpro
 
                 if (DataCount == 1)
                 {
-                    proxyAddress = account.Split(':')[0];
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxy Not In correct Format ]");
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + account + " ]");
+                    IPAddress = account.Split(':')[0];
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ IP Not In correct Format ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + account + " ]");
                     return;
                 }
                 if (DataCount == 2)
                 {
-                    proxyAddress = account.Split(':')[0];
-                    proxyPort = account.Split(':')[1];
+                    IPAddress = account.Split(':')[0];
+                    IPPort = account.Split(':')[1];
                 }
                 else if (DataCount > 2)
                 {
-                    proxyAddress = account.Split(':')[0];
-                    proxyPort = account.Split(':')[1];
-                    proxyUserName = account.Split(':')[2];
-                    proxyPassword = account.Split(':')[3];
-                    //AddToProxysLogs("Proxy Not In correct Format");
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + account + " ]");
+                    IPAddress = account.Split(':')[0];
+                    IPPort = account.Split(':')[1];
+                    IPUsername = account.Split(':')[2];
+                    IPpassword = account.Split(':')[3];
+                    //AddToIPsLogs("IP Not In correct Format");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + account + " ]");
                     return;
                 }
 
                 try
                 {
-                    dictionary_Threads.Add("proxy_" + proxyAddress, Thread.CurrentThread);
+                    dictionary_Threads.Add("IP_" + IPAddress, Thread.CurrentThread);
                 }
                 catch { };
 
 
-                ProxyChecker proxyChecker = new ProxyChecker(proxyAddress, proxyPort, proxyUserName, proxyPassword, IsPublic);
-                if (proxyChecker.CheckProxy())
+                IPChecker IPChecker = new IPChecker(IPAddress, IPPort, IPUsername, IPpassword, IsPublic);
+                if (IPChecker.CheckIP())
                 {
                     //lock (((System.Collections.ICollection)listWorkingProxies).SyncRoot)
                     {
-                        //if (!listWorkingProxies.Contains(proxy))
+                        //if (!listWorkingProxies.Contains(IP))
                         {
                             workingproxiesCount++;
-                            //listWorkingProxies.Add(proxy);
-                            lock (proxyListLockr)
+                            //listWorkingProxies.Add(IP);
+                            lock (IPListLockr)
                             {
                                 queWorkingProxies.Enqueue(item);
-                                Monitor.Pulse(proxyListLockr);
+                                Monitor.Pulse(IPListLockr);
                             }
-                            AddToProxysLogs("[ " + DateTime.Now + " ] => [ Added " + item + " to working proxies list ]");
+                            AddToIPsLogs("[ " + DateTime.Now + " ] => [ Added " + item + " to working proxies list ]");
 
-                            lock (Locker_LstRunningProxy_ProxyModule)
+                            lock (Locker_LstRunningIP_IPModule)
                             {
-                                LstRunningProxy_ProxyModule.Add(item);
+                                LstRunningIP_IPModule.Add(item);
                             }
 
                             Globals.EnquequeWorkingProxiesForSignUp(item);
@@ -7181,7 +7475,7 @@ namespace twtboardpro
                 }
                 else
                 {
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Non Working Proxy: " + proxyAddress + ":" + proxyPort + " ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ Non Working IP: " + IPAddress + ":" + IPPort + " ]");
                     GlobusFileHelper.AppendStringToTextfileNewLine(item, Globals.Path_Non_ExistingProxies);
                 }
 
@@ -7190,7 +7484,7 @@ namespace twtboardpro
                 //try
                 //{
                 //    GlobusHttpHelper httpHelper = new GlobusHttpHelper();
-                //    pageSource = httpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), "", proxyAddress, proxyPort, proxyUserName, proxyPassword);
+                //    pageSource = httpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), "", IPAddress, IPPort, IPUsername, IPpassword);
                 //}
                 //catch (Exception ex)
                 //{
@@ -7200,7 +7494,7 @@ namespace twtboardpro
                 //{
                 //    using (SQLiteConnection con = new SQLiteConnection(DataBaseHandler.CONstr))
                 //    {
-                //        //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE ProxyAddress = '" + proxyAddress + "'", con))
+                //        //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE IPAddress = '" + IPAddress + "'", con))
                 //        using (SQLiteDataAdapter ad = new SQLiteDataAdapter())
                 //        {
                 //            if (DataCount >= 2)
@@ -7214,8 +7508,8 @@ namespace twtboardpro
                 //                IsPublic = 1;
                 //            }
                 //            Working = 1;
-                //            string InsertQuery = "Insert into tb_Proxies values('" + proxyAddress + "','" + proxyPort + "','" + proxyUserName + "','" + proxyPassword + "', " + Working + "," + IsPublic + " , '" + LoggedInIp + "')";
-                //            DataBaseHandler.InsertQuery(InsertQuery, "tb_Proxies");
+                //            string InsertQuery = "Insert into tb_IP values('" + IPAddress + "','" + IPPort + "','" + IPUsername + "','" + IPpassword + "', " + Working + "," + IsPublic + " , '" + LoggedInIp + "')";
+                //            DataBaseHandler.InsertQuery(InsertQuery, "tb_IP");
                 //        }
                 //    }
                 //    ValidPublicProxies.Add(item);
@@ -7225,7 +7519,7 @@ namespace twtboardpro
             }
             catch (Exception ex)
             {
-                //AddToProxysLogs(ex.Message);
+                //AddToIPsLogs(ex.Message);
             }
             finally
             {
@@ -7241,8 +7535,8 @@ namespace twtboardpro
                 if (threadcountForFinishMSG == 0)
                 {
 
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ PROCESS COMPLETED ]");
-                    AddToProxysLogs("-----------------------------------------------------------------------------------------------------------------------");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ PROCESS COMPLETED ]");
+                    AddToIPsLogs("-----------------------------------------------------------------------------------------------------------------------");
                 }
 
 
@@ -7257,11 +7551,11 @@ namespace twtboardpro
             {
                 try
                 {
-                    if (MessageBox.Show("Do you really want to delete all the Proxies from Database", "Proxy", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show("Do you really want to delete all the Proxies from Database", "IP", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         clsDBQueryManager setting = new clsDBQueryManager();
-                        setting.DeletePublicProxyData();
-                        AddToProxysLogs("[ " + DateTime.Now + " ] => [ All Public Proxies Deleted from the DataBase ]");
+                        setting.DeletePublicIPData();
+                        AddToIPsLogs("[ " + DateTime.Now + " ] => [ All Public Proxies Deleted from the DataBase ]");
                         workingproxiesCount = 0;
                         lbltotalworkingproxies.Invoke(new MethodInvoker(delegate
                         {
@@ -7277,7 +7571,7 @@ namespace twtboardpro
             else
             {
                 MessageBox.Show("Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection...");
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
             }
         }
 
@@ -7289,13 +7583,13 @@ namespace twtboardpro
             {
                 try
                 {
-                    if (MessageBox.Show("Do you really want to delete all the Private Proxies from Database???", "Proxy", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show("Do you really want to delete all the Private Proxies from Database???", "IP", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         new Thread(() =>
                         {
                             clsDBQueryManager setting = new clsDBQueryManager();
-                            setting.DeletePrivateProxyData();
-                            AddToProxysLogs("[ " + DateTime.Now + " ] => [ All Private Proxies Deleted from the DataBase ]");
+                            setting.DeletePrivateIPData();
+                            AddToIPsLogs("[ " + DateTime.Now + " ] => [ All Private Proxies Deleted from the DataBase ]");
                         }).Start();
                     }
                 }
@@ -7307,11 +7601,11 @@ namespace twtboardpro
             else
             {
                 MessageBox.Show("Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection...");
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
             }
         }
 
-        private void btnPublicProxy_Click(object sender, EventArgs e)
+        private void btnPublicIP_Click(object sender, EventArgs e)
         {
             try
             {
@@ -7321,15 +7615,15 @@ namespace twtboardpro
                     ofd.InitialDirectory = Application.StartupPath;
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
-                        txtPublicProxy.Text = ofd.FileName;
+                        txtPublicIP.Text = ofd.FileName;
 
-                        List<string> publicProxy = new List<string>();
-                        publicProxy = Globussoft.GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
-                        AddToProxysLogs("[ " + DateTime.Now + " ] => [ Public Proxy FileUploaded ]");
-                        AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + publicProxy.Count + " Public Proxy Uploaded ]");
-                        if (!string.IsNullOrEmpty(txtPublicProxy.Text))
+                        List<string> publicIP = new List<string>();
+                        publicIP = Globussoft.GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
+                        AddToIPsLogs("[ " + DateTime.Now + " ] => [ Public IP FileUploaded ]");
+                        AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + publicIP.Count + " Public IP Uploaded ]");
+                        if (!string.IsNullOrEmpty(txtPublicIP.Text))
                         {
-                            objclsSettingDB.InsertOrUpdateSetting("WaitAndReply", "ReplyMsgFile", StringEncoderDecoder.Encode(txtPublicProxy.Text));
+                            objclsSettingDB.InsertOrUpdateSetting("WaitAndReply", "ReplyMsgFile", StringEncoderDecoder.Encode(txtPublicIP.Text));
                         }
                     }
                 }
@@ -7340,7 +7634,7 @@ namespace twtboardpro
             }
         }
 
-        private void btnPvtProxyFour_Click(object sender, EventArgs e)
+        private void btnPvtIPFour_Click(object sender, EventArgs e)
         {
             try
             {
@@ -7349,51 +7643,51 @@ namespace twtboardpro
                 string LoggedInIp = string.Empty;
                 using (System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog())
                 {
-                    List<string> lstValidProxyList = new List<string>();
+                    List<string> lstValidIPList = new List<string>();
                     ofd.Filter = "Text Files (*.txt)|*.txt";
                     ofd.InitialDirectory = Application.StartupPath;
                     if (ofd.ShowDialog() == DialogResult.OK)
                     {
 
-                        txtPvtProxyFour.Text = ofd.FileName;
-                        List<string> pvtProxy = new List<string>();
-                        pvtProxy = Globussoft.GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
+                        txtPvtIPFour.Text = ofd.FileName;
+                        List<string> pvtIP = new List<string>();
+                        pvtIP = Globussoft.GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
 
 
                         new Thread(() =>
                         {
-                            #region start proxy Insert process in DB ..
+                            #region start IP Insert process in DB ..
 
-                            foreach (string Proxylst in pvtProxy)
+                            foreach (string IPlst in pvtIP)
                             {
-                                string account = Proxylst;
-                                string proxyAddress = string.Empty;
-                                string proxyPort = string.Empty;
-                                string proxyUserName = string.Empty;
-                                string proxyPassword = string.Empty;
+                                string account = IPlst;
+                                string IPAddress = string.Empty;
+                                string IPPort = string.Empty;
+                                string IPUsername = string.Empty;
+                                string IPpassword = string.Empty;
 
                                 int DataCount = account.Split(':').Length;
 
                                 using (SQLiteConnection con = new SQLiteConnection(DataBaseHandler.CONstr))
                                 {
-                                    //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE ProxyAddress = '" + proxyAddress + "'", con))
+                                    //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE IPAddress = '" + IPAddress + "'", con))
                                     using (SQLiteDataAdapter ad = new SQLiteDataAdapter())
                                     {
                                         if (DataCount == 4)
                                         {
                                             try
                                             {
-                                                lstValidProxyList.Add(Proxylst);
+                                                lstValidIPList.Add(IPlst);
                                                 string[] Data = account.Split(':');
-                                                proxyAddress = Data[0];
-                                                proxyPort = Data[1];
-                                                proxyUserName = Data[2];
-                                                proxyPassword = Data[3];
+                                                IPAddress = Data[0];
+                                                IPPort = Data[1];
+                                                IPUsername = Data[2];
+                                                IPpassword = Data[3];
                                                 LoggedInIp = "NoIP";
                                                 IsPublic = 1;
                                                 Working = 1;
-                                                string InsertQuery = "Insert into tb_Proxies values('" + proxyAddress + "','" + proxyPort + "','" + proxyUserName + "','" + proxyPassword + "', " + Working + "," + IsPublic + " , '" + LoggedInIp + "')";
-                                                DataBaseHandler.InsertQuery(InsertQuery, "tb_Proxies");
+                                                string InsertQuery = "Insert into tb_IP values('" + IPAddress + "','" + IPPort + "','" + IPUsername + "','" + IPpassword + "', " + Working + "," + IsPublic + " , '" + LoggedInIp + "')";
+                                                DataBaseHandler.InsertQuery(InsertQuery, "tb_IP");
                                             }
                                             catch (Exception)
                                             {
@@ -7401,13 +7695,13 @@ namespace twtboardpro
                                         }
                                         else
                                         {
-                                            AddToProxysLogs("[ " + DateTime.Now + " ] => [ Only Private Proxies allowed using this option ]");
+                                            AddToIPsLogs("[ " + DateTime.Now + " ] => [ Only Private Proxies allowed using this option ]");
                                         }
                                     }
                                 }
                             }
 
-                            AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + lstValidProxyList.Count() + " Private Proxies File Uploaded ]");
+                            AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + lstValidIPList.Count() + " Private Proxies File Uploaded ]");
 
                             #endregion
 
@@ -7421,55 +7715,55 @@ namespace twtboardpro
             }
         }
 
-        private void btnPvtProxyThree_Click(object sender, EventArgs e)
+        private void btnPvtIPThree_Click(object sender, EventArgs e)
         {
             int IsPublic = 0;
             int Working = 0;
             string LoggedInIp = string.Empty;
-            List<string> lstValidProxyList = new List<string>();
+            List<string> lstValidIPList = new List<string>();
             using (System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog())
             {
                 ofd.Filter = "Text Files (*.txt)|*.txt";
                 ofd.InitialDirectory = Application.StartupPath;
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    txtPvtProxyThree.Text = ofd.FileName;
-                    List<string> pvtProxy = new List<string>();
-                    pvtProxy = Globussoft.GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
-                    foreach (string Proxylst in pvtProxy)
+                    txtPvtIPThree.Text = ofd.FileName;
+                    List<string> pvtIP = new List<string>();
+                    pvtIP = Globussoft.GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
+                    foreach (string IPlst in pvtIP)
                     {
-                        string account = Proxylst;
-                        string proxyAddress = string.Empty;
-                        string proxyPort = string.Empty;
-                        string ProxyIp = string.Empty;
-                        string proxyUserName = string.Empty;
-                        string proxyPassword = string.Empty;
+                        string account = IPlst;
+                        string IPAddress = string.Empty;
+                        string IPPort = string.Empty;
+                        string IPIp = string.Empty;
+                        string IPUsername = string.Empty;
+                        string IPpassword = string.Empty;
 
                         int DataCount = account.Split(':').Length;
 
                         using (SQLiteConnection con = new SQLiteConnection(DataBaseHandler.CONstr))
                         {
-                            //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE ProxyAddress = '" + proxyAddress + "'", con))
+                            //using (SQLiteDataAdapter ad = new SQLiteDataAdapter("SELECT * FROM tb_FBAccount WHERE IPAddress = '" + IPAddress + "'", con))
                             using (SQLiteDataAdapter ad = new SQLiteDataAdapter())
                             {
                                 if (DataCount == 3)
                                 {
-                                    lstValidProxyList.Add(Proxylst);
+                                    lstValidIPList.Add(IPlst);
                                     string[] Data = account.Split(':');
-                                    proxyAddress = Data[0];
-                                    proxyPort = Data[1];
-                                    proxyUserName = "";
-                                    proxyPassword = "";
+                                    IPAddress = Data[0];
+                                    IPPort = Data[1];
+                                    IPUsername = "";
+                                    IPpassword = "";
                                     LoggedInIp = Data[2];
                                     IsPublic = 1;
                                     Working = 1;
-                                    string InsertQuery = "Insert into tb_Proxies values('" + proxyAddress + "','" + proxyPort + "','" + proxyUserName + "','" + proxyPassword + "', " + Working + "," + IsPublic + " , '" + LoggedInIp + "')";
-                                    DataBaseHandler.InsertQuery(InsertQuery, "tb_Proxies");
+                                    string InsertQuery = "Insert into tb_IP values('" + IPAddress + "','" + IPPort + "','" + IPUsername + "','" + IPpassword + "', " + Working + "," + IsPublic + " , '" + LoggedInIp + "')";
+                                    DataBaseHandler.InsertQuery(InsertQuery, "tb_IP");
                                 }
                             }
                         }
                     }
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + lstValidProxyList.Count() + " Private Proxies File Uploaded ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + lstValidIPList.Count() + " Private Proxies File Uploaded ]");
                 }
             }
         }
@@ -7596,10 +7890,10 @@ namespace twtboardpro
                         TweetLogin = new TweetAccountManager();
                         TweetLogin.Username = item.Key;
                         TweetLogin.Password = item.Value.Password;
-                        TweetLogin.proxyAddress = item.Value.proxyAddress;
-                        TweetLogin.proxyPort = item.Value.proxyPort;
-                        TweetLogin.proxyUsername = item.Value.proxyUsername;
-                        TweetLogin.proxyPassword = item.Value.proxyPassword;
+                        TweetLogin.IPAddress = item.Value.IPAddress;
+                        TweetLogin.IPPort = item.Value.IPPort;
+                        TweetLogin.IPUsername = item.Value.IPUsername;
+                        TweetLogin.IPpassword = item.Value.IPpassword;
                         TweetLogin.Login();
 
                         if (!TweetLogin.IsLoggedIn)
@@ -8380,12 +8674,12 @@ namespace twtboardpro
 
         #endregion
 
-        private void btnAssignProxy_Click(object sender, EventArgs e)
+        private void btnAssignIP_Click(object sender, EventArgs e)
         {
-            UploadPrivateProxy();
+            UploadPrivateIP();
         }
 
-        private void UploadPrivateProxy()
+        private void UploadPrivateIP()
         {
             CheckNetConn = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
 
@@ -8393,24 +8687,24 @@ namespace twtboardpro
             {
                 try
                 {
-                    //if (!string.IsNullOrEmpty(txtPvtProxyFour.Text))
+                    //if (!string.IsNullOrEmpty(txtPvtIPFour.Text))
                     {
-                        if (MessageBox.Show("Assign Private Proxies from Database???", "Proxy", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                        if (MessageBox.Show("Assign Private Proxies from Database???", "IP", MessageBoxButtons.YesNo) == DialogResult.Yes)
                         {
                             try
                             {
-                                List<string> lstProxies = proxyFetcher.GetPrivateProxies();
+                                List<string> lstProxies = IPFetcher.GetPrivateProxies();
                                 if (lstProxies.Count > 0)
                                 {
-                                    if (!string.IsNullOrEmpty(txtAccountsPerProxy.Text) && GlobusRegex.ValidateNumber(txtAccountsPerProxy.Text))
+                                    if (!string.IsNullOrEmpty(txtAccountsPerIP.Text) && GlobusRegex.ValidateNumber(txtAccountsPerIP.Text))
                                     {
-                                        accountsPerProxy = int.Parse(txtAccountsPerProxy.Text);
+                                        accountsPerIP = int.Parse(txtAccountsPerIP.Text);
                                     }
                                     new Thread(() =>
                                     {
-                                        proxyFetcher.AssignProxiesToAccounts(lstProxies, accountsPerProxy);//AssignProxiesToAccounts(lstProxies);
+                                        IPFetcher.AssignProxiesToAccounts(lstProxies, accountsPerIP);//AssignProxiesToAccounts(lstProxies);
                                         ReloadAccountsFromDataBase();
-                                        AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxies Assigned To Accounts ]");
+                                        AddToIPsLogs("[ " + DateTime.Now + " ] => [ Proxies Assigned To Accounts ]");
                                     }).Start();
                                 }
                                 else
@@ -8420,8 +8714,8 @@ namespace twtboardpro
                             }
                             catch (Exception ex)
                             {
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> btnAssignProxy_Click() --> " + ex.Message, Globals.Path_ProxySettingErroLog);
-                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> btnAssignProxy_Click() --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> btnAssignIP_Click() --> " + ex.Message, Globals.Path_IPSettingErroLog);
+                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> btnAssignIP_Click() --> " + ex.Message, Globals.Path_TwtErrorLogs);
                             }
                         }
                         else
@@ -8433,17 +8727,17 @@ namespace twtboardpro
                             //    ofd.InitialDirectory = Application.StartupPath;
                             //    if (ofd.ShowDialog() == DialogResult.OK)
                             //    {
-                            //        list_pvtProxy = new List<string>();
+                            //        list_pvtIP = new List<string>();
 
-                            //        list_pvtProxy = GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
+                            //        list_pvtIP = GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
 
-                            //        if (!string.IsNullOrEmpty(txtAccountsPerProxy.Text) && GlobusRegex.ValidateNumber(txtAccountsPerProxy.Text))
+                            //        if (!string.IsNullOrEmpty(txtAccountsPerIP.Text) && GlobusRegex.ValidateNumber(txtAccountsPerIP.Text))
                             //        {
-                            //            accountsPerProxy = int.Parse(txtAccountsPerProxy.Text);
+                            //            accountsPerIP = int.Parse(txtAccountsPerIP.Text);
                             //        }
-                            //        proxyFetcher.AssignProxiesToAccounts(list_pvtProxy, accountsPerProxy);//AssignProxiesToAccounts(lstProxies);
+                            //        IPFetcher.AssignProxiesToAccounts(list_pvtIP, accountsPerIP);//AssignProxiesToAccounts(lstProxies);
                             //        ReloadAccountsFromDataBase();
-                            //        AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxies Assigned To Accounts ]");
+                            //        AddToIPsLogs("[ " + DateTime.Now + " ] => [ Proxies Assigned To Accounts ]");
                             //    }
                             //} 
                             #endregion
@@ -8451,8 +8745,8 @@ namespace twtboardpro
                     }
                     //else
                     //{
-                    //    MessageBox.Show("Please Select Proxy File To Assign Proxy");
-                    //    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Please Select Proxy File To Assign Proxy ]");
+                    //    MessageBox.Show("Please Select IP File To Assign IP");
+                    //    AddToIPsLogs("[ " + DateTime.Now + " ] => [ Please Select IP File To Assign IP ]");
                     //}
                 }
                 catch (Exception)
@@ -8463,7 +8757,7 @@ namespace twtboardpro
             else
             {
                 MessageBox.Show("Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection...");
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
             }
         }
 
@@ -8493,10 +8787,10 @@ namespace twtboardpro
                             facebooker.Password = dRow[1].ToString();
                             facebooker.Screen_name = dRow[2].ToString();
                             facebooker.FollowerCount = dRow[3].ToString();
-                            facebooker.proxyAddress = dRow[5].ToString();
-                            facebooker.proxyPort = dRow[6].ToString();
-                            facebooker.proxyUsername = dRow[7].ToString();
-                            facebooker.proxyPassword = dRow[8].ToString();
+                            facebooker.IPAddress = dRow[5].ToString();
+                            facebooker.IPPort = dRow[6].ToString();
+                            facebooker.IPUsername = dRow[7].ToString();
+                            facebooker.IPpassword = dRow[8].ToString();
                             if (!string.IsNullOrEmpty(dRow[10].ToString()))
                             {
                                 facebooker.profileStatus = int.Parse(dRow[10].ToString());
@@ -8504,14 +8798,14 @@ namespace twtboardpro
 
                             if (!string.IsNullOrEmpty(facebooker.Username))
                             {
-                                Globals.listAccounts.Add(facebooker.Username + ":" + facebooker.Password + ":" + facebooker.proxyAddress + ":" + facebooker.proxyPort + ":" + facebooker.proxyUsername + ":" + facebooker.proxyPassword);
+                                Globals.listAccounts.Add(facebooker.Username + ":" + facebooker.Password + ":" + facebooker.IPAddress + ":" + facebooker.IPPort + ":" + facebooker.IPUsername + ":" + facebooker.IPpassword);
                                 TweetAccountContainer.dictionary_TweetAccount.Add(facebooker.Username, facebooker);
                             }
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine(ex.StackTrace);
-                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ReloadAccountsFromDataBase() -- Rows From DB --> " + ex.Message, Globals.Path_ProxySettingErroLog);
+                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ReloadAccountsFromDataBase() -- Rows From DB --> " + ex.Message, Globals.Path_IPSettingErroLog);
                             Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ReloadAccountsFromDataBase() -- Rows From DB --> " + ex.Message, Globals.Path_TwtErrorLogs);
                         }
 
@@ -8522,13 +8816,13 @@ namespace twtboardpro
             }
             catch (Exception ex)
             {
-                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ReloadAccountsFromDataBase() --> " + ex.Message, Globals.Path_ProxySettingErroLog);
+                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> ReloadAccountsFromDataBase() --> " + ex.Message, Globals.Path_IPSettingErroLog);
                 Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> ReloadAccountsFromDataBase() --> " + ex.Message, Globals.Path_TwtErrorLogs);
             }
         }
 
         /// <summary>
-        /// Assigns "accountsPerProxy" number of proxies to accounts in Database, only picks up only those accounts where ProxyAddress is Null or Empty
+        /// Assigns "accountsPerIP" number of proxies to accounts in Database, only picks up only those accounts where IPAddress is Null or Empty
         /// </summary>
         private void AssignProxiesToAccounts()
         {
@@ -8929,10 +9223,10 @@ namespace twtboardpro
                     TweetLogin = new TweetAccountManager();
                     TweetLogin.Username = item.Key;
                     TweetLogin.Password = item.Value.Password;
-                    TweetLogin.proxyAddress = item.Value.proxyAddress;
-                    TweetLogin.proxyPort = item.Value.proxyPort;
-                    TweetLogin.proxyUsername = item.Value.proxyUsername;
-                    TweetLogin.proxyPassword = item.Value.proxyPassword;
+                    TweetLogin.IPAddress = item.Value.IPAddress;
+                    TweetLogin.IPPort = item.Value.IPPort;
+                    TweetLogin.IPUsername = item.Value.IPUsername;
+                    TweetLogin.IPpassword = item.Value.IPpassword;
                     TweetLogin.Login();
                     if (!TweetLogin.IsNotSuspended)
                     {
@@ -9370,7 +9664,7 @@ namespace twtboardpro
                     if (Ismentionsingleuser && lst_mentionUser.Count != 0)
                     {
                         int countNoofMentionUser = 1;
-                        if (NumberHelper.ValidateNumber(txtNumberOfProxyThreads.Text))
+                        if (NumberHelper.ValidateNumber(txtNumberOfIPThreads.Text))
                         {
                             countNoofMentionUser = Convert.ToInt32(txtTweetMentionNoOfUser.Text.Trim());
                             if (countNoofMentionUser <= 0)
@@ -9641,12 +9935,24 @@ namespace twtboardpro
             catch { }
         }
 
+        #region New Updated Code StartFollowing By Sonu
+
         private void StartFollowing()
         {
             try
             {
                 List<string> RemoveList = new List<string>();
                 List<List<string>> list_listTargetURLs = new List<List<string>>();
+                string pathUserIds = ""; ;
+                try
+                {
+                    if (string.IsNullOrEmpty(txtUserIDtoFollow.Text) && !string.IsNullOrEmpty(txtPathUserIDs.Text))
+                    {
+                        pathUserIds = txtPathUserIDs.Text;
+                    }
+                }
+                catch { };
+
 
                 try
                 {
@@ -9710,10 +10016,10 @@ namespace twtboardpro
                         //        }
                         //    }
                         //}
-                        if (chkDontFollowUsersThatUnfollowedBefore.Checked)
-                        {
-                            TweetAccountManager.UseUnfollowedBeforeFilter = true;
-                        }
+                        //if (chkDontFollowUsersThatUnfollowedBefore.Checked)
+                        //{
+                        //    TweetAccountManager.UseUnfollowedBeforeFilter = true;
+                        //}
                         #endregion
 
                         #region Option For screen Name
@@ -9836,57 +10142,61 @@ namespace twtboardpro
                         #region User Without Picture
                         if (chkDontFollowUsersWithNoPicture.Checked)
                         {
+                            if (rdBtnDivideEqually.Checked)
+                            {
+                                TweetAccountManager.noOFFollows = listUserIDs.Count();
+                            }
                             TweetAccountManager.IscontainPicture = true;
-                            //AddToLog_Follower("Get Followes/Followings from targeted user.");
-                            //List<string> tempdata = new List<string>();
-                            //try
-                            //{
-                            //    foreach (string newitem in listUserIDs)
-                            //    {
-                            //        tempdata.Add(newitem);
-                            //    }
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartFollowing() -- User With No Picture --> " + ex.Message, Globals.Path_FollowerErroLog);
-                            //    GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartFollowing() -- User With No Picture --> " + ex.Message, Globals.Path_TwtErrorLogs);
-                            //}
-                            //listUserIDs.Clear();
+                            AddToLog_Follower("Get Followes/Followings from targeted user.");
+                            List<string> tempdata = new List<string>();
+                            try
+                            {
+                                foreach (string newitem in listUserIDs)
+                                {
+                                    tempdata.Add(newitem);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartFollowing() -- User With No Picture --> " + ex.Message, Globals.Path_FollowerErroLog);
+                                GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartFollowing() -- User With No Picture --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                            }
+                            listUserIDs.Clear();
 
-                            //AddToLog_Follower("Checking Profile Image in Extracted User id's");
+                            AddToLog_Follower("Checking Profile Image in Extracted User id's");
 
-                            //foreach (string tempdataitem in tempdata)
-                            //{
-                            //    string containsIamge = TwitterDataScrapper.GetPhotoFromUsername_New(tempdataitem);
-                            //    //Thread.Sleep(1000);
-                            //    if (containsIamge == "true")
-                            //    {
-                            //        AddToLog_Follower(tempdataitem + " Contains Image");
-                            //        listUserIDs.Add(tempdataitem);
-                            //        if ((TweetAccountManager.noOFFollows == listUserIDs.Count) && (!IsUsingDivideData))
-                            //        {
-                            //            break;
-                            //        }
-                            //    }
-                            //    else if (containsIamge == "false")
-                            //    {
-                            //        AddToLog_Follower(tempdataitem + " Not Contains Image");
-                            //        ///Add in blacklist table
-                            //    }
-                            //    else if (containsIamge == "Rate limit exceeded")
-                            //    {
-                            //        AddToLog_Follower("Cannot Make Request. Rate limit exceeded");
-                            //        AddToLog_Follower("Please Try After Some Time");
-                            //    }
+                            foreach (string tempdataitem in tempdata)
+                            {
+                                string containsIamge = TwitterDataScrapper.GetPhotoFromUsername_New(tempdataitem);
+                                //Thread.Sleep(1000);
+                                if (containsIamge == "true")
+                                {
+                                    AddToLog_Follower(tempdataitem + " Contains Image");
+                                    listUserIDs.Add(tempdataitem);
+                                    if ((TweetAccountManager.noOFFollows == listUserIDs.Count) && (!IsUsingDivideData))
+                                    {
+                                        break;
+                                    }
+                                }
+                                else if (containsIamge == "false")
+                                {
+                                    AddToLog_Follower(tempdataitem + " Not Contains Image");
+                                    ///Add in blacklist table
+                                }
+                                else if (containsIamge == "Rate limit exceeded")
+                                {
+                                    AddToLog_Follower("Cannot Make Request. Rate limit exceeded");
+                                    AddToLog_Follower("Please Try After Some Time");
+                                }
 
-                            //    if (listUserIDs.Count == TweetAccountManager.noOFFollows)
-                            //    {
-                            //        break;
-                            //    }
-                            //    //AddToLog_Follower("Sleep For 4 Seconds");
-                            //    Thread.Sleep(1500);
-                            //}
-                            //AddToLog_Follower(listUserIDs.Count + " Users Contain Profile Image");
+                                if (listUserIDs.Count == TweetAccountManager.noOFFollows)
+                                {
+                                    break;
+                                }
+                                //AddToLog_Follower("Sleep For 4 Seconds");
+                                Thread.Sleep(1500);
+                            }
+                            AddToLog_Follower(listUserIDs.Count + " Users Contain Profile Image");
                         }
 
 
@@ -10029,7 +10339,7 @@ namespace twtboardpro
                                     followMaxDelay = Convert.ToInt32(txtFollowMaxDelay.Text);
                                 }
 
-                                ThreadPool.QueueUserWorkItem(new WaitCallback(StartFollowingMultithreaded), new object[] { item, listUserIDs, OtherUser, followMinDelay, followMaxDelay });
+                                ThreadPool.QueueUserWorkItem(new WaitCallback(StartFollowingMultithreaded), new object[] { item, listUserIDs, OtherUser, followMinDelay, followMaxDelay, pathUserIds });
 
                                 //if user is check fast follow option then delay is not working on that condition ...!!
                                 if (!IsFastfollow)
@@ -10064,6 +10374,436 @@ namespace twtboardpro
                 GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartFollowing() -- list_listTargetURLs --> " + ex.Message, Globals.Path_TwtErrorLogs);
             }
         }
+
+        #endregion
+
+
+
+        #region previous method of StartFollowing
+        //private void StartFollowing()
+        //{
+        //    try
+        //    {
+        //        List<string> RemoveList = new List<string>();
+        //        List<List<string>> list_listTargetURLs = new List<List<string>>();
+
+        //        try
+        //        {
+        //            int numberOfThreads = 7;
+        //            if (TweetAccountContainer.dictionary_TweetAccount.Count > 0)
+        //            {
+        //                int count_AccountsUsed = 0;
+
+        //                int index = 0;
+
+        //                #region Other User No
+        //                //bool OtherUser = false;
+        //                if (!string.IsNullOrEmpty(txtUserOtherNumber.Text))
+        //                {
+        //                    if (NumberHelper.ValidateNumber(txtUserOtherNumber.Text))
+        //                    {
+        //                        TweetAccountManager.noOFFollows = Convert.ToInt32(txtUserOtherNumber.Text);
+        //                        //OtherUser = true;
+        //                    }
+        //                    else
+        //                    {
+        //                        AddToLog_Follower("[ " + DateTime.Now + " ] => [ Please Enter a Number ]");
+        //                        return;
+        //                    }
+        //                }
+        //                #endregion
+
+        //                #region Follower Following ratio
+        //                if (chkDontFollowUsersWithFollowingsFollowersRatio.Checked)
+        //                {
+        //                    TweetAccountManager.UseRatioFilter = true;
+        //                    if (!string.IsNullOrEmpty(txtFollowingsFollowersRatio.Text))
+        //                    {
+        //                        if (NumberHelper.ValidateNumber(txtFollowingsFollowersRatio.Text))
+        //                        {
+        //                            TweetAccountManager.FollowingsFollowersRatio = Convert.ToInt32(txtFollowingsFollowersRatio.Text);
+        //                        }
+        //                        else
+        //                        {
+        //                            AddToLog_Follower("[ " + DateTime.Now + " ] => [ Default Value 80 set in FollowingsFollowers Ratio ]");
+        //                            //return;
+        //                        }
+        //                    }
+        //                }
+        //                #endregion
+
+        //                #region Not Tweeted For #  no of Days
+        //                //if (chkDontFollowUsersWhoHavntTweetedForLong.Checked)
+        //                //{
+        //                //    TweetAccountManager.UseDateLastTweeted = true;
+        //                //    if (!string.IsNullOrEmpty(txtLastTweetDays.Text))
+        //                //    {
+        //                //        if (NumberHelper.ValidateNumber(txtLastTweetDays.Text))
+        //                //        {
+        //                //            TweetAccountManager.LastTweetDays = Convert.ToInt32(txtLastTweetDays.Text);
+        //                //        }
+        //                //        else
+        //                //        {
+        //                //            AddToLog_Follower("Default Days 50 set in Required Last Tweet Days");
+        //                //            //return;
+        //                //        }
+        //                //    }
+        //                //}
+        //                if (chkDontFollowUsersThatUnfollowedBefore.Checked)
+        //                {
+        //                    TweetAccountManager.UseUnfollowedBeforeFilter = true;
+        //                }
+        //                #endregion
+
+        //                #region Option For screen Name
+        //                if ((IsFollowerScreenName != true && IsfollowerUserId != true) || (IsFollowerScreenName != false && IsfollowerUserId != false))
+        //                {
+        //                    AddToLog_Follower("[ " + DateTime.Now + " ] => [ Please Select any one option From Screen Name Or User Id. ]");
+        //                    MessageBox.Show("Please Select any one option From Screen Name Or User Id.");
+        //                    return;
+        //                }
+        //                #endregion
+
+        //                #region Get follower  Follow  Id
+        //                //when we fill any usrname in test box 
+        //                //and follow of these user followes and friends ..
+
+        //                if (!string.IsNullOrEmpty(txtOtherfollow.Text))
+        //                {
+        //                    listUserIDs.Clear();
+        //                    if (chkFollowers.Checked)
+        //                    {
+        //                        threadStartScrape();
+        //                    }
+        //                    if (chkFollowings.Checked)
+        //                    {
+        //                        listUserIDs.AddRange(GetFollowersUsingUserID(txtOtherfollow.Text));
+        //                    }
+
+        //                    if (listUserIDs.Count == 0)
+        //                    {
+        //                        AddToLog_Follower("[ " + DateTime.Now + " ] => [ No Ids in the Scraped List ]");
+        //                        return;
+        //                    }
+        //                }
+        //                #endregion
+
+        //                #region GetUsernameOrUserID
+        //                //foreach (string user_id_toFollow in listUserIDs)
+        //                //{
+        //                //    string user_id = string.Empty;
+        //                //    string Username = string.Empty;
+        //                //    string Screen_name = string.Empty;
+        //                //    clsDBQueryManager DB = new clsDBQueryManager();
+        //                //    //if (!GlobusRegex.ValidateNumber(user_id_toFollow))//(!IsItNumber(user_id_toFollow))
+        //                //    if (IsFollowerScreanName && !FollowUsrnameFollowerAndFriends)
+        //                //    {
+        //                //        string returnStatus = string.Empty;
+        //                //        user_id = TwitterDataScrapper.GetUserIDFromUsername(user_id_toFollow, out returnStatus);
+        //                //        if (returnStatus == "No Error" && !string.IsNullOrEmpty(user_id))
+        //                //        {
+        //                //            AddToLog_Follower(user_id_toFollow + " >>> " + user_id);
+        //                //        }
+        //                //        else if (returnStatus == "Rate limit exceeded")
+        //                //        {
+        //                //            AddToLog_Follower(user_id_toFollow + " >>> " + returnStatus);
+        //                //        }
+        //                //        else if (returnStatus == "Sorry, that page does not exist")
+        //                //        {
+        //                //            RemoveList.Add(user_id_toFollow);
+        //                //            AddToLog_Follower(user_id_toFollow + " >>> " + returnStatus);
+        //                //        }
+        //                //        else if (returnStatus == "User has been suspended")
+        //                //        {
+        //                //            RemoveList.Add(user_id_toFollow);
+        //                //            AddToLog_Follower(user_id_toFollow + " >>> " + returnStatus);
+        //                //        }
+
+        //                //        if (!string.IsNullOrEmpty(user_id))
+        //                //        {
+        //                //            if (!NumberHelper.ValidateNumber(user_id))
+        //                //            {
+        //                //                DB.InsertUserNameId(user_id, user_id_toFollow);
+        //                //            }
+        //                //            else
+        //                //            {
+        //                //                DB.InsertUserNameId(user_id_toFollow, user_id);
+        //                //            }
+        //                //        }
+        //                //    }
+        //                //    //else
+        //                //    else if (IsfollowerUserId || FollowUsrnameFollowerAndFriends)
+        //                //    {
+        //                //        user_id = user_id_toFollow;
+        //                //        Screen_name = TwitterDataScrapper.GetUserNameFromUserId(user_id);
+        //                //        if (Screen_name == "Rate Limit Exceeded")
+        //                //        {
+        //                //            AddToLog_Follower(user_id_toFollow + " >>> " + Screen_name);
+        //                //        }
+        //                //        else
+        //                //        {
+        //                //            AddToLog_Follower(Screen_name + " >>> " + user_id);
+        //                //        }
+        //                //    }
+        //                //    else
+        //                //    {
+
+        //                //    }
+        //                //    //AddToLog_Follower("Sleep For 4 Seconds");
+
+        //                //    //if user is check fast follow option then delay is not working on that condition ...!!
+        //                //    if (!IsFastfollow)
+        //                //    {
+        //                //        Thread.Sleep(1500);
+        //                //    }
+        //                //}
+
+        //                //foreach (string lst in RemoveList)
+        //                //{
+        //                //    try
+        //                //    {
+        //                //        listUserIDs.Remove(lst);
+        //                //    }
+        //                //    catch (Exception ex)
+        //                //    {
+
+        //                //    }
+        //                //}
+
+        //                #endregion
+
+        //                #region User Without Picture
+        //                if (chkDontFollowUsersWithNoPicture.Checked)
+        //                {
+        //                    TweetAccountManager.IscontainPicture = true;
+        //                    //AddToLog_Follower("Get Followes/Followings from targeted user.");
+        //                    //List<string> tempdata = new List<string>();
+        //                    //try
+        //                    //{
+        //                    //    foreach (string newitem in listUserIDs)
+        //                    //    {
+        //                    //        tempdata.Add(newitem);
+        //                    //    }
+        //                    //}
+        //                    //catch (Exception ex)
+        //                    //{
+        //                    //    GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartFollowing() -- User With No Picture --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //                    //    GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartFollowing() -- User With No Picture --> " + ex.Message, Globals.Path_TwtErrorLogs);
+        //                    //}
+        //                    //listUserIDs.Clear();
+
+        //                    //AddToLog_Follower("Checking Profile Image in Extracted User id's");
+
+        //                    //foreach (string tempdataitem in tempdata)
+        //                    //{
+        //                    //    string containsIamge = TwitterDataScrapper.GetPhotoFromUsername_New(tempdataitem);
+        //                    //    //Thread.Sleep(1000);
+        //                    //    if (containsIamge == "true")
+        //                    //    {
+        //                    //        AddToLog_Follower(tempdataitem + " Contains Image");
+        //                    //        listUserIDs.Add(tempdataitem);
+        //                    //        if ((TweetAccountManager.noOFFollows == listUserIDs.Count) && (!IsUsingDivideData))
+        //                    //        {
+        //                    //            break;
+        //                    //        }
+        //                    //    }
+        //                    //    else if (containsIamge == "false")
+        //                    //    {
+        //                    //        AddToLog_Follower(tempdataitem + " Not Contains Image");
+        //                    //        ///Add in blacklist table
+        //                    //    }
+        //                    //    else if (containsIamge == "Rate limit exceeded")
+        //                    //    {
+        //                    //        AddToLog_Follower("Cannot Make Request. Rate limit exceeded");
+        //                    //        AddToLog_Follower("Please Try After Some Time");
+        //                    //    }
+
+        //                    //    if (listUserIDs.Count == TweetAccountManager.noOFFollows)
+        //                    //    {
+        //                    //        break;
+        //                    //    }
+        //                    //    //AddToLog_Follower("Sleep For 4 Seconds");
+        //                    //    Thread.Sleep(1500);
+        //                    //}
+        //                    //AddToLog_Follower(listUserIDs.Count + " Users Contain Profile Image");
+        //                }
+
+
+
+
+        //                #endregion
+
+        //                bool OtherUser = false;
+        //                if (!string.IsNullOrEmpty(txtUserOtherNumber.Text))
+        //                {
+        //                    if (NumberHelper.ValidateNumber(txtUserOtherNumber.Text))
+        //                    {
+        //                        TweetAccountManager.noOFFollows = Convert.ToInt32(txtUserOtherNumber.Text);
+        //                        OtherUser = true;
+        //                        //txtUserOtherNumber.Text = "";
+        //                    }
+        //                    else
+        //                    {
+        //                        AddToLog_Follower("[ " + DateTime.Now + " ] => [ Please Enter a Number ]");
+        //                        return;
+        //                    }
+        //                }
+
+        //                #region User Divude Checked
+        //                if (chkUseDivide.Checked || IsUsingDivideData)
+        //                {
+        //                    int splitNo = 0;
+        //                    if (rdBtnDivideEqually.Checked)
+        //                    {
+        //                        splitNo = listUserIDs.Count / TweetAccountContainer.dictionary_TweetAccount.Count;
+        //                    }
+        //                    else if (rdBtnDivideByGivenNo.Checked)
+        //                    {
+        //                        if (!string.IsNullOrEmpty(txtScrapeNoOfUsers.Text) && NumberHelper.ValidateNumber(txtScrapeNoOfUsers.Text))
+        //                        {
+        //                            int res = Convert.ToInt32(txtScrapeNoOfUsers.Text);
+        //                            splitNo = res;//listUserIDs.Count / res;
+        //                        }
+        //                    }
+        //                    if (splitNo == 0)
+        //                    {
+        //                        splitNo = RandomNumberGenerator.GenerateRandom(0, listUserIDs.Count - 1);
+        //                    }
+        //                    list_listTargetURLs = Split(listUserIDs, splitNo);
+        //                    TweetAccountManager.noOFFollows = splitNo;
+        //                }
+
+        //                if (!string.IsNullOrEmpty(txtNoOfFollowThreads.Text) && Globals.IdCheck.IsMatch(txtNoOfFollowThreads.Text))
+        //                {
+        //                    numberOfThreads = int.Parse(txtNoOfFollowThreads.Text);
+        //                }
+
+        //                ThreadPool.SetMaxThreads(numberOfThreads, 5);
+
+
+
+        //                #endregion
+
+        //                #region followUserWithmanyLinks
+        //                if (chkDontFollowUsersWithManyLinks.Checked)
+        //                {
+        //                    AddToLog_Follower("[ " + DateTime.Now + " ] => [ Checking For Links in Tweets ]");
+        //                    if (!string.IsNullOrEmpty(txtNoOfLinks.Text) && NumberHelper.ValidateNumber(txtNoOfLinks.Text))
+        //                    {
+        //                        TwitterDataScrapper.Percentage = Convert.ToInt32(txtNoOfLinks.Text);
+        //                    }
+        //                    else
+        //                    {
+        //                        TwitterDataScrapper.Percentage = 40;
+        //                        AddToLog_Follower("[ " + DateTime.Now + " ] => [ Setting Default Percentage : 40% ]");
+        //                    }
+        //                    List<string> tempdata = new List<string>();
+        //                    try
+        //                    {
+        //                        foreach (string newitem in listUserIDs)
+        //                        {
+        //                            tempdata.Add(newitem);
+        //                        }
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartFollowing() -- User With too Many Links --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartFollowing() -- User With too Many Links --> " + ex.Message, Globals.Path_TwtErrorLogs);
+        //                    }
+        //                    listUserIDs.Clear();
+        //                    foreach (string tempdataitem in tempdata)
+        //                    {
+        //                        bool toomanyLinks = TwitterDataScrapper.GetStatusLinks(tempdataitem);
+        //                        if (toomanyLinks)
+        //                        {
+        //                            listUserIDs.Add(tempdataitem);
+        //                            AddToLog_Follower("[ " + DateTime.Now + " ] => [ Added User id : " + tempdataitem + " To Follow List ]");
+        //                        }
+        //                    }
+        //                }
+        //                #endregion
+
+        //                #region Follow Per Day
+        //                //Code Added by Abhishek 
+
+        //                TweetAccountManager.NoOfFollowPerDay_ChkBox = false;
+        //                if (chkBox_NoOFfollow.Checked)
+        //                {
+        //                    if (!string.IsNullOrEmpty(txt_MaximumFollow.Text))
+        //                    {
+        //                        if (NumberHelper.ValidateNumber(txt_MaximumFollow.Text))
+        //                        {
+        //                            TweetAccountManager.NoOfFollowPerDay = Convert.ToInt32(txt_MaximumFollow.Text);
+        //                            TweetAccountManager.NoOfFollowPerDay_ChkBox = true;
+        //                            //txtUserOtherNumber.Text = "";
+        //                        }
+        //                        else
+        //                        {
+        //                            AddToLog_Follower("[ " + DateTime.Now + " ] => [ Please Enter a Number In Maximum follow per Id ]");
+        //                            return;
+        //                        }
+        //                    }
+        //                }
+        //                #endregion
+
+        //                Globals.FollowerRunningText = "FollowerModule";
+        //                counter_AccountFollwer = TweetAccountContainer.dictionary_TweetAccount.Count;
+        //                foreach (KeyValuePair<string, TweetAccountManager> item in TweetAccountContainer.dictionary_TweetAccount)
+        //                {
+        //                    try
+        //                    {
+        //                        ThreadPool.SetMaxThreads(numberOfThreads, 5);
+
+        //                        if (chkUseDivide.Checked || IsUsingDivideData)
+        //                        {
+        //                            listUserIDs = list_listTargetURLs[index];
+        //                        }
+
+        //                        if (GlobusRegex.ValidateNumber(txtFollowMinDelay.Text))
+        //                        {
+        //                            followMinDelay = Convert.ToInt32(txtFollowMinDelay.Text);
+        //                        }
+        //                        if (GlobusRegex.ValidateNumber(txtFollowMaxDelay.Text))
+        //                        {
+        //                            followMaxDelay = Convert.ToInt32(txtFollowMaxDelay.Text);
+        //                        }
+
+        //                        ThreadPool.QueueUserWorkItem(new WaitCallback(StartFollowingMultithreaded), new object[] { item, listUserIDs, OtherUser, followMinDelay, followMaxDelay });
+
+        //                        //if user is check fast follow option then delay is not working on that condition ...!!
+        //                        if (!IsFastfollow)
+        //                        {
+        //                            Thread.Sleep(1000);
+        //                        }
+        //                        count_AccountsUsed++;
+        //                        index++;
+        //                    }
+        //                    catch (Exception ex)
+        //                    {
+        //                        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartFollowing() -- foreach loop Foreach Dictiinoary --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //                        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartFollowing() -- foreach loop Foreach Dictiinoary --> " + ex.Message, Globals.Path_TwtErrorLogs);
+        //                    }
+        //                }
+        //            }
+        //            else
+        //            {
+        //                MessageBox.Show("Please Upload Twitter Account");
+        //                AddToGeneralLogs("[ " + DateTime.Now + " ] => [ Please Upload Twitter Account ]");
+        //            }
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartFollowing() -- foreach loop Foreach Dictiinoary --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //            GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartFollowing() -- foreach loop Foreach Dictiinoary --> " + ex.Message, Globals.Path_TwtErrorLogs);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartFollowing() --  list_listTargetURLs --> " + ex.Message, Globals.Path_FollowerErroLog);
+        //        GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartFollowing() -- list_listTargetURLs --> " + ex.Message, Globals.Path_TwtErrorLogs);
+        //    }
+        //}
+        #endregion
 
         private void StartFollowingModified(List<List<string>> list_listTargetURLs, int numberOfThreads, bool otherUser, bool UseDivide, string followMinDelay, string followMaxDelay)
         {
@@ -10545,47 +11285,47 @@ namespace twtboardpro
             }
         }
 
-        private void chkboxImportPublicProxy_CheckedChanged(object sender, EventArgs e)
+        private void chkboxImportPublicIP_CheckedChanged(object sender, EventArgs e)
         {
             try
             {
-                if (chkboxImportPublicProxy.Checked)
+                if (chkboxImportPublicIP.Checked)
                 {
-                    if (chkboxUseUrlProxy.Checked && !string.IsNullOrEmpty(txtProxyUrl.Text))
+                    if (chkboxUseUrlIP.Checked && !string.IsNullOrEmpty(txtIPUrl.Text))
                     {
                         GlobusHttpHelper HttpHelper = new GlobusHttpHelper();
-                        string pageSource = HttpHelper.getHtmlfromUrlProxy(new Uri(txtProxyUrl.Text), "", "", "", "", "");
+                        string pageSource = HttpHelper.getHtmlfromUrlIP(new Uri(txtIPUrl.Text), "", "", "", "", "");
                         string[] array = Regex.Split(pageSource, "\n");
                         foreach (string item in array)
                         {
-                            lstPublicProxyWOTest.Add(item.Replace("\r", ""));
+                            lstPublicIPWOTest.Add(item.Replace("\r", ""));
                         }
                     }
-                    else if (!string.IsNullOrEmpty(txtPublicProxy.Text))
+                    else if (!string.IsNullOrEmpty(txtPublicIP.Text))
                     {
-                        lstPublicProxyWOTest = GlobusFileHelper.ReadFiletoStringList(txtPublicProxy.Text);
+                        lstPublicIPWOTest = GlobusFileHelper.ReadFiletoStringList(txtPublicIP.Text);
                     }
                     else
                     {
-                        AddToProxysLogs("[ " + DateTime.Now + " ] => [ Please Upload Either Url or Load Proxy Files ]");
+                        AddToIPsLogs("[ " + DateTime.Now + " ] => [ Please Upload Either Url or Load IP Files ]");
                         return;
                     }
 
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + lstPublicProxyWOTest.Count + " Public Proxies Loaded ]");
-                    if (lstPublicProxyWOTest.Count > 0)
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + lstPublicIPWOTest.Count + " Public Proxies Loaded ]");
+                    if (lstPublicIPWOTest.Count > 0)
                     {
                         new Thread(() =>
                         {
-                            foreach (string item in lstPublicProxyWOTest)
+                            foreach (string item in lstPublicIPWOTest)
                             {
-                                ImportingProxy(item);
+                                ImportingIP(item);
                             }
                         }
                         ).Start();
                     }
                     else
                     {
-                        AddToProxysLogs("[ " + DateTime.Now + " ] => [ Sorry No Proxies Available ]");
+                        AddToIPsLogs("[ " + DateTime.Now + " ] => [ Sorry No Proxies Available ]");
                     }
                 }
             }
@@ -10595,24 +11335,24 @@ namespace twtboardpro
             }
         }
 
-        bool IsStopImportingProxy = false;
-        public void ImportingProxy(string item)
+        bool IsStopImportingIP = false;
+        public void ImportingIP(string item)
         {
             try
             {
-                if (IsStopImportingProxy)
+                if (IsStopImportingIP)
                 {
                     return;
                 }
-                LstPublicProxy.Add(Thread.CurrentThread);
-                LstPublicProxy = LstPublicProxy.Distinct().ToList();
+                LstPublicIP.Add(Thread.CurrentThread);
+                LstPublicIP = LstPublicIP.Distinct().ToList();
                 Thread.CurrentThread.IsBackground = true;
             }
             catch { }
-            string proxyAddress = string.Empty;
-            string proxyPort = string.Empty;
-            string proxyUsername = string.Empty;
-            string proxyPassword = string.Empty;
+            string IPAddress = string.Empty;
+            string IPPort = string.Empty;
+            string IPUsername = string.Empty;
+            string IPpassword = string.Empty;
             int Working = 0;
             int IsPublic = 0;
             string LoggedInIp = string.Empty;
@@ -10622,41 +11362,41 @@ namespace twtboardpro
 
             if (DataCount == 1)
             {
-                proxyAddress = account.Split(':')[0];
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxy Not In correct Format ]");
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + account + " ]");
+                IPAddress = account.Split(':')[0];
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ IP Not In correct Format ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + account + " ]");
                 return;
             }
             if (DataCount == 2)
             {
-                proxyAddress = account.Split(':')[0];
-                proxyPort = account.Split(':')[1];
+                IPAddress = account.Split(':')[0];
+                IPPort = account.Split(':')[1];
             }
             else if (DataCount > 2)
             {
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxy Not In correct Format ]");
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + account + " ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ IP Not In correct Format ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + account + " ]");
                 return;
             }
             try
             {
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Added Proxies -> " + proxyAddress + ":" + proxyPort + " ]");
-                string InsertQuery = "Insert into tb_Proxies values('" + proxyAddress + "','" + proxyPort + "','" + proxyUsername + "','" + proxyPassword + "', " + Working + "," + IsPublic + " , '" + LoggedInIp + "')";
-                DataBaseHandler.InsertQuery(InsertQuery, "tb_Proxies");
-                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(proxyAddress + ":" + proxyPort, Globals.Path_ExsistingProxies);
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ Added Proxies -> " + IPAddress + ":" + IPPort + " ]");
+                string InsertQuery = "Insert into tb_IP values('" + IPAddress + "','" + IPPort + "','" + IPUsername + "','" + IPpassword + "', " + Working + "," + IsPublic + " , '" + LoggedInIp + "')";
+                DataBaseHandler.InsertQuery(InsertQuery, "tb_IP");
+                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(IPAddress + ":" + IPPort, Globals.Path_ExsistingProxies);
             }
             catch (Exception ex)
             {
-                GlobusFileHelper.AppendStringToTextfileNewLine("Error Importing Public Proxy W/o testing --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                GlobusFileHelper.AppendStringToTextfileNewLine("Error Importing Public IP W/o testing --> " + ex.Message, Globals.Path_TwtErrorLogs);
             }
         }
 
-        private void txtAsssignPublicProxy_Click(object sender, EventArgs e)
+        private void txtAsssignPublicIP_Click(object sender, EventArgs e)
         {
-            ProxyUpload();
+            IPUpload();
         }
 
-        private void ProxyUpload()
+        private void IPUpload()
         {
             CheckNetConn = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
 
@@ -10664,20 +11404,20 @@ namespace twtboardpro
             {
                 try
                 {
-                    if (MessageBox.Show("Assign Public Proxies from Database???", "Proxy", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    if (MessageBox.Show("Assign Public Proxies from Database???", "IP", MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
                         try
                         {
-                            List<string> lstProxies = proxyFetcher.GetPublicProxies();
+                            List<string> lstProxies = IPFetcher.GetPublicProxies();
                             if (lstProxies.Count > 0)
                             {
-                                if (!string.IsNullOrEmpty(txtAccountsPerProxy.Text) && GlobusRegex.ValidateNumber(txtAccountsPerProxy.Text))
+                                if (!string.IsNullOrEmpty(txtAccountsPerIP.Text) && GlobusRegex.ValidateNumber(txtAccountsPerIP.Text))
                                 {
-                                    accountsPerProxy = int.Parse(txtAccountsPerProxy.Text);
+                                    accountsPerIP = int.Parse(txtAccountsPerIP.Text);
                                 }
-                                proxyFetcher.AssignProxiesToAccounts(lstProxies, accountsPerProxy);//AssignProxiesToAccounts(lstProxies);
+                                IPFetcher.AssignProxiesToAccounts(lstProxies, accountsPerIP);//AssignProxiesToAccounts(lstProxies);
                                 ReloadAccountsFromDataBase();
-                                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxies Assigned To Accounts ]");
+                                AddToIPsLogs("[ " + DateTime.Now + " ] => [ Proxies Assigned To Accounts ]");
                             }
                             else
                             {
@@ -10686,8 +11426,8 @@ namespace twtboardpro
                         }
                         catch (Exception ex)
                         {
-                            GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> txtAsssignPublicProxy_Click  --> " + ex.Message, Globals.Path_ProxySettingErroLog);
-                            GlobusFileHelper.AppendStringToTextfileNewLine("Error --> txtAsssignPublicProxy_Click() --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> txtAsssignPublicIP_Click  --> " + ex.Message, Globals.Path_IPSettingErroLog);
+                            GlobusFileHelper.AppendStringToTextfileNewLine("Error --> txtAsssignPublicIP_Click() --> " + ex.Message, Globals.Path_TwtErrorLogs);
                         }
                     }
                     else
@@ -10699,17 +11439,17 @@ namespace twtboardpro
                         //    ofd.InitialDirectory = Application.StartupPath;
                         //    if (ofd.ShowDialog() == DialogResult.OK)
                         //    {
-                        //        list_pvtProxy = new List<string>();
+                        //        list_pvtIP = new List<string>();
 
-                        //        list_pvtProxy = GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
+                        //        list_pvtIP = GlobusFileHelper.ReadFiletoStringList(ofd.FileName);
 
-                        //        if (!string.IsNullOrEmpty(txtAccountsPerProxy.Text) && GlobusRegex.ValidateNumber(txtAccountsPerProxy.Text))
+                        //        if (!string.IsNullOrEmpty(txtAccountsPerIP.Text) && GlobusRegex.ValidateNumber(txtAccountsPerIP.Text))
                         //        {
-                        //            accountsPerProxy = int.Parse(txtAccountsPerProxy.Text);
+                        //            accountsPerIP = int.Parse(txtAccountsPerIP.Text);
                         //        }
-                        //        proxyFetcher.AssignProxiesToAccounts(list_pvtProxy, accountsPerProxy);//AssignProxiesToAccounts(lstProxies);
+                        //        IPFetcher.AssignProxiesToAccounts(list_pvtIP, accountsPerIP);//AssignProxiesToAccounts(lstProxies);
                         //        ReloadAccountsFromDataBase();
-                        //        AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxies Assigned To Accounts ]");
+                        //        AddToIPsLogs("[ " + DateTime.Now + " ] => [ Proxies Assigned To Accounts ]");
                         //    }
                         //} 
                         #endregion
@@ -10723,7 +11463,7 @@ namespace twtboardpro
             else
             {
                 MessageBox.Show("Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection...");
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
             }
         }
 
@@ -10871,10 +11611,10 @@ namespace twtboardpro
 
         //        AccountManager.Username = item.Value.Username;
         //        AccountManager.Password = item.Value.Password;
-        //        AccountManager.proxyAddress = item.Value.proxyAddress;
-        //        AccountManager.proxyPort = item.Value.proxyPort;
-        //        AccountManager.proxyUsername = item.Value.proxyUsername;
-        //        AccountManager.proxyPassword = item.Value.proxyPassword;
+        //        AccountManager.IPAddress = item.Value.IPAddress;
+        //        AccountManager.IPPort = item.Value.IPPort;
+        //        AccountManager.IPUsername = item.Value.IPUsername;
+        //        AccountManager.IPpassword = item.Value.IPpassword;
 
         //        AddToDMLog("Logging In With Email : " + item.Value.Username);
         //        if (!AccountManager.IsLoggedIn)
@@ -11068,10 +11808,10 @@ namespace twtboardpro
 
         //        AccountManager.Username = item.Value.Username;
         //        AccountManager.Password = item.Value.Password;
-        //        AccountManager.proxyAddress = item.Value.proxyAddress;
-        //        AccountManager.proxyPort = item.Value.proxyPort;
-        //        AccountManager.proxyUsername = item.Value.proxyUsername;
-        //        AccountManager.proxyPassword = item.Value.proxyPassword;
+        //        AccountManager.IPAddress = item.Value.IPAddress;
+        //        AccountManager.IPPort = item.Value.IPPort;
+        //        AccountManager.IPUsername = item.Value.IPUsername;
+        //        AccountManager.IPpassword = item.Value.IPpassword;
 
         //        if (!AccountManager.IsLoggedIn)
         //        {
@@ -11550,7 +12290,7 @@ namespace twtboardpro
             }
             else if (Tb_AccountManager.SelectedIndex == 5)
             {
-                labelAccountcreator.Text = "Proxy Setting";
+                labelAccountcreator.Text = "IP Setting";
             }
             else if (Tb_AccountManager.SelectedIndex == 6)
             {
@@ -11817,26 +12557,26 @@ namespace twtboardpro
             return null;
         }
 
-        public void SetProxy(string servername, string portnumber)
+        public void SetIP(string servername, string portnumber)
         {
             try
             {
                 //GlobusHttpHelper objhelper = new GlobusHttpHelper();
 
-                //string responce = objhelper.getHtmlfromUrlProxy(new Uri("http://www.google.co.in/"), servername, int.Parse(portnumber), "", "");
+                //string responce = objhelper.getHtmlfromUrlIP(new Uri("http://www.google.co.in/"), servername, int.Parse(portnumber), "", "");
 
                 string key = "Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings";
-                string serverName = servername;//your proxy server name;
+                string serverName = servername;//your IP server name;
 
-                string port = portnumber; //your proxy port;
+                string port = portnumber; //your IP port;
 
-                string proxy = serverName + ":" + port;
+                string IP = serverName + ":" + port;
 
                 RegistryKey RegKey = Registry.CurrentUser.OpenSubKey(key, true);
 
-                RegKey.SetValue("ProxyServer", proxy);
+                RegKey.SetValue("IPServer", IP);
 
-                RegKey.SetValue("ProxyEnable", 1);
+                RegKey.SetValue("IPEnable", 1);
             }
             catch { };
 
@@ -11863,7 +12603,7 @@ namespace twtboardpro
                             }
                         }
                     }
-                    AddToProxyAccountCreationLog("[ " + DateTime.Now + " ] => [ " + LstAccountCreationName.Count() + " Name in List ]");
+                    AddToIPAccountCreationLog("[ " + DateTime.Now + " ] => [ " + LstAccountCreationName.Count() + " Name in List ]");
                 }
             }
             catch (Exception ex)
@@ -11895,7 +12635,7 @@ namespace twtboardpro
                             }
                         }
                     }
-                    AddToProxyAccountCreationLog("[ " + DateTime.Now + " ] => [ " + LstAccountcreationEmailPassword.Count() + " Email in List ]");
+                    AddToIPAccountCreationLog("[ " + DateTime.Now + " ] => [ " + LstAccountcreationEmailPassword.Count() + " Email in List ]");
                 }
             }
             catch (Exception ex)
@@ -11927,7 +12667,7 @@ namespace twtboardpro
                             }
                         }
                     }
-                    AddToProxyAccountCreationLog("[ " + DateTime.Now + " ] => [ " + LstAccountcreationUsername.Count() + " Username in List ]");
+                    AddToIPAccountCreationLog("[ " + DateTime.Now + " ] => [ " + LstAccountcreationUsername.Count() + " Username in List ]");
                 }
             }
             catch (Exception ex)
@@ -12020,7 +12760,7 @@ namespace twtboardpro
                         {
                             try
                             {
-                                if (item.ProcessName.Contains("TD_LicensingManager"))
+                                if (item.ProcessName.Contains("twtBoard_LicensingManager"))
                                 {
                                     item.Kill();
 
@@ -12039,7 +12779,7 @@ namespace twtboardpro
                         {
                             try
                             {
-                                if (item.ProcessName.Contains("TD_LicensingManager"))
+                                if (item.ProcessName.Contains("twtBoard_LicensingManager"))
                                 {
                                     item.Kill();
                                 }
@@ -12225,7 +12965,7 @@ namespace twtboardpro
 
         }
 
-        private void tabProxy_Paint(object sender, PaintEventArgs e)
+        private void tabIP_Paint(object sender, PaintEventArgs e)
         {
             Graphics g;
 
@@ -12237,7 +12977,7 @@ namespace twtboardpro
             //g.FillRectangle(Brushes.Yellow, new Rectangle(new Point(0, 0), this.ClientSize));
 
             //// Draw the image.
-            g.DrawImage(image, 0, 0, tabProxy.Width, tabProxy.Height);
+            g.DrawImage(image, 0, 0, tabIP.Width, tabIP.Height);
         }
 
         private void tabScrape_Paint(object sender, PaintEventArgs e)
@@ -13138,20 +13878,20 @@ namespace twtboardpro
                             catch (Exception)
                             {
                             }
-                            GlobusFileHelper.AppendStringToTextfileNewLine(tweetAccountManager.Username + ":" + tweetAccountManager.Password + ":" + username + ":" + userid + ":" + tweetAccountManager.proxyAddress + ":" + tweetAccountManager.proxyPort + ":" + tweetAccountManager.proxyUsername + ":" + tweetAccountManager.proxyPassword, Globals.path_SuccessfullyFollowAccounts);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(tweetAccountManager.Username + ":" + tweetAccountManager.Password + ":" + username + ":" + userid + ":" + tweetAccountManager.IPAddress + ":" + tweetAccountManager.IPPort + ":" + tweetAccountManager.IPUsername + ":" + tweetAccountManager.IPpassword, Globals.path_SuccessfullyFollowAccounts);
                         }
                         else if (status == "Already Followed")
                         {
                             Console.WriteLine("Already followed From =>" + tweetAccountManager.Username);
                             AddToLog_Follower("[ " + DateTime.Now + " ] => [ Already Followed User >>> " + USerIdToFollow + " From " + tweetAccountManager.Username + " ]");
-                            GlobusFileHelper.AppendStringToTextfileNewLine(tweetAccountManager.Username + ":" + tweetAccountManager.Password + ":" + "" + ":" + USerIdToFollow + ":" + tweetAccountManager.proxyAddress + ":" + tweetAccountManager.proxyPort + ":" + tweetAccountManager.proxyUsername + ":" + tweetAccountManager.proxyPassword, Globals.path_FailedToFollowAccounts);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(tweetAccountManager.Username + ":" + tweetAccountManager.Password + ":" + "" + ":" + USerIdToFollow + ":" + tweetAccountManager.IPAddress + ":" + tweetAccountManager.IPPort + ":" + tweetAccountManager.IPUsername + ":" + tweetAccountManager.IPpassword, Globals.path_FailedToFollowAccounts);
                         }
 
                         else
                         {
                             Console.WriteLine("not followed From =>" + tweetAccountManager.Username);
                             AddToLog_Follower("[ " + DateTime.Now + " ] => [ Not Followed User >>> " + USerIdToFollow + " From " + tweetAccountManager.Username + " ]");
-                            GlobusFileHelper.AppendStringToTextfileNewLine(tweetAccountManager.Username + ":" + tweetAccountManager.Password + ":" + "" + ":" + USerIdToFollow + ":" + tweetAccountManager.proxyAddress + ":" + tweetAccountManager.proxyPort + ":" + tweetAccountManager.proxyUsername + ":" + tweetAccountManager.proxyPassword, Globals.path_FailedToFollowAccounts);
+                            GlobusFileHelper.AppendStringToTextfileNewLine(tweetAccountManager.Username + ":" + tweetAccountManager.Password + ":" + "" + ":" + USerIdToFollow + ":" + tweetAccountManager.IPAddress + ":" + tweetAccountManager.IPPort + ":" + tweetAccountManager.IPUsername + ":" + tweetAccountManager.IPpassword, Globals.path_FailedToFollowAccounts);
                         }
                     }
                 }
@@ -14158,15 +14898,15 @@ namespace twtboardpro
             }
         }
 
-        private void chkboxUseUrlProxy_CheckedChanged(object sender, EventArgs e)
+        private void chkboxUseUrlIP_CheckedChanged(object sender, EventArgs e)
         {
-            if (chkboxUseUrlProxy.Checked)
+            if (chkboxUseUrlIP.Checked)
             {
-                txtProxyUrl.Enabled = true;
+                txtIPUrl.Enabled = true;
             }
-            else if (!chkboxUseUrlProxy.Checked)
+            else if (!chkboxUseUrlIP.Checked)
             {
-                txtProxyUrl.Enabled = false;
+                txtIPUrl.Enabled = false;
             }
         }
 
@@ -14237,10 +14977,10 @@ namespace twtboardpro
                             TweetAccountManager TweetLogin = new TweetAccountManager();
                             TweetLogin.Username = item.Key;
                             TweetLogin.Password = item.Value.Password;
-                            TweetLogin.proxyAddress = item.Value.proxyAddress;
-                            TweetLogin.proxyPort = item.Value.proxyPort;
-                            TweetLogin.proxyUsername = item.Value.proxyUsername;
-                            TweetLogin.proxyPassword = item.Value.proxyPassword;
+                            TweetLogin.IPAddress = item.Value.IPAddress;
+                            TweetLogin.IPPort = item.Value.IPPort;
+                            TweetLogin.IPUsername = item.Value.IPUsername;
+                            TweetLogin.IPpassword = item.Value.IPpassword;
                             TweetLogin.Login();
                             if (!TweetLogin.IsNotSuspended)
                             {
@@ -15331,14 +16071,14 @@ namespace twtboardpro
 
         }
 
-        private void btn_StopProxyTesting_Click(object sender, EventArgs e)
+        private void btn_StopIPTesting_Click(object sender, EventArgs e)
         {
 
             try
             {
-                IsStopPublicProxy = true;
-                IsStopImportingProxy = true;
-                List<Thread> lstTemp = LstPublicProxy.Distinct().ToList();
+                IsStopPublicIP = true;
+                IsStopImportingIP = true;
+                List<Thread> lstTemp = LstPublicIP.Distinct().ToList();
                 foreach (Thread item in lstTemp)
                 {
                     try
@@ -15352,7 +16092,7 @@ namespace twtboardpro
                 }
 
 
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxy Testing is Aborted ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ IP Testing is Aborted ]");
 
 
             }
@@ -15362,8 +16102,8 @@ namespace twtboardpro
             }
             //try
             //{
-            //    StopThreads("proxy");
-            //    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxy testing is Abort. ]");
+            //    StopThreads("IP");
+            //    AddToIPsLogs("[ " + DateTime.Now + " ] => [ IP testing is Abort. ]");
             //}
             //catch (Exception)
             //{
@@ -15902,12 +16642,12 @@ namespace twtboardpro
                                     //Prnt in logger is posted..
                                     AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Retweeted :" + RetweetUrl + " from " + tweetAccountManager.Username + " ]");
                                     AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Success fully Retweeted Form Account > " + keyValue_Item.Key);
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.proxyAddress + ":" + tweetAccountManager.proxyPort + ":" + tweetAccountManager.proxyUsername + ":" + tweetAccountManager.proxyPassword, Globals.path_SucessfullyRetweetToUrlFromId);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.IPAddress + ":" + tweetAccountManager.IPPort + ":" + tweetAccountManager.IPUsername + ":" + tweetAccountManager.IPpassword, Globals.path_SucessfullyRetweetToUrlFromId);
                                 }
                                 else
                                 {
                                     AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Fail/Already Retweeted From Account  > " + keyValue_Item.Key + " ]");
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.proxyAddress + ":" + tweetAccountManager.proxyPort + ":" + tweetAccountManager.proxyUsername + ":" + tweetAccountManager.proxyPassword, Globals.path_FailureRetweetToUrlFromId);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.IPAddress + ":" + tweetAccountManager.IPPort + ":" + tweetAccountManager.IPUsername + ":" + tweetAccountManager.IPpassword, Globals.path_FailureRetweetToUrlFromId);
                                 }
                                 AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Retweet delay for "+delay+" secs ]");
                                 //AddToLog_RetweetAndFavorite("Retweet delay for "+delay+" secs");
@@ -16015,12 +16755,12 @@ namespace twtboardpro
                                 {
                                     //Prnt in logger is posted..
                                     AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Successfully Favorite sending From Account > " + keyValue_Item.Key + " ]");
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.proxyAddress + ":" + tweetAccountManager.proxyPort + ":" + tweetAccountManager.proxyUsername + ":" + tweetAccountManager.proxyPassword, Globals.path_SucessfullyFavoriteToUrlFromId);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.IPAddress + ":" + tweetAccountManager.IPPort + ":" + tweetAccountManager.IPUsername + ":" + tweetAccountManager.IPpassword, Globals.path_SucessfullyFavoriteToUrlFromId);
                                 }
                                 else
                                 {
                                     AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Failed Favorite sending From Account > " + keyValue_Item.Key + " ]");
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.proxyAddress + ":" + tweetAccountManager.proxyPort + ":" + tweetAccountManager.proxyUsername + ":" + tweetAccountManager.proxyPassword, Globals.path_FailureFavoriteToUrlFromId);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.IPAddress + ":" + tweetAccountManager.IPPort + ":" + tweetAccountManager.IPUsername + ":" + tweetAccountManager.IPpassword, Globals.path_FailureFavoriteToUrlFromId);
 
                                 }
                                 AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Favorite delay for " + delay + " secs ] ");
@@ -16126,12 +16866,12 @@ namespace twtboardpro
                                     favCount++;
                                     //Prnt in logger is posted..
                                     AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Successfully Favorite sending From Account > " + keyValue_Item.Key + " ]");
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.proxyAddress + ":" + tweetAccountManager.proxyPort + ":" + tweetAccountManager.proxyUsername + ":" + tweetAccountManager.proxyPassword, Globals.path_SucessfullyFavoriteToUrlFromId);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.IPAddress + ":" + tweetAccountManager.IPPort + ":" + tweetAccountManager.IPUsername + ":" + tweetAccountManager.IPpassword, Globals.path_SucessfullyFavoriteToUrlFromId);
                                 }
                                 else
                                 {
                                     AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Failed Favorite sending From Account > " + keyValue_Item.Key + " ]");
-                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.proxyAddress + ":" + tweetAccountManager.proxyPort + ":" + tweetAccountManager.proxyUsername + ":" + tweetAccountManager.proxyPassword, Globals.path_FailureFavoriteToUrlFromId);
+                                    GlobusFileHelper.AppendStringToTextfileNewLine(keyValue_Item.Key + ":" + tweetAccountManager.Password + ":" + tweetAccountManager.IPAddress + ":" + tweetAccountManager.IPPort + ":" + tweetAccountManager.IPUsername + ":" + tweetAccountManager.IPpassword, Globals.path_FailureFavoriteToUrlFromId);
 
                                 }
                                 AddToLog_RetweetAndFavorite("[ " + DateTime.Now + " ] => [ Favorite delay for " + delay + " secs ]");
@@ -16163,26 +16903,26 @@ namespace twtboardpro
             return favCount;
         }
 
-        private void chk_RetweetAndFavoritePublicproxy_CheckedChanged(object sender, EventArgs e)
+        private void chk_RetweetAndFavoritePublicIP_CheckedChanged(object sender, EventArgs e)
         {
             try
             {
-                if (chk_RetweetAndFavoritePublicproxy.Checked == true)
+                if (chk_RetweetAndFavoritePublicIP.Checked == true)
                 {
-                    ProxyUpload();
-                    chk_RetweetAndFavoritePrivateproxy.Checked = false;
+                    IPUpload();
+                    chk_RetweetAndFavoritePrivateIP.Checked = false;
                     clsDBQueryManager SetDb = new clsDBQueryManager();
                     DataSet ds = new DataSet();
-                    ds = SetDb.SelectPublicProxyData();
+                    ds = SetDb.SelectPublicIPData();
                     if (ds.Tables[0].Rows.Count > 0)
                     {
 
                     }
                     else
                     {
-                        //MessageBox.Show("Please Import Proxy Files. We Are redirecting you to Proxy Tab");
+                        //MessageBox.Show("Please Import IP Files. We Are redirecting you to IP Tab");
                         //Tb_AccountManager.SelectedIndex = 5;
-                        DialogResult dr = MessageBox.Show("Please Import Proxy Files. We Are redirecting you to Proxy Tab", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        DialogResult dr = MessageBox.Show("Please Import IP Files. We Are redirecting you to IP Tab", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (dr == DialogResult.Yes)
                         {
                             Tb_AccountManager.SelectedIndex = 5;
@@ -16204,26 +16944,26 @@ namespace twtboardpro
         }
 
 
-        private void chk_RetweetAndFavoritePrivateproxy_CheckedChanged(object sender, EventArgs e)
+        private void chk_RetweetAndFavoritePrivateIP_CheckedChanged(object sender, EventArgs e)
         {
             try
             {
-                if (chk_RetweetAndFavoritePrivateproxy.Checked == true)
+                if (chk_RetweetAndFavoritePrivateIP.Checked == true)
                 {
-                    UploadPrivateProxy();
-                    chk_RetweetAndFavoritePublicproxy.Checked = false;
+                    UploadPrivateIP();
+                    chk_RetweetAndFavoritePublicIP.Checked = false;
                     clsDBQueryManager SetDb = new clsDBQueryManager();
                     DataSet ds = new DataSet();
-                    ds = SetDb.SelectPrivateProxyData();
+                    ds = SetDb.SelectPrivateIPData();
                     if (ds.Tables[0].Rows.Count > 0)
                     {
 
                     }
                     else
                     {
-                        //MessageBox.Show("Please Import Private Proxy Files. We Are redirecting you to Proxy Tab");
+                        //MessageBox.Show("Please Import Private IP Files. We Are redirecting you to IP Tab");
                         //Tb_AccountManager.SelectedIndex = 5;
-                        DialogResult dr = MessageBox.Show("Please Import Private Proxy Files. We Are redirecting you to Proxy Tab", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        DialogResult dr = MessageBox.Show("Please Import Private IP Files. We Are redirecting you to IP Tab", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                         if (dr == DialogResult.Yes)
                         {
                             Tb_AccountManager.SelectedIndex = 5;
@@ -16365,21 +17105,21 @@ namespace twtboardpro
 
         public readonly object locker_que_TweetMessage = new object();
         public readonly object lockr_queueRunningProxies_Mobile = new object();
-        public Queue<string> qRunningProxy_Mobile = new Queue<string>();
+        public Queue<string> qRunningIP_Mobile = new Queue<string>();
         int counter = 0;
         int AccountCounter = 0;
 
 
 
 
-        private void FillRunningProxyInQueue()
+        private void FillRunningIPInQueue()
         {
             try
             {
-                List<string> lstTemp = frmMain_NewUI.LstRunningProxy_ProxyModule.Distinct().ToList();
+                List<string> lstTemp = frmMain_NewUI.LstRunningIP_IPModule.Distinct().ToList();
 
-                AddToMobileLogs("[ " + DateTime.Now + " ] => [ " + lstTemp.Count + " Proxy Loaded ! ]");
-                if (frmMain_NewUI.LstRunningProxy_ProxyModule.Count > 0)
+                AddToMobileLogs("[ " + DateTime.Now + " ] => [ " + lstTemp.Count + " IP Loaded ! ]");
+                if (frmMain_NewUI.LstRunningIP_IPModule.Count > 0)
                 {
                     foreach (string item in lstTemp)
                     {
@@ -16387,7 +17127,7 @@ namespace twtboardpro
                         {
                             lock (lockr_queueRunningProxies_Mobile)
                             {
-                                qRunningProxy_Mobile.Enqueue(item);
+                                qRunningIP_Mobile.Enqueue(item);
                             }
                         }
                         catch
@@ -16397,7 +17137,7 @@ namespace twtboardpro
                 }
                 else
                 {
-                    AddToMobileLogs("[ " + DateTime.Now + " ] => [ There Is No Running Proxy. So Please Upload The New Proxy And Start Process Aggain ! ]");
+                    AddToMobileLogs("[ " + DateTime.Now + " ] => [ There Is No Running IP. So Please Upload The New IP And Start Process Aggain ! ]");
                     //return;
                 }
             }
@@ -16406,45 +17146,45 @@ namespace twtboardpro
             }
         }
 
-        private void CheckAndFillProxyInQueue()
+        private void CheckAndFillIPInQueue()
         {
             try
             {
-                string proxyAddress = string.Empty;
-                string proxyPort = string.Empty;
-                string proxyUsername = string.Empty;
-                string proxyPassword = string.Empty;
+                string IPAddress = string.Empty;
+                string IPPort = string.Empty;
+                string IPUsername = string.Empty;
+                string IPpassword = string.Empty;
 
                 int isPublic = 0;
 
-                if (frmMain_NewUI.LstRunningProxy_ProxyModule.Count > 0)
+                if (frmMain_NewUI.LstRunningIP_IPModule.Count > 0)
                 {
-                    List<string> lstTemp = frmMain_NewUI.LstRunningProxy_ProxyModule.Distinct().ToList();
+                    List<string> lstTemp = frmMain_NewUI.LstRunningIP_IPModule.Distinct().ToList();
 
-                    AddToMobileLogs("[ " + DateTime.Now + " ] => [ " + lstTemp.Count + " Proxy Loaded ! ]");
+                    AddToMobileLogs("[ " + DateTime.Now + " ] => [ " + lstTemp.Count + " IP Loaded ! ]");
 
                     foreach (string item in lstTemp)
                     {
                         try
                         {
-                            proxyAddress = item.Split(':')[0];
-                            proxyPort = item.Split(':')[1];
-                            proxyUsername = item.Split(':')[2];
-                            proxyPassword = item.Split(':')[3];
+                            IPAddress = item.Split(':')[0];
+                            IPPort = item.Split(':')[1];
+                            IPUsername = item.Split(':')[2];
+                            IPpassword = item.Split(':')[3];
 
-                            ProxyChecker obj_ProxyChecker = new ProxyChecker(proxyAddress, proxyPort, proxyUsername, proxyPassword, isPublic);
+                            IPChecker obj_IPChecker = new IPChecker(IPAddress, IPPort, IPUsername, IPpassword, isPublic);
 
-                            if (obj_ProxyChecker.CheckProxy())
+                            if (obj_IPChecker.CheckIP())
                             {
-                                qRunningProxy_Mobile.Enqueue(item);
+                                qRunningIP_Mobile.Enqueue(item);
                             }
 
-                            lock (frmMain_NewUI.Locker_LstRunningProxy_ProxyModule)
+                            lock (frmMain_NewUI.Locker_LstRunningIP_IPModule)
                             {
-                                frmMain_NewUI.LstRunningProxy_ProxyModule.Remove(item);
+                                frmMain_NewUI.LstRunningIP_IPModule.Remove(item);
                             }
 
-                            AddToMobileLogs("[ " + DateTime.Now + " ] => [ Not Running Proxy >>> " + item + " ]");
+                            AddToMobileLogs("[ " + DateTime.Now + " ] => [ Not Running IP >>> " + item + " ]");
                         }
                         catch
                         {
@@ -16453,7 +17193,7 @@ namespace twtboardpro
                 }
                 else
                 {
-                    AddToMobileLogs("[ " + DateTime.Now + " ] => [ There Is No Running Proxy. So Please Upload The New Proxy And Start Process Aggain ! ]");
+                    AddToMobileLogs("[ " + DateTime.Now + " ] => [ There Is No Running IP. So Please Upload The New IP And Start Process Aggain ! ]");
                     // return;
                 }
             }
@@ -16476,10 +17216,10 @@ namespace twtboardpro
                 string email = string.Empty;
                 string pass = string.Empty;
 
-                string proxyAddress = string.Empty;
-                string proxyPort = string.Empty;
-                string proxyUsername = string.Empty;
-                string proxyPassword = string.Empty;
+                string IPAddress = string.Empty;
+                string IPPort = string.Empty;
+                string IPUsername = string.Empty;
+                string IPpassword = string.Empty;
 
                 string username = string.Empty;
                 string name = string.Empty;
@@ -16491,17 +17231,17 @@ namespace twtboardpro
                 string Location = "";
                 string Bio = "";
 
-                string proxyItem = string.Empty;
+                string IPItem = string.Empty;
 
                 GlobusHttpHelper HttpHelper = new GlobusHttpHelper();
 
                 lock (lockr_queueRunningProxies_Mobile)
                 {
-                    if (qRunningProxy_Mobile.Count > 0)
+                    if (qRunningIP_Mobile.Count > 0)
                     {
                         try
                         {
-                            proxyItem = qRunningProxy_Mobile.Dequeue();
+                            IPItem = qRunningIP_Mobile.Dequeue();
                         }
                         catch
                         {
@@ -16509,7 +17249,7 @@ namespace twtboardpro
                     }
                     else
                     {
-                        CheckAndFillProxyInQueue();
+                        CheckAndFillIPInQueue();
                     }
                 }
 
@@ -16532,17 +17272,17 @@ namespace twtboardpro
                 {
                     email = emailData.Split(':')[0].Replace("\0", "");
                     pass = emailData.Split(':')[1].Replace("\0", "");
-                    proxyAddress = emailData.Split(':')[2];
-                    proxyPort = emailData.Split(':')[3];
+                    IPAddress = emailData.Split(':')[2];
+                    IPPort = emailData.Split(':')[3];
                 }
                 else if (arr.Length == 6)
                 {
                     email = emailData.Split(':')[0].Replace("\0", "");
                     pass = emailData.Split(':')[1].Replace("\0", "");
-                    proxyAddress = emailData.Split(':')[2];
-                    proxyPort = emailData.Split(':')[3];
-                    proxyUsername = emailData.Split(':')[4];
-                    proxyPassword = emailData.Split(':')[5];
+                    IPAddress = emailData.Split(':')[2];
+                    IPPort = emailData.Split(':')[3];
+                    IPUsername = emailData.Split(':')[4];
+                    IPpassword = emailData.Split(':')[5];
                 }
                 else
                 {
@@ -16551,14 +17291,14 @@ namespace twtboardpro
                 }
 
 
-                if (!string.IsNullOrEmpty(proxyItem))
+                if (!string.IsNullOrEmpty(IPItem))
                 {
                     try
                     {
-                        proxyAddress = proxyItem.Split(':')[0];
-                        proxyPort = proxyItem.Split(':')[1];
-                        proxyUsername = proxyItem.Split(':')[2];
-                        proxyPassword = proxyItem.Split(':')[3];
+                        IPAddress = IPItem.Split(':')[0];
+                        IPPort = IPItem.Split(':')[1];
+                        IPUsername = IPItem.Split(':')[2];
+                        IPpassword = IPItem.Split(':')[3];
                     }
                     catch
                     {
@@ -16622,8 +17362,8 @@ namespace twtboardpro
                 int tempCount_usernameCheckLoop = 0;
             usernameCheckLoop:
                 string url1 = "https://twitter.com/users/email_available?suggest=1&username=&full_name=&email=" + Uri.EscapeDataString(email.Replace(" ", "")) + "&suggest_on_username=true&context=signup";
-                string EmailCheck = HttpHelper.getHtmlfromUrlProxy(new Uri(url1), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://twitter.com/signup,", "", mobileagent);
-                string Usernamecheck = HttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/users/username_available?suggest=1&username=" + username + "&full_name=" + name + "&email=&suggest_on_username=true&context=signup"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://twitter.com/signup,", "", mobileagent);
+                string EmailCheck = HttpHelper.getHtmlfromUrlIP(new Uri(url1), IPAddress, IPPort, IPUsername, IPpassword, "https://twitter.com/signup,", "", mobileagent);
+                string Usernamecheck = HttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/users/username_available?suggest=1&username=" + username + "&full_name=" + name + "&email=&suggest_on_username=true&context=signup"), IPAddress, IPPort, IPUsername, IPpassword, "https://twitter.com/signup,", "", mobileagent);
 
                 if (EmailCheck.Contains("Email has already been taken. An email can only be used on one Twitter account at a time"))
                 {
@@ -16659,7 +17399,7 @@ namespace twtboardpro
                 AddToMobileLogs("[ " + DateTime.Now + " ] => [ Redirecting To Twitter Signup ]");
                 string url = "https://mobile.twitter.com/signup";
 
-                string pagesource1 = HttpHelper.getHtmlfromUrlProxy(new Uri(url), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://twitter.com/signup,", "", mobileagent);
+                string pagesource1 = HttpHelper.getHtmlfromUrlIP(new Uri(url), IPAddress, IPPort, IPUsername, IPpassword, "https://twitter.com/signup,", "", mobileagent);
 
                 string authenticity_token = string.Empty;
                 AddToMobileLogs("[ " + DateTime.Now + " ] => [ Getting Captcha Chanllenge ]");
@@ -16749,7 +17489,7 @@ namespace twtboardpro
                     }
 
                     AddToMobileLogs("[ " + DateTime.Now + " ] => [ Account Created : " + email + " ]");
-                    GlobusFileHelper.AppendStringToTextfileNewLine(email + ":" + pass + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, BaseLib.Globals.Path_MobEmailCreator);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(email + ":" + pass + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, BaseLib.Globals.Path_MobEmailCreator);
                     int counter_profile = 0;
                 profilling:
                     string pageProfileData = HttpHelper.getHtmlfromUrl(new Uri("https://mobile.twitter.com/settings/profile"), "https://mobile.twitter.com/account", "");
@@ -16777,7 +17517,7 @@ namespace twtboardpro
                     }
 
 
-                    string pagesource3 = HttpHelper.getHtmlfromUrlProxy(new Uri("https://mobile.twitter.com/compose/tweet"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://mobile.twitter.com/compose/tweet", "", mobileagent);
+                    string pagesource3 = HttpHelper.getHtmlfromUrlIP(new Uri("https://mobile.twitter.com/compose/tweet"), IPAddress, IPPort, IPUsername, IPpassword, "https://mobile.twitter.com/compose/tweet", "", mobileagent);
                     string TweetPost = "authenticity_token=" + authenticity_token + "&tweet%5Btext%5D=" + Uri.EscapeDataString(Tweet) + "&commit=Tweet";
                     string pagesourcepost = HttpHelper.postFormDataMobileData(new Uri("https://mobile.twitter.com/"), TweetPost, "https://mobile.twitter.com/compose/tweet", "", "", "", "", mobileagent);
                     string secondpagesourcepost = HttpHelper.getHtmlfromUrl(new Uri("https://mobile.twitter.com/"), "https://mobile.twitter.com/", "", mobileagent);
@@ -16803,7 +17543,7 @@ namespace twtboardpro
                 else if (pagfinal.Contains("Redirecting to: <a href=\"https://mobile.twitter.com/signup/screen_name"))
                 {
                     Thread.Sleep(300);
-                    pagfinal = HttpHelper.getHtmlfromUrlProxy(new Uri("https://mobile.twitter.com/signup/screen_name"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://mobile.twitter.com/compose/tweet", "", mobileagent);
+                    pagfinal = HttpHelper.getHtmlfromUrlIP(new Uri("https://mobile.twitter.com/signup/screen_name"), IPAddress, IPPort, IPUsername, IPpassword, "https://mobile.twitter.com/compose/tweet", "", mobileagent);
                 }
                 else if (pagfinal.Contains("captcha invalid-field invalid-captcha-response-field")) //wrong captcha
                 {
@@ -16842,7 +17582,7 @@ namespace twtboardpro
                     #region Profile and tweet
 
                     AddToMobileLogs("[ " + DateTime.Now + " ] => [ Account Created : " + email + " ]");
-                    GlobusFileHelper.AppendStringToTextfileNewLine(email + ":" + pass + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, BaseLib.Globals.Path_MobEmailCreator);
+                    GlobusFileHelper.AppendStringToTextfileNewLine(email + ":" + pass + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, BaseLib.Globals.Path_MobEmailCreator);
                     int counter_profile = 0;
                 profilling:
                     string pageProfileData = HttpHelper.getHtmlfromUrl(new Uri("https://mobile.twitter.com/settings/profile"), "https://mobile.twitter.com/account", "");
@@ -16870,7 +17610,7 @@ namespace twtboardpro
                         GlobusFileHelper.AppendStringToTextfileNewLine(email + ":" + pass, BaseLib.Globals.Path_NotMobEmailProfiled);
                     }
 
-                    string pagesource3 = HttpHelper.getHtmlfromUrlProxy(new Uri("https://mobile.twitter.com/compose/tweet"), proxyAddress, proxyPort, proxyUsername, proxyPassword, "https://mobile.twitter.com/compose/tweet", "", mobileagent);
+                    string pagesource3 = HttpHelper.getHtmlfromUrlIP(new Uri("https://mobile.twitter.com/compose/tweet"), IPAddress, IPPort, IPUsername, IPpassword, "https://mobile.twitter.com/compose/tweet", "", mobileagent);
                     string TweetPost = "authenticity_token=" + authenticity_token + "&tweet%5Btext%5D=" + Uri.EscapeDataString(Tweet) + "&commit=Tweet";
                     string pagesourcepost = HttpHelper.postFormDataMobileData(new Uri("https://mobile.twitter.com/"), TweetPost, "https://mobile.twitter.com/compose/tweet", "", "", "", "", mobileagent);
                     string secondpagesourcepost = HttpHelper.getHtmlfromUrl(new Uri("https://mobile.twitter.com/"), "https://mobile.twitter.com/", "", mobileagent);
@@ -17092,14 +17832,28 @@ namespace twtboardpro
                 }
                 AddToTweetCreatorLogs("[ " + DateTime.Now + " ] => [ Starting Extracting Tweets ]");
 
-                new Thread(() =>
+                if (chkBoxScrapeLiveTweet.Checked)
                 {
-                    foreach (string keyword in lst_TweetExtrcator)
+                    new Thread(() =>
                     {
-                        StartKeywordExtracting(keyword, count);
+                        foreach (string keyword in lst_TweetExtrcator)
+                        {
+                            StartKeywordExtractingForLiveTweet(keyword, count);
 
-                    }
-                }).Start();
+                        }
+                    }).Start();
+                }
+                else
+                {
+                    new Thread(() =>
+                    {
+                        foreach (string keyword in lst_TweetExtrcator)
+                        {
+                            StartKeywordExtracting(keyword, count);
+
+                        }
+                    }).Start();
+                }
             }
             else
             {
@@ -17184,6 +17938,7 @@ namespace twtboardpro
                                 if (!string.IsNullOrEmpty(TweetText) && TweetText.Length <= 100)
                                 {
                                     lstweete.Add(TweetText);
+                                    ScrapTweetsForTweetModule.Add(TweetText);
                                 }
                             }
                             catch (Exception ex)
@@ -17210,6 +17965,15 @@ namespace twtboardpro
                 keyword = keyword.Replace("%23", "#");
                 AddToTweetCreatorLogs("[ " + DateTime.Now + " ] => [ Finished Extracting Tweets for " + keyword + " ]");
                 AddToTweetCreatorLogs("-----------------------------------------------------------------------------------------------------------------------");
+
+                if (CheckBoxScrapTweetsIsChecked)
+                {
+                    ScrapTweetsForTweetModule = lstweete;
+                    AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Scraped No of Tweets " + ScrapTweetsForTweetModule.Count() + " ]");
+                    CheckBoxScrapTweetsIsChecked = false;
+                    this.Invoke(new MethodInvoker(delegate { Tb_AccountManager.SelectedIndex = 1; }));
+                }
+
             }
             catch (Exception ex)
             {
@@ -17217,6 +17981,259 @@ namespace twtboardpro
                 Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartKeywordExtracting() --> " + ex.Message, Globals.Path_TwtErrorLogs);
             }
         }
+
+
+        public void StartKeywordExtractingForLiveTweet(string keyword, int count)
+        {
+            try
+            {
+                keyword = keyword.Replace("#", "%23");
+                List<string> lstweete = new List<string>();
+                keyword = keyword.Replace("%23", "#");
+                AddToTweetCreatorLogs("[ " + DateTime.Now + " ] => [ Extracting Tweets for " + keyword + " ]");
+                keyword = keyword.Replace("#", "%23");
+                string[] arraylst = new string[] { };
+                string scroll_cursor = "0";
+                GlobusHttpHelper HttpHelper = new GlobusHttpHelper();
+                ScrapTweetsForTweetModule.Clear();
+                string tweetURL = string.Empty;
+                string max_position = string.Empty;
+
+                for (int i = 1; i < count; i++)
+                {
+                    string pgsrcs = string.Empty;
+                    AddToTweetCreatorLogs("[ " + DateTime.Now + " ] => [ Getting " + (i) + " Page Live Tweets ]");
+
+                    if (i == 1)
+                    {
+                        //https://twitter.com/search?f=tweets&vertical=default&q=computer&src=typd
+                        pgsrcs = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/search?f=tweets&vertical=default&q=" + keyword + "&src=typd"), "", "");
+                    }
+                    else
+                    {
+                        // pgsrcs = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/i/search/timeline?q=" + keyword + "&src=typd&f=realtime&include_available_features=1&include_entities=1&last_note_ts=0&scroll_cursor=" + scroll_cursor), "", "");
+                        pgsrcs = HttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/i/search/timeline?vertical=default&q=" + keyword + "&src=typd&include_available_features=1&include_entities=1&last_note_ts=1435160952&max_position=" + max_position), "", "");
+                        //https://twitter.com/i/search/timeline?f=tweets&vertical=default&q=computer&src=typd&include_available_features=1&include_entities=1&last_note_ts=1435161052&max_position=
+                    }
+
+                    try
+                    {
+                        //int startindex = pgsrcs.IndexOf("scroll_cursor");
+                        //string start = pgsrcs.Substring(startindex).Replace("scroll_cursor", string.Empty);
+                        //int endindex = start.IndexOf("refresh_cursor");
+                        //string end = string.Empty;
+
+                        //if (endindex >= 0)
+                        //{
+
+                        //    end = start.Substring(0, endindex);
+                        //    scroll_cursor = end.Replace("\\", string.Empty).Replace("\"", string.Empty).Replace(",", string.Empty).Replace(":", string.Empty).Trim();
+                        //}
+                        //else
+                        //{
+                        //    endindex = start.IndexOf("\"}");
+                        //    end = start.Substring(0, endindex);
+                        //    scroll_cursor = end;
+                        //}
+                        try
+                        {
+                            max_position = Utils.getBetween(pgsrcs, "data-max-position=\"", "\"");
+                            if (string.IsNullOrEmpty(max_position))
+                            {
+                                max_position = Utils.getBetween(pgsrcs, "min_position\":\"", "\"");
+                            }
+                        }
+                        catch { };
+                    }
+                    catch (Exception ex)
+                    {
+                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartKeywordExtracting() --> Getting Maxid --> " + ex.Message, Globals.Path_TweetCreatorErroLog);
+                        Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartKeywordExtracting() --> Getting Maxid  --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                    }
+
+                    //arraylst = Regex.Split(pgsrcs, "tweet-text");//TweetTextSize  js-tweet-text tweet-text
+                    arraylst = Regex.Split(pgsrcs, "TweetTextSize  js-tweet-text tweet-text");
+                    arraylst = arraylst.Skip(1).ToArray();
+                    foreach (string data in arraylst)
+                    {
+                        string dataname = Utils.getBetween(data, "<a href=\"", "\"");
+                        if (string.IsNullOrEmpty(dataname))
+                        {
+                            dataname = Utils.getBetween(data, "href=\\\"\\/hashtag\\/", "?");
+                        }
+                        try
+                        {
+                            string TweetText = string.Empty;
+                            //int stratindex = data.IndexOf("\"");
+                            //string start = data.Substring(stratindex);
+                            //Regex regex = new Regex(@"\\u([0-9a-z]{4})", RegexOptions.IgnoreCase);
+                            //start = regex.Replace(start, match => char.ConvertFromUtf32(Int32.Parse(match.Groups[1].Value, System.Globalization.NumberStyles.HexNumber)));
+                            //string abc = start.Substring(start.IndexOf(">"), start.IndexOf("<div") - start.IndexOf(">") - 1);
+                            //BaseLib.GlobusRegex baselib = new GlobusRegex();
+                            //string TweetText = baselib.StripTagsRegex(abc);
+
+                            TweetText = Utils.getBetween(data, ">", "<");
+                            if (string.IsNullOrEmpty(TweetText))
+                            {
+                                try
+                                {
+                                    string[] getTweetText = Regex.Split(data, "href=");
+                                    if (getTweetText[0].Contains("div class=\\\"expanded-content js-tweet-details-dropdown"))//div class=\"expanded-content js-tweet-details-dropdown
+                                    {
+                                        if (!getTweetText[0].Contains("div class=\\\"expanded-content js-tweet-details-dropdown"))
+                                        {
+                                            TweetText = Utils.getBetween(getTweetText[0] + "\"", "data-aria-label-part=\\\"0\\\"", "\"");
+                                            TweetText = TweetText.Replace("strong", "").Replace("\\u003e", "").Replace("\\u003ca", "").Replace("\\u003cs", "").Replace("\\u003c", "").Replace("\\u003cb", "").Replace("/s", "").Replace("&#39;", "'").Replace("&#10;", "");
+                                        }
+                                        else
+                                        {
+                                            TweetText = Utils.getBetween(getTweetText[0], "data-aria-label-part=\\\"0\\\"", "div class=\\\"expanded-content js-tweet-details-dropdown");
+                                            TweetText = TweetText.Replace("strong", "").Replace("\\u003e", "").Replace("\\u003ca", "").Replace("\\u003cs", "").Replace("\\u003c", "").Replace("\\u003cb", "").Replace("/s", "").Replace("&#39;", "'").Replace("&#10;", "");
+
+                                        }
+                                    }
+                                    if (getTweetText[1].Contains("class=\\\"twitter-atreply pretty-link js-nav\\\" dir=\\\"ltr\\\""))
+                                    {
+                                        if (!getTweetText[1].Contains("div class=\"expanded-content js-tweet-details-dropdown"))
+                                        {
+                                            TweetText = TweetText + Utils.getBetween(getTweetText[1] + "\"", "dir=\\\"ltr\\\"", "\"");
+                                            TweetText = TweetText.Replace("strong", "").Replace("\\u003e", "").Replace("\\u003ca", "").Replace("\\u003cs", "").Replace("\\u003c", "").Replace("\\u003cb", "").Replace("/s", "").Replace("&#39;", "'").Replace("&#10;", "");
+                                        }
+                                        else
+                                        {
+                                            TweetText = TweetText + Utils.getBetween(getTweetText[1], "dir=\\\"ltr\\\"", "div class=\\\"expanded-content js-tweet-details-dropdown");
+                                            TweetText = TweetText.Replace("strong", "").Replace("\\u003e", "").Replace("\\u003ca", "").Replace("\\u003cs", "").Replace("\\u003c", "").Replace("\\u003cb", "").Replace("/s", "").Replace("&#39;", "'").Replace("&#10;", "");
+                                        }
+                                    }
+                                    if (getTweetText[2].Contains("class=\\\"twitter-atreply pretty-link js-nav\\\" dir=\\\"ltr\\\""))
+                                    {
+                                        if (!getTweetText[2].Contains("div class=\"expanded-content js-tweet-details-dropdown"))
+                                        {
+                                            TweetText = TweetText + Utils.getBetween(getTweetText[2] + "\"", "dir=\\\"ltr\\\"", "\"");
+                                            TweetText = TweetText.Replace("strong", "").Replace("\\u003e", "").Replace("\\u003ca", "").Replace("\\u003cs", "").Replace("\\u003c", "").Replace("\\u003cb", "").Replace("/s", "").Replace("&#39;", "'").Replace("&#10;", "");
+                                        }
+                                        else
+                                        {
+                                            TweetText = TweetText + Utils.getBetween(getTweetText[2], "dir=\\\"ltr\\\"", "div class=\\\"expanded-content js-tweet-details-dropdown");
+                                            TweetText = TweetText.Replace("strong", "").Replace("\\u003e", "").Replace("\\u003ca", "").Replace("\\u003cs", "").Replace("\\u003c", "").Replace("\\u003cb", "").Replace("/s", "").Replace("&#39;", "'").Replace("&#10;", "");
+                                        }
+                                    }
+                                }
+                                catch { };
+
+
+                                //TweetText = Utils.getBetween(data, "data-aria-label-part=", "class=\\\"twitter-atreply pretty-link js-nav");// class=\"twitter-atreply pretty-link js-nav
+                                //if (string.IsNullOrEmpty(TweetText))
+                                //{
+                                //    TweetText = Utils.getBetween(data, "data-aria-label-part=\"0\"", "</p>");
+                                //    if (string.IsNullOrEmpty(TweetText))
+                                //    {
+                                //        TweetText = Utils.getBetween(data, "data-aria-label-part=", "class=\\\"expanded-content js-tweet-details-dropdown");//class=\"expanded-content js-tweet-details-dropdown
+                                //    }
+                                //}
+
+
+                            }
+
+                            TweetText = TweetText.Replace("\\u003c", "").Replace("\\u003e", "").Replace("\\u003cb", "").Replace("strong", "").Replace("div", "").Replace("\n", "").Replace("\\", "").Replace("\"0", "").Trim();
+                            TweetText = TweetText.Replace("<a href=\"/" + dataname + "\" class=\"twitter-atreply pretty-link js-nav\" dir=\"ltr\" >", "").Replace("</s>", "").Replace("<s>", "").Replace("<a>", "").Replace("</a>", "").Replace("</b>", "").Replace("<b>", "").Replace("<strong>", "").Replace("</strong>", "");
+                            try
+                            {
+                                try
+                                {
+                                    if (TweetText.Contains("http:\\") || TweetText.Contains("pic.twitter.com") || TweetText.Contains("class=\"twitter-emoji"))
+                                    {
+                                        if (TweetText.Contains("http:\\"))
+                                        {
+                                            string[] array = Regex.Split(TweetText, "http:");
+                                            TweetText = array[0];
+                                        }
+                                        else if (TweetText.Contains("pic.twitter.com"))
+                                        {
+                                            string[] array = Regex.Split(TweetText, "pic.twitter.com");
+                                            TweetText = array[0];
+                                        }
+                                        else if (TweetText.Contains("class=\"twitter-emoji"))
+                                        {
+                                            string[] array = Regex.Split(TweetText, "class=\"twitter-emoji");
+                                            TweetText = TweetText + array[0];
+                                        }
+                                    }
+                                }
+                                catch { };
+                                TweetText = TweetText.Replace("href=\"/hashtag/" + dataname + "?src=hash\"", "").Replace("data-query-source=\"hashtag_click\"", "").Replace("class=\"twitter-hashtag pretty-link js-nav\" dir=\"ltr\"", "").Replace("\n", "").Replace("n", "");
+                                // string tweetURL = string.Empty;
+                                try
+                                {
+                                    string[] getURL = Regex.Split(data, "data-card-url="); //details with-icn js-details\" href=\"\
+                                    if (getURL.Count() == 1)
+                                    {
+                                        // getURL = Regex.Split(data, "");
+                                        try
+                                        {
+                                            tweetURL = Utils.getBetween(data, "details with-icn js-details\" href=\"\\", "\\");
+                                        }
+                                        catch { };
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            tweetURL = Utils.getBetween(getURL[1], "twitter.com\\", "\\");
+                                        }
+                                        catch { };
+                                    }
+                                }
+                                catch { };
+                                TweetText = TweetText.Replace("&quot", string.Empty).Replace("&gt", string.Empty).Replace("&lt", string.Empty).Replace("&amp;", string.Empty).Replace("\n", string.Empty).Replace("\\n", string.Empty).Replace("&nbsp;", string.Empty).Replace(">", string.Empty).Replace("&#39;", string.Empty).Replace("/", "");//&nbsp;\n    \n          
+                                if (!string.IsNullOrEmpty(TweetText) && TweetText.Length <= 100)
+                                {
+                                    lstweete.Add(TweetText);
+                                    ScrapTweetsForTweetModule.Add(TweetText);
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartKeywordExtracting() --> RemovingLinks --> " + ex.Message, Globals.Path_TweetCreatorErroLog);
+                                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartKeywordExtracting() --> RemovingLinks --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartKeywordExtracting() --> Getting Tweet Message --> " + ex.Message, Globals.Path_TweetCreatorErroLog);
+                            Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartKeywordExtracting() --> Getting Tweet Message --> " + ex.Message, Globals.Path_TwtErrorLogs);
+                        }
+                    }
+                }
+
+                lstweete = lstweete.Distinct().ToList();
+                AddToTweetCreatorLogs("[ " + DateTime.Now + " ] => [ " + lstweete.Count + " Total distinct Tweets ]");
+                //ScrapTweetsForTweetModule
+                foreach (string Tweet in lstweete)
+                {
+                    AddToTweetCreatorLogs("[ " + DateTime.Now + " ] => [ " + Tweet + " ]");
+                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(Tweet, Globals.path_StoreKeywordTweetExtractor + "_" + keyword.Replace("%23", "#") + ".txt");
+                }
+                keyword = keyword.Replace("%23", "#");
+                AddToTweetCreatorLogs("[ " + DateTime.Now + " ] => [ Finished Extracting Tweets for " + keyword + " ]");
+                AddToTweetCreatorLogs("-----------------------------------------------------------------------------------------------------------------------");
+
+                if (CheckBoxScrapTweetsIsChecked)
+                {
+                    ScrapTweetsForTweetModule = lstweete;
+                    AddToLog_Tweet("[ " + DateTime.Now + " ] => [ Scraped No of Tweets " + ScrapTweetsForTweetModule.Count() + " ]");
+                    CheckBoxScrapTweetsIsChecked = false;
+                    this.Invoke(new MethodInvoker(delegate { Tb_AccountManager.SelectedIndex = 1; }));
+                }
+            }
+            catch (Exception ex)
+            {
+                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> StartKeywordExtracting() -->  " + ex.Message, Globals.Path_TweetCreatorErroLog);
+                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine("Error --> StartKeywordExtracting() --> " + ex.Message, Globals.Path_TwtErrorLogs);
+            }
+
+        }
+
 
         private void btnKeywordTweetExtrcator_Click(object sender, EventArgs e)
         {
@@ -17237,8 +18254,8 @@ namespace twtboardpro
             }
         }
 
-        public static List<string> LstRunningPvtProxy_ProxyModule = new List<string>();
-        public static readonly object Locker_LstRunningPvtProxy_ProxyModule = new object();
+        public static List<string> LstRunningPvtIP_IPModule = new List<string>();
+        public static readonly object Locker_LstRunningPvtIP_IPModule = new object();
         public int threadcountForFinishMSGPvtProxies = 0;
         /// <summary>
         /// CHecking Valid Private Proxies
@@ -17246,8 +18263,8 @@ namespace twtboardpro
         /// <param name="sender"></param>
         /// <param name="e"></param>
         /// 
-        List<Thread> LstAssignPrivateProxy = new List<Thread>();
-        bool IsStopPrivateProxy = false;
+        List<Thread> LstAssignPrivateIP = new List<Thread>();
+        bool IsStopPrivateIP = false;
         private void btnTestPvtProxies_Click(object sender, EventArgs e)
         {
             CheckNetConn = System.Net.NetworkInformation.NetworkInterface.GetIsNetworkAvailable();
@@ -17258,20 +18275,20 @@ namespace twtboardpro
                 {
                     workingproxiesCount = 0;
                     //Storing Valid Private Proxies in Txt file
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Existing Proxies Saved To : ]");
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + Globals.Path_ExsistingPvtProxies + " ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ Existing Proxies Saved To : ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + Globals.Path_ExsistingPvtProxies + " ]");
                     List<string> lstProxies = new List<string>();
-                    if (!string.IsNullOrEmpty(txtPvtProxyFour.Text.Trim()))
+                    if (!string.IsNullOrEmpty(txtPvtIPFour.Text.Trim()))
                     {
-                        lstProxies = GlobusFileHelper.ReadFiletoStringList(txtPvtProxyFour.Text);
+                        lstProxies = GlobusFileHelper.ReadFiletoStringList(txtPvtIPFour.Text);
                     }
                     else
                     {
-                        AddToProxysLogs("[ " + DateTime.Now + " ] => [ Please Upload Either Url or Load Proxy Files ]");
+                        AddToIPsLogs("[ " + DateTime.Now + " ] => [ Please Upload Either Url or Load IP Files ]");
                         return;
                     }
-                    //lstProxies = Globussoft.GlobusFileHelper.ReadFiletoStringList(txtPublicProxy.Text);
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ " + lstProxies.Count() + " Private Proxies Uploaded ]");
+                    //lstProxies = Globussoft.GlobusFileHelper.ReadFiletoStringList(txtPublicIP.Text);
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ " + lstProxies.Count() + " Private Proxies Uploaded ]");
                     new Thread(() =>
                     {
                         GetValidPrivateProxies(lstProxies);
@@ -17285,7 +18302,7 @@ namespace twtboardpro
             else
             {
                 MessageBox.Show("Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection...");
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [ Your Internet Connection is disabled ! or not working, Please Check Your Internet Connection... ]");
             }
         }
 
@@ -17297,12 +18314,12 @@ namespace twtboardpro
         {
             try
             {
-                if (IsStopPrivateProxy)
+                if (IsStopPrivateIP)
                 {
                     return;
                 }
-                LstAssignPrivateProxy.Add(Thread.CurrentThread);
-                LstAssignPrivateProxy = LstAssignPrivateProxy.Distinct().ToList();
+                LstAssignPrivateIP.Add(Thread.CurrentThread);
+                LstAssignPrivateIP = LstAssignPrivateIP.Distinct().ToList();
                 Thread.CurrentThread.IsBackground = true;
 
             }
@@ -17311,21 +18328,21 @@ namespace twtboardpro
 
             //try
             //{
-            //    dictionary_Threads.Add("proxy", Thread.CurrentThread);
+            //    dictionary_Threads.Add("IP", Thread.CurrentThread);
             //}
             //catch { };
 
-            numberOfProxyThreads = 25;
+            numberOfIPThreads = 25;
             threadcountForFinishMSG = lstProxies.Count;
-            if (!string.IsNullOrEmpty(txtNumberOfProxyThreads.Text) && GlobusRegex.ValidateNumber(txtNumberOfProxyThreads.Text))
+            if (!string.IsNullOrEmpty(txtNumberOfIPThreads.Text) && GlobusRegex.ValidateNumber(txtNumberOfIPThreads.Text))
             {
-                numberOfProxyThreads = int.Parse(txtNumberOfProxyThreads.Text);
+                numberOfIPThreads = int.Parse(txtNumberOfIPThreads.Text);
             }
 
             WaitCallback waitCallBack = new WaitCallback(ThreadPoolMethod_PvtProxies);
             foreach (string item in lstProxies)
             {
-                if (countParseProxiesThreads >= numberOfProxyThreads)
+                if (countParseProxiesThreads >= numberOfIPThreads)
                 {
                     lock (pvtProxiesThreadLockr)
                     {
@@ -17333,7 +18350,7 @@ namespace twtboardpro
                     }
                 }
 
-                ///Code for checking and then adding proxies to FinalProxyList...
+                ///Code for checking and then adding proxies to FinalIPList...
                 ThreadPool.QueueUserWorkItem(waitCallBack, item);
                 Thread.Sleep(500);
             }
@@ -17342,26 +18359,26 @@ namespace twtboardpro
         /// <summary>
         /// Thread pool Private Proxies
         /// </summary>
-        /// <param name="objProxy"></param>
-        private void ThreadPoolMethod_PvtProxies(object objProxy)
+        /// <param name="objIP"></param>
+        private void ThreadPoolMethod_PvtProxies(object objIP)
         {
             try
             {
-                LstAssignPrivateProxy.Add(Thread.CurrentThread);
-                LstAssignPrivateProxy = LstAssignPrivateProxy.Distinct().ToList();
+                LstAssignPrivateIP.Add(Thread.CurrentThread);
+                LstAssignPrivateIP = LstAssignPrivateIP.Distinct().ToList();
                 Thread.CurrentThread.IsBackground = true;
 
                 countParsePvtProxiesThreads++;
 
-                string item = (string)objProxy;
+                string item = (string)objIP;
                 int IsPublic = 1;
                 int Working = 0;
                 string LoggedInIp = string.Empty;
 
-                string proxyAddress = string.Empty;
-                string proxyPort = string.Empty;
-                string proxyUserName = string.Empty;
-                string proxyPassword = string.Empty;
+                string IPAddress = string.Empty;
+                string IPPort = string.Empty;
+                string IPUsername = string.Empty;
+                string IPpassword = string.Empty;
 
                 string account = item;
 
@@ -17369,43 +18386,43 @@ namespace twtboardpro
 
                 if (DataCount == 4)
                 {
-                    proxyAddress = account.Split(':')[0];
-                    proxyPort = account.Split(':')[1];
-                    proxyUserName = account.Split(':')[2];
-                    proxyPassword = account.Split(':')[3];
-                    //AddToProxysLogs(account);
+                    IPAddress = account.Split(':')[0];
+                    IPPort = account.Split(':')[1];
+                    IPUsername = account.Split(':')[2];
+                    IPpassword = account.Split(':')[3];
+                    //AddToIPsLogs(account);
                 }
                 else
                 {
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Proxy Not In correct Format ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ IP Not In correct Format ]");
                     return;
                 }
 
                 try
                 {
-                    dictionary_Threads.Add("proxy_" + proxyAddress, Thread.CurrentThread);
+                    dictionary_Threads.Add("IP_" + IPAddress, Thread.CurrentThread);
                 }
                 catch { };
 
-                ProxyChecker proxyChecker = new ProxyChecker(proxyAddress, proxyPort, proxyUserName, proxyPassword, IsPublic);
-                if (proxyChecker.CheckPvtProxy())
+                IPChecker IPChecker = new IPChecker(IPAddress, IPPort, IPUsername, IPpassword, IsPublic);
+                if (IPChecker.CheckPvtIP())
                 {
                     workingproxiesCount++;
-                    lock (proxyListLockr)
+                    lock (IPListLockr)
                     {
                         queWorkingPvtProxies.Enqueue(item);
-                        Monitor.Pulse(proxyListLockr);
+                        Monitor.Pulse(IPListLockr);
                     }
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Added " + item + " to working proxies list ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ Added " + item + " to working proxies list ]");
 
-                    lock (LstRunningPvtProxy_ProxyModule)
+                    lock (LstRunningPvtIP_IPModule)
                     {
-                        LstRunningPvtProxy_ProxyModule.Add(item);
+                        LstRunningPvtIP_IPModule.Add(item);
                     }
                 }
                 else
                 {
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Non Working Proxy: " + proxyAddress + ":" + proxyPort + ":" + proxyUserName + ":" + proxyPassword + " ]");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ Non Working IP: " + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + " ]");
                     GlobusFileHelper.AppendStringToTextfileNewLine(item, Globals.Path_Non_ExistingProxies);
                 }
             }
@@ -17425,8 +18442,8 @@ namespace twtboardpro
 
                 if (countParsePvtProxiesThreads == 0)
                 {
-                    AddToProxysLogs("[ " + DateTime.Now + " ] => [ Process of Proxy testing is finished. ]");
-                    AddToProxysLogs("-----------------------------------------------------------------------------------------------------------------------");
+                    AddToIPsLogs("[ " + DateTime.Now + " ] => [ Process of IP testing is finished. ]");
+                    AddToIPsLogs("-----------------------------------------------------------------------------------------------------------------------");
                 }
             }
         }
@@ -18010,7 +19027,7 @@ namespace twtboardpro
                     }
                 }
                 AddToScrapeLogs("[ " + DateTime.Now + " ] => [ Finished Scraping For " + tweetAccountManager.Username + " ]");
-                AddToProxysLogs("-----------------------------------------------------------------------------------------------------------------------");
+                AddToIPsLogs("-----------------------------------------------------------------------------------------------------------------------");
             }
             catch (Exception ex)
             {
@@ -19079,13 +20096,13 @@ namespace twtboardpro
                     // account is suspended.. 
                     return;
                 }
-                if (string.IsNullOrEmpty(AcManager.proxyPort))
+                if (string.IsNullOrEmpty(AcManager.IPPort))
                 {
-                    AcManager.proxyPort = "0";
+                    AcManager.IPPort = "0";
                 }
-                string pagesource = AcManager.globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/settings/notifications"),"",AcManager.proxyAddress,AcManager.proxyPort,AcManager.proxyUsername,AcManager.proxyPassword);
+                string pagesource = AcManager.globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/settings/notifications"),"",AcManager.IPAddress,AcManager.IPPort,AcManager.IPUsername,AcManager.IPpassword);
                 string postData = "authenticity_token="+AcManager.postAuthenticityToken+"&user%5Bsend_twitter_emails%5D=0";
-                pagesource = AcManager.globusHttpHelper.postFormDataProxy(new Uri("https://twitter.com/settings/notifications/update"), postData, "https://twitter.com/settings/notifications", AcManager.proxyAddress, Convert.ToInt16(AcManager.proxyPort), AcManager.proxyUsername, AcManager.proxyPassword);
+                pagesource = AcManager.globusHttpHelper.postFormDataIP(new Uri("https://twitter.com/settings/notifications/update"), postData, "https://twitter.com/settings/notifications", AcManager.IPAddress, Convert.ToInt16(AcManager.IPPort), AcManager.IPUsername, AcManager.IPpassword);
                 if (pagesource.Contains("Thanks, your notification settings have been saved."))
                 {
                     AddToLog_AcManager("[ " + DateTime.Now + " ] => [ SuccessFully Disabled The Email Notification with account " + _KeyValue.Key +" ]");
@@ -19694,13 +20711,13 @@ namespace twtboardpro
             }
         }
 
-        private void btnAssignPrivateProxyStop_Click(object sender, EventArgs e)
+        private void btnAssignPrivateIPStop_Click(object sender, EventArgs e)
         {
 
             try
             {
-                IsStopPrivateProxy = true;
-                List<Thread> lstTemp = LstAssignPrivateProxy.Distinct().ToList();
+                IsStopPrivateIP = true;
+                List<Thread> lstTemp = LstAssignPrivateIP.Distinct().ToList();
                 foreach (Thread item in lstTemp)
                 {
                     try
@@ -19714,7 +20731,7 @@ namespace twtboardpro
                 }
 
 
-                AddToProxysLogs("[ " + DateTime.Now + " ] => [Proxy testing is Aborted]");
+                AddToIPsLogs("[ " + DateTime.Now + " ] => [IP testing is Aborted]");
 
             }
             catch (Exception ex)
@@ -19943,6 +20960,23 @@ namespace twtboardpro
         private void splitContainerTweet_Panel1_Paint(object sender, PaintEventArgs e)
         {
 
+        }
+        public static bool CheckBoxScrapTweetsIsChecked = false;
+        public static List<string> ScrapTweetsForTweetModule = new List<string>();
+        private void CheckBoxScrapTweets_CheckedChanged(object sender, EventArgs e)
+        {
+            if (CheckBoxScrapTweets.Checked == true)
+            {
+                CheckBoxScrapTweetsIsChecked = true;
+                Tb_AccountManager.SelectedIndex = 7;
+                btnUploadTweetMessage.Enabled = false;
+                txtTweetMessageFile.Text = "";
+            }
+            else
+            {
+                CheckBoxScrapTweetsIsChecked = false;
+                btnUploadTweetMessage.Enabled = true;
+            }
         }
 
 

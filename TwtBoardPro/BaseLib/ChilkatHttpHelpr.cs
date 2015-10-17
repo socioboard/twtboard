@@ -9,10 +9,10 @@ namespace BaseLib
 {
     public class ChilkatHttpHelpr
     {
-        public string proxyAddress = string.Empty;
-        public string proxyPort = string.Empty;
-        public string proxyUsername = string.Empty;
-        public string proxyPassword = string.Empty;
+        public string IPAddress = string.Empty;
+        public string IPPort = string.Empty;
+        public string IPUsername = string.Empty;
+        public string IPpassword = string.Empty;
 
 
         ///Chilkat Http object...
@@ -54,31 +54,31 @@ namespace BaseLib
             return xHtml;
         }
 
-        private void ChangeProxy()
+        private void ChangeIP()
         {
-            if (!string.IsNullOrEmpty(proxyAddress))
+            if (!string.IsNullOrEmpty(IPAddress))
             {
-                http.ProxyDomain = proxyAddress;
-                if (!string.IsNullOrEmpty(proxyPort))
+                http.ProxyDomain = IPAddress;
+                if (!string.IsNullOrEmpty(IPPort))
                 {
                     Regex IdCheck = new Regex("^[0-9]*$");
 
-                    if (!string.IsNullOrEmpty(proxyPort) && IdCheck.IsMatch(proxyPort))
+                    if (!string.IsNullOrEmpty(IPPort) && IdCheck.IsMatch(IPPort))
                     {
-                        http.ProxyPort = int.Parse(proxyPort);
+                        http.ProxyPort = int.Parse(IPPort);
                     }
                     else
                     {
-                        proxyPort = "80";
-                        http.ProxyPort = int.Parse(proxyPort);
+                        IPPort = "80";
+                        http.ProxyPort = int.Parse(IPPort);
                     }
                 }
-                //http.ProxyPort = int.Parse(proxyPort);
+                //http.IPPort = int.Parse(IPPort);
             }
-            if (!string.IsNullOrEmpty(proxyUsername))
+            if (!string.IsNullOrEmpty(IPUsername))
             {
-                http.ProxyLogin = proxyUsername;
-                http.ProxyPassword = proxyPassword;
+                http.ProxyLogin = IPUsername;
+                http.ProxyPassword = IPpassword;
             }
         }
 
@@ -86,7 +86,7 @@ namespace BaseLib
         {
             string response = string.Empty;
 
-            ChangeProxy();
+            ChangeIP();
 
             if (!http.UnlockComponent("THEBACHttp_b3C9o9QvZQ06"))
             {
@@ -118,7 +118,7 @@ namespace BaseLib
         {
             string response = string.Empty;
 
-            ChangeProxy();
+            ChangeIP();
 
             if (!http.UnlockComponent("THEBACHttp_b3C9o9QvZQ06"))
             {
@@ -146,16 +146,16 @@ namespace BaseLib
             return response;
         }
 
-        public string GetHtmlProxy(string URL, string proxyAddress, string proxyPort, string proxyUsername, string proxyPassword)
+        public string GetHtmlIP(string URL, string IPAddress, string IPPort, string IPUsername, string IPpassword)
         {
             string response = string.Empty;
 
-            this.proxyAddress = proxyAddress;
-            this.proxyPort = proxyPort;
-            this.proxyUsername = proxyUsername;
-            this.proxyPassword = proxyPassword;
+            this.IPAddress = IPAddress;
+            this.IPPort = IPPort;
+            this.IPUsername = IPUsername;
+            this.IPpassword = IPpassword;
 
-            ChangeProxy();
+            ChangeIP();
 
             if (!http.UnlockComponent("THEBACHttp_b3C9o9QvZQ06"))
             {
@@ -176,16 +176,16 @@ namespace BaseLib
             return response;
         }
 
-        public string GetHtmlProxy(string URL, string proxyAddress, string proxyPort, string proxyUsername, string proxyPassword, ref Chilkat.Http http)
+        public string GetHtmlIP(string URL, string IPAddress, string IPPort, string IPUsername, string IPpassword, ref Chilkat.Http http)
         {
             string response = string.Empty;
 
-            this.proxyAddress = proxyAddress;
-            this.proxyPort = proxyPort;
-            this.proxyUsername = proxyUsername;
-            this.proxyPassword = proxyPassword;
+            this.IPAddress = IPAddress;
+            this.IPPort = IPPort;
+            this.IPUsername = IPUsername;
+            this.IPpassword = IPpassword;
 
-            ChangeProxy();
+            ChangeIP();
 
             if (!http.UnlockComponent("THEBACHttp_b3C9o9QvZQ06"))
             {
@@ -215,7 +215,7 @@ namespace BaseLib
         {
             string response = string.Empty;
 
-            ChangeProxy();
+            ChangeIP();
 
             //http.SetRequestHeader("Cookie", "PREF=ID=39a7dcb4769a70b5:U=01e856263f78e316:FF=0:TM=1310809062:LM=1311756586:GM=1:S=qiyaqpZc0QJwSHyD;NID=49=Ljnrtc5KZDOFfgRVn1Tt6G6MdaeISmX4vOzE7MSbouPD_4ze6OoSuCMWXlH0Jy7fnAlEYzdYxs4V7JP2DXnKgDxVQMKYY60yWoeCgFIwTL2WWBfmxJZNml5pYdudn5Zw;GAPS=1:tS3_AUBl7WpcKSXAXYMVdDiWuMdX0Q:rAR7mbwZ6PlPnJt-;GALX=7iQKVcsEdN4;GoogleAccountsLocale_session=en_GB;SID=DQAAAIUAAAD1r3xd8mtKrnHFMI4AdB1fuFDSG6YQ98V-_olltRKYgRSHMAgKC9eU88xa6oIay8EgmaV8PRZl1uxi_Q7Hx3etXAUCd42mHJph5YHU015yCzmHUoGdeVpzpFtvPc4xFpnu1Hl2PqXSN4tIlDAY_Qg6vs8I8eoWpiVPPXkLR1WaKcw54W9s1Yx1PxN7C5Nazmc;LSID=blogger|s.IN:DQAAAIYAAACEkfAmZiRHYaawY6Ol0Oguk5C58mprkWFDmf4StK2d_UZDRC6baudw3SoGKkQGBEsB4r2wRrklsK9O1XChX7Pj-UnTPMaDxSz4ADM5O69S-LQhLJx10-1kdeomZSC2NIOWxIpHhoWn1FPrpQrFDgisVLfVsHsjD7l5ASyaLzgzaIxx-XZfuQHaCRgnMRF09vo;GAUSR=lachelle.longenecker.jvqq@hotmail.com;HSID=AuAY8LSZuG828am_4;SSID=AYAPgLxKQx6efsNxV;APISID=j799BJ0rwj5vK8S3/Aid730sB7T-6RWKbq;SAPISID=BnxZXhygC3cPGeSV/AVHrAqmtZgl16WiOi");
 

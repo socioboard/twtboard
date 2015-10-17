@@ -33,7 +33,7 @@
             this.grpScrapProfileImage = new System.Windows.Forms.GroupBox();
             this.chk_UseGroup = new System.Windows.Forms.CheckBox();
             this.txt_InsertGroup = new System.Windows.Forms.TextBox();
-            this.chkAppFollowAdd_PublicProxy = new System.Windows.Forms.CheckBox();
+            this.chkAppFollowAdd_PublicIP = new System.Windows.Forms.CheckBox();
             this.btn_App_FollowAccountCreation = new System.Windows.Forms.Button();
             this.btn_App_FollowAccountCreatorStop = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
@@ -48,7 +48,7 @@
             this.grpScrapProfileImage.BackColor = System.Drawing.Color.Transparent;
             this.grpScrapProfileImage.Controls.Add(this.chk_UseGroup);
             this.grpScrapProfileImage.Controls.Add(this.txt_InsertGroup);
-            this.grpScrapProfileImage.Controls.Add(this.chkAppFollowAdd_PublicProxy);
+            this.grpScrapProfileImage.Controls.Add(this.chkAppFollowAdd_PublicIP);
             this.grpScrapProfileImage.Controls.Add(this.btn_App_FollowAccountCreation);
             this.grpScrapProfileImage.Controls.Add(this.btn_App_FollowAccountCreatorStop);
             this.grpScrapProfileImage.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -78,16 +78,16 @@
             this.txt_InsertGroup.TabIndex = 83;
             this.txt_InsertGroup.Visible = false;
             // 
-            // chkAppFollowAdd_PublicProxy
+            // chkAppFollowAdd_PublicIP
             // 
-            this.chkAppFollowAdd_PublicProxy.AutoSize = true;
-            this.chkAppFollowAdd_PublicProxy.Location = new System.Drawing.Point(78, 44);
-            this.chkAppFollowAdd_PublicProxy.Name = "chkAppFollowAdd_PublicProxy";
-            this.chkAppFollowAdd_PublicProxy.Size = new System.Drawing.Size(126, 17);
-            this.chkAppFollowAdd_PublicProxy.TabIndex = 81;
-            this.chkAppFollowAdd_PublicProxy.Text = "ADD Public Proxy";
-            this.chkAppFollowAdd_PublicProxy.UseVisualStyleBackColor = true;
-            this.chkAppFollowAdd_PublicProxy.Visible = false;
+            this.chkAppFollowAdd_PublicIP.AutoSize = true;
+            this.chkAppFollowAdd_PublicIP.Location = new System.Drawing.Point(78, 44);
+            this.chkAppFollowAdd_PublicIP.Name = "chkAppFollowAdd_PublicIP";
+            this.chkAppFollowAdd_PublicIP.Size = new System.Drawing.Size(126, 17);
+            this.chkAppFollowAdd_PublicIP.TabIndex = 81;
+            this.chkAppFollowAdd_PublicIP.Text = "ADD Public IP";
+            this.chkAppFollowAdd_PublicIP.UseVisualStyleBackColor = true;
+            this.chkAppFollowAdd_PublicIP.Visible = false;
             // 
             // btn_App_FollowAccountCreation
             // 
@@ -169,7 +169,7 @@
         private System.Windows.Forms.ListBox lstProcessLoggerForAccounts;
         private System.Windows.Forms.Button btn_App_FollowAccountCreatorStop;
         private System.Windows.Forms.Button btn_App_FollowAccountCreation;
-        private System.Windows.Forms.CheckBox chkAppFollowAdd_PublicProxy;
+        private System.Windows.Forms.CheckBox chkAppFollowAdd_PublicIP;
         private System.Windows.Forms.Timer timerAppsWebManager;
         private System.Windows.Forms.TextBox txt_InsertGroup;
         private System.Windows.Forms.CheckBox chk_UseGroup;

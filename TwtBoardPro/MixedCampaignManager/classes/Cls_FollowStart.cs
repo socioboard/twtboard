@@ -239,12 +239,56 @@ namespace MixedCampaignManager.classes
                             }
                         }
 
-                        Thread threadGetStartProcessForFollow = new Thread(GetStartProcessForFollow);
-                        threadGetStartProcessForFollow.Name = CampaignName + "_" + item.Key;
-                        threadGetStartProcessForFollow.IsBackground = true;
-                        threadGetStartProcessForFollow.Start(new object[] { item, list_lstTargetUsers_item, NoOfFollowPerAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime, divideEql, dividebyUser, FollowFilePath });
+                        #region New Licencing Feature Added by Sonu
 
+                        try
+                        {
+                            if (Globals.IsBasicVersion || Globals.IsProVersion || Globals.IsFreeVersion)
+                            {
+                                string queryCheckDataBaseEmpty = "select * from tb_FBAccount";
+                                DataSet DS1 = DataBaseHandler.SelectQuery(queryCheckDataBaseEmpty, "tb_FBAccount");
+                                if (!(DS1.Tables[0].Rows.Count == 0))
+                                {
+                                    DataTable DT = DS1.Tables[0];
+                                    bool check = DT.Select().Any(x => x.ItemArray[0].ToString() == item.Key);
+                                    if (!check)
+                                    {
+                                        System.Windows.Forms.MessageBox.Show("Please Upload this Account in Account Manager");
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        Thread threadGetStartProcessForFollow = new Thread(GetStartProcessForFollow);
+                                        threadGetStartProcessForFollow.Name = CampaignName + "_" + item.Key;
+                                        threadGetStartProcessForFollow.IsBackground = true;
+                                        threadGetStartProcessForFollow.Start(new object[] { item, list_lstTargetUsers_item, NoOfFollowPerAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime, divideEql, dividebyUser, FollowFilePath });
+                                    }
+                                }
+                                else
+                                {
+                                    System.Windows.Forms.MessageBox.Show("Please Upload this Account in Account Manager");
+                                    return;
+                                }
+                            }
+                            else
+                            {
+                                Thread threadGetStartProcessForFollow = new Thread(GetStartProcessForFollow);
+                                threadGetStartProcessForFollow.Name = CampaignName + "_" + item.Key;
+                                threadGetStartProcessForFollow.IsBackground = true;
+                                threadGetStartProcessForFollow.Start(new object[] { item, list_lstTargetUsers_item, NoOfFollowPerAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime, divideEql, dividebyUser, FollowFilePath });
+                            }
+                        }
+                        catch { };
 
+                        #endregion
+
+                        #region Old Code
+                        //Thread threadGetStartProcessForFollow = new Thread(GetStartProcessForFollow);
+                        //threadGetStartProcessForFollow.Name = CampaignName + "_" + item.Key;
+                        //threadGetStartProcessForFollow.IsBackground = true;
+                        //threadGetStartProcessForFollow.Start(new object[] { item, list_lstTargetUsers_item, NoOfFollowPerAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime, divideEql, dividebyUser, FollowFilePath });
+
+                        #endregion
 
                         Thread.Sleep(1000);
 

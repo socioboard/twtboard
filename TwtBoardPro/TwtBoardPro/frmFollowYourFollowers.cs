@@ -17,7 +17,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Globalization;
 using System.Net;
-using ProxySettings;
+using IPSettings;
 using Microsoft.Win32;
 using System.Drawing.Drawing2D;
 using Newtonsoft.Json.Linq;

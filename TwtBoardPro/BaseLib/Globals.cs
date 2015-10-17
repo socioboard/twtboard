@@ -11,6 +11,12 @@ namespace BaseLib
     {
 
         public static bool IsFreeVersion = false;
+        public static bool IsBasicVersion = false;
+        public static bool IsProVersion = false;
+        public static bool IsAgencyVersion = false;
+
+        public static string licType = string.Empty;
+
 
         public static List<string> listAccounts = new List<string>();
 
@@ -29,16 +35,37 @@ namespace BaseLib
         public static int MinGlobalDelay = 20;
         public static int MaxGlobalDelay = 25;
         public static bool IsCheckValueOfDelay = true;
-        public static bool proxyNotWorking = false;
+        public static bool IPNotWorking = false;
         public static bool IsRefreshAccountExecute = false;
         //for global delay settings: if two module is working then it sholuld activate.
         public static string FollowerRunningText = string.Empty;
         public static string TweetRunningText = string.Empty;
         //public static bool IsMobileVersion = false;
+        public static string DesktopFolder = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\twtBoardPro";
+        public static string path_NonPostStatus = Globals.DesktopFolder + "\\TwtNoStatusUpdate.txt";
 
+        public static string path_NonCreatedAccounts
+        {
+            get
+            {
+                return DesktopFolder + "\\twtNonCreatedAccounts.txt";
+            }
 
-       
+        }
 
+        public static void CreateFolder(string FolderPath)
+        {
+            try
+            {
+                if (!Directory.Exists(FolderPath))
+                {
+                    Directory.CreateDirectory(FolderPath);
+                }
+            }
+            catch
+            {
+            }
+        }
         //public static List<string> lstDesktopFilePaths = new List<string>() { Path.Combine(FbAccountDesktopPath, "DisableFbAccount.txt"), Path.Combine(FbAccountDesktopPath, "IncorrectFbAccount.txt"), Path.Combine(FbAccountDesktopPath, "PhoneVerifyFbAccount.txt"), Path.Combine(FbAccountDesktopPath, "CorrectFbAccount.txt"), Path.Combine(FbAccountDesktopPath, "TemporarilyFbAccount.txt"), Path.Combine(FbAccountDesktopPath, "AccountNotConfirmed.txt"), Path.Combine(FbAccountDesktopPath, "CorrectFbAccount.txt") };
 
         public static string path_AppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\twtboardpro";
@@ -216,7 +243,7 @@ namespace BaseLib
 
         public static string Path_WaitNreplyErroLog = path_AppDataFolder + "\\ErrorWaitnReply.txt";
 
-        public static string Path_ProxySettingErroLog = path_AppDataFolder + "\\ErrorProxySetting.txt";
+        public static string Path_IPSettingErroLog = path_AppDataFolder + "\\ErrorIPSetting.txt";
 
         public static string Path_ScrapeUsersErroLog = path_AppDataFolder + "\\ErrorScrapeUsers.txt";
 
@@ -251,6 +278,10 @@ namespace BaseLib
         public static string Path_MobTweeted = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\twtboardpro\\AccountsTweetedByMob.txt";
 
         public static string Path_CheckAccountByEmail = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\twtboardpro\\getusernamefromaccount.csv";
+
+        public static string Path_RETweetExtractorCSV = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\TwtDominator\\ReTweetExtractor.csv";
+
+        public static string Path_TweetExtractorCSV = Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\TwtDominator\\TweetExtractor.csv";
 
         public static string Path_BlackListedUser = path_DesktopFolder + "\\BlackListedUser.txt";
 
@@ -423,13 +454,13 @@ namespace BaseLib
         private static object locker_queWorkingProxiesForSignUp = new object();
         public static Queue<string> queWorkingProxiesForSignUp = new Queue<string>();
 
-        public static void EnquequeWorkingProxiesForSignUp(string proxy)
+        public static void EnquequeWorkingProxiesForSignUp(string IP)
         {
             try
             {
                 lock (locker_queWorkingProxiesForSignUp)
                 {
-                    queWorkingProxiesForSignUp.Enqueue(proxy);
+                    queWorkingProxiesForSignUp.Enqueue(IP);
                 }
             }
             catch (Exception ex)
@@ -438,21 +469,21 @@ namespace BaseLib
         }
         public static string DequequeWorkingProxiesForSignUp()
         {
-            string proxy = "";
+            string IP = "";
             try
             {
                 lock (locker_queWorkingProxiesForSignUp)
                 {
                     if (queWorkingProxiesForSignUp.Count > 0)
                     {
-                        proxy = queWorkingProxiesForSignUp.Dequeue();
+                        IP = queWorkingProxiesForSignUp.Dequeue();
                     }
                 }
             }
             catch (Exception ex)
             {
             }
-            return proxy;
+            return IP;
         }
 
         public static int GetCountqueWorkingProxiesForSignUp()
@@ -480,6 +511,6 @@ namespace BaseLib
 
     public enum AccountMode
     {
-        NoProxy, PublicProxy, PrivateProxy
+        NoIP, PublicIP, PrivateIP
     }
 }

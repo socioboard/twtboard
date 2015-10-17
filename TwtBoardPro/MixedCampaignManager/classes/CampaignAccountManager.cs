@@ -24,15 +24,15 @@ namespace MixedCampaignManager.classes
         public string Screen_name = string.Empty;
         public string FollowerCount = string.Empty;
 
-        public string proxyAddress = string.Empty;
-        public string proxyPort = string.Empty;
-        public string proxyUsername = string.Empty;
-        public string proxyPassword = string.Empty;
+        public string IPAddress = string.Empty;
+        public string IPPort = string.Empty;
+        public string IPUsername = string.Empty;
+        public string IPpassword = string.Empty;
 
-        public string proxyAddress_Socks5 = string.Empty;
-        public string proxyPort_Socks5 = string.Empty;
-        public string proxyUsername_Socks5 = string.Empty;
-        public string proxyPassword_Socks5 = string.Empty;
+        public string IPAddress_Socks5 = string.Empty;
+        public string IPPort_Socks5 = string.Empty;
+        public string IPUsername_Socks5 = string.Empty;
+        public string IPpassword_Socks5 = string.Empty;
 
         public string AccountStatus = string.Empty;
         public bool IsLoggedIn = false;
@@ -47,14 +47,14 @@ namespace MixedCampaignManager.classes
         {
         }
 
-        public CampaignAccountManager(string Username, string Password, string Screen_name, string follower_Count, int numberOfMessages, string proxyAddress, string proxyPort, string proxyUsername, string proxyPassword, string currentCity, string HomeTown, string Birthday_Month, string BirthDay_Date, string BirthDay_Year, string AboutMe, string Employer, string College, string HighSchool, string Religion, string profilePic, string FamilyName, string Role, string language, string sex, string activities, string interests, string movies, string music, string books, string favoriteSports, string favoriteTeams, string GroupName, string status)
+        public CampaignAccountManager(string Username, string Password, string Screen_name, string follower_Count, int numberOfMessages, string IPAddress, string IPPort, string IPUsername, string IPpassword, string currentCity, string HomeTown, string Birthday_Month, string BirthDay_Date, string BirthDay_Year, string AboutMe, string Employer, string College, string HighSchool, string Religion, string profilePic, string FamilyName, string Role, string language, string sex, string activities, string interests, string movies, string music, string books, string favoriteSports, string favoriteTeams, string GroupName, string status)
         {
             this.Username = Username;
             this.Password = Password;
-            this.proxyAddress = proxyAddress;
-            this.proxyPort = proxyPort;
-            this.proxyUsername = proxyUsername;
-            this.proxyPassword = proxyPassword;
+            this.IPAddress = IPAddress;
+            this.IPPort = IPPort;
+            this.IPUsername = IPUsername;
+            this.IPpassword = IPpassword;
             this.Screen_name = Screen_name;
             this.FollowerCount = follower_Count;
             //this.GroupName = GroupName;
@@ -78,12 +78,12 @@ namespace MixedCampaignManager.classes
                 string get_twitter_first = string.Empty;
                 try
                 {
-                    get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                    get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                 }
                 catch (Exception ex)
                 {
                     Thread.Sleep(1000);
-                    get_twitter_first = globusHttpHelper.getHtmlfromUrlProxy(new Uri("https://twitter.com/"), proxyAddress, proxyPort, proxyUsername, proxyPassword, string.Empty, string.Empty);
+                    get_twitter_first = globusHttpHelper.getHtmlfromUrlIP(new Uri("https://twitter.com/"), IPAddress, IPPort, IPUsername, IPpassword, string.Empty, string.Empty);
                 }
 
                 try
@@ -96,7 +96,7 @@ namespace MixedCampaignManager.classes
                 {
                     string get_twitter_second = globusHttpHelper.postFormData(new Uri("https://twitter.com/scribe"), "log%5B%5D=%7B%22event_name%22%3A%22web%3Amobile_gallery%3Agallery%3A%3A%3Aimpression%22%2C%22noob_level%22%3Anull%2C%22internal_referer%22%3Anull%2C%22context%22%3A%22mobile_gallery%22%2C%22event_info%22%3A%22mobile_app_download%22%2C%22user_id%22%3A0%2C%22page%22%3A%22mobile_gallery%22%2C%22_category_%22%3A%22client_event%22%2C%22ts%22%3A" + ts + "%7D", "https://twitter.com/?lang=en&logged_out=1#!/download", "", "", "", "");//globusHttpHelper.getHtmlfromUrl(new Uri("https://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "https://twitter.com/", string.Empty);
 
-                    string get2nd = globusHttpHelper.getHtmlfromUrlProxy(new Uri("http://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "https://twitter.com/", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                    string get2nd = globusHttpHelper.getHtmlfromUrlIP(new Uri("http://twitter.com/account/bootstrap_data?r=0.21632839148912897"), "https://twitter.com/", IPAddress, IPPort, IPUsername, IPpassword);
 
                     string get_api = globusHttpHelper.getHtmlfromUrl(new Uri("http://api.twitter.com/receiver.html"), "https://twitter.com/", "");
 
@@ -105,7 +105,7 @@ namespace MixedCampaignManager.classes
 
                 string postData = "session%5Busername_or_email%5D=" + Uri.EscapeDataString(Username) + "&session%5Bpassword%5D=" + Uri.EscapeDataString(Password) + "&scribe_log=&redirect_after_login=&authenticity_token=" + postAuthenticityToken + "";
 
-                string response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/sessions"), postData, "https://twitter.com/", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                string response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/sessions"), postData, "https://twitter.com/", IPAddress, IPPort, IPUsername, IPpassword);
 
                 if (response_Login.Contains("अपनी पहचान सत्यापित करें") || response_Login.Contains("आपके खाते को सुरक्षित रखेने में हमें मदद करें.") || response_Login.Contains("Help us keep your account safe.") || response_Login.Contains("Verify your identity"))
                 {
@@ -118,12 +118,12 @@ namespace MixedCampaignManager.classes
                         if (response_Login.Contains(" name=\"challenge_type\" value=\"RetypeEmail") && response_Login.Contains("@"))
                         {
                             postData = "authenticity_token=" + postAuthenticityToken + "&challenge_id=" + challenge_id + "&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&platform=web&redirect_after_login=&remember_me=true&challenge_response=" + Screen_name;
-                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&remember_me=true", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeEmail&remember_me=true", IPAddress, IPPort, IPUsername, IPpassword);
                         }
                         else
                         {
                             postData = "authenticity_token=" + postAuthenticityToken + "&challenge_id=" + challenge_id + "&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&platform=web&redirect_after_login=&remember_me=true&challenge_response=" + Screen_name;
-                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&remember_me=true", proxyAddress, proxyPort, proxyUsername, proxyPassword);
+                            response_Login = globusHttpHelper.postFormData(new Uri("https://twitter.com/account/login_challenge"), postData, "https://twitter.com/account/login_challenge?platform=web&user_id=" + temp_user_id + "&challenge_type=RetypeScreenName&remember_me=true", IPAddress, IPPort, IPUsername, IPpassword);
 
                         }
                     }
@@ -161,13 +161,13 @@ namespace MixedCampaignManager.classes
                     if (responseURI.Contains("error"))
                     {
                         //Log("[ " + DateTime.Now + " ] => [ Login Error with " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
                         return;
                     }
                     else if (responseURI.Contains("captcha"))
                     {
                         Log("[ " + DateTime.Now + " ] => [ Asking Captcha with " + Username + " ]");
-                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_AskingCaptchaAccounts);
+                        GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_AskingCaptchaAccounts);
                         return;
                     }
 
@@ -188,8 +188,8 @@ namespace MixedCampaignManager.classes
             catch (Exception ex)
             {
                 Log("[ " + DateTime.Now + " ] => [ Error in Login : " + Username + " ]");
-                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_FailedLoginAccounts);
-                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> Login() --> " + Username + ":" + Password + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword + " --> " + ex.Message, Globals.Path_TweetAccountManager);
+                GlobusFileHelper.AppendStringToTextfileNewLine(Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_FailedLoginAccounts);
+                Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(DateTime.Now + " --> Error --> Login() --> " + Username + ":" + Password + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword + " --> " + ex.Message, Globals.Path_TweetAccountManager);
                 return;
             }
         }

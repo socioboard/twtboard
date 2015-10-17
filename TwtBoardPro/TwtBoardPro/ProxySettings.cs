@@ -6,49 +6,49 @@ using RedTomahawk.TORActivator;
 using System.Timers;
 using BaseLib;
 
-namespace ProxySettings
+namespace IPSettings
 {
-    public class ProxySettings
+    public class IPSettings
     {
         CEngine engine = new CEngine();
 
-        public static int proxyTime = 120000;
+        public static int IPTime = 120000;
 
         public static List<string> proxies = new List<string>();
 
         public static int i = 0;
 
-        Timer ProxyTimer = new Timer(proxyTime);
+        Timer IPTimer = new Timer(IPTime);
 
         public static BaseLib.Events logEvents = new BaseLib.Events();
 
-        public ProxySettings()
+        public IPSettings()
         {
-            SetProxy(proxies[i]);
-            ProxyTimer.Start();
-            ProxyTimer.Elapsed += new ElapsedEventHandler(ProxyTimer_Elapsed);
+            SetIP(proxies[i]);
+            IPTimer.Start();
+            IPTimer.Elapsed += new ElapsedEventHandler(IPTimer_Elapsed);
         }
 
-        public void SetProxy(string proxy)
+        public void SetIP(string IP)
         {
-            engine.EnableProxy(proxy);
-            Log("[ " + DateTime.Now + " ] => [ Current Proxy: " + proxy + " ]");
+            engine.EnableProxy(IP);
+            Log("[ " + DateTime.Now + " ] => [ Current IP: " + IP + " ]");
         }
 
-        void ProxyTimer_Elapsed(object sender, ElapsedEventArgs e)
+        void IPTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             if (i < proxies.Count-1)
             {
-                ProxyTimer.Stop();
-                SetProxy(proxies[++i]); 
+                IPTimer.Stop();
+                SetIP(proxies[++i]); 
             }
             else
             {
                 i = 0;
-                ProxyTimer.Stop();
-                SetProxy(proxies[i]);
+                IPTimer.Stop();
+                SetIP(proxies[i]);
             }
-            ProxyTimer.Start();
+            IPTimer.Start();
         }
 
         /// <summary>

@@ -65,16 +65,16 @@ namespace EmailActivator
                         http.SendCookies = true;
                         http.SaveCookies = true;
 
-                        //http.ProxyDomain = "127.0.0.1";
-                        //http.ProxyPort = 8888;
+                        //http.IPDomain = "127.0.0.1";
+                        //http.IPPort = 8888;
                         http.SetRequestHeader("Accept-Encoding", "gzip,deflate");
                         Chilkat.Imap iMap = new Imap();
                         string Username = Email;
 
                         iMap.UnlockComponent("THEBACIMAPMAILQ_OtWKOHoF1R0Q");
                         //iMap.
-                        //iMap.HttpProxyHostname = "127.0.0.1";
-                        //iMap.HttpProxyPort = 8888;
+                        //iMap.HttpIPHostname = "127.0.0.1";
+                        //iMap.HttpIPPort = 8888;
                         iMap.Port = 993;
                         iMap.Connect("imap.n.mail.yahoo.com");
                         iMap.Login(Email, Password);
@@ -400,8 +400,8 @@ namespace EmailActivator
             http.SendCookies = true;
             http.SaveCookies = true;
 
-            //http.ProxyDomain = "127.0.0.1";
-            //http.ProxyPort = 8888;
+            //http.IPDomain = "127.0.0.1";
+            //http.IPPort = 8888;
 
 
             http.SetRequestHeader("Accept-Encoding", "gzip,deflate");
@@ -529,8 +529,8 @@ namespace EmailActivator
                 http.SendCookies = true;
                 http.SaveCookies = true;
 
-                //http.ProxyDomain = "127.0.0.1";
-                //http.ProxyPort = 8888;
+                //http.IPDomain = "127.0.0.1";
+                //http.IPPort = 8888;
 
                 http.SetRequestHeader("Accept-Encoding", "gzip,deflate");
 
@@ -542,8 +542,8 @@ namespace EmailActivator
                 iMap.UnlockComponent("THEBACIMAPMAILQ_OtWKOHoF1R0Q");
 
                 //iMap.
-                //iMap.HttpProxyHostname = "127.0.0.1";
-                //iMap.HttpProxyPort = 8888;
+                //iMap.HttpIPHostname = "127.0.0.1";
+                //iMap.HttpIPPort = 8888;
 
                 iMap.Connect("imap.n.mail.yahoo.com");
                 iMap.Login(yahooEmail, yahooPassword);

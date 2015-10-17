@@ -43,7 +43,7 @@ namespace Randomiser
             try
             {
                 //Get Image 
-                image = Properties.Resources.app_bg;
+                image = twtboardpro.Properties.Resources.app_bg;
             }
             catch
             {

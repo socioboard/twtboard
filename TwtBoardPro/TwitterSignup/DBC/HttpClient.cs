@@ -36,9 +36,9 @@ namespace DeathByCaptcha
 
 
         /**
-         * <value>HTTP proxy to use, if necessary.</value>
+         * <value>HTTP IP to use, if necessary.</value>
          */
-        public WebProxy Proxy = null;
+        public WebProxy IP = null;
 
 
         protected void OnTimeout(Object state, bool timedOut)
@@ -95,7 +95,7 @@ namespace DeathByCaptcha
                                                            true);
 
                 req.AllowAutoRedirect = false;
-                req.Proxy = this.Proxy;
+                req.Proxy = this.IP;
                 req.Accept = HttpClient.ResponseContentType;
                 req.UserAgent = Client.Version;
                 req.KeepAlive = false;

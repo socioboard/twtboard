@@ -9,7 +9,9 @@ namespace Follower
 {
     public class Follower
     {
-        
+        //Globussoft.GlobusHttpHelper globusHttpHelper = new Globussoft.GlobusHttpHelper();
+        //FaceDominator.Facebooker faceBooker = new FaceDominator.Facebooker();
+
         #region global declaration
         public Events logEvents = new Events();
         string userID = string.Empty;
@@ -85,15 +87,22 @@ namespace Follower
                         if (string.IsNullOrEmpty(userID))
                         {
                             userID = string.Empty;
-                            string[] useridarr = System.Text.RegularExpressions.Regex.Split(pageSource, "data-user-id=");
-                            foreach (string useridarr_item in useridarr)
+                            //string[] useridarr = System.Text.RegularExpressions.Regex.Split(pageSource, "data-user-id="); //account-group js-mini-current-user
+                            string[] useridarr = System.Text.RegularExpressions.Regex.Split(pageSource, "account-group js-mini-current-user");
+                            //foreach (string useridarr_item in useridarr)
+                            //{
+                            //    if (useridarr_item.Contains("data-screen-name="))
+                            //    {
+                            //        userID = useridarr_item.Substring(0 + 1, useridarr_item.IndexOf("data-screen-name=") - 3);
+                            //        break;
+                            //    }
+                            //}
+
+                            try
                             {
-                                if (useridarr_item.Contains("data-screen-name="))
-                                {
-                                    userID = useridarr_item.Substring(0 + 1, useridarr_item.IndexOf("data-screen-name=") - 3);
-                                    break;
-                                }
+                                userID = Utils.getBetween(useridarr[1],"data-user-id=\"","\"");
                             }
+                            catch { };
                         }
                     }
                 }
@@ -113,6 +122,24 @@ namespace Follower
                             int startIndx = pageSource.IndexOf("data-user-id=\"") + "data-user-id=\"".Length;
                             int endIndx = pageSource.IndexOf("\"", startIndx);
                             userID = pageSource.Substring(startIndx, endIndx - startIndx);
+                            if (string.IsNullOrEmpty(userID))
+                            {
+                                try
+                                {
+                                    //string[] GetUserId = System.Text.RegularExpressions.Regex.Split(pageSource, "user-actions btn-group not-following not-muting");
+                                    string[] useridarr = System.Text.RegularExpressions.Regex.Split(pageSource, "account-group js-mini-current-user");
+
+                                    try 
+                                    {
+                                        userID = Utils.getBetween(useridarr[1], "data-user-id=\"", "\"");
+                                    }
+                                    catch { };
+
+                                }
+                                catch { };
+                            }
+                        
+
                         }
                         catch { }
 
@@ -151,11 +178,18 @@ namespace Follower
                             }
                             else
                             {
-                                int startindex = pageSource.IndexOf("ProfileTweet-authorDetails\">");
-                                string start = pageSource.Substring(startindex).Replace("ProfileTweet-authorDetails\">", "");
-                                int endindex = start.IndexOf("\">");
-                                string end = start.Substring(start.IndexOf("data-user-id="), endindex - start.IndexOf("data-user-id=")).Replace("data-user-id=", "").Replace("\"", "");
-                                data_user_id = end.Trim();
+                                try
+                                {
+                                    //int startindex = pageSource.IndexOf("ProfileTweet-authorDetails\">");
+                                    //string start = pageSource.Substring(startindex).Replace("ProfileTweet-authorDetails\">", "");
+                                    //int endindex = start.IndexOf("\">");
+                                    //string end = start.Substring(start.IndexOf("data-user-id="), endindex - start.IndexOf("data-user-id=")).Replace("data-user-id=", "").Replace("\"", "");
+                                    //data_user_id = end.Trim();
+
+                                    string[] getDataUserID = System.Text.RegularExpressions.Regex.Split(pageSource, "ProfileNav");
+                                    data_user_id = Utils.getBetween(getDataUserID[1],"data-user-id=\"","\"");
+                                }
+                                catch { };
 
                             }
                         }
@@ -273,7 +307,7 @@ namespace Follower
 
 
         #region DirectMessage
-        public void SendDirectMessage(ref Globussoft.GlobusHttpHelper globusHttpHelper, string pgSrc, string postAuthenticityToken, string user_id_toFollow, string msgBodyCompose, out string status)
+        public void SendDirectMessage(ref Globussoft.GlobusHttpHelper globusHttpHelper, string pgSrc, string postAuthenticityToken, string user_id_toFollow, string msgBodyCompose,string EmailId, out string status)
         {
             try
             {
@@ -283,6 +317,10 @@ namespace Follower
                 if (user_id_toFollow.Contains(":"))
                 {
                     data_user_id = user_id_toFollow.Split(':')[0];
+                }
+                else 
+                {
+                    data_user_id = user_id_toFollow;
                 }
                // msgBodyCompose = msgBodyCompose.Replace(" ", "+").Trim();
                 msgBodyCompose = msgBodyCompose.Trim();
@@ -295,11 +333,33 @@ namespace Follower
 
                     try
                     {
+                        string direct_message_id=string.Empty;
+                        try
+                        {
+                            direct_message_id = Utils.getBetween(res_PostFollow, "data-message-id=\\\"", "\\\""); // data-message-id=\"611051888205697024\"
+                        }
+                        catch{};
+                        string username=string.Empty;
+                        try
+                        {
+                            username=Utils.getBetween(res_PostFollow,"href=\\\"\\/","\\\"");
+                        }
+                        catch{};
+                        
                         if (!string.IsNullOrEmpty(user_id_toFollow) && !string.IsNullOrEmpty(data_user_id))
                         {
                             // string query = "INSERT INTO tb_UsernameDetails (Username , Userid) VALUES ('" + user_id_toFollow + "' ,'" + data_user_id + "') ";
                             //string query = "INSERT INTO  tb_user_follower_details (followerName,followerId,userId) VALUES ('" + user_id_toFollow + "' ,'" + data_user_id + "','" + userID + "') ";
                             //DataBaseHandler.InsertQuery(query, "tb_UsernameDetails");
+                        }
+                        if (res_PostFollow.Contains("DirectMessage--sent"))
+                        {
+                            try
+                            {
+                                string Insertquery = "insert into tb_DirectMessageDetails(Username,FollowerId,Message) values('" + EmailId + "','" + data_user_id + "','" + msgBodyCompose + "')";
+                                DataBaseHandler.InsertQuery(Insertquery, "tb_DirectMessageDetails");
+                            }
+                            catch { };
                         }
                     }
                     catch (Exception ex)

@@ -174,13 +174,13 @@ namespace BaseLib
             }
         }
 
-        public DataSet SelectPrivateProxyData()
+        public DataSet SelectPrivateIPData()
         {
             try
             {
-                string strQuery = "SELECT * FROM tb_Proxies WHERE IsPublic = 1";
+                string strQuery = "SELECT * FROM tb_IP WHERE IsPublic = 1";
 
-                DataSet ds = DataBaseHandler.SelectQuery(strQuery, "tb_Proxies");
+                DataSet ds = DataBaseHandler.SelectQuery(strQuery, "tb_IP");
 
                 return ds;
             }
@@ -190,13 +190,13 @@ namespace BaseLib
             }
         }
 
-        public DataSet SelectPublicProxyData()
+        public DataSet SelectPublicIPData()
         {
             try
             {
-                string strQuery = "SELECT * FROM tb_Proxies WHERE IsPublic = 0";
+                string strQuery = "SELECT * FROM tb_IP WHERE IsPublic = 0";
 
-                DataSet ds = DataBaseHandler.SelectQuery(strQuery, "tb_Proxies");
+                DataSet ds = DataBaseHandler.SelectQuery(strQuery, "tb_IP");
 
                 return ds;
             }
@@ -206,12 +206,12 @@ namespace BaseLib
             }
         }
 
-        public void DeletePublicProxyData()
+        public void DeletePublicIPData()
         {
             try
             {
-                string strQuery = "DELETE From tb_Proxies WHERE IsPublic = 0";
-                DataBaseHandler.DeleteQuery(strQuery, "tb_Proxies");
+                string strQuery = "DELETE From tb_IP WHERE IsPublic = 0";
+                DataBaseHandler.DeleteQuery(strQuery, "tb_IP");
             }
             catch (Exception ex)
             {
@@ -219,12 +219,12 @@ namespace BaseLib
             }
         }
 
-        public void DeletePrivateProxyData()
+        public void DeletePrivateIPData()
         {
             try
             {
-                string strQuery = "DELETE From tb_Proxies WHERE IsPublic = 1";
-                DataBaseHandler.DeleteQuery(strQuery, "tb_Proxies");
+                string strQuery = "DELETE From tb_IP WHERE IsPublic = 1";
+                DataBaseHandler.DeleteQuery(strQuery, "tb_IP");
             }
             catch (Exception ex)
             {

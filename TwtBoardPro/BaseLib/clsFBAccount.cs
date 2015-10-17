@@ -15,9 +15,9 @@ namespace BaseLib
         string strPassword=string.Empty;
         string strScreen_name = string.Empty;
         string strProxiaddress =string.Empty;
-        string strProxyport=string.Empty;
-        string strProxyName=string.Empty;
-        string strProxypassword=string.Empty;
+        string strIPPort=string.Empty;
+        string strIPName=string.Empty;
+        string strIPpassword=string.Empty;
         string strProfileStatus = string.Empty;
         
         public List<string> SelectAccouts()
@@ -133,19 +133,19 @@ namespace BaseLib
             }
         }
 
-        public void InsertUpdateFBAccount(string Username,string password, string username , string proxiaddress ,string proxyport,string proxyName,string proxypassword,string friendcount,string profilename)
+        public void InsertUpdateFBAccount(string Username,string password, string username , string proxiaddress ,string IPPort,string IPName,string IPpassword,string friendcount,string profilename)
         {
             try
             {
                 this.strUsernaem=Username;
                 this.strPassword=password;
                 this.strProxiaddress=proxiaddress;
-                this.strProxyport=proxyport;
-                this.strProxyName=proxyName;
-                this.strProxypassword=proxypassword;
+                this.strIPPort=IPPort;
+                this.strIPName=IPName;
+                this.strIPpassword=IPpassword;
                 this.strProfileStatus = "";
                 this.strScreen_name = username;
-                string strQuery = "INSERT INTO tb_FBAccount VALUES ('" + Username + "','" + password + "', '"+ username +"' ,'" + proxiaddress + "','" + proxyport + "','" + proxyName + "','"+proxypassword+ "','"+friendcount+ "','"+profilename+"','"+strProfileStatus+"') ";
+                string strQuery = "INSERT INTO tb_FBAccount VALUES ('" + Username + "','" + password + "', '"+ username +"' ,'" + proxiaddress + "','" + IPPort + "','" + IPName + "','"+IPpassword+ "','"+friendcount+ "','"+profilename+"','"+strProfileStatus+"') ";
 
                 DataBaseHandler.InsertQuery(strQuery, "tb_FBAccount");
             }
@@ -153,18 +153,18 @@ namespace BaseLib
             {
                 try
                 {
-                    UpdateTDAccount(strUsernaem, strPassword, strProxiaddress, strProxyport, strProxyName, strProxypassword);
+                    UpdateTDAccount(strUsernaem, strPassword, strProxiaddress, strIPPort, strIPName, strIPpassword);
                 }
                 catch { }
             }
         }
 
-        public void UpdateTDAccount(string Usernaem, string password, string proxiaddress, string proxyport, string proxyName, string proxypassword)
+        public void UpdateTDAccount(string Usernaem, string password, string proxiaddress, string IPPort, string IPName, string IPpassword)
         {
             try
             {
                 string strTable = "tb_FBAccount";
-                string strQuery = "UPDATE tb_FBAccount SET Password='" + password + "', ProxyAddress='" + proxiaddress + "', ProxyPort='" + proxyport + "', ProxyUserName='" + proxyName + "', ProxyPassword='" + proxypassword + "' WHERE UserName='" + Usernaem+"'";
+                string strQuery = "UPDATE tb_FBAccount SET Password='" + password + "', IPAddress='" + proxiaddress + "', IPPort='" + IPPort + "', IPUsername='" + IPName + "', IPpassword='" + IPpassword + "' WHERE UserName='" + Usernaem+"'";
 
                 DataBaseHandler.UpdateQuery(strQuery, strTable);
             }

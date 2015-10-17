@@ -374,10 +374,53 @@ namespace MixedCampaignManager.classes
                     }
                 }
 
-                Thread threadGetStartProcessForReply = new Thread(GetStartReply);
-                threadGetStartProcessForReply.Name = CampaignName + "_" + Account.Key;
-                threadGetStartProcessForReply.IsBackground = true;
-                threadGetStartProcessForReply.Start(new object[] { Account, lst_Struct_ReplyData, _lst_ReplyMessages, _IsReplyParDay, _NoofReplyParDay, _NoofReplyParAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime });
+                #region New Licensing Feature Added By Sonu
+                try
+                {
+                    if (Globals.IsBasicVersion || Globals.IsProVersion || Globals.IsFreeVersion)
+                    {
+                        string queryCheckDataBaseEmpty = "select * from tb_FBAccount";
+                        DataSet DS1 = DataBaseHandler.SelectQuery(queryCheckDataBaseEmpty, "tb_FBAccount");
+                        if (!(DS1.Tables[0].Rows.Count == 0))
+                        {
+                            DataTable DT = DS1.Tables[0];
+                            bool check = DT.Select().Any(x => x.ItemArray[0].ToString() == Account.Key);
+                            if (!check)
+                            {
+                                System.Windows.Forms.MessageBox.Show("Please Upload this Account in Account Manager");
+                                return;
+                            }
+                            else
+                            {
+                                Thread threadGetStartProcessForReply = new Thread(GetStartReply);
+                                threadGetStartProcessForReply.Name = CampaignName + "_" + Account.Key;
+                                threadGetStartProcessForReply.IsBackground = true;
+                                threadGetStartProcessForReply.Start(new object[] { Account, lst_Struct_ReplyData, _lst_ReplyMessages, _IsReplyParDay, _NoofReplyParDay, _NoofReplyParAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime });
+                            }
+                        }
+                        else
+                        {
+                            System.Windows.Forms.MessageBox.Show("Please Upload this Account in Account Manager");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        Thread threadGetStartProcessForReply = new Thread(GetStartReply);
+                        threadGetStartProcessForReply.Name = CampaignName + "_" + Account.Key;
+                        threadGetStartProcessForReply.IsBackground = true;
+                        threadGetStartProcessForReply.Start(new object[] { Account, lst_Struct_ReplyData, _lst_ReplyMessages, _IsReplyParDay, _NoofReplyParDay, _NoofReplyParAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime });
+                    }
+                }
+                catch { };
+                #endregion
+
+                #region old Code
+                //Thread threadGetStartProcessForReply = new Thread(GetStartReply);
+                //threadGetStartProcessForReply.Name = CampaignName + "_" + Account.Key;
+                //threadGetStartProcessForReply.IsBackground = true;
+                //threadGetStartProcessForReply.Start(new object[] { Account, lst_Struct_ReplyData, _lst_ReplyMessages, _IsReplyParDay, _NoofReplyParDay, _NoofReplyParAc, DelayStar, DelayEnd, CampaignName, IsSchedulDaily, SchedulerEndTime });
+                #endregion
 
                 Thread.Sleep(1000);
                 LstCounter++;
@@ -490,38 +533,46 @@ namespace MixedCampaignManager.classes
                         }
                     }
 
-                    string tweetId = lst_ReplyData_item.ID_Tweet;
-
-                    string tweetUsername = lst_ReplyData_item.username__Tweet_User;
-
-                    string Msg = lst_ReplyMsgs[MsgCounter];
-
-                    string _wholeTweetMessage = lst_ReplyData_item.wholeTweetMessage;
-                    string tweetStatus;
-
-                    tweeter.Reply(ref ReplyAccountManager.globusHttpHelper, "", ReplyAccountManager.postAuthenticityToken, tweetId, tweetUsername, Msg, out tweetStatus);
-
-                    if (tweetStatus == "posted")
+                   // foreach (string Msg in lst_ReplyMsgs)
                     {
-                        Log("[ " + DateTime.Now + " ] => [ Message :- " + Msg + " Tweet :- " + _wholeTweetMessage + " by " + keyValue.Key + " ]");
+                        string tweetId = lst_ReplyData_item.ID_Tweet;
 
-                        try
-                        {
-                            RepositoryClasses.ReportTableRepository.InsertReport(CampaignName, accKey, "", 0, tweetId, "", "", Msg);
-                        }
-                        catch (Exception)
-                        {
-                        }
-                    }
-                    else
-                    {
-                        Log("[ " + DateTime.Now + " ] => [ Status :- " + tweetStatus + " by " + keyValue.Key + " ]");
-                    }
+                        string tweetUsername = lst_ReplyData_item.username__Tweet_User;
 
-                    int delay = BaseLib.RandomNumberGenerator.GenerateRandom(DelayStar * 1000, DelayEnd * 1000);
-                    Log("[ " + DateTime.Now + " ] => [ Delay :- " + TimeSpan.FromMilliseconds(delay).Seconds + " Seconds. ]");
-                    Thread.Sleep(delay);
-                    MsgCounter++;
+                        if (MsgCounter == lst_ReplyMsgs.Count)
+                        {
+                            MsgCounter = 0;
+                        }
+
+                        string Msg = lst_ReplyMsgs[MsgCounter];
+
+                        string _wholeTweetMessage = lst_ReplyData_item.wholeTweetMessage;
+                        string tweetStatus;
+
+                        tweeter.Reply(ref ReplyAccountManager.globusHttpHelper, "", ReplyAccountManager.postAuthenticityToken, tweetId, tweetUsername, Msg, out tweetStatus);
+
+                        if (tweetStatus == "posted")
+                        {
+                            Log("[ " + DateTime.Now + " ] => [ Message :- " + Msg + " Tweet :- " + _wholeTweetMessage + " by " + keyValue.Key + " ]");
+
+                            try
+                            {
+                                RepositoryClasses.ReportTableRepository.InsertReport(CampaignName, accKey, "", 0, tweetId, "", "", Msg);
+                            }
+                            catch (Exception)
+                            {
+                            }
+                        }
+                        else
+                        {
+                            Log("[ " + DateTime.Now + " ] => [ Status :- " + tweetStatus + " by " + keyValue.Key + " ]");
+                        }
+
+                        int delay = BaseLib.RandomNumberGenerator.GenerateRandom(DelayStar * 1000, DelayEnd * 1000);
+                        Log("[ " + DateTime.Now + " ] => [ Delay :- " + TimeSpan.FromMilliseconds(delay).Seconds + " Seconds. ]");
+                        Thread.Sleep(delay);
+                        MsgCounter++; 
+                    }
                 }
 
             }

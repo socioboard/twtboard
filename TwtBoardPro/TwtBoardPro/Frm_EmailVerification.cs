@@ -128,11 +128,11 @@ namespace twtboardpro
                 string Email = string.Empty;
                 string Password = string.Empty;
                 string username = string.Empty;
-                string proxyAddress = string.Empty;
-                string proxyPort = string.Empty;
-                string proxyUsername = string.Empty;
-                string proxyPassword = string.Empty;
-                string Proxy = string.Empty;
+                string IPAddress = string.Empty;
+                string IPPort = string.Empty;
+                string IPUsername = string.Empty;
+                string IPpassword = string.Empty;
+                string IP = string.Empty;
                 string tempEmail = string.Empty;
 
 
@@ -140,7 +140,7 @@ namespace twtboardpro
                 //string emailData = (string)paramsArray.GetValue(0);
                 //if (paramsArray.Length>1)
                 //{
-                //    Proxy = (string)paramsArray.GetValue(1);
+                //    IP = (string)paramsArray.GetValue(1);
                 //}
 
                 //if (!emailData.Contains(':'))
@@ -155,22 +155,22 @@ namespace twtboardpro
 
                 //AddToEmailVerificationLog("[ " + DateTime.Now + " ] => [ Going for Email Verification : " + Email + " ]");
 
-                //if (!string.IsNullOrEmpty(Proxy))
+                //if (!string.IsNullOrEmpty(IP))
                 //{
                 //    try
                 //    {
-                //        string[] ProxyData = Proxy.Split(':');
-                //        if (ProxyData.Count() == 2)
+                //        string[] IPData = IP.Split(':');
+                //        if (IPData.Count() == 2)
                 //        {
-                //            proxyAddress = ProxyData[0];
-                //            proxyPort = ProxyData[1];
+                //            IPAddress = IPData[0];
+                //            IPPort = IPData[1];
                 //        }
-                //        if (ProxyData.Count() == 4)
+                //        if (IPData.Count() == 4)
                 //        {
-                //            proxyAddress = ProxyData[0];
-                //            proxyPort = ProxyData[1];
-                //            proxyUsername = ProxyData[2];
-                //            proxyPassword = ProxyData[3];
+                //            IPAddress = IPData[0];
+                //            IPPort = IPData[1];
+                //            IPUsername = IPData[2];
+                //            IPpassword = IPData[3];
                 //        }
                 //    }
                 //    catch (Exception)
@@ -196,17 +196,17 @@ namespace twtboardpro
                     {
                         Email = arrItem[0]; //item.Key;
                         Password = arrItem[1];//item.Value._Password;
-                        proxyAddress = arrItem[2];//item.Value._ProxyAddress;
-                        proxyPort = arrItem[3];
+                        IPAddress = arrItem[2];//item.Value._IPAddress;
+                        IPPort = arrItem[3];
                     }
                     else if (arrItem.Length == 6)
                     {
                         Email = arrItem[0]; //item.Key;
                         Password = arrItem[1];//item.Value._Password;
-                        proxyAddress = arrItem[2];//item.Value._ProxyAddress;
-                        proxyPort = arrItem[3];//item.Value._ProxyPort;
-                        proxyUsername = arrItem[4];//item.Value._ProxyUsername;
-                        proxyPassword = arrItem[5];//item.Value._ProxyPassword;
+                        IPAddress = arrItem[2];//item.Value._IPAddress;
+                        IPPort = arrItem[3];//item.Value._IPPort;
+                        IPUsername = arrItem[4];//item.Value._IPUsername;
+                        IPpassword = arrItem[5];//item.Value._IPpassword;
                     }
                     else
                     {
@@ -232,10 +232,10 @@ namespace twtboardpro
                     Accountmanager.globusHttpHelper = globusHelper;
                     Accountmanager.Username = Email.Replace(" ", "").Replace("\0", "");
                     Accountmanager.Password = Password;
-                    Accountmanager.proxyAddress = proxyAddress;
-                    Accountmanager.proxyPort = proxyPort;
-                    Accountmanager.proxyUsername = proxyUsername;
-                    Accountmanager.proxyPassword = proxyPassword;
+                    Accountmanager.IPAddress = IPAddress;
+                    Accountmanager.IPPort = IPPort;
+                    Accountmanager.IPUsername = IPUsername;
+                    Accountmanager.IPpassword = IPpassword;
                     Accountmanager.Login();
 
                     if (Accountmanager.IsLoggedIn)
@@ -268,12 +268,12 @@ namespace twtboardpro
                 if (verified && Accountmanager.IsLoggedIn)
                 {
 
-                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_SuccessfullyVerifiedAccounts);
+                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_SuccessfullyVerifiedAccounts);
                     AddToEmailVerificationLog("[ " + DateTime.Now + " ] => [ Account Verified : " + Email + " ]");
                 }
                 else
                 {
-                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_VerificationFailedAccounts);
+                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_VerificationFailedAccounts);
                     AddToEmailVerificationLog("[ " + DateTime.Now + " ] => [ Account Couldn't be Email Verified : " + Email + " ]");
                 }
             }
@@ -390,11 +390,11 @@ namespace twtboardpro
                 string Email = string.Empty;
                 string Password = string.Empty;
                 string username = string.Empty;
-                string proxyAddress = string.Empty;
-                string proxyPort = string.Empty;
-                string proxyUsername = string.Empty;
-                string proxyPassword = string.Empty;
-                string Proxy = string.Empty;
+                string IPAddress = string.Empty;
+                string IPPort = string.Empty;
+                string IPUsername = string.Empty;
+                string IPpassword = string.Empty;
+                string IP = string.Empty;
                 string tempEmail = string.Empty;
                 string postdataPageSource = string.Empty;
                         
@@ -415,17 +415,17 @@ namespace twtboardpro
                     {
                         Email = arrItem[0]; //item.Key;
                         Password = arrItem[1];//item.Value._Password;
-                        proxyAddress = arrItem[2];//item.Value._ProxyAddress;
-                        proxyPort = arrItem[3];
+                        IPAddress = arrItem[2];//item.Value._IPAddress;
+                        IPPort = arrItem[3];
                     }
                     else if (arrItem.Length == 6)
                     {
                         Email = arrItem[0]; //item.Key;
                         Password = arrItem[1];//item.Value._Password;
-                        proxyAddress = arrItem[2];//item.Value._ProxyAddress;
-                        proxyPort = arrItem[3];//item.Value._ProxyPort;
-                        proxyUsername = arrItem[4];//item.Value._ProxyUsername;
-                        proxyPassword = arrItem[5];//item.Value._ProxyPassword;
+                        IPAddress = arrItem[2];//item.Value._IPAddress;
+                        IPPort = arrItem[3];//item.Value._IPPort;
+                        IPUsername = arrItem[4];//item.Value._IPUsername;
+                        IPpassword = arrItem[5];//item.Value._IPpassword;
                     }
                     else
                     {
@@ -451,10 +451,10 @@ namespace twtboardpro
                     Accountmanager.globusHttpHelper = globusHelper;
                     Accountmanager.Username = Email.Replace(" ", "").Replace("\0", "");
                     Accountmanager.Password = Password;
-                    Accountmanager.proxyAddress = proxyAddress;
-                    Accountmanager.proxyPort = proxyPort;
-                    Accountmanager.proxyUsername = proxyUsername;
-                    Accountmanager.proxyPassword = proxyPassword;
+                    Accountmanager.IPAddress = IPAddress;
+                    Accountmanager.IPPort = IPPort;
+                    Accountmanager.IPUsername = IPUsername;
+                    Accountmanager.IPpassword = IPpassword;
                     Accountmanager.Login();
 
                     if (Accountmanager.IsLoggedIn)
@@ -473,7 +473,7 @@ namespace twtboardpro
                 
                 else
                 {
-                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + proxyAddress + ":" + proxyPort + ":" + proxyUsername + ":" + proxyPassword, Globals.path_VerificationFailedAccounts);
+                    Globussoft.GlobusFileHelper.AppendStringToTextfileNewLine(Email + ":" + Password + ":" + username + ":" + IPAddress + ":" + IPPort + ":" + IPUsername + ":" + IPpassword, Globals.path_VerificationFailedAccounts);
                     AddToEmailVerificationLog("[ " + DateTime.Now + " ] => [ Email not send to confirmation for Account : " + Email + " ]");
                 }
             }
